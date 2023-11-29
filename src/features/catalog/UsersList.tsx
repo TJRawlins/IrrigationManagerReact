@@ -1,22 +1,19 @@
-import { Button, List, ListItem, ListItemText } from "@mui/material";
+import { List } from "@mui/material";
 import { User } from "../../app/models/Users";
+import UserCard from "./UserCard";
 
 interface Props {
   users: User[];
-  addUser: () => void;
 }
 
-export default function UsersList({ users, addUser }: Props) {
+export default function UsersList({ users }: Props) {
   return (
     <>
       <List>
-        {users.map((user, index) => (
-          <ListItem key={index}>
-            <ListItemText>{user.username} - {user.email}</ListItemText>
-          </ListItem>
+        {users.map((user) => (
+          <UserCard key={user.username} user={user} />
         ))}
       </List>
-      <Button variant="contained" onClick={addUser}>Add User</Button>
     </>
   );
 }
