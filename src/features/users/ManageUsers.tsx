@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import UsersList from "./UsersList";
-import { User } from "../../app/models/Users";
+import { User } from "../../app/models/User";
 
 interface Props {
   users: User[];
