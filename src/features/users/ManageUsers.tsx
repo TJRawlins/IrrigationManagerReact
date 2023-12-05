@@ -9,6 +9,7 @@ interface Props {
 }
 
 export default function ManageUsers({ users }: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState<User[]>([]);
 
   useEffect(() => {

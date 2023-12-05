@@ -9,7 +9,7 @@ interface Props {
 export default function ZoneList({ zones }: Props) {
   return (
     <>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} paddingTop={'5rem'}>
         {zones.map((zone) => (
           <Grid item xs={3} key={zone.id}>
             <ZoneCard zone={zone} />
