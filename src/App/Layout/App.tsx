@@ -1,42 +1,36 @@
 import { useEffect, useState } from "react";
 import "/src/App.css";
-import { User } from "../models/Users";
+// import { User } from "../models/User";
+// import { Plant } from "../models/Plant";
+import { Container, CssBaseline } from "@mui/material";
+// import ManageUsers from "../../features/users/ManageUsers";
+import Header from "./Header";
+import agent from "../api/agent";
+// import PlantList from "../../features/plants/PlantList";
+import ZoneList from "../../features/zones/ZoneList";
+import { Zone } from "../models/Zone";
 
 function App() {
-  const [users, setUsers] = useState<User[]>([]);
+  // const [plants, setPlants] = useState<Plant[]>([]);
+  const [zones, setZones] = useState<Zone[]>([]);
+
+  // useEffect(() => {
+  //   agent.Plants.list().then((plants) => setPlants(plants));
+  // }, []);
 
   useEffect(() => {
-    fetch("https://localhost:5555/api/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data));
+    agent.Zones.list().then((zones) => setZones(zones));
   }, []);
-
-  function addProduct() {
-    setUsers((prevState) => [
-      ...prevState,
-      {
-        id: prevState.length + 101,
-        firstname: "John",
-        lastname: "Doe",
-        username: "john" + (prevState.length + 1),
-        email: "john" + (prevState.length + 1) + "@gmail.com",
-      },
-    ]);
-  }
 
   return (
     <>
-      <div>
-        <h1>Irrigation Manager</h1>
-        <ul>
-          {users.map((user, index) => (
-            <li key={index}>
-              {user.username} - {user.email}
-            </li>
-          ))}
-        </ul>
-        <button onClick={addProduct}>Add User</button>
-      </div>
+      <CssBaseline />
+      <Header />
+      <Container>
+        {/* <ManageUsers users={users} addUser={addUser} /> */}
+        <ZoneList zones={zones} />
+        {/* <PlantList plants={plants} /> */}
+      </Container>
     </>
   );
 }

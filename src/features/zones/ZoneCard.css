@@ -1,0 +1,16 @@
+.iconStyle {
+  background: #ffffff;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  padding: 0.1rem;
+}
+
+.iconStyleFA {
+  font-size: 0.95rem !important;
+}
+
+.chip {
+  margin: 1rem 0 1rem -0.1rem;
+  font-size: 0.75rem;
+  color: #ffff !important;
+}

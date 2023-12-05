@@ -1,13 +1,32 @@
 import { Button } from "@mui/material";
 import UsersList from "./UsersList";
 import { User } from "../../app/models/User";
+import { useEffect, useState } from "react";
+import agent from "../../app/api/agent";
 
 interface Props {
   users: User[];
-  addUser: () => void;
 }
 
-export default function ManageUsers({ users, addUser }: Props) {
+export default function ManageUsers({ users }: Props) {
+  const [user, setUser] = useState<User[]>([]);
+
+  useEffect(() => {
+    agent.Users.list().then((user) => setUser(user));
+  }, []);
+
+  function addUser() {
+    setUser((prevState) => [
+      ...prevState,
+      {
+        id: prevState.length + 101,
+        firstname: "John",
+        lastname: "Doe",
+        username: "john" + (prevState.length + 1),
+        email: "john" + (prevState.length + 1) + "@gmail.com",
+      },
+    ]);
+  }
   return (
     <>
       <UsersList users={users} />
