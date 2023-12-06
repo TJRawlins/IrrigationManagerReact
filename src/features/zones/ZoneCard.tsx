@@ -15,6 +15,7 @@ import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
 
+//* Get a zone from list of zones from ZoneList.tsx (list obtained from App.tsx)
 interface Props {
   zone: Zone;
 }
@@ -26,13 +27,13 @@ export default function ZoneCard({ zone }: Props) {
       return {
         icon: <LocalFlorist className="iconStyle" sx={{ fill: "#ff00aa" }} />,
         label: params,
-        style: {background: '#d4028e'}
+        style: { background: "#d4028e" },
       };
     } else if (params === "Summer") {
       return {
         icon: <Brightness7 className="iconStyle" sx={{ fill: "#ffbc00" }} />,
         label: params,
-        style: {background: '#e9ab00'}
+        style: { background: "#e9ab00" },
       };
     } else if (params === "Fall") {
       return {
@@ -44,13 +45,13 @@ export default function ZoneCard({ zone }: Props) {
           />
         ),
         label: params,
-        style: {background: '#dd3f01'}
+        style: { background: "#dd3f01" },
       };
     } else if (params === "Winter") {
       return {
         icon: <AcUnit className="iconStyle" sx={{ fill: "#00aeff" }} />,
         label: params,
-        style: {background: '#0092d6'}
+        style: { background: "#0092d6" },
       };
     } else {
       return {

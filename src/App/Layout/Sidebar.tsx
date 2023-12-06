@@ -8,11 +8,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import {
-  Mail as MailIcon,
-  Menu as MenuIcon,
-  Inbox as InboxIcon,
-} from "@mui/icons-material";
+import { Mail as MailIcon, Inbox as InboxIcon } from "@mui/icons-material";
+import "/src/app/layout/Sidebar.css";
 
 type Anchor = "left";
 
@@ -21,6 +18,7 @@ export default function SwipeableTemporaryDrawer() {
     left: false,
   });
 
+  // Toggle the sidebar menu
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -32,13 +30,15 @@ export default function SwipeableTemporaryDrawer() {
       ) {
         return;
       }
+      toggleClass();
 
       setState({ ...state, [anchor]: open });
     };
 
+  // List sidebar menu items
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 250, paddingTop: "5rem" }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -71,18 +71,35 @@ export default function SwipeableTemporaryDrawer() {
     </Box>
   );
 
+  const HamburgerIcon = () => {
+    return <div className="icon"></div>;
+  };
+
+  const [isActive, setActive] = React.useState(true);
+
+  const toggleClass = () => {
+    setActive(!isActive);
+  };
+
   return (
     <div>
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button sx={{ padding: 1, minWidth: 0 }} onClick={toggleDrawer(anchor, true)}>
-            <MenuIcon sx={{ color: "#ffffff"}} />
+          <Button
+            className={
+              isActive ? "nav-toggle icon" : "nav-open nav-toggle icon"
+            }
+            sx={{ padding: 1, minWidth: 0 }}
+            onClick={toggleDrawer(anchor, isActive ? true : false)}
+          >
+            <HamburgerIcon />
           </Button>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
             onOpen={toggleDrawer(anchor, true)}
+            slotProps={{ backdrop: { style: { backgroundColor: 'rgba(255, 255, 255, 0.623)' } } }}
           >
             {list(anchor)}
           </SwipeableDrawer>
