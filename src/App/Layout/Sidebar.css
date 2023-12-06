@@ -1,0 +1,65 @@
+
+.nav-open.nav-toggle .icon {
+  width: 0;
+}
+
+.nav-open.nav-toggle .icon:before {
+  -webkit-transform: translateY(9px) rotate(45deg);
+  -ms-transform: translateY(9px) rotate(45deg);
+  transform: translateY(9px) rotate(45deg);
+}
+
+.nav-open.nav-toggle .icon:after {
+  -webkit-transform: translateY(-9px) rotate(-45deg);
+  -ms-transform: translateY(-9px) rotate(-45deg);
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+.nav-toggle {
+  width: 60px;
+  height: 60px;
+  z-index: 2;
+  border-radius: 50%;
+  margin: 10px;
+  position: absolute;
+  cursor: pointer;
+  transition: 0.66s all ease-in;
+  /* -webkit-transition-duration: 0.66s; */
+  /* -webkit-transition-timing-function: swing;
+  transition-timing-function: swing; */
+}
+
+.nav-toggle .icon {
+  width: 30px;
+  height: 4px;
+  background-color: white;
+  position: absolute;
+  top: 28px;
+  left: 15px;
+  transition: 0.5s all ease-in;
+  /* -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  transition-timing-function: swing; */
+}
+
+.nav-toggle .icon:before,
+.nav-toggle .icon:after {
+  width: 30px;
+  height: 4px;
+  background-color: white;
+  content: "";
+  position: absolute;
+  left: 0;
+  transition: 0.5s all ease-in;
+  /* -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  transition-timing-function: swing; */
+}
+
+.nav-toggle .icon:before {
+  top: -9px;
+}
+
+.nav-toggle .icon:after {
+  top: 9px;
+}
