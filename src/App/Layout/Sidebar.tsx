@@ -8,7 +8,16 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Mail as MailIcon, Inbox as InboxIcon } from "@mui/icons-material";
+import {
+  BubbleChartOutlined as BubbleChartOutlinedIcon,
+  DashboardOutlined as DashboardOutlinedIcon,
+  Grass as GrassIcon,
+  CalculateOutlined as CalculateOutlinedIcon,
+  QuestionMarkOutlined as QuestionMarkOutlinedIcon,
+  AccountCircleOutlined as AccountCircleIcon,
+  SettingsSuggestOutlined as SettingsSuggestOutlinedIcon,
+  Logout as LogoutIcon,
+} from "@mui/icons-material";
 import "/src/app/layout/Sidebar.css";
 
 type Anchor = "left";
@@ -38,30 +47,58 @@ export default function SwipeableTemporaryDrawer() {
   // List sidebar menu items
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: 250, paddingTop: "5rem" }}
+      sx={{ width: 270, paddingTop: "5rem" }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {["Dashboard", "Zones", "Plants", "Calculator", "About"].map(
+          (text) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {(() => {
+                    if (text === "Dashboard") {
+                      return <BubbleChartOutlinedIcon />;
+                    }
+                    if (text === "Zones") {
+                      return <DashboardOutlinedIcon />;
+                    }
+                    if (text === "Plants") {
+                      return <GrassIcon />;
+                    }
+                    if (text === "Calculator") {
+                      return <CalculateOutlinedIcon />;
+                    }
+                    if (text === "About") {
+                      return <QuestionMarkOutlinedIcon />;
+                    }
+                  })()}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        {["Account", "Settings", "Sign-out"].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              {(() => {
+                    if (text === "Account") {
+                      return <AccountCircleIcon />;
+                    }
+                    if (text === "Settings") {
+                      return <SettingsSuggestOutlinedIcon />;
+                    }
+                    if (text === "Sign-out") {
+                      return <LogoutIcon />;
+                    } 
+                })()}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -99,7 +136,11 @@ export default function SwipeableTemporaryDrawer() {
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
             onOpen={toggleDrawer(anchor, true)}
-            slotProps={{ backdrop: { style: { backgroundColor: 'rgba(255, 255, 255, 0.623)' } } }}
+            slotProps={{
+              backdrop: {
+                style: { backgroundColor: "rgba(255, 255, 255, 0.623)" },
+              },
+            }}
           >
             {list(anchor)}
           </SwipeableDrawer>

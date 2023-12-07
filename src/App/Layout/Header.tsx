@@ -77,6 +77,8 @@ export default function Header() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  /* HANDLERS =====================================
+  */
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -94,6 +96,8 @@ export default function Header() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  /* SUB-COMPONENTS =====================================
+  */
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -168,6 +172,8 @@ export default function Header() {
     </Menu>
   );
 
+  /* RETURNED-COMPONENT =====================================
+  */
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar sx={appBarStyles(theme).mainBar}>

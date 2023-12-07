@@ -26,7 +26,7 @@ function App() {
     <>
       <CssBaseline />
       <Header />
-      <Container>
+      <Container maxWidth={false} disableGutters>
         {/* <ManageUsers users={users} addUser={addUser} /> */}
         <ZoneList zones={zones} />
         {/* <PlantList plants={plants} /> */}

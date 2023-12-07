@@ -1,0 +1,6 @@
+.season-btn {
+    height: 100%;
+}
+.season-btn:hover {
+    background: rgb(235, 235, 235) !important;
+}
