@@ -2,23 +2,22 @@ import "./ZoneBar.css";
 import {
   Avatar,
   Box,
-  Button,
   Chip,
   CssBaseline,
   Divider,
-  Menu,
+  FormControl,
+  InputLabel,
   MenuItem,
-  MenuProps,
+  Select,
+  SelectChangeEvent,
   Stack,
+  SvgIconProps,
+  Tooltip,
   Typography,
-  alpha,
-  styled,
 } from "@mui/material";
 import {
   DashboardOutlined as DashboardOutlinedIcon,
   WbSunny as WbSunnyIcon,
-  KeyboardArrowDown as KeyboardArrowDownIcon,
-  Brightness7 as Brightness7Icon,
   LocalFlorist as LocalFloristIcon,
   AcUnit as AcUnitIcon,
   FlipCameraAndroid as FlipCameraAndroidIcon,
@@ -32,7 +31,11 @@ export default function ZoneBar() {
   /* 
   GALS - DAILY MONTHLY YEARLY ====================
   */
-  const galsList = ["D", "M", "Y"];
+  const galsList: Array<string> = [
+    "Daily Gallons",
+    "Monthly Gallons",
+    "Yearly Gallons",
+  ];
   const AvatarChips = () => {
     return (
       <>
@@ -41,8 +44,10 @@ export default function ZoneBar() {
           mt={0.5}
           sx={{ display: { sm: "none", xs: "flex" }, alignItems: "center" }}
         >
-          <FlipCameraAndroidIcon sx={{color: "silver"}} />
-          <Typography ml={1} sx={{color: "silver", fontSize: 13}} >Flip to see gallons</Typography>
+          <FlipCameraAndroidIcon sx={{ color: "silver" }} />
+          <Typography ml={1} sx={{ color: "silver", fontSize: 13 }}>
+            Flip to see gallons
+          </Typography>
         </Box>
         <Stack
           direction="row"
@@ -52,28 +57,30 @@ export default function ZoneBar() {
           sx={{ display: { xs: "none", sm: "block" } }}
         >
           {galsList.map((gals) => (
-            <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
-              avatar={
-                <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
-                >
-                  {gals.toLocaleUpperCase()}
-                </Avatar>
-              }
-              label="615"
-            />
+            <Tooltip title={gals} arrow>
+              <Chip
+                sx={{
+                  width: "fit-content",
+                  borderBottom: "1px solid silver",
+                  bgcolor: "#ffffff",
+                  color: "#919191",
+                  justifyContent: "left",
+                }}
+                avatar={
+                  <Avatar
+                    sx={{
+                      minWidth: "fit-content",
+                      background: "rgba(0, 0, 0, 0.08)",
+                      fontWeight: "700",
+                      color: "#919191 !important",
+                    }}
+                  >
+                    {gals[0].toLocaleUpperCase()}
+                  </Avatar>
+                }
+                label="615"
+              />
+            </Tooltip>
           ))}
         </Stack>
       </>
@@ -81,114 +88,82 @@ export default function ZoneBar() {
   };
 
   /* 
-  SEASON MENU BUTTON ====================
+  SEASON DROPDOWN COMPONENT ====================
   */
   library.add(faCanadianMapleLeaf);
 
-  const StyledMenu = styled((props: MenuProps) => (
-    <Menu
-      elevation={0}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "right",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      {...props}
-    />
-  ))(({ theme }) => ({
-    "& .MuiPaper-root": {
-      borderRadius: 6,
-      marginTop: theme.spacing(0.5),
-      minWidth: 130,
-      color:
-        theme.palette.mode === "light"
-          ? "rgb(55, 65, 81)"
-          : theme.palette.grey[300],
-      boxShadow:
-        "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-      "& .MuiMenu-list": {
-        padding: "4px 0",
-      },
-      "& .MuiMenuItem-root": {
-        "& .MuiSvgIcon-root": {
-          fontSize: 18,
-          color: theme.palette.text.secondary,
-          marginRight: theme.spacing(1.5),
-        },
-        "&:active": {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            theme.palette.action.selectedOpacity
-          ),
-        },
-      },
-    },
-  }));
-
   const SeasonMenu = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorEl(event.currentTarget);
+    const [season, setSeason] = React.useState("");
+
+    const handleChange = (event: SelectChangeEvent) => {
+      setSeason(event.target.value as string);
     };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
+
+    const seasons: Array<string> = ["Fall", "Winter", "Spring"];
+    const seasonsIcons: Array<React.ReactElement<SvgIconProps>> = [
+      <FontAwesomeIcon
+        className="menuIcon"
+        icon={faCanadianMapleLeaf}
+        style={{
+          transform: "scale(1.5) rotate(-45deg)",
+          margin: "0 1rem 0 .3rem",
+        }}
+      />,
+      <AcUnitIcon className="menuIcon" />,
+      <LocalFloristIcon className="menuIcon" />,
+    ];
 
     return (
-      <div>
-        <Button
-          className="season-btn"
-          sx={{
-            bgcolor: "white",
-            color: "inherit",
-            paddingTop: 1,
-            height: "3rem",
-          }}
-          onClick={handleClick}
-          endIcon={<KeyboardArrowDownIcon />}
-        >
-          <WbSunnyIcon sx={{ mr: 1, ml: 1 }} />
-          Season
-        </Button>
-        <StyledMenu
-          color="inherit"
-          id="demo-customized-menu"
-          MenuListProps={{
-            "aria-labelledby": "demo-customized-button",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleClose} disableRipple>
-            <Brightness7Icon />
-            Summer
-          </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
-            <FontAwesomeIcon
-              icon={faCanadianMapleLeaf}
-              color="rgba(0, 0, 0, 0.6)"
-              style={{ marginRight: "12px" }}
-            />
-            Fall
-          </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
-            <AcUnitIcon />
-            Winter
-          </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
-            <LocalFloristIcon />
-            Spring
-          </MenuItem>
-        </StyledMenu>
-      </div>
+      <Box sx={{ minWidth: 150 }}>
+        <FormControl fullWidth>
+          <InputLabel
+            id="simple-select-label"
+            sx={{
+              fontSize: "1.25rem",
+              color: "#777",
+              display: "flex !important",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></InputLabel>
+          <Select
+            className="season-btn"
+            displayEmpty
+            labelId="simple-select-label"
+            value={season}
+            label="Season"
+            onChange={handleChange}
+            sx={{
+              boxShadow: "none",
+              ".MuiOutlinedInput-notchedOutline": { border: 0 },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                border: "1px solid #ffffff",
+                borderRadius: "5px 5px 0 0",
+              },
+              height: "40px",
+              mt: 0.5,
+            }}
+          >
+            <MenuItem value="">
+              <WbSunnyIcon className="menuIcon" />
+              <Typography width={0}>Summer</Typography>
+            </MenuItem>
+            <CssBaseline />
+            {seasons.map((season, i) => (
+              <MenuItem value={season}>
+                {seasonsIcons[i]}
+                <Typography width={0}>{season}</Typography>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
     );
   };
 
+  /* MAIN COMPONENT =================================
+   */
   return (
     <>
       <CssBaseline />

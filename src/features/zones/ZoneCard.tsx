@@ -8,7 +8,11 @@ import {
   ChipProps,
   Typography,
 } from "@mui/material";
-import { LocalFlorist, AcUnit, Brightness7 } from "@mui/icons-material";
+import {
+  LocalFlorist as LocalFloristIcon,
+  AcUnit as AcUnitIcon,
+  WbSunny as WbSunnyIcon,
+} from "@mui/icons-material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
@@ -25,13 +29,15 @@ export default function ZoneCard({ zone }: Props) {
   function getChipProps(params: string): ChipProps {
     if (params === "Spring") {
       return {
-        icon: <LocalFlorist className="iconStyle" sx={{ fill: "#ff00aa" }} />,
+        icon: (
+          <LocalFloristIcon className="iconStyle" sx={{ fill: "#ff00aa" }} />
+        ),
         label: params,
         style: { background: "#d4028e" },
       };
     } else if (params === "Summer") {
       return {
-        icon: <Brightness7 className="iconStyle" sx={{ fill: "#ffbc00" }} />,
+        icon: <WbSunnyIcon className="iconStyle" sx={{ fill: "#ffbc00" }} />,
         label: params,
         style: { background: "#e9ab00" },
       };
@@ -39,6 +45,7 @@ export default function ZoneCard({ zone }: Props) {
       return {
         icon: (
           <FontAwesomeIcon
+            style={{ transform: "rotate(-45deg)" }}
             icon={faCanadianMapleLeaf}
             className="iconStyleFA iconStyle"
             color="#ff4800"
@@ -49,7 +56,7 @@ export default function ZoneCard({ zone }: Props) {
       };
     } else if (params === "Winter") {
       return {
-        icon: <AcUnit className="iconStyle" sx={{ fill: "#00aeff" }} />,
+        icon: <AcUnitIcon className="iconStyle" sx={{ fill: "#00aeff" }} />,
         label: params,
         style: { background: "#0092d6" },
       };

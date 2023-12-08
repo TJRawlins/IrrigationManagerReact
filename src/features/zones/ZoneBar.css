@@ -1,6 +1,13 @@
-.season-btn {
-    height: 100%;
-}
 .season-btn:hover {
-    background: rgb(235, 235, 235) !important;
+  background: rgb(235, 235, 235) !important;
+}
+.menuIcon {
+  color: silver;
+  transform: scale(1);
+  margin-right: 0.5rem;
+}
+
+.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
+  display: flex;
+  color: #777;
 }
