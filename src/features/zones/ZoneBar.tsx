@@ -1,12 +1,15 @@
-// const pages = ["Add", "Pricing", "Blog"];
 import "./ZoneBar.css";
 import {
+  Avatar,
+  Box,
   Button,
+  Chip,
   CssBaseline,
   Divider,
   Menu,
   MenuItem,
   MenuProps,
+  Stack,
   Typography,
   alpha,
   styled,
@@ -18,6 +21,7 @@ import {
   Brightness7 as Brightness7Icon,
   LocalFlorist as LocalFloristIcon,
   AcUnit as AcUnitIcon,
+  FlipCameraAndroid as FlipCameraAndroidIcon,
 } from "@mui/icons-material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -25,10 +29,62 @@ import React from "react";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 
 export default function ZoneBar() {
-  library.add(faCanadianMapleLeaf);
+  /* 
+  GALS - DAILY MONTHLY YEARLY ====================
+  */
+  const galsList = ["D", "M", "Y"];
+  const AvatarChips = () => {
+    return (
+      <>
+        <Box
+          ml={2}
+          mt={0.5}
+          sx={{ display: { sm: "none", xs: "flex" }, alignItems: "center" }}
+        >
+          <FlipCameraAndroidIcon sx={{color: "silver"}} />
+          <Typography ml={1} sx={{color: "silver", fontSize: 13}} >Flip to see gallons</Typography>
+        </Box>
+        <Stack
+          direction="row"
+          spacing={1}
+          ml={2}
+          mt={0.5}
+          sx={{ display: { xs: "none", sm: "block" } }}
+        >
+          {galsList.map((gals) => (
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {gals.toLocaleUpperCase()}
+                </Avatar>
+              }
+              label="615"
+            />
+          ))}
+        </Stack>
+      </>
+    );
+  };
+
   /* 
   SEASON MENU BUTTON ====================
   */
+  library.add(faCanadianMapleLeaf);
+
   const StyledMenu = styled((props: MenuProps) => (
     <Menu
       elevation={0}
@@ -95,7 +151,7 @@ export default function ZoneBar() {
           onClick={handleClick}
           endIcon={<KeyboardArrowDownIcon />}
         >
-          <WbSunnyIcon sx={{ mr: 1 }} />
+          <WbSunnyIcon sx={{ mr: 1, ml: 1 }} />
           Season
         </Button>
         <StyledMenu
@@ -198,8 +254,18 @@ export default function ZoneBar() {
               height: "100%",
             }}
           >
-            <Divider sx={{height: "60%", marginTop: "12px"}} orientation="vertical" flexItem />
-              <SeasonMenu />
+            <Divider
+              sx={{ height: "60%", marginTop: "12px" }}
+              orientation="vertical"
+              flexItem
+            />
+            <SeasonMenu />
+            <Divider
+              sx={{ height: "60%", marginTop: "12px" }}
+              orientation="vertical"
+              flexItem
+            />
+            <AvatarChips />
           </div>
         </div>
       </div>
