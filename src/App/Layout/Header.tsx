@@ -103,7 +103,7 @@ export default function Header() {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={menuId}
@@ -172,7 +172,7 @@ export default function Header() {
     </Menu>
   );
 
-  /* RETURNED-COMPONENT =====================================
+  /* RETURNED-MAIN COMPONENT =====================================
   */
   return (
     <Box sx={{ flexGrow: 1 }}>

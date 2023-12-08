@@ -1,6 +1,12 @@
 .season-btn:hover {
   background: rgb(235, 235, 235) !important;
 }
+
+.menuText {
+  width: 0;
+  color: #777;
+}
+
 .menuIcon {
   color: silver;
   transform: scale(1);

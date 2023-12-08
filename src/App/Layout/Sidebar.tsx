@@ -12,11 +12,12 @@ import {
   BubbleChartOutlined as BubbleChartOutlinedIcon,
   DashboardOutlined as DashboardOutlinedIcon,
   Grass as GrassIcon,
-  CalculateOutlined as CalculateOutlinedIcon,
+  // CalculateOutlined as CalculateOutlinedIcon,
   QuestionMarkOutlined as QuestionMarkOutlinedIcon,
   AccountCircleOutlined as AccountCircleIcon,
   SettingsSuggestOutlined as SettingsSuggestOutlinedIcon,
   Logout as LogoutIcon,
+  WaterDropOutlined as WaterDropIcon
 } from "@mui/icons-material";
 import "/src/app/layout/Sidebar.css";
 
@@ -53,7 +54,7 @@ export default function SwipeableTemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Dashboard", "Zones", "Plants", "Calculator", "About"].map(
+        {["Dashboard", "Zones", "Plants", "Emitter Calculator", "About"].map(
           (text) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
@@ -68,8 +69,8 @@ export default function SwipeableTemporaryDrawer() {
                     if (text === "Plants") {
                       return <GrassIcon />;
                     }
-                    if (text === "Calculator") {
-                      return <CalculateOutlinedIcon />;
+                    if (text === "Emitter Calculator") {
+                      return <WaterDropIcon />;
                     }
                     if (text === "About") {
                       return <QuestionMarkOutlinedIcon />;

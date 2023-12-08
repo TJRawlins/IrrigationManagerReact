@@ -7,7 +7,7 @@ import { Container, CssBaseline } from "@mui/material";
 import Header from "./Header";
 import agent from "../api/agent";
 // import PlantList from "../../features/plants/PlantList";
-import ZoneList from "../../features/zones/ZoneList";
+import ZoneList from "../../Components/zones/ZoneList";
 import { Zone } from "../models/Zone";
 
 function App() {

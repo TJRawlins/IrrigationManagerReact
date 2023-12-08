@@ -147,13 +147,13 @@ export default function ZoneBar() {
           >
             <MenuItem value="">
               <WbSunnyIcon className="menuIcon" />
-              <Typography width={0}>Summer</Typography>
+              <Typography className="menuText">Summer</Typography>
             </MenuItem>
             <CssBaseline />
             {seasons.map((season, i) => (
               <MenuItem value={season}>
                 {seasonsIcons[i]}
-                <Typography width={0}>{season}</Typography>
+                <Typography className="menuText">{season}</Typography>
               </MenuItem>
             ))}
           </Select>
