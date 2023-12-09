@@ -138,7 +138,7 @@ export default function ZoneBar() {
               boxShadow: "none",
               ".MuiOutlinedInput-notchedOutline": { border: 0 },
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                border: "1px solid #ffffff",
+                border: "none",
                 borderRadius: "5px 5px 0 0",
               },
               height: "40px",
