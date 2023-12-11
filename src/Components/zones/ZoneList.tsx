@@ -2,8 +2,6 @@ import { Box, Container, Grid } from "@mui/material";
 import { Zone } from "../../app/models/Zone";
 import ZoneCard from "./ZoneCard";
 import ZoneBar from "./ZoneBar";
-// import { useEffect, useState } from "react";
-// import agent from "../../app/api/agent";
 
 //* Get list of zones from App.tsx (Axios Call)
 interface Props {
@@ -11,15 +9,6 @@ interface Props {
 }
 
 export default function ZoneList({ zones }: Props) {
-  // TODO - Fetch plant count
-  // function getPlantCount() {
-
-  //   const [plantCount, setPlantCount] = useState({})
-  //   const { id } = useParams()
-  //   useEffect(() => {
-  //     agent.Zones.details(id).then((plantCount) => setPlantCount(plantCount.plant.length))
-  //   }, [id])
-  // }
 
   return (
     <>

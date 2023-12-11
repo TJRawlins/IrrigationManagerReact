@@ -22,6 +22,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
+import { useEffect, useState } from "react";
+import agent from "../../app/api/agent";
 
 //* Get a zone from list of zones from ZoneList.tsx (list obtained from App.tsx)
 interface Props {
@@ -29,7 +31,27 @@ interface Props {
 }
 export default function ZoneCard({ zone }: Props) {
 
+  // TODO - Fetch plant count
+  type Id = {
+    zoneId: string;
+  };
+  const GetPlantCount = ({ zoneId }: Id) => {
+    const [plantCount, setPlantCount] = useState("");
 
+    useEffect(() => {
+      agent.Zones.details(zoneId).then((plantCount) =>
+        setPlantCount(JSON.stringify(plantCount.plants.length))
+      );
+    }, [zoneId]);
+
+    return (
+      <Typography variant="body2" color="text.secondary">
+        <b>Plants:</b> {plantCount}
+      </Typography>
+    );
+  };
+
+  // Font Awesome Icons
   library.add(faCanadianMapleLeaf);
 
   function getChipProps(params: string): ChipProps {
@@ -72,8 +94,7 @@ export default function ZoneCard({ zone }: Props) {
       };
     }
   }
-  // TODO - TEST
-  // console.log(zoneDetailss?.plants?.length);
+
   return (
     <>
       <Card sx={{ position: "relative" }}>
@@ -105,9 +126,8 @@ export default function ZoneCard({ zone }: Props) {
           <Typography variant="body2" color="text.secondary">
             <b>Per Week:</b> {zone.runtimePerWeek}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <b>Plants:</b>
-          </Typography>
+
+          <GetPlantCount zoneId={zone.id} />
         </CardContent>
         <Divider />
         <CardActions sx={{ display: "flex", justifyContent: "space-around" }}>
