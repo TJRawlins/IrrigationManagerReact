@@ -30,8 +30,9 @@ interface Props {
   zone: Zone;
 }
 export default function ZoneCard({ zone }: Props) {
-
-  // TODO - Fetch plant count
+  /**
+   ** PLANT COUNT SUB-COMPONENT =====================
+   */
   type Id = {
     zoneId: string;
   };
@@ -51,6 +52,9 @@ export default function ZoneCard({ zone }: Props) {
     );
   };
 
+  /**
+   ** SEASON ICON CHIPS =====================
+   */
   // Font Awesome Icons
   library.add(faCanadianMapleLeaf);
 
@@ -95,6 +99,65 @@ export default function ZoneCard({ zone }: Props) {
     }
   }
 
+  /**
+   ** RETURN CARD DATA SUB-COMPONENT =====================
+   */
+  const CardData = () => {
+    return (
+      <CardContent>
+        <Chip
+          className="chip"
+          variant="filled"
+          size="small"
+          sx={{ position: "absolute", top: "-5px", left: "10px" }}
+          {...getChipProps(zone.season)}
+        />
+        <Typography
+          className="zone-name"
+          gutterBottom
+          variant="h5"
+          component="div"
+        >
+          {zone.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <b>Runtime:</b> {zone.runtimeHours}:
+          {zone.runtimeMinutes == 0 ? "00" : zone.runtimeMinutes}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <b>Per Week:</b> {zone.runtimePerWeek}
+        </Typography>
+
+        <GetPlantCount zoneId={zone.id} />
+      </CardContent>
+    );
+  };
+
+  /**
+   ** ACTION MENU SUB-COMPONENT =====================
+   */
+  const ActionMenu = () => {
+    return (
+      <CardActions
+        className="hidden"
+        sx={{ display: "flex", justifyContent: "space-around" }}
+      >
+        <Button className="card-btn" size="small">
+          <VisibilityIcon className="action-icon" />
+        </Button>
+        <Button className="card-btn" size="small">
+          <EditIcon className="action-icon" />
+        </Button>
+        <Button className="card-btn" size="small">
+          <ClearIcon className="action-icon" />
+        </Button>
+      </CardActions>
+    );
+  };
+
+  /**
+   ** RETURN MAIN COMPONENT =====================
+   */
   return (
     <>
       <Card sx={{ position: "relative" }}>
@@ -103,44 +166,9 @@ export default function ZoneCard({ zone }: Props) {
           image={zone.imagePath}
           title="green iguana"
         />
-        <CardContent>
-          <Chip
-            className="chip"
-            variant="filled"
-            size="small"
-            sx={{ position: "absolute", top: "-5px", left: "10px" }}
-            {...getChipProps(zone.season)}
-          />
-          <Typography
-            className="zone-name"
-            gutterBottom
-            variant="h5"
-            component="div"
-          >
-            {zone.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <b>Runtime:</b> {zone.runtimeHours}:
-            {zone.runtimeMinutes == 0 ? "00" : zone.runtimeMinutes}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <b>Per Week:</b> {zone.runtimePerWeek}
-          </Typography>
-
-          <GetPlantCount zoneId={zone.id} />
-        </CardContent>
+        <CardData />
         <Divider />
-        <CardActions sx={{ display: "flex", justifyContent: "space-around" }}>
-          <Button className="card-btn" size="small">
-            <VisibilityIcon className="action-icon" />
-          </Button>
-          <Button className="card-btn" size="small">
-            <EditIcon className="action-icon" />
-          </Button>
-          <Button className="card-btn" size="small">
-            <ClearIcon className="action-icon" />
-          </Button>
-        </CardActions>
+        <ActionMenu />
       </Card>
     </>
   );

@@ -35,3 +35,7 @@
 .card-btn:hover {
   background-color: #002b491f !important;
 }
+
+.hidden {
+  display: none !important
+}
