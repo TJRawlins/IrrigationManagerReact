@@ -57,7 +57,7 @@ export default function ZoneBar() {
           sx={{ display: { xs: "none", sm: "block" } }}
         >
           {galsList.map((gals) => (
-            <Tooltip title={gals} arrow>
+            <Tooltip key={gals} title={gals} arrow>
               <Chip
                 sx={{
                   width: "fit-content",
@@ -151,7 +151,7 @@ export default function ZoneBar() {
             </MenuItem>
             <CssBaseline />
             {seasons.map((season, i) => (
-              <MenuItem value={season}>
+              <MenuItem key={season} value={season}>
                 {seasonsIcons[i]}
                 <Typography className="menuText">{season}</Typography>
               </MenuItem>

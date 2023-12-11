@@ -6,12 +6,16 @@ import {
   CardMedia,
   Chip,
   ChipProps,
+  Divider,
   Typography,
 } from "@mui/material";
 import {
   LocalFlorist as LocalFloristIcon,
   AcUnit as AcUnitIcon,
   WbSunny as WbSunnyIcon,
+  Visibility as VisibilityIcon,
+  Edit as EditIcon,
+  Clear as ClearIcon,
 } from "@mui/icons-material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -23,9 +27,11 @@ import "./ZoneCard.css";
 interface Props {
   zone: Zone;
 }
-
 export default function ZoneCard({ zone }: Props) {
+
+
   library.add(faCanadianMapleLeaf);
+
   function getChipProps(params: string): ChipProps {
     if (params === "Spring") {
       return {
@@ -66,10 +72,11 @@ export default function ZoneCard({ zone }: Props) {
       };
     }
   }
-
+  // TODO - TEST
+  // console.log(zoneDetailss?.plants?.length);
   return (
     <>
-      <Card>
+      <Card sx={{ position: "relative" }}>
         <CardMedia
           sx={{ height: 140 }}
           image={zone.imagePath}
@@ -80,9 +87,15 @@ export default function ZoneCard({ zone }: Props) {
             className="chip"
             variant="filled"
             size="small"
+            sx={{ position: "absolute", top: "-5px", left: "10px" }}
             {...getChipProps(zone.season)}
           />
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            className="zone-name"
+            gutterBottom
+            variant="h5"
+            component="div"
+          >
             {zone.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
@@ -92,9 +105,21 @@ export default function ZoneCard({ zone }: Props) {
           <Typography variant="body2" color="text.secondary">
             <b>Per Week:</b> {zone.runtimePerWeek}
           </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <b>Plants:</b>
+          </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">View Plants</Button>
+        <Divider />
+        <CardActions sx={{ display: "flex", justifyContent: "space-around" }}>
+          <Button className="card-btn" size="small">
+            <VisibilityIcon className="action-icon" />
+          </Button>
+          <Button className="card-btn" size="small">
+            <EditIcon className="action-icon" />
+          </Button>
+          <Button className="card-btn" size="small">
+            <ClearIcon className="action-icon" />
+          </Button>
         </CardActions>
       </Card>
     </>

@@ -13,4 +13,25 @@
   margin: 1rem 0 1rem -0.1rem;
   font-size: 0.75rem;
   color: #ffff !important;
+  border: 1px #ffffff85 solid !important;
+}
+
+.action-icon {
+  transform: scale(0.8);
+  /* margin-right: 0.2rem; */
+}
+
+.zone-name {
+  color: #666666;
+}
+
+.card-btn {
+  width: 100% !important;
+  background-color: #002b4910 !important;
+  color: #002b4988 !important;
+  border-radius: 20px !important;
+}
+
+.card-btn:hover {
+  background-color: #002b491f !important;
 }
