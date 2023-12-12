@@ -32,7 +32,6 @@ export default function ZoneBar() {
   GALS - DAILY MONTHLY YEARLY ====================
   */
   const galsList: Array<string> = [
-    "Daily Gallons",
     "Weekly Gallons",
     "Monthly Gallons",
     "Yearly Gallons",
