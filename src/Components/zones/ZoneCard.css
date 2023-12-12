@@ -27,14 +27,23 @@
 
 .card-btn {
   width: 100% !important;
+  background-color: #ffffffa8 !important;
+  color: #002b49 !important;
+  border-radius: 20px !important;
+}
+/* .card-btn {
+  width: 100% !important;
   background-color: #002b4910 !important;
   color: #002b4988 !important;
   border-radius: 20px !important;
-}
+} */
 
 .card-btn:hover {
-  background-color: #002b491f !important;
+  background-color: #ffffffe8 !important;
 }
+/* .card-btn:hover {
+  background-color: #002b491f !important;
+} */
 
 .hidden {
   display: none !important

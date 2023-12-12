@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -136,21 +137,43 @@ export default function ZoneCard({ zone }: Props) {
   /**
    ** ACTION MENU SUB-COMPONENT =====================
    */
+  const [isHovering, setIsHovering] = useState(false);
+  function handelMouseEnter() {
+    setIsHovering(true);
+  }
+  function handelMouseLeave() {
+    setIsHovering(false);
+  }
+
   const ActionMenu = () => {
     return (
       <CardActions
-        className="hidden"
-        sx={{ display: "flex", justifyContent: "space-around" }}
+        sx={{
+          height: "48px",
+          width: "100%",
+          position: "absolute",
+          top: "90px",
+        }}
       >
-        <Button className="card-btn" size="small">
-          <VisibilityIcon className="action-icon" />
-        </Button>
-        <Button className="card-btn" size="small">
-          <EditIcon className="action-icon" />
-        </Button>
-        <Button className="card-btn" size="small">
-          <ClearIcon className="action-icon" />
-        </Button>
+        <Box
+          className={isHovering ? "" : "hidden"}
+          sx={{
+            gap: 1,
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+          }}
+        >
+          <Button className="card-btn" size="small">
+            <VisibilityIcon className="action-icon" />
+          </Button>
+          <Button className="card-btn" size="small">
+            <EditIcon className="action-icon" />
+          </Button>
+          <Button className="card-btn" size="small">
+            <ClearIcon className="action-icon" />
+          </Button>
+        </Box>
       </CardActions>
     );
   };
@@ -160,7 +183,11 @@ export default function ZoneCard({ zone }: Props) {
    */
   return (
     <>
-      <Card sx={{ position: "relative" }}>
+      <Card
+        onMouseEnter={handelMouseEnter}
+        onMouseLeave={handelMouseLeave}
+        sx={{ position: "relative" }}
+      >
         <CardMedia
           sx={{ height: 140 }}
           image={zone.imagePath}
