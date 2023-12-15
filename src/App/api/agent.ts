@@ -13,15 +13,15 @@ const requests = {
 
 const Users = {
     list: () => requests.get('users'),
-    details: (id: number) => requests.get(`users/${id}`) 
+    details: (id: string) => requests.get(`users/${id}`) 
 }
 const Plants = {
     list: () => requests.get('plants'),
-    details: (id: number) => requests.get(`plants/${id}`) 
+    details: (id: string) => requests.get(`plants/${id}`) 
 }
 const Zones = {
     list: () => requests.get('zones'),
-    details: (id: number) => requests.get(`zones/${id}`) 
+    details: (id: string) => requests.get(`zones/${id}`) 
 }
 
 const agent = {

@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function ZoneList({ zones }: Props) {
-
   return (
     <>
       <ZoneBar />
