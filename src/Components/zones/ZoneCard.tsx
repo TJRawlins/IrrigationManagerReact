@@ -128,7 +128,6 @@ export default function ZoneCard({ zone }: Props) {
         <Typography variant="body2" color="text.secondary">
           <b>Per Week:</b> {zone.runtimePerWeek}
         </Typography>
-
         <GetPlantCount zoneId={zone.id} />
       </CardContent>
     );

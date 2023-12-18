@@ -2,13 +2,26 @@ import { Box, Container, Grid } from "@mui/material";
 import { Zone } from "../../app/models/Zone";
 import ZoneCard from "./ZoneCard";
 import ZoneBar from "./ZoneBar";
+import { useEffect, useState } from "react";
+import agent from "../../app/api/agent";
 
-//* Get list of zones from App.tsx (Axios Call)
-interface Props {
-  zones: Zone[];
-}
+// interface Props {
+//   zones: Zone[];
+// }
 
-export default function ZoneList({ zones }: Props) {
+export default function ZoneList(/*{ zones }: Props*/) {
+  const [zones, setZones] = useState<Zone[]>([]);
+
+  //* Get list of zones (Axios Call)
+useEffect(() => {
+      try {
+        agent.Zones.list().then((zones) => setZones(zones));
+      } catch (err) {
+        console.error("Could not fetch zones: ", err);
+      }
+  }, []);
+
+
   return (
     <>
       <ZoneBar />
