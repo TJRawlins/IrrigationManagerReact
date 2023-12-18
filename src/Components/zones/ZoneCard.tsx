@@ -23,8 +23,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
-import { useEffect, useState } from "react";
-import agent from "../../app/api/agent";
+import { useState } from "react";
 
 //* Get a zone from list of zones from ZoneList.tsx (list obtained from App.tsx)
 interface Props {
@@ -34,24 +33,24 @@ export default function ZoneCard({ zone }: Props) {
   /**
    ** PLANT COUNT SUB-COMPONENT =====================
    */
-  type Id = {
-    zoneId: string;
-  };
-  const GetPlantCount = ({ zoneId }: Id) => {
-    const [plantCount, setPlantCount] = useState("");
+  // type Id = {
+  //   zoneId: string;
+  // };
+  // const GetPlantCount = ({ zoneId }: Id) => {
+  //   const [plantCount, setPlantCount] = useState("");
 
-    useEffect(() => {
-      agent.Zones.details(zoneId).then((plantCount) =>
-        setPlantCount(JSON.stringify(plantCount.plants.length))
-      );
-    }, [zoneId]);
+  //   useEffect(() => {
+  //     agent.Zones.details(zoneId).then((plantCount) =>
+  //       setPlantCount(JSON.stringify(plantCount.plants.length))
+  //     );
+  //   }, [zoneId]);
 
-    return (
-      <Typography variant="body2" color="text.secondary">
-        <b>Plants:</b> {plantCount}
-      </Typography>
-    );
-  };
+  //   return (
+  //     <Typography variant="body2" color="text.secondary">
+  //       <b>Plants:</b> {plantCount}
+  //     </Typography>
+  //   );
+  // };
 
   /**
    ** SEASON ICON CHIPS =====================
@@ -128,7 +127,9 @@ export default function ZoneCard({ zone }: Props) {
         <Typography variant="body2" color="text.secondary">
           <b>Per Week:</b> {zone.runtimePerWeek}
         </Typography>
-        <GetPlantCount zoneId={zone.id} />
+        <Typography variant="body2" color="text.secondary">
+          <b>Plants:</b> {zone.totalPlants}
+        </Typography>
       </CardContent>
     );
   };
