@@ -164,7 +164,11 @@ export default function ZoneCard({ zone }: Props) {
       <Card
         onMouseEnter={handelMouseEnter}
         onMouseLeave={handelMouseLeave}
-        sx={{ position: "relative" }}
+        sx={{
+          position: "relative",
+          boxShadow: "none !important",
+          borderRadius: "15px",
+        }}
       >
         <CardMedia
           sx={{ height: 140 }}
