@@ -15,8 +15,8 @@ import { AccountCircle, Mail, More, Notifications } from "@mui/icons-material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme, Theme } from "@mui/material/styles";
 import React from "react";
-import SwipeableTemporaryDrawer from "./Sidebar";
-import logo from "../../assets/irrigation logo.png"
+import logo from "../../assets/irrigation logo.png";
+import Sidebar from "./Sidebar";
 
 export default function Header() {
   const theme = useTheme();
@@ -26,7 +26,8 @@ export default function Header() {
         backgroundColor: "#002b49",
         color: "#ffffff",
         zIndex: theme.zIndex.drawer + 1,
-      }
+        position: "relative !important",
+      },
     };
   };
 
@@ -78,7 +79,7 @@ export default function Header() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   /* HANDLERS =====================================
-  */
+   */
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -97,7 +98,7 @@ export default function Header() {
   };
 
   /* SUB-COMPONENTS =====================================
-  */
+   */
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -173,18 +174,24 @@ export default function Header() {
   );
 
   /* RETURNED-MAIN COMPONENT =====================================
-  */
+   */
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, position: "relative !important" }}>
       <AppBar sx={appBarStyles(theme).mainBar}>
         <Toolbar sx={{ paddingLeft: "0.5rem !important" }}>
-          <SwipeableTemporaryDrawer />
-          <img src={logo} style={{width: "50px", marginRight: "0.5rem"}}></img>
+          <Sidebar />
+          <img
+            src={logo}
+            style={{ width: "50px", marginRight: "0.5rem" }}
+          ></img>
           <Typography
             variant="h4"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" }, fontFamily: "'MuseoModerno', sans-serif" }}
+            sx={{
+              display: { xs: "none", sm: "block" },
+              fontFamily: "'MuseoModerno', sans-serif",
+            }}
           >
             droplet
           </Typography>

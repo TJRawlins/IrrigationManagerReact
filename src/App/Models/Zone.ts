@@ -8,5 +8,6 @@ export interface Zone {
     runtimePerWeek: number,
     imagePath: string,
     season: string
+    totalPlants: number
     plants: Plant[] | null
 }

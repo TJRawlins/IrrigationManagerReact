@@ -23,7 +23,7 @@ import Box from "@mui/material/Box";
 
 type Anchor = "left";
 
-export default function SwipeableTemporaryDrawer() {
+export default function Sidebar() {
   const [state, setState] = React.useState({
     left: false,
   });

@@ -30,30 +30,8 @@ interface Props {
   zone: Zone;
 }
 export default function ZoneCard({ zone }: Props) {
-  /**
-   ** PLANT COUNT SUB-COMPONENT =====================
-   */
-  // type Id = {
-  //   zoneId: string;
-  // };
-  // const GetPlantCount = ({ zoneId }: Id) => {
-  //   const [plantCount, setPlantCount] = useState("");
-
-  //   useEffect(() => {
-  //     agent.Zones.details(zoneId).then((plantCount) =>
-  //       setPlantCount(JSON.stringify(plantCount.plants.length))
-  //     );
-  //   }, [zoneId]);
-
-  //   return (
-  //     <Typography variant="body2" color="text.secondary">
-  //       <b>Plants:</b> {plantCount}
-  //     </Typography>
-  //   );
-  // };
-
-  /**
-   ** SEASON ICON CHIPS =====================
+  /*
+   * SEASON ICON CHIPS =====================
    */
   // Font Awesome Icons
   library.add(faCanadianMapleLeaf);

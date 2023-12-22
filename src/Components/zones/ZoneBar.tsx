@@ -167,54 +167,15 @@ export default function ZoneBar() {
   return (
     <>
       <CssBaseline />
-      <div
-        className="main-container"
-        style={{
-          // border: "1px dashed blue",
-          position: "sticky",
-          top: 60,
-          backgroundColor: "#ffffff",
-          color: "#8b8b8b",
-          width: "100%",
-          height: 55,
-          padding: 0,
-          boxShadow: "none",
-          borderBottom: "1px solid silver",
-        }}
-      >
-        <div
-          className="content-container"
-          style={{
-            // border: "1px solid red",
-            display: "flex",
-            justifyContent: "left",
-            height: "100%",
-            alignItems: "center",
-          }}
-        >
-          <div
-            className="title-container"
-            style={{
-              // border: "1px solid green",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
+      <div className="main-container">
+        <div className="content-container">
+          <div className="title-container">
             <DashboardOutlinedIcon sx={{ m: 2 }} />
             <Typography
+              className="bar-title"
               variant="h6"
               noWrap
               component="a"
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".1rem",
-                color: "inherit",
-              }}
             >
               ZONES
             </Typography>
@@ -222,7 +183,6 @@ export default function ZoneBar() {
           <div
             className="action-container"
             style={{
-              // border: "1px solid red",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
