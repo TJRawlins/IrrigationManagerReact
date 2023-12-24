@@ -1,6 +1,6 @@
 import "./DashboardBar.css";
 import { CssBaseline, Divider, Typography } from "@mui/material";
-import { BubbleChartOutlined as BubbleChartOutlinedIcon } from "@mui/icons-material";
+import { Speed as SpeedIcon } from "@mui/icons-material";
 
 export default function DashboardBar() {
   /* MAIN COMPONENT =================================
@@ -11,7 +11,7 @@ export default function DashboardBar() {
       <div className="main-container">
         <div className="content-container">
           <div className="title-container">
-            <BubbleChartOutlinedIcon sx={{ m: 2 }} />
+            <SpeedIcon sx={{ m: 2 }} />
             <Typography className="bar-title" variant="h6" noWrap component="a">
               Dashboard
             </Typography>
