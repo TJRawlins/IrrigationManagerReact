@@ -1,3 +1,13 @@
+.card-img::before {
+  content: "";
+  position: absolute;
+  min-height: 140px !important;
+  width: 94% !important;
+  border-radius: 10px 10px 0 0;
+  background-color: #002b49;
+  opacity: 0.25;
+}
+
 .iconStyle {
   background: #ffffff;
   border-radius: 50%;
@@ -18,11 +28,36 @@
 
 .action-icon {
   transform: scale(0.8);
-  /* margin-right: 0.2rem; */
 }
 
 .zone-name {
   color: #666666;
+  font-weight: 700 !important;
+  font-family: "Outfit", sans-serif !important;
+}
+
+.card-data-container {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.card-data {
+  display: flex;
+  font-size: 1rem !important;
+  color: #33333386 !important;
+  margin-bottom: 2px !important;
+  color: #8d8d8d !important;
+  border-radius: 5px;
+}
+
+.card-data span:nth-child(1) {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.card-data span:nth-child(2) {
+  padding-left: 0.5rem !important;
+  font-weight: 200;
 }
 
 .card-btn {
@@ -31,20 +66,11 @@
   color: #002b49 !important;
   border-radius: 20px !important;
 }
-/* .card-btn {
-  width: 100% !important;
-  background-color: #002b4910 !important;
-  color: #002b4988 !important;
-  border-radius: 20px !important;
-} */
 
 .card-btn:hover {
   background-color: #ffffffe8 !important;
 }
-/* .card-btn:hover {
-  background-color: #002b491f !important;
-} */
 
 .hidden {
-  display: none !important
+  display: none !important;
 }

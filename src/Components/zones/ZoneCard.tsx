@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Card,
@@ -7,7 +8,7 @@ import {
   CardMedia,
   Chip,
   ChipProps,
-  Divider,
+  Stack,
   Typography,
 } from "@mui/material";
 import {
@@ -30,6 +31,94 @@ interface Props {
   zone: Zone;
 }
 export default function ZoneCard({ zone }: Props) {
+  const CardAvatarChips = () => {
+    return (
+      <>
+        <Stack
+          direction="row"
+          spacing={1}
+          mt={2}
+          mb={0}
+          sx={{
+            display: { xs: "block", sm: "block", md: "flex" },
+            justifyContent: "space-between",
+            maxWidth: "100%",
+            flexWrap: "nowrap",
+          }}
+        >
+          <Chip
+            sx={{
+              width: "100%",
+              bgcolor: "#f5f5f5",
+              color: "#3189af",
+              justifyContent: "left",
+              borderRadius: "10px",
+              margin: "0 !important",
+              padding: "0 !important",
+            }}
+            avatar={
+              <Avatar
+                sx={{
+                  minWidth: "fit-content",
+                  background: "rgba(0, 0, 0, 0.08)",
+                  fontWeight: "700",
+                  color: "#3189af !important",
+                }}
+              >
+                W
+              </Avatar>
+            }
+            label="658"
+          />
+          <Chip
+            sx={{
+              width: "100%",
+              bgcolor: "#f5f5f5",
+              color: "#3189af",
+              justifyContent: "left",
+              borderRadius: "10px",
+            }}
+            avatar={
+              <Avatar
+                sx={{
+                  minWidth: "fit-content",
+                  background: "rgba(0, 0, 0, 0.08)",
+                  fontWeight: "700",
+                  color: "#3189af !important",
+                }}
+              >
+                M
+              </Avatar>
+            }
+            label="1567"
+          />
+          <Chip
+            sx={{
+              width: "100%",
+              bgcolor: "#f5f5f5",
+              color: "#3189af",
+              justifyContent: "left",
+              borderRadius: "10px",
+            }}
+            avatar={
+              <Avatar
+                sx={{
+                  minWidth: "fit-content",
+                  background: "rgba(0, 0, 0, 0.08)",
+                  fontWeight: "700",
+                  color: "#3189af !important",
+                }}
+              >
+                Y
+              </Avatar>
+            }
+            label="35687"
+          />
+        </Stack>
+      </>
+    );
+  };
+
   /*
    * SEASON ICON CHIPS =====================
    */
@@ -87,27 +176,49 @@ export default function ZoneCard({ zone }: Props) {
           className="chip"
           variant="filled"
           size="small"
-          sx={{ position: "absolute", top: "-5px", left: "10px" }}
+          sx={{ position: "absolute", top: "5px", left: "20px" }}
           {...getChipProps(zone.season)}
         />
         <Typography
           className="zone-name"
           gutterBottom
-          variant="h5"
+          variant="h6"
           component="div"
         >
-          {zone.name}
+          {zone.name.toLocaleUpperCase()}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <b>Runtime:</b> {zone.runtimeHours}:
-          {zone.runtimeMinutes == 0 ? "00" : zone.runtimeMinutes}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <b>Per Week:</b> {zone.runtimePerWeek}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <b>Plants:</b> {zone.totalPlants}
-        </Typography>
+        <Box className="card-data-container">
+          <Typography
+            className="card-data"
+            variant="body2"
+            color="text.secondary"
+          >
+            <span>Runtime:</span>
+            <span>
+              {zone.runtimeHours}:
+              {zone.runtimeMinutes == 0 ? "00" : zone.runtimeMinutes}
+            </span>
+          </Typography>
+          <Typography
+            className="card-data"
+            variant="body2"
+            color="text.secondary"
+          >
+            <span>Per Week:</span>
+            <span>{zone.runtimePerWeek}</span>
+          </Typography>
+          <Typography
+            className="card-data"
+            variant="body2"
+            color="text.secondary"
+          >
+            <span>Total Plants:</span>
+            <span>{zone.totalPlants}</span>
+          </Typography>
+        </Box>
+        <Box>
+          <CardAvatarChips />
+        </Box>
       </CardContent>
     );
   };
@@ -128,7 +239,7 @@ export default function ZoneCard({ zone }: Props) {
       <CardActions
         sx={{
           height: "48px",
-          width: "100%",
+          width: "94%",
           position: "absolute",
           top: "90px",
         }}
@@ -168,15 +279,16 @@ export default function ZoneCard({ zone }: Props) {
           position: "relative",
           boxShadow: "none !important",
           borderRadius: "15px",
+          padding: "10px",
         }}
       >
         <CardMedia
-          sx={{ height: 140 }}
+          className="card-img"
+          sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
           image={zone.imagePath}
           title="green iguana"
         />
         <CardData />
-        <Divider />
         <ActionMenu />
       </Card>
     </>
