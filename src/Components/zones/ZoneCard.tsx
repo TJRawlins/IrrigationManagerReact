@@ -50,7 +50,7 @@ export default function ZoneCard({ zone }: Props) {
             sx={{
               width: "100%",
               bgcolor: "#f5f5f5",
-              color: "#3189af",
+              color: "#969696",
               justifyContent: "left",
               borderRadius: "10px",
               margin: "0 !important",
@@ -62,7 +62,7 @@ export default function ZoneCard({ zone }: Props) {
                   minWidth: "fit-content",
                   background: "rgba(0, 0, 0, 0.08)",
                   fontWeight: "700",
-                  color: "#3189af !important",
+                  color: "#969696 !important",
                 }}
               >
                 W
@@ -74,7 +74,7 @@ export default function ZoneCard({ zone }: Props) {
             sx={{
               width: "100%",
               bgcolor: "#f5f5f5",
-              color: "#3189af",
+              color: "#969696",
               justifyContent: "left",
               borderRadius: "10px",
             }}
@@ -84,7 +84,7 @@ export default function ZoneCard({ zone }: Props) {
                   minWidth: "fit-content",
                   background: "rgba(0, 0, 0, 0.08)",
                   fontWeight: "700",
-                  color: "#3189af !important",
+                  color: "#969696 !important",
                 }}
               >
                 M
@@ -96,7 +96,7 @@ export default function ZoneCard({ zone }: Props) {
             sx={{
               width: "100%",
               bgcolor: "#f5f5f5",
-              color: "#3189af",
+              color: "#969696",
               justifyContent: "left",
               borderRadius: "10px",
             }}
@@ -106,7 +106,7 @@ export default function ZoneCard({ zone }: Props) {
                   minWidth: "fit-content",
                   background: "rgba(0, 0, 0, 0.08)",
                   fontWeight: "700",
-                  color: "#3189af !important",
+                  color: "#969696 !important",
                 }}
               >
                 Y
