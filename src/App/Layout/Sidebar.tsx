@@ -8,7 +8,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {
-  BubbleChartOutlined as BubbleChartOutlinedIcon,
+  Speed as SpeedIcon,
   DashboardOutlined as DashboardOutlinedIcon,
   Grass as GrassIcon,
   // CalculateOutlined as CalculateOutlinedIcon,
@@ -16,10 +16,11 @@ import {
   AccountCircleOutlined as AccountCircleIcon,
   SettingsSuggestOutlined as SettingsSuggestOutlinedIcon,
   Logout as LogoutIcon,
-  WaterDropOutlined as WaterDropIcon
+  WaterDropOutlined as WaterDropIcon,
 } from "@mui/icons-material";
 import "/src/app/layout/Sidebar.css";
 import Box from "@mui/material/Box";
+import { Grid } from "@mui/material";
 
 type Anchor = "left";
 
@@ -48,7 +49,7 @@ export default function Sidebar() {
   // List sidebar menu items
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: 270, paddingTop: "5rem" }}
+      sx={{ width: 270, marginTop: "140px" }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -61,7 +62,7 @@ export default function Sidebar() {
                 <ListItemIcon>
                   {(() => {
                     if (text === "Dashboard") {
-                      return <BubbleChartOutlinedIcon />;
+                      return <SpeedIcon />;
                     }
                     if (text === "Zones") {
                       return <DashboardOutlinedIcon />;
@@ -89,16 +90,16 @@ export default function Sidebar() {
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-              {(() => {
-                    if (text === "Account") {
-                      return <AccountCircleIcon />;
-                    }
-                    if (text === "Settings") {
-                      return <SettingsSuggestOutlinedIcon />;
-                    }
-                    if (text === "Sign-out") {
-                      return <LogoutIcon />;
-                    } 
+                {(() => {
+                  if (text === "Account") {
+                    return <AccountCircleIcon />;
+                  }
+                  if (text === "Settings") {
+                    return <SettingsSuggestOutlinedIcon />;
+                  }
+                  if (text === "Sign-out") {
+                    return <LogoutIcon />;
+                  }
                 })()}
               </ListItemIcon>
               <ListItemText primary={text} />
@@ -132,16 +133,21 @@ export default function Sidebar() {
           >
             <HamburgerIcon />
           </Button>
+          <Grid>
+            
+          </Grid>
           <SwipeableDrawer
+            className="sidebar"
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
             onOpen={toggleDrawer(anchor, true)}
             slotProps={{
               backdrop: {
-                style: { backgroundColor: "rgba(255, 255, 255, 0.623)" },
+                style: { backgroundColor: "#002b49a7" },
               },
             }}
+            sx={{ zIndex: 1 }}
           >
             {list(anchor)}
           </SwipeableDrawer>

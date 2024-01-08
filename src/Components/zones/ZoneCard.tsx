@@ -68,7 +68,7 @@ export default function ZoneCard({ zone }: Props) {
                 W
               </Avatar>
             }
-            label="658"
+            label={zone.totalGalPerWeek}
           />
           <Chip
             sx={{
@@ -90,7 +90,7 @@ export default function ZoneCard({ zone }: Props) {
                 M
               </Avatar>
             }
-            label="1567"
+            label={zone.totalGalPerMonth}
           />
           <Chip
             sx={{
@@ -112,7 +112,7 @@ export default function ZoneCard({ zone }: Props) {
                 Y
               </Avatar>
             }
-            label="35687"
+            label={zone.totalGalPerYear}
           />
         </Stack>
       </>
@@ -120,7 +120,7 @@ export default function ZoneCard({ zone }: Props) {
   };
 
   /*
-   * SEASON ICON CHIPS =====================
+   * -*-*-*-*-*-*-*-*-*-*-*-* SEASON ICON CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
    */
   // Font Awesome Icons
   library.add(faCanadianMapleLeaf);
@@ -167,7 +167,7 @@ export default function ZoneCard({ zone }: Props) {
   }
 
   /**
-   ** RETURN CARD DATA SUB-COMPONENT =====================
+   ** -*-*-*-*-*-*-*-*-*-*-*-* RETURN CARD DATA SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
    */
   const CardData = () => {
     return (
@@ -224,7 +224,7 @@ export default function ZoneCard({ zone }: Props) {
   };
 
   /**
-   ** ACTION MENU SUB-COMPONENT =====================
+   ** -*-*-*-*-*-*-*-*-*-*-*-* ACTION MENU SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
    */
   const [isHovering, setIsHovering] = useState(false);
   function handelMouseEnter() {
@@ -268,7 +268,7 @@ export default function ZoneCard({ zone }: Props) {
   };
 
   /**
-   ** RETURN MAIN COMPONENT =====================
+   ** -*-*-*-*-*-*-*-*-*-*-*-* RETURN MAIN COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
    */
   return (
     <>

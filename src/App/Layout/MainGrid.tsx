@@ -16,11 +16,15 @@ export default function BasicGrid() {
     }
   };
   return (
-    <Box sx={{ bgcolor: "purple", flexGrow: 1, minHeight: "100" }}>
+    <Box sx={{ bgcolor: "purple", flexGrow: 1 }}>
       <Grid
         container
         spacing={0}
-        sx={{ bgcolor: "aqua", alignItems: "start", height: "100% !Important" }}
+        sx={{
+          bgcolor: "aqua",
+          border: "5px solid aqua",
+          minHeight: "100vh !Important",
+        }}
       >
         <Grid
           className="navbar-container"
@@ -28,14 +32,15 @@ export default function BasicGrid() {
           direction="column"
           xs={12}
           sx={{
-            bgcolor: "red",
-            border: "1px red solid",
+            bgcolor: "black",
+            border: "3px red solid",
             position: "sticky",
             top: "0",
             zIndex: 999,
+            height: "fit-content"
           }}
         >
-          <Grid xs={12} sx={{ bgcolor: "brown" }}>
+          <Grid xs={12} sx={{ bgcolor: "brown"}}>
             <Header />
           </Grid>
           <Grid xs={12} sx={{ bgcolor: "blue" }}>
@@ -43,29 +48,41 @@ export default function BasicGrid() {
           </Grid>
         </Grid>
         <Grid
-          className="sidebar-container"
-          xs={1}
-          sx={{
-            bgcolor: "yellow",
-            border: "1px red solid",
-            position: "sticky",
-            top: "0",
-            height: "100%",
-          }}
+          className="center-grid"
+          container
+          xs={12}
+          sx={{ border: "3px blue solid", height: `calc(100vh - 160px)`, flexWrap: "wrap"}}
         >
-          Hello
-        </Grid>
-        <Grid
-          className="content-container"
-          xs={11}
-          sx={{ bgcolor: "#eef2f6", border: "1px red solid", alignItems: "start" }}
-        >
-          <ZoneList />
+          <Grid
+            className="sidebar-container"
+            xs={1}
+            sx={{
+              bgcolor: "yellow",
+              border: "3px red solid",
+              height: "auto",
+              flexWrap: "wrap"
+            }}
+          >
+            Hello
+          </Grid>
+          <Grid
+            className="content-container"
+            xs={11}
+            sx={{
+              bgcolor: "#eef2f6",
+              border: "3px red solid",
+              height: "auto",
+              flexWrap: "wrap",
+              justifyContent: "flex-start"
+            }}
+          >
+            <ZoneList />
+          </Grid>
         </Grid>
         <Grid
           className="footer-container"
           xs={12}
-          sx={{ bgcolor: "gray", border: "1px red solid" }}
+          sx={{ bgcolor: "gray", border: "3px red solid" }}
         >
           Footer
         </Grid>
