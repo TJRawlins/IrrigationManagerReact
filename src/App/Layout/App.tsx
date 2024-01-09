@@ -2,7 +2,7 @@
 import DashboardBar from "../../Components/dashboard/DashboardBar";
 import ZoneBar from "../../Components/zones/ZoneBar";
 import ZoneList from "../../Components/zones/ZoneList";
-import Header from "./Header";
+import Navbar from "./Navbar";
 import "/src/App.css";
 import { Container, CssBaseline, Grid } from "@mui/material";
 
@@ -28,7 +28,7 @@ function App() {
         sx={{ position: "fixed" }}
       >
         <Grid className="navbar">
-          <Header />
+          <Navbar />
         </Grid>
         <Grid className="page-navbar">{displayBar()}</Grid>
       </Grid>

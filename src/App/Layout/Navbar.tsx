@@ -18,7 +18,7 @@ import React from "react";
 import logo from "../../assets/irrigation logo.png";
 import Sidebar from "./Sidebar";
 
-export default function Header() {
+export default function Navbar() {
   const theme = useTheme();
   const appBarStyles = (theme: Theme) => {
     return {

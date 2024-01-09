@@ -4,7 +4,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import DashboardBar from "../../Components/dashboard/DashboardBar";
 import ZoneList from "../../Components/zones/ZoneList";
 import ZoneBar from "../../Components/zones/ZoneBar";
-import Header from "./Header";
+import Navbar from "./Navbar";
 
 export default function BasicGrid() {
   const bar: string = "zone";
@@ -37,11 +37,11 @@ export default function BasicGrid() {
             position: "sticky",
             top: "0",
             zIndex: 999,
-            height: "fit-content"
+            height: "fit-content",
           }}
         >
-          <Grid xs={12} sx={{ bgcolor: "brown"}}>
-            <Header />
+          <Grid xs={12} sx={{ bgcolor: "brown" }}>
+            <Navbar />
           </Grid>
           <Grid xs={12} sx={{ bgcolor: "blue" }}>
             {displayBar()}
@@ -51,7 +51,11 @@ export default function BasicGrid() {
           className="center-grid"
           container
           xs={12}
-          sx={{ border: "3px blue solid", height: `calc(100vh - 160px)`, flexWrap: "wrap"}}
+          sx={{
+            border: "3px blue solid",
+            height: `calc(100vh - 160px)`,
+            flexWrap: "wrap",
+          }}
         >
           <Grid
             className="sidebar-container"
@@ -60,7 +64,7 @@ export default function BasicGrid() {
               bgcolor: "yellow",
               border: "3px red solid",
               height: "auto",
-              flexWrap: "wrap"
+              flexWrap: "wrap",
             }}
           >
             Hello
@@ -73,7 +77,7 @@ export default function BasicGrid() {
               border: "3px red solid",
               height: "auto",
               flexWrap: "wrap",
-              justifyContent: "flex-start"
+              justifyContent: "flex-start",
             }}
           >
             <ZoneList />
