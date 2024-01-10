@@ -9,6 +9,10 @@ import { Container, CssBaseline, Grid } from "@mui/material";
 import { SeasonContext } from "../context/context";
 
 function App() {
+  //* Set initial season context
+  const [seasonContext, setSeasonContext] = useState("Summer");
+  console.log("Test: ", seasonContext);
+
   // Determine which sub-navbar to display
   const bar: string = "zone";
   const displayBar = () => {
@@ -19,47 +23,44 @@ function App() {
     }
   };
 
-  //* Get season context
-  const [seasonContext, setSeasonContext] = useState("Winter");
-
   return (
     <>
       <CssBaseline />
-      <Grid
-        className="nav-grid"
-        container
-        direction={"column"}
-        flexShrink={0}
-        zIndex={"999"}
-        sx={{ position: "fixed" }}
-      >
-        <Grid className="navbar">
-          <Navbar />
-        </Grid>
-        <Grid className="page-navbar">{displayBar()}</Grid>
-      </Grid>
-      <Grid
-        className="content-grid"
-        container
-        flexGrow={0}
-        sx={{ bgcolor: "#fff", minHeight: "100vh", padding: "30px" }}
-      >
+      <SeasonContext.Provider value={[seasonContext, setSeasonContext]}>
         <Grid
-          className="content-item"
-          sx={{
-            bgcolor: "#eef2f6",
-            borderRadius: "20px",
-            width: "100vw",
-            marginTop: "95px",
-          }}
+          className="nav-grid"
+          container
+          direction={"column"}
+          flexShrink={0}
+          zIndex={"999"}
+          sx={{ position: "fixed" }}
         >
-          <SeasonContext.Provider value={[seasonContext, setSeasonContext]}>
-            <ZoneList />
-          </SeasonContext.Provider>
-          {/* <Dashboard /> */}
+          <Grid className="navbar">
+            <Navbar />
+          </Grid>
+          <Grid className="page-navbar">{displayBar()}</Grid>
         </Grid>
-      </Grid>
-      <Container maxWidth={false} disableGutters></Container>
+        <Grid
+          className="content-grid"
+          container
+          flexGrow={0}
+          sx={{ bgcolor: "#fff", minHeight: "100vh", padding: "30px" }}
+        >
+          <Grid
+            className="content-item"
+            sx={{
+              bgcolor: "#eef2f6",
+              borderRadius: "20px",
+              width: "100vw",
+              marginTop: "95px",
+            }}
+          >
+            <ZoneList />
+            {/* <Dashboard /> */}
+          </Grid>
+        </Grid>
+        <Container maxWidth={false} disableGutters></Container>
+      </SeasonContext.Provider>
     </>
   );
 }

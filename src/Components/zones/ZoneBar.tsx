@@ -24,13 +24,17 @@ import {
 } from "@mui/icons-material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
+import { SeasonContext } from "../../app/context/context";
 
 export default function ZoneBar() {
-  /* 
-  *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
-  */
+  //* Consume SeasonContext, get season string
+  const [seasonContext, setSeasonContext] = useContext(SeasonContext);
+  
+  /*
+   *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
+   */
   const galsList: Array<string> = [
     "Weekly Gallons",
     "Monthly Gallons",
@@ -87,20 +91,27 @@ export default function ZoneBar() {
     );
   };
 
-  /* 
-  *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
-  */
+  /*
+   *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
+   */
   library.add(faCanadianMapleLeaf);
 
   const SeasonMenu = () => {
-    const [season, setSeason] = useState("");
+    const [season, setSeason] = useState("Summer");
 
     const handleChange = (event: SelectChangeEvent) => {
       setSeason(event.target.value as string);
+      setSeasonContext(event.target.value as string);
     };
 
-    const seasons: Array<string> = ["Fall", "Winter", "Spring"];
+    useEffect(()=> {
+      console.log("Test2: ",seasonContext)
+      setSeasonContext(seasonContext);
+    },[]);
+
+    const seasons: Array<string> = ["Summer","Fall", "Winter", "Spring"];
     const seasonsIcons: Array<React.ReactElement<SvgIconProps>> = [
+      <WbSunnyIcon className="menuIcon" />,
       <FontAwesomeIcon
         className="menuIcon"
         icon={faCanadianMapleLeaf}
@@ -145,10 +156,10 @@ export default function ZoneBar() {
               mt: 0.5,
             }}
           >
-            <MenuItem value="">
+            {/* <MenuItem value="Summer">
               <WbSunnyIcon className="menuIcon" />
               <Typography className="menuText">Summer</Typography>
-            </MenuItem>
+            </MenuItem> */}
             <CssBaseline />
             {seasons.map((season, i) => (
               <MenuItem key={season} value={season}>
@@ -162,8 +173,8 @@ export default function ZoneBar() {
     );
   };
 
-  /* 
-  *-*-*-*-*-*-*-*-*-*-*-*-* MAIN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
+  /*
+   *-*-*-*-*-*-*-*-*-*-*-*-* MAIN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
    */
   return (
     <>
@@ -172,12 +183,7 @@ export default function ZoneBar() {
         <div className="content-container">
           <div className="title-container">
             <DashboardOutlinedIcon sx={{ m: 2 }} />
-            <Typography
-              className="bar-title"
-              variant="h6"
-              noWrap
-              component="a"
-            >
+            <Typography className="bar-title" variant="h6" noWrap component="a">
               ZONES
             </Typography>
           </div>

@@ -10,7 +10,8 @@ export default function BasicGrid() {
   const bar: string = "zone";
   const displayBar = () => {
     if (bar === "zone") {
-      return <ZoneBar />;
+      return;
+      <ZoneBar />;
     } else if (bar === "dashboard") {
       return <DashboardBar />;
     }
