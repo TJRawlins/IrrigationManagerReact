@@ -24,12 +24,12 @@ import {
 } from "@mui/icons-material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import React from "react";
+import React, { useState } from "react";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 
 export default function ZoneBar() {
   /* 
-  GALS - DAILY MONTHLY YEARLY ====================
+  *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
   */
   const galsList: Array<string> = [
     "Weekly Gallons",
@@ -88,12 +88,12 @@ export default function ZoneBar() {
   };
 
   /* 
-  SEASON DROPDOWN COMPONENT ====================
+  *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
   */
   library.add(faCanadianMapleLeaf);
 
   const SeasonMenu = () => {
-    const [season, setSeason] = React.useState("");
+    const [season, setSeason] = useState("");
 
     const handleChange = (event: SelectChangeEvent) => {
       setSeason(event.target.value as string);
@@ -162,7 +162,8 @@ export default function ZoneBar() {
     );
   };
 
-  /* MAIN COMPONENT =================================
+  /* 
+  *-*-*-*-*-*-*-*-*-*-*-*-* MAIN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
    */
   return (
     <>

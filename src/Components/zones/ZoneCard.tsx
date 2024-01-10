@@ -26,11 +26,13 @@ import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
 import { useState } from "react";
 
+
 //* Get a zone from list of zones from ZoneList.tsx (list obtained from App.tsx)
 interface Props {
   zone: Zone;
 }
 export default function ZoneCard({ zone }: Props) {
+
   const CardAvatarChips = () => {
     return (
       <>

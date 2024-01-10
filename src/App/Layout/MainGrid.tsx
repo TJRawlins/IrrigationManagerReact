@@ -15,6 +15,7 @@ export default function BasicGrid() {
       return <DashboardBar />;
     }
   };
+
   return (
     <Box sx={{ bgcolor: "purple", flexGrow: 1 }}>
       <Grid

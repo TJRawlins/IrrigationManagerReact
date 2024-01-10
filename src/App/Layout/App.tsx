@@ -1,12 +1,15 @@
 // import Dashboard from "../../Components/dashboard/Dashboard";
+import { useState } from "react";
 import DashboardBar from "../../Components/dashboard/DashboardBar";
 import ZoneBar from "../../Components/zones/ZoneBar";
 import ZoneList from "../../Components/zones/ZoneList";
 import Navbar from "./Navbar";
 import "/src/App.css";
 import { Container, CssBaseline, Grid } from "@mui/material";
+import { SeasonContext } from "../context/context";
 
 function App() {
+  // Determine which sub-navbar to display
   const bar: string = "zone";
   const displayBar = () => {
     if (bar === "zone") {
@@ -15,6 +18,9 @@ function App() {
       return <DashboardBar />;
     }
   };
+
+  //* Get season context
+  const [seasonContext, setSeasonContext] = useState("Winter");
 
   return (
     <>
@@ -47,7 +53,9 @@ function App() {
             marginTop: "95px",
           }}
         >
-          <ZoneList />
+          <SeasonContext.Provider value={[seasonContext, setSeasonContext]}>
+            <ZoneList />
+          </SeasonContext.Provider>
           {/* <Dashboard /> */}
         </Grid>
       </Grid>
