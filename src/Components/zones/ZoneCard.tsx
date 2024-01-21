@@ -40,7 +40,7 @@ export default function ZoneCard({ zone }: Props) {
           mt={2}
           mb={0}
           sx={{
-            display: { xs: "block", sm: "block", md: "flex" },
+            display: { xs: "flex", sm: "flex", md: "flex" },
             justifyContent: "space-between",
             maxWidth: "100%",
             flexWrap: "nowrap",
