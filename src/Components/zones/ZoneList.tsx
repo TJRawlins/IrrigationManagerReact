@@ -43,14 +43,14 @@ export default function ZoneList() {
         <Box sx={{ flexGrow: 1, height: "100%" }}>
           <Grid
             container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 15 }}
+            spacing={{ xs: "1.5rem" }}
+            columns={{ xs: 4, sm: 6, md: 9 }}
             padding={"1.5rem"}
             justifyContent={{ xs: "center", sm: "center", md: "left" }}
             sx={{ height: "auto" }}
           >
             {zones.map((zone) => (
-              <Grid item xs={3} key={zone.id}>
+              <Grid item key={zone.id}>
                 <ZoneCard zone={zone} />
               </Grid>
             ))}

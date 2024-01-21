@@ -1,8 +1,12 @@
+.card-img {
+  position: relative;
+}
+
 .card-img::before {
   content: "";
   position: absolute;
   min-height: 140px !important;
-  width: 94% !important;
+  width: 100% !important;
   border-radius: 10px 10px 0 0;
   background-color: #002b49;
   opacity: 0.25;

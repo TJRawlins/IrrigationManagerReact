@@ -31,7 +31,7 @@ import { SeasonContext } from "../../app/context/context";
 export default function ZoneBar() {
   //* Consume SeasonContext, get season string
   const [seasonContext, setSeasonContext] = useContext(SeasonContext);
-  
+
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */
@@ -99,17 +99,19 @@ export default function ZoneBar() {
   const SeasonMenu = () => {
     const [season, setSeason] = useState("Summer");
 
+    //! BUG: DOES NOT REFRESH ZONE LIST WITH NEW SEASON CONTEXT
     const handleChange = (event: SelectChangeEvent) => {
       setSeason(event.target.value as string);
       setSeasonContext(event.target.value as string);
     };
 
-    useEffect(()=> {
-      console.log("Test2: ",seasonContext)
+    useEffect(() => {
+      console.log("Test2: ", seasonContext);
       setSeasonContext(seasonContext);
-    },[]);
+    }, []);
 
-    const seasons: Array<string> = ["Summer","Fall", "Winter", "Spring"];
+    //! BUG: DROPDOWN DOES NOT CHANGE TO SELECTION
+    const seasons: Array<string> = ["Summer", "Fall", "Winter", "Spring"];
     const seasonsIcons: Array<React.ReactElement<SvgIconProps>> = [
       <WbSunnyIcon className="menuIcon" />,
       <FontAwesomeIcon
