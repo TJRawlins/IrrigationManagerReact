@@ -10,7 +10,7 @@ import { SeasonContext } from "../context/context";
 
 function App() {
   //* Set initial season context
-  const [seasonContext, setSeasonContext] = useState("Summer");
+  const [seasonContext, setSeasonContext] = useState("Winter");
   console.log("Test: ", seasonContext);
 
   // Determine which sub-navbar to display

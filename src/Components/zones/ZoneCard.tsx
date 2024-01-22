@@ -11,17 +11,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
+import { FaCanadianMapleLeaf } from "react-icons/fa";
 import {
-  LocalFlorist as LocalFloristIcon,
-  AcUnit as AcUnitIcon,
-  WbSunny as WbSunnyIcon,
   Visibility as VisibilityIcon,
   Edit as EditIcon,
   Clear as ClearIcon,
 } from "@mui/icons-material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
 import { useState } from "react";
@@ -122,32 +118,27 @@ export default function ZoneCard({ zone }: Props) {
   /*
    * -*-*-*-*-*-*-*-*-*-*-*-* SEASON ICON CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
    */
-  // Font Awesome Icons
-  library.add(faCanadianMapleLeaf);
-
   function getChipProps(params: string): ChipProps {
     if (params === "Spring") {
       return {
         icon: (
-          <LocalFloristIcon className="iconStyle" sx={{ fill: "#ff00aa" }} />
+          <MdLocalFlorist className="iconStyle" style={{ fill: "#ff00aa" }} />
         ),
         label: params,
         style: { background: "#d4028e" },
       };
     } else if (params === "Summer") {
       return {
-        icon: <WbSunnyIcon className="iconStyle" sx={{ fill: "#ffbc00" }} />,
+        icon: <MdSunny className="iconStyle" style={{ fill: "#ffbc00" }} />,
         label: params,
         style: { background: "#e9ab00" },
       };
     } else if (params === "Fall") {
       return {
         icon: (
-          <FontAwesomeIcon
-            style={{ transform: "rotate(-45deg)" }}
-            icon={faCanadianMapleLeaf}
-            className="iconStyleFA iconStyle"
-            color="#ff4800"
+          <FaCanadianMapleLeaf
+            className="iconStyle rotateIcon"
+            style={{ fill: "#ff4800" }}
           />
         ),
         label: params,
@@ -155,7 +146,7 @@ export default function ZoneCard({ zone }: Props) {
       };
     } else if (params === "Winter") {
       return {
-        icon: <AcUnitIcon className="iconStyle" sx={{ fill: "#00aeff" }} />,
+        icon: <MdAcUnit className="iconStyle" style={{ fill: "#00aeff" }} />,
         label: params,
         style: { background: "#0092d6" },
       };
@@ -275,7 +266,7 @@ export default function ZoneCard({ zone }: Props) {
       <Card
         onMouseEnter={handelMouseEnter}
         onMouseLeave={handelMouseLeave}
-          sx={{
+        sx={{
           position: "relative",
           boxShadow: "none !important",
           borderRadius: "15px",

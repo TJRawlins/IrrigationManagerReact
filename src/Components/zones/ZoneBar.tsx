@@ -6,7 +6,6 @@ import {
   CssBaseline,
   Divider,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -15,17 +14,13 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
+import { FaCanadianMapleLeaf } from "react-icons/fa";
 import {
   DashboardOutlined as DashboardOutlinedIcon,
-  WbSunny as WbSunnyIcon,
-  LocalFlorist as LocalFloristIcon,
-  AcUnit as AcUnitIcon,
   FlipCameraAndroid as FlipCameraAndroidIcon,
 } from "@mui/icons-material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
 import React, { useContext, useEffect, useState } from "react";
-import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 import { SeasonContext } from "../../app/context/context";
 
 export default function ZoneBar() {
@@ -94,8 +89,6 @@ export default function ZoneBar() {
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
    */
-  library.add(faCanadianMapleLeaf);
-
   const SeasonMenu = () => {
     const [season, setSeason] = useState("Summer");
 
@@ -113,22 +106,44 @@ export default function ZoneBar() {
     //! BUG: DROPDOWN DOES NOT CHANGE TO SELECTION
     const seasons: Array<string> = ["Summer", "Fall", "Winter", "Spring"];
     const seasonsIcons: Array<React.ReactElement<SvgIconProps>> = [
-      <WbSunnyIcon className="menuIcon" />,
-      <FontAwesomeIcon
-        className="menuIcon"
-        icon={faCanadianMapleLeaf}
-        style={{
-          transform: "scale(1.5) rotate(-45deg)",
-          margin: "0 1rem 0 .3rem",
-        }}
-      />,
-      <AcUnitIcon className="menuIcon" />,
-      <LocalFloristIcon className="menuIcon" />,
+      <MdSunny className="menuIcon" />,
+      <FaCanadianMapleLeaf className="menuIcon" />,
+      <MdAcUnit className="menuIcon" />,
+      <MdLocalFlorist className="menuIcon" />,
     ];
 
     return (
       <Box sx={{ minWidth: 150 }}>
         <FormControl fullWidth>
+          <Select
+            className="season-btn"
+            value={season}
+            onChange={handleChange}
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
+            sx={{
+              boxShadow: "none",
+              ".MuiOutlinedInput-notchedOutline": { border: 0 },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                border: "none",
+                borderRadius: "5px 5px 0 0",
+              },
+              height: "40px",
+              mt: 0.5,
+            }}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {seasons.map((season, i) => (
+              <MenuItem key={season} value={season}>
+                {seasonsIcons[i]}
+                <Typography className="menuText">{season}</Typography>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {/* <FormControl fullWidth>
           <InputLabel
             id="simple-select-label"
             sx={{
@@ -158,10 +173,6 @@ export default function ZoneBar() {
               mt: 0.5,
             }}
           >
-            {/* <MenuItem value="Summer">
-              <WbSunnyIcon className="menuIcon" />
-              <Typography className="menuText">Summer</Typography>
-            </MenuItem> */}
             <CssBaseline />
             {seasons.map((season, i) => (
               <MenuItem key={season} value={season}>
@@ -170,7 +181,7 @@ export default function ZoneBar() {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </FormControl> */}
       </Box>
     );
   };

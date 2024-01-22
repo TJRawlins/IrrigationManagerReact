@@ -46,8 +46,13 @@ div.main-container {
 
 .menuIcon {
   color: silver;
-  transform: scale(1);
+  transform: scale(1.5);
   margin-right: 0.5rem;
+}
+
+svg.menuIcon {
+  height: 1.5em;
+  margin-right: 0.75rem;
 }
 
 .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
