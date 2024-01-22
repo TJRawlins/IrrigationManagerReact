@@ -107,7 +107,7 @@ export default function ZoneBar() {
     const seasons: Array<string> = ["Summer", "Fall", "Winter", "Spring"];
     const seasonsIcons: Array<React.ReactElement<SvgIconProps>> = [
       <MdSunny className="menuIcon" />,
-      <FaCanadianMapleLeaf className="menuIcon" />,
+      <FaCanadianMapleLeaf className="menuIcon iconRotate" />,
       <MdAcUnit className="menuIcon" />,
       <MdLocalFlorist className="menuIcon" />,
     ];
@@ -143,45 +143,6 @@ export default function ZoneBar() {
             ))}
           </Select>
         </FormControl>
-        {/* <FormControl fullWidth>
-          <InputLabel
-            id="simple-select-label"
-            sx={{
-              fontSize: "1.25rem",
-              color: "#777",
-              display: "flex !important",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          ></InputLabel>
-          <Select
-            className="season-btn"
-            displayEmpty
-            labelId="simple-select-label"
-            value={season}
-            label="Season"
-            onChange={handleChange}
-            sx={{
-              boxShadow: "none",
-              ".MuiOutlinedInput-notchedOutline": { border: 0 },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                border: "none",
-                borderRadius: "5px 5px 0 0",
-              },
-              height: "40px",
-              mt: 0.5,
-            }}
-          >
-            <CssBaseline />
-            {seasons.map((season, i) => (
-              <MenuItem key={season} value={season}>
-                {seasonsIcons[i]}
-                <Typography className="menuText">{season}</Typography>
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl> */}
       </Box>
     );
   };

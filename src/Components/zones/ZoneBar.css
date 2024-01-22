@@ -55,6 +55,10 @@ svg.menuIcon {
   margin-right: 0.75rem;
 }
 
+.menuIcon.iconRotate {
+  transform: rotate(-45deg) scale(1.5);
+}
+
 .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
   display: flex;
   color: #777;
