@@ -28,16 +28,6 @@ function App() {
   //* Initial zone list
   const [zones, setZones] = useState<Zone[]>([]);
 
-  // const fetchZones = () => {
-  //   agent.Zones.list().then((zones) => {
-  //     const filterZones = zones.filter(
-  //       (zone: { season: string | ((_value: string) => void) }) =>
-  //         zone.season === seasonContext
-  //     );
-  //     setZones(filterZones);
-  //     console.log("App.tsx fetchZones()", seasonContext); //! STILL SHOWING PREVIOUS
-  //   });
-  // };
   const fetchZones = (seasonString: string) => {
     agent.Zones.list().then((zones) => {
       const filterZones = zones.filter(
@@ -45,7 +35,6 @@ function App() {
           zone.season === seasonString
       );
       setZones(filterZones);
-      console.log("App.tsx fetchZones()", seasonContext); //! STILL SHOWING PREVIOUS
     });
   };
 
