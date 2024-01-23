@@ -1,5 +1,5 @@
 // import Dashboard from "../../Components/dashboard/Dashboard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardBar from "../../Components/dashboard/DashboardBar";
 import ZoneBar from "../../Components/zones/ZoneBar";
 import ZoneList from "../../Components/zones/ZoneList";
@@ -7,22 +7,45 @@ import Navbar from "./Navbar";
 import "/src/App.css";
 import { Container, CssBaseline, Grid } from "@mui/material";
 import { SeasonContext } from "../context/context";
+import agent from "../api/agent";
+import { Zone } from "../models/Zone";
 
 function App() {
-  //* Set initial season context
-  const [seasonContext, setSeasonContext] = useState("Winter");
-  console.log("Context: ", seasonContext);
+  //TODO - STEP 2: SET INITIAL CONTEXT
+  const [seasonContext, setSeasonContext] = useState("Summer");
 
   // Determine which sub-navbar to display
   const bar: string = "zone";
   const displayBar = () => {
     if (bar === "zone") {
-      return <ZoneBar />;
+      return <ZoneBar fetchZones={fetchZones} />;
     } else if (bar === "dashboard") {
       return <DashboardBar />;
     }
   };
 
+  //TODO STEP 5: FETCH FILTERED DATA BASED ON CURRENT CONTEXT
+  //* Initial zone list
+  const [zones, setZones] = useState<Zone[]>([]);
+
+  const fetchZones = () => {
+    agent.Zones.list().then((zones) => {
+      const filterZones = zones.filter(
+        (zone: { season: string | ((_value: string) => void) }) =>
+          zone.season === seasonContext
+      );
+      setZones(filterZones);
+    });
+  };
+
+  useEffect(() => {
+    fetchZones();
+    setSeasonContext(seasonContext)
+    console.log('App.tsx useEffect')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  //TODO - STEP 3: PROVIDE CONTEXT TO COMPONENTS
   return (
     <>
       <CssBaseline />
@@ -55,7 +78,7 @@ function App() {
               marginTop: "95px",
             }}
           >
-            <ZoneList />
+            <ZoneList zones={zones} />
             {/* <Dashboard /> */}
           </Grid>
         </Grid>

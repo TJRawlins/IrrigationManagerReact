@@ -1,33 +1,12 @@
 import { Box, Container, CssBaseline, Grid } from "@mui/material";
-import { Zone } from "../../app/models/Zone";
+// import { Zone } from "../../app/models/Zone";
 import ZoneCard from "./ZoneCard";
-import { useContext, useEffect, useState } from "react";
-import agent from "../../app/api/agent";
-import { SeasonContext } from "../../app/context/context";
+// import { useContext, useEffect, useState } from "react";
+// import agent from "../../app/api/agent";
+// import { SeasonContext } from "../../app/context/context";
+import { Zone } from "../../app/models/Zone";
 
-export default function ZoneList() {
-  //* Initial zone list
-  const [zones, setZones] = useState<Zone[]>([]);
-
-  //* Consume SeasonContext, get season string
-  const [seasonContext] = useContext(SeasonContext);
-
-  //* Get list of zones (Axios Call)
-  useEffect(() => {
-    try {
-      //* Update zones list to filtered list based on season string
-      agent.Zones.list().then((zones) => {
-        const filterZones = zones.filter(
-          (zone: { season: string | ((_value: string) => void) }) =>
-            zone.season === seasonContext
-        );
-        setZones(filterZones);
-      });
-    } catch (err) {
-      console.error("Could not fetch zones: ", err);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+export default function ZoneList({zones} : {zones:Zone[]}) {
 
   return (
     <>

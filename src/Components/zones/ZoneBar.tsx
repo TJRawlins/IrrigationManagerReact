@@ -10,7 +10,6 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  SvgIconProps,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -20,13 +19,14 @@ import {
   DashboardOutlined as DashboardOutlinedIcon,
   FlipCameraAndroid as FlipCameraAndroidIcon,
 } from "@mui/icons-material";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { SeasonContext } from "../../app/context/context";
 
-export default function ZoneBar() {
-  //* Consume SeasonContext, get season string
-  const [seasonContext, setSeasonContext] = useContext(SeasonContext);
+interface ZoneBarProps {
+  fetchZones(): void;
+}
 
+export default function ZoneBar({ fetchZones }: ZoneBarProps) {
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */
@@ -90,34 +90,28 @@ export default function ZoneBar() {
    *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
    */
   const SeasonMenu = () => {
-    const [season, setSeason] = useState("Summer");
+    //TODO STEP 6: CONSUME CONTEXT, GET SEASON STRING
+    const [seasonContext, setSeasonContext] = useContext(SeasonContext);
 
-    //! BUG: DOES NOT REFRESH ZONE LIST WITH NEW SEASON CONTEXT
+    //TODO STEP 7: UPDATE CONTEXT VALUE WITH DROPDOWN SELECTION
+    //! BUG: DISPLAYS PREVIOUS SELECTION INSTEAD OF CURRENT
     const handleChange = (event: SelectChangeEvent) => {
-      setSeason(event.target.value as string);
-      setSeasonContext(event.target.value as string);
+      setSeasonContext(event.target.value);
+      fetchZones();
+      console.log("handleChange Called");
     };
 
     useEffect(() => {
-      console.log("Test2: ", seasonContext);
       setSeasonContext(seasonContext);
-    }, []);
-
-    //! BUG: DROPDOWN DOES NOT CHANGE TO SELECTION
-    const seasons: Array<string> = ["Summer", "Fall", "Winter", "Spring"];
-    const seasonsIcons: Array<React.ReactElement<SvgIconProps>> = [
-      <MdSunny className="menuIcon" />,
-      <FaCanadianMapleLeaf className="menuIcon iconRotate" />,
-      <MdAcUnit className="menuIcon" />,
-      <MdLocalFlorist className="menuIcon" />,
-    ];
+      console.log("ZoneBar.tsx useEffect", seasonContext);
+    });
 
     return (
       <Box sx={{ minWidth: 150 }}>
         <FormControl fullWidth>
           <Select
             className="season-btn"
-            value={season}
+            value={seasonContext}
             onChange={handleChange}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
@@ -132,15 +126,28 @@ export default function ZoneBar() {
               mt: 0.5,
             }}
           >
-            <MenuItem value="">
-              <em>None</em>
+            <MenuItem value={"Summer"}>
+              <MdSunny className="menuIcon" />
+              <Typography className="menuText">Summer</Typography>
             </MenuItem>
-            {seasons.map((season, i) => (
+            <MenuItem value={"Fall"}>
+              <FaCanadianMapleLeaf className="menuIcon iconRotate" />
+              <Typography className="menuText">Fall</Typography>
+            </MenuItem>
+            <MenuItem value={"Winter"}>
+              <MdAcUnit className="menuIcon" />
+              <Typography className="menuText">Winter</Typography>
+            </MenuItem>
+            <MenuItem value={"Spring"}>
+              <MdLocalFlorist className="menuIcon" />
+              <Typography className="menuText">Spring</Typography>
+            </MenuItem>
+            {/* {seasons.map((season, i) => (
               <MenuItem key={season} value={season}>
                 {seasonsIcons[i]}
                 <Typography className="menuText">{season}</Typography>
               </MenuItem>
-            ))}
+            ))} */}
           </Select>
         </FormControl>
       </Box>
