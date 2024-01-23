@@ -19,12 +19,12 @@ import {
   DashboardOutlined as DashboardOutlinedIcon,
   FlipCameraAndroid as FlipCameraAndroidIcon,
 } from "@mui/icons-material";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { SeasonContext } from "../../app/context/context";
 
-interface ZoneBarProps {
-  fetchZones(): void;
-}
+type ZoneBarProps = {
+  fetchZones(args: string): void;
+};
 
 export default function ZoneBar({ fetchZones }: ZoneBarProps) {
   /*
@@ -96,15 +96,18 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
     //TODO STEP 7: UPDATE CONTEXT VALUE WITH DROPDOWN SELECTION
     //! BUG: DISPLAYS PREVIOUS SELECTION INSTEAD OF CURRENT
     const handleChange = (event: SelectChangeEvent) => {
-      setSeasonContext(event.target.value);
-      fetchZones();
       console.log("handleChange Called");
+      // Variable to assign the most current seasonContext (currentState)
+      let currentStateSeason = "";
+      setSeasonContext((currentState: string) => {
+        currentState = event.target.value;
+        // Assign the most current seasonContext (currentState)
+        currentStateSeason = currentState;
+        return currentState;
+      });
+      // Pass in the most current seasonContext (currentState)
+      fetchZones(currentStateSeason);
     };
-
-    useEffect(() => {
-      setSeasonContext(seasonContext);
-      console.log("ZoneBar.tsx useEffect", seasonContext);
-    });
 
     return (
       <Box sx={{ minWidth: 150 }}>

@@ -28,20 +28,29 @@ function App() {
   //* Initial zone list
   const [zones, setZones] = useState<Zone[]>([]);
 
-  const fetchZones = () => {
+  // const fetchZones = () => {
+  //   agent.Zones.list().then((zones) => {
+  //     const filterZones = zones.filter(
+  //       (zone: { season: string | ((_value: string) => void) }) =>
+  //         zone.season === seasonContext
+  //     );
+  //     setZones(filterZones);
+  //     console.log("App.tsx fetchZones()", seasonContext); //! STILL SHOWING PREVIOUS
+  //   });
+  // };
+  const fetchZones = (seasonString: string) => {
     agent.Zones.list().then((zones) => {
       const filterZones = zones.filter(
         (zone: { season: string | ((_value: string) => void) }) =>
-          zone.season === seasonContext
+          zone.season === seasonString
       );
       setZones(filterZones);
+      console.log("App.tsx fetchZones()", seasonContext); //! STILL SHOWING PREVIOUS
     });
   };
 
   useEffect(() => {
-    fetchZones();
-    setSeasonContext(seasonContext)
-    console.log('App.tsx useEffect')
+    fetchZones(seasonContext);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
