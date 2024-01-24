@@ -1,4 +1,4 @@
-.addBtn {
+.add-btn {
     margin: 1.5rem 0 0 1.5rem !important;
     height: 350px !important;
     width: 300px !important;
@@ -7,17 +7,35 @@
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px !important;
 }
 
-.addBtn:hover {
+.add-btn:hover {
     opacity: 0.75;
 }
 
-.addPlusIcon {
+.add-plus-icon {
     color: #002b49;
     opacity: 0.20;
     font-size: 3rem !important;
 }
 
-.modalBox {
+.modal-box {
     border: none !important;
     border-radius: 15px;
+}
+
+.modal-title {
+    color: #333;
+}
+
+.input {
+    margin-top: 0.5rem !important;
+}
+
+.submit-btn {
+    background-color: #03eec7 !important;
+    color: #ffff !important;
+    margin-top: 2rem !important;
+}
+
+.submit-btn:hover {
+    background-color: #00d8b4 !important;
 }

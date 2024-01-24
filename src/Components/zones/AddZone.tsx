@@ -1,4 +1,4 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, FormControl, Modal, TextField, Typography } from "@mui/material";
 import "./AddZone.css";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
@@ -22,16 +22,16 @@ function AddZone() {
   const handleClose = () => setOpen(false);
 
   return (
-    <div className="mainContainer">
+    <div>
       <Button
-        className="addBtn"
+        className="add-btn"
         onClick={handleOpen}
         sx={{
           position: "relative",
           boxShadow: "none !important",
         }}
       >
-        <FaPlus className="addPlusIcon" />
+        <FaPlus className="add-plus-icon" />
       </Button>
       <Modal
         open={open}
@@ -44,13 +44,55 @@ function AddZone() {
           },
         }}
       >
-        <Box className="modalBox" sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Box className="modal-box" sx={style}>
+          <Typography
+            className="modal-title"
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+          >
             Add new zone
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            This is where the form will go
-          </Typography>
+          <FormControl sx={{ width: "100%" }}>
+            <TextField
+              required
+              className="input"
+              id="zone-name-input"
+              label="Zone name"
+              type="text"
+              autoComplete=""
+              variant="standard"
+            />
+            <TextField
+              required
+              className="input"
+              id="runtime-hours-input"
+              label="Runtime hours"
+              type="number"
+              autoComplete=""
+              variant="standard"
+            />
+            <TextField
+              required
+              className="input"
+              id="runtime-minutes-input"
+              label="Runtime minutes"
+              type="number"
+              autoComplete=""
+              variant="standard"
+            />
+            <TextField
+              disabled
+              className="input"
+              id="standard-disabled"
+              label="Season"
+              defaultValue="Summer"
+              variant="standard"
+            />
+            <Button className="submit-btn" type="submit">
+              Add
+            </Button>
+          </FormControl>
         </Box>
       </Modal>
     </div>
