@@ -5,9 +5,9 @@ import ZoneCard from "./ZoneCard";
 // import agent from "../../app/api/agent";
 // import { SeasonContext } from "../../app/context/context";
 import { Zone } from "../../app/models/Zone";
+import AddZone from "./AddZone";
 
-export default function ZoneList({zones} : {zones:Zone[]}) {
-
+export default function ZoneList({ zones }: { zones: Zone[] }) {
   return (
     <>
       <CssBaseline />
@@ -33,6 +33,9 @@ export default function ZoneList({zones} : {zones:Zone[]}) {
                 <ZoneCard zone={zone} />
               </Grid>
             ))}
+            <Grid>
+              <AddZone />
+            </Grid>
           </Grid>
         </Box>
       </Container>

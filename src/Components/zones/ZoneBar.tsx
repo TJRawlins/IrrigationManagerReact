@@ -86,26 +86,35 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
     );
   };
 
-  /*
-   *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
-   */
-  const SeasonMenu = () => {
-    //TODO STEP 6: CONSUME CONTEXT, GET SEASON STRING
-    const [seasonContext, setSeasonContext] = useContext(SeasonContext);
+  // *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
 
-    //TODO STEP 7: UPDATE CONTEXT VALUE WITH DROPDOWN SELECTION
-    //! BUG: DISPLAYS PREVIOUS SELECTION INSTEAD OF CURRENT
+  /**
+   * ://TODO CONTEXT STEPS
+   * ://TODO [1] STEP 6: CONSUME CONTEXT, GET SEASON STRING
+   * ://TODO [2] STEP 7: UPDATE CONTEXT VALUE WITH DROPDOWN SELECTION
+   */
+  /**
+   * ://! BUG FIX: DISPLAYS PREVIOUS SELECTION INSTEAD OF CURRENT
+   * ://! [1] Variable to assign the most current seasonContext (currentState)
+   * ://! [2] Assign the most current seasonContext (currentState)
+   * ://! [3] Pass in the most current seasonContext (currentState)
+   */
+
+  const SeasonMenu = () => {
+    //TODO [1]
+    const [seasonContext, setSeasonContext] = useContext(SeasonContext);
+    //TODO [2]
     const handleChange = (event: SelectChangeEvent) => {
       console.log("handleChange Called");
-      // Variable to assign the most current seasonContext (currentState)
+      //! [1]
       let currentStateSeason = "";
       setSeasonContext((currentState: string) => {
         currentState = event.target.value;
-        // Assign the most current seasonContext (currentState)
+        //! [2]
         currentStateSeason = currentState;
         return currentState;
       });
-      // Pass in the most current seasonContext (currentState)
+      //! [3]
       fetchZones(currentStateSeason);
     };
 
@@ -145,12 +154,6 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
               <MdLocalFlorist className="menuIcon" />
               <Typography className="menuText">Spring</Typography>
             </MenuItem>
-            {/* {seasons.map((season, i) => (
-              <MenuItem key={season} value={season}>
-                {seasonsIcons[i]}
-                <Typography className="menuText">{season}</Typography>
-              </MenuItem>
-            ))} */}
           </Select>
         </FormControl>
       </Box>
