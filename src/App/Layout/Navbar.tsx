@@ -1,3 +1,4 @@
+import "./Navbar.css";
 import {
   AppBar,
   Badge,
@@ -11,7 +12,7 @@ import {
   alpha,
   styled,
 } from "@mui/material";
-import { AccountCircle, Mail, More, Notifications } from "@mui/icons-material";
+import { AccountCircle, More, Notifications } from "@mui/icons-material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme, Theme } from "@mui/material/styles";
 import React from "react";
@@ -139,14 +140,6 @@ export default function Navbar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <Mail />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
@@ -206,15 +199,6 @@ export default function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <Mail />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"

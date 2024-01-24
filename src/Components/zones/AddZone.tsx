@@ -40,7 +40,7 @@ function AddZone() {
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: { backgroundColor: "#002b49a7" },
+            style: { backgroundColor: "#002b49a7", opacity: 0.5 },
           },
         }}
       >
