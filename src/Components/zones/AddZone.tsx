@@ -2,9 +2,10 @@ import { Box, FormControl, Modal, TextField, Typography } from "@mui/material";
 import "./AddZone.css";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Zone } from "../../app/models/Zone";
 import agent from "../../app/api/agent";
+import { SeasonContext } from "../../app/context/context";
 
 const style = {
   position: "absolute" as const,
@@ -27,8 +28,9 @@ function AddZone({ zone }: Props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [newZone, setNewZone] = useState<Zone>(zone);
+  const [seasonContext] = useContext(SeasonContext);
 
+  const [newZone, setNewZone] = useState<Zone>(zone);
   const handleAddZone = () => {
     handleClose();
     agent.Zones.createZone(newZone).catch((error) => console.log(error));
@@ -219,7 +221,7 @@ function AddZone({ zone }: Props) {
               className="input"
               id="standard-disabled"
               label="Season"
-              defaultValue="Summer"
+              defaultValue={seasonContext}
               variant="standard"
               onChange={(e) =>
                 setNewZone({ ...newZone, season: e.target.value })
