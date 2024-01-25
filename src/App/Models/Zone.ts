@@ -6,6 +6,10 @@ export interface Zone {
   runtimeHours: number;
   runtimeMinutes: number;
   runtimePerWeek: number;
+  startHours: number;
+  startMinutes: number;
+  endHours: number;
+  endMinutes: number;
   imagePath: string;
   season: string;
   totalPlants: number;

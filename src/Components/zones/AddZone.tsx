@@ -2,7 +2,9 @@ import { Box, FormControl, Modal, TextField, Typography } from "@mui/material";
 import "./AddZone.css";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
-import React from "react";
+import React, { useState } from "react";
+import { Zone } from "../../app/models/Zone";
+import agent from "../../app/api/agent";
 
 const style = {
   position: "absolute" as const,
@@ -16,10 +18,21 @@ const style = {
   p: 4,
 };
 
-function AddZone() {
+type Props = {
+  zone: Zone;
+};
+
+function AddZone({ zone }: Props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [newZone, setNewZone] = useState<Zone>(zone);
+
+  const handleAddZone = () => {
+    handleClose();
+    agent.Zones.createZone(newZone).catch((error) => console.log(error));
+  };
 
   return (
     <div>
@@ -62,24 +75,144 @@ function AddZone() {
               type="text"
               autoComplete=""
               variant="standard"
+              onChange={(e) => setNewZone({ ...newZone, name: e.target.value })}
             />
+            <div className="split-container">
+              <TextField
+                required
+                className="input"
+                id="runtime-hours-input"
+                label="Runtime hours"
+                type="number"
+                autoComplete=""
+                variant="standard"
+                onChange={(e) =>
+                  setNewZone({
+                    ...newZone,
+                    runtimeHours: Number(e.target.value),
+                  })
+                }
+              />
+              <Typography
+                sx={{ textAlign: "center !important", paddingTop: "30px" }}
+              >
+                :
+              </Typography>
+              <TextField
+                required
+                className="input"
+                id="runtime-minutes-input"
+                label="Runtime minutes"
+                type="number"
+                autoComplete=""
+                variant="standard"
+                onChange={(e) =>
+                  setNewZone({
+                    ...newZone,
+                    runtimeMinutes: Number(e.target.value),
+                  })
+                }
+              />
+            </div>
+            <div className="split-container">
+              <TextField
+                required
+                className="input"
+                id="start-hours-input"
+                label="Start hour"
+                type="number"
+                autoComplete=""
+                variant="standard"
+                onChange={(e) =>
+                  setNewZone({
+                    ...newZone,
+                    startHours: Number(e.target.value),
+                  })
+                }
+              />
+              <Typography
+                sx={{ textAlign: "center !important", paddingTop: "30px" }}
+              >
+                :
+              </Typography>
+              <TextField
+                required
+                className="input"
+                id="start-minutes-input"
+                label="Start minutes"
+                type="number"
+                autoComplete=""
+                variant="standard"
+                onChange={(e) =>
+                  setNewZone({
+                    ...newZone,
+                    startMinutes: Number(e.target.value),
+                  })
+                }
+              />
+            </div>
+            <div className="split-container">
+              <TextField
+                required
+                className="input"
+                id="start-hours-input"
+                label="End hour"
+                type="number"
+                autoComplete=""
+                variant="standard"
+                onChange={(e) =>
+                  setNewZone({
+                    ...newZone,
+                    endHours: Number(e.target.value),
+                  })
+                }
+              />
+              <Typography
+                sx={{ textAlign: "center !important", paddingTop: "30px" }}
+              >
+                :
+              </Typography>
+              <TextField
+                required
+                className="input"
+                id="start-minutes-input"
+                label="End minutes"
+                type="number"
+                autoComplete=""
+                variant="standard"
+                onChange={(e) =>
+                  setNewZone({
+                    ...newZone,
+                    endMinutes: Number(e.target.value),
+                  })
+                }
+              />
+            </div>
             <TextField
               required
               className="input"
-              id="runtime-hours-input"
-              label="Runtime hours"
+              id="per-week-input"
+              label="Times per week"
               type="number"
               autoComplete=""
               variant="standard"
+              onChange={(e) =>
+                setNewZone({
+                  ...newZone,
+                  runtimePerWeek: Number(e.target.value),
+                })
+              }
             />
             <TextField
-              required
               className="input"
-              id="runtime-minutes-input"
-              label="Runtime minutes"
-              type="number"
+              id="image-path-input"
+              label="Image path"
+              type="text"
               autoComplete=""
               variant="standard"
+              onChange={(e) =>
+                setNewZone({ ...newZone, imagePath: e.target.value })
+              }
             />
             <TextField
               disabled
@@ -88,8 +221,15 @@ function AddZone() {
               label="Season"
               defaultValue="Summer"
               variant="standard"
+              onChange={(e) =>
+                setNewZone({ ...newZone, season: e.target.value })
+              }
             />
-            <Button className="submit-btn" type="submit">
+            <Button
+              className="submit-btn"
+              type="submit"
+              onClick={handleAddZone}
+            >
               Add
             </Button>
           </FormControl>
