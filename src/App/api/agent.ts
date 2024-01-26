@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Zone } from "../models/Zone";
+// import { Zone } from "../models/Zone";
 
 axios.defaults.baseURL = "https://localhost:5555/api/";
 
@@ -23,7 +23,7 @@ const Plants = {
 const Zones = {
   list: () => requests.get("zones"),
   details: (id: string) => requests.get(`zones/${id}`),
-  createZone: (zone: Zone) => requests.post("zones", zone),
+  createZone: (zone: object) => requests.post("zones", zone),
   removeZone: (id: string) => requests.delete(`zones/${id}`),
 };
 
