@@ -20,13 +20,18 @@ import {
 } from "@mui/icons-material";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import agent from "../../app/api/agent";
+import { SeasonContext } from "../../app/context/context";
 
 //* Get a zone from list of zones from ZoneList.tsx (list obtained from App.tsx)
-interface Props {
+type ZoneCardProps = {
+  fetchZones(args: string): void;
   zone: Zone;
-}
-export default function ZoneCard({ zone }: Props) {
+};
+
+export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
+  //* -*-*-*-*-*-*-*-*-*-*-*-* TOTAL GALLONS CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
   const CardAvatarChips = () => {
     return (
       <>
@@ -115,9 +120,8 @@ export default function ZoneCard({ zone }: Props) {
     );
   };
 
-  /*
-   * -*-*-*-*-*-*-*-*-*-*-*-* SEASON ICON CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
-   */
+  // * -*-*-*-*-*-*-*-*-*-*-*-* SEASON ICON CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
+
   function getChipProps(params: string): ChipProps {
     if (params === "Spring") {
       return {
@@ -157,9 +161,8 @@ export default function ZoneCard({ zone }: Props) {
     }
   }
 
-  /**
-   ** -*-*-*-*-*-*-*-*-*-*-*-* RETURN CARD DATA SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
-   */
+  //* -*-*-*-*-*-*-*-*-*-*-*-* RETURN CARD DATA SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
+
   const CardData = () => {
     return (
       <CardContent>
@@ -214,9 +217,8 @@ export default function ZoneCard({ zone }: Props) {
     );
   };
 
-  /**
-   ** -*-*-*-*-*-*-*-*-*-*-*-* ACTION MENU SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
-   */
+  //* -*-*-*-*-*-*-*-*-*-*-*-* ACTION MENU SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
+
   const [isHovering, setIsHovering] = useState(false);
   function handelMouseEnter() {
     setIsHovering(true);
@@ -225,7 +227,13 @@ export default function ZoneCard({ zone }: Props) {
     setIsHovering(false);
   }
 
-  const ActionMenu = () => {
+  const ActionMenu = (zone: Zone) => {
+    const [seasonContext] = useContext(SeasonContext);
+
+    const deleteZone = () => {
+      agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonContext));
+    };
+
     return (
       <CardActions
         sx={{
@@ -250,7 +258,7 @@ export default function ZoneCard({ zone }: Props) {
           <Button className="card-btn" size="small">
             <EditIcon className="action-icon" />
           </Button>
-          <Button className="card-btn" size="small">
+          <Button className="card-btn" size="small" onClick={deleteZone}>
             <ClearIcon className="action-icon" />
           </Button>
         </Box>
@@ -258,9 +266,8 @@ export default function ZoneCard({ zone }: Props) {
     );
   };
 
-  /**
-   ** -*-*-*-*-*-*-*-*-*-*-*-* RETURN MAIN COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
-   */
+  //* -*-*-*-*-*-*-*-*-*-*-*-* RETURN MAIN COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
+
   return (
     <>
       <Card
@@ -281,7 +288,7 @@ export default function ZoneCard({ zone }: Props) {
           title="green iguana"
         />
         <CardData />
-        <ActionMenu />
+        <ActionMenu {...zone} />
       </Card>
     </>
   );

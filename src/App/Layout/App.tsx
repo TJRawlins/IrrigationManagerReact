@@ -50,6 +50,7 @@ function App() {
           zone.season === seasonString
       );
       setZones(filterZones);
+      console.log('Zones fetched!')
     });
   };
 
@@ -92,7 +93,7 @@ function App() {
                 marginTop: "95px",
               }}
             >
-              <ZoneList zones={zones} />
+              <ZoneList zones={zones} fetchZones={fetchZones} />
               {/* <Dashboard /> */}
             </Grid>
           </Grid>

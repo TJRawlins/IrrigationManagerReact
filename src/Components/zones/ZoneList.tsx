@@ -7,7 +7,12 @@ import ZoneCard from "./ZoneCard";
 import { Zone } from "../../app/models/Zone";
 import AddZone from "./AddZone";
 
-export default function ZoneList({ zones }: { zones: Zone[] }) {
+type ZoneBarProps = {
+  fetchZones(args: string): void;
+  zones: Zone[]
+};
+
+export default function ZoneList({zones, fetchZones}: ZoneBarProps ) {
   return (
     <>
       <CssBaseline />
@@ -30,11 +35,11 @@ export default function ZoneList({ zones }: { zones: Zone[] }) {
           >
             {zones.map((zone) => (
               <Grid item key={zone.id}>
-                <ZoneCard zone={zone} />
+                <ZoneCard zone={zone} fetchZones={fetchZones} />
               </Grid>
             ))}
             <Grid>
-              <AddZone />
+              <AddZone fetchZones={fetchZones} />
             </Grid>
           </Grid>
         </Box>

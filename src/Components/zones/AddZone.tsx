@@ -8,6 +8,10 @@ import { SeasonContext } from "../../app/context/context";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+type ZoneBarProps = {
+  fetchZones(args: string): void;
+};
+
 const style = {
   position: "absolute" as const,
   top: "50%",
@@ -20,7 +24,7 @@ const style = {
   p: 4,
 };
 
-function AddZone() {
+function AddZone({ fetchZones }: ZoneBarProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -56,7 +60,9 @@ function AddZone() {
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     console.log(values);
     console.log(props);
-    agent.Zones.createZone(values).catch((error) => alert(error));
+    agent.Zones.createZone(values)
+      .catch((error) => alert(error))
+      .then(() => fetchZones(seasonContext));
     props.resetForm();
     handleClose();
   };
@@ -299,10 +305,7 @@ function AddZone() {
                   defaultValue={seasonContext}
                   variant="standard"
                 />
-                <Button
-                  className="submit-btn"
-                  type="submit"
-                >
+                <Button className="submit-btn" type="submit">
                   Add
                 </Button>
               </Form>
