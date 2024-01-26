@@ -285,7 +285,7 @@ export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
           className="card-img"
           sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
           image={zone.imagePath}
-          title="green iguana"
+          title={zone.name}
         />
         <CardData />
         <ActionMenu {...zone} />
