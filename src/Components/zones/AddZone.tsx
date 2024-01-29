@@ -37,10 +37,6 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimeHours: 0,
     runtimeMinutes: 0,
     runtimePerWeek: 0,
-    // startHours: 0,
-    // startMinutes: 0,
-    // endHours: 0,
-    // endMinutes: 0,
     imagePath: undefined,
     season: seasonContext,
   };
@@ -50,10 +46,6 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimeHours: Yup.number().required("Required field"),
     runtimeMinutes: Yup.number().required("Required field"),
     runtimePerWeek: Yup.number().required("Required field"),
-    // startHours: Yup.number().required("Required field"),
-    // startMinutes: Yup.number().required("Required field"),
-    // endHours: Yup.number().required("Required field"),
-    // endMinutes: Yup.number().required("Required field"),
     imagePath: Yup.string().url("Please enter valid URL"),
   });
 
@@ -169,96 +161,6 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                     }
                   />
                 </div>
-                {/* <div className="split-container">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="start-hours-input"
-                    name="startHours"
-                    label="Start hour"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 24 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="startHours"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                  <Typography
-                    sx={{ textAlign: "center !important", paddingTop: "30px" }}
-                  >
-                    :
-                  </Typography>
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="start-minutes-input"
-                    name="startMinutes"
-                    label="Start minutes"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 59 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="startMinutes"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                </div>
-                <div className="split-container">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="end-hours-input"
-                    name="endHours"
-                    label="End hour"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 24 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="endHours"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                  <Typography
-                    sx={{ textAlign: "center !important", paddingTop: "30px" }}
-                  >
-                    :
-                  </Typography>
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="end-minutes-input"
-                    name="endMinutes"
-                    label="End minutes"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 59 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="endMinutes"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                </div> */}
                 <Field
                   as={TextField}
                   required
