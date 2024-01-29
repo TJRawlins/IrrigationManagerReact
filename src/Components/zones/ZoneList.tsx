@@ -1,9 +1,5 @@
 import { Box, Container, CssBaseline, Grid } from "@mui/material";
-// import { Zone } from "../../app/models/Zone";
 import ZoneCard from "./ZoneCard";
-// import { useContext, useEffect, useState } from "react";
-// import agent from "../../app/api/agent";
-// import { SeasonContext } from "../../app/context/context";
 import { Zone } from "../../app/models/Zone";
 import AddZone from "./AddZone";
 
