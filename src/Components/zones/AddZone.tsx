@@ -37,10 +37,10 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimeHours: 0,
     runtimeMinutes: 0,
     runtimePerWeek: 0,
-    startHours: 0,
-    startMinutes: 0,
-    endHours: 0,
-    endMinutes: 0,
+    // startHours: 0,
+    // startMinutes: 0,
+    // endHours: 0,
+    // endMinutes: 0,
     imagePath: undefined,
     season: seasonContext,
   };
@@ -50,10 +50,10 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimeHours: Yup.number().required("Required field"),
     runtimeMinutes: Yup.number().required("Required field"),
     runtimePerWeek: Yup.number().required("Required field"),
-    startHours: Yup.number().required("Required field"),
-    startMinutes: Yup.number().required("Required field"),
-    endHours: Yup.number().required("Required field"),
-    endMinutes: Yup.number().required("Required field"),
+    // startHours: Yup.number().required("Required field"),
+    // startMinutes: Yup.number().required("Required field"),
+    // endHours: Yup.number().required("Required field"),
+    // endMinutes: Yup.number().required("Required field"),
     imagePath: Yup.string().url("Please enter valid URL"),
   });
 
@@ -169,7 +169,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                     }
                   />
                 </div>
-                <div className="split-container">
+                {/* <div className="split-container">
                   <Field
                     as={TextField}
                     required
@@ -258,7 +258,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                       />
                     }
                   />
-                </div>
+                </div> */}
                 <Field
                   as={TextField}
                   required
