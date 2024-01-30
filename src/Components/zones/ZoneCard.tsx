@@ -208,7 +208,7 @@ export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
             variant="body2"
             color="text.secondary"
           >
-            <span>Total Plant:</span>
+            <span>Total Plants:</span>
             <span>{zone.totalPlants}</span>
           </Typography>
         </Box>
