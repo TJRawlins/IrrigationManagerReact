@@ -189,7 +189,7 @@ export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
           >
             <span>Runtime:</span>
             <span>
-              {zone.runtimeHours}:{zone.runtimeHours}:
+              {zone.runtimeHours}:
               {zone.runtimeMinutes.toString().length == 1
                 ? "0" + zone.runtimeMinutes
                 : zone.runtimeMinutes}

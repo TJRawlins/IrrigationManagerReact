@@ -5,10 +5,10 @@ import AddZone from "./AddZone";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
-  zones: Zone[]
+  zones: Zone[];
 };
 
-export default function ZoneList({zones, fetchZones}: ZoneBarProps ) {
+export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
   return (
     <>
       <CssBaseline />
