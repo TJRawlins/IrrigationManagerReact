@@ -1,7 +1,7 @@
 import { Plant } from "./Plant";
 
 export interface Zone {
-  id: string;
+  id: number;
   name: string;
   runtimeHours: number;
   runtimeMinutes: number;

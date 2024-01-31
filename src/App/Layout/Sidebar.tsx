@@ -49,7 +49,7 @@ export default function Sidebar() {
   // List sidebar menu items
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: 270, marginTop: "140px" }}
+      sx={{ width: 270, marginTop: "90px" }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
