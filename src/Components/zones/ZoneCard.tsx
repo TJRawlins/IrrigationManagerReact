@@ -162,7 +162,7 @@ export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
     }
   }
 
-  //* -*-*-*-*-*-*-*-*-*-*-*-* RETURN CARD DATA SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
+  //* -*-*-*-*-*-*-*-*-*-*-*-* CARD DATA SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
 
   const CardData = () => {
     return (
@@ -242,7 +242,6 @@ export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
           title={zone.name}
         />
         <CardData />
-        {/* <ActionMenu {...zone} /> */}
         <ZoneCardActionMenu
           fetchZones={fetchZones}
           zoneId={zone.id}
