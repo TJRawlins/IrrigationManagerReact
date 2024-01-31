@@ -1,6 +1,6 @@
 div.main-container {
-  /* position: sticky;
-  top: 60px; */
+  position: sticky;
+  top: 60px;
   background-color: #ffffff;
   color: #8b8b8b;
   width: 100%;
@@ -9,7 +9,7 @@ div.main-container {
   box-shadow: none;
   border-bottom: none;
   box-shadow: none;
-  /* z-index: 999; */
+  z-index: 1;
 }
 
 .content-container {

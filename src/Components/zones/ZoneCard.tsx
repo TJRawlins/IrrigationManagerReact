@@ -1,9 +1,7 @@
 import {
   Avatar,
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
   Chip,
@@ -13,16 +11,10 @@ import {
 } from "@mui/material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
-import {
-  Visibility as VisibilityIcon,
-  Edit as EditIcon,
-  Clear as ClearIcon,
-} from "@mui/icons-material";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
-import { useContext, useState } from "react";
-import agent from "../../app/api/agent";
-import { SeasonContext } from "../../app/context/context";
+import { useState } from "react";
+import { ZoneCardActionMenu } from "./ZoneCardActionMenu";
 
 //* Get a zone from list of zones from ZoneList.tsx (list obtained from App.tsx)
 type ZoneCardProps = {
@@ -31,6 +23,15 @@ type ZoneCardProps = {
 };
 
 export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
+  const [isHovering, setIsHovering] = useState(false);
+
+  function handelMouseEnter() {
+    setIsHovering(true);
+  }
+  function handelMouseLeave() {
+    setIsHovering(false);
+  }
+
   //* -*-*-*-*-*-*-*-*-*-*-*-* TOTAL GALLONS CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
   const CardAvatarChips = () => {
     return (
@@ -219,55 +220,6 @@ export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
     );
   };
 
-  //* -*-*-*-*-*-*-*-*-*-*-*-* ACTION MENU SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
-
-  const [isHovering, setIsHovering] = useState(false);
-  function handelMouseEnter() {
-    setIsHovering(true);
-  }
-  function handelMouseLeave() {
-    setIsHovering(false);
-  }
-
-  const ActionMenu = (zone: Zone) => {
-    const [seasonContext] = useContext(SeasonContext);
-
-    const deleteZone = () => {
-      agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonContext));
-    };
-
-    return (
-      <CardActions
-        sx={{
-          height: "48px",
-          width: "94%",
-          position: "absolute",
-          top: "90px",
-        }}
-      >
-        <Box
-          className={isHovering ? "" : "hidden"}
-          sx={{
-            gap: 1,
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-around",
-          }}
-        >
-          <Button className="card-btn" size="small">
-            <VisibilityIcon className="action-icon" />
-          </Button>
-          <Button className="card-btn" size="small">
-            <EditIcon className="action-icon" />
-          </Button>
-          <Button className="card-btn" size="small" onClick={deleteZone}>
-            <ClearIcon className="action-icon" />
-          </Button>
-        </Box>
-      </CardActions>
-    );
-  };
-
   //* -*-*-*-*-*-*-*-*-*-*-*-* RETURN MAIN COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
 
   return (
@@ -290,7 +242,12 @@ export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
           title={zone.name}
         />
         <CardData />
-        <ActionMenu {...zone} />
+        {/* <ActionMenu {...zone} /> */}
+        <ZoneCardActionMenu
+          fetchZones={fetchZones}
+          zoneId={zone.id}
+          isHovering={isHovering}
+        />
       </Card>
     </>
   );
