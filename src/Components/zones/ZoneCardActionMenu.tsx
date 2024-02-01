@@ -5,24 +5,28 @@ import {
   Clear as ClearIcon,
 } from "@mui/icons-material";
 import agent from "../../app/api/agent";
-import { useContext } from "react";
+import { useContext} from "react";
 import { SeasonContext } from "../../app/context/context";
 
 type ZoneCardProps = {
     fetchZones(args: string): void;
     setIsShowEdit(args: boolean): void;
+    setZoneId(args: number): void;
     zoneId: number;
     isHovering: boolean;
   };
 
-export const ZoneCardActionMenu = ({ zoneId, fetchZones, setIsShowEdit, isHovering }: ZoneCardProps) => {
+export const ZoneCardActionMenu = ({ zoneId, fetchZones, setIsShowEdit, setZoneId, isHovering }: ZoneCardProps) => {
   const [seasonContext] = useContext(SeasonContext);
 
   const deleteZone = () => {
     agent.Zones.removeZone(zoneId).then(() => fetchZones(seasonContext));
   };
 
-  const showEdit = () => setIsShowEdit(true)
+  const showEdit = () => {
+    setIsShowEdit(true)
+    setZoneId(zoneId)
+  }
 
   return (
     <CardActions

@@ -20,10 +20,11 @@ import { ZoneCardActionMenu } from "./ZoneCardActionMenu";
 type ZoneCardProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
+  setZoneId(args: number): void;
   zone: Zone;
 };
 
-export default function ZoneCard({ zone, fetchZones, setIsShowEdit }: ZoneCardProps) {
+export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }: ZoneCardProps) {
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -246,6 +247,7 @@ export default function ZoneCard({ zone, fetchZones, setIsShowEdit }: ZoneCardPr
         <ZoneCardActionMenu
           fetchZones={fetchZones}
           setIsShowEdit={setIsShowEdit}
+          setZoneId={setZoneId}
           zoneId={zone.id}
           isHovering={isHovering}
         />

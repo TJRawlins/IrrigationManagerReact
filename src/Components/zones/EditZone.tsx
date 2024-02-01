@@ -1,16 +1,18 @@
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import "./AddZone.css";
 import Button from "@mui/material/Button";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import agent from "../../app/api/agent";
 import { SeasonContext } from "../../app/context/context";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { Zone } from "../../app/models/Zone";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
+  zoneId: number;
 };
 
 const style = {
@@ -25,12 +27,19 @@ const style = {
   p: 4,
 };
 
-function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
-  //   const [open] = React.useState(false);
-  //   const handleOpen = () => setOpen(true);
+function EditZone({
+  fetchZones,
+  setIsShowEdit,
+  zoneId,
+  isShowEdit,
+}: ZoneBarProps) {
   const handleClose = () => setIsShowEdit(false);
-
   const [seasonContext] = useContext(SeasonContext);
+  const [zone, setZone] = useState<Zone>();
+
+  useEffect(() => {
+    agent.Zones.details(zoneId).then((zone) => setZone(zone));
+  });
 
   // Form submission
   const initialValues = {
@@ -99,6 +108,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                   type="text"
                   autoComplete=""
                   variant="standard"
+                  value={zone?.name}
                   helperText={
                     <ErrorMessage
                       name="name"
@@ -118,6 +128,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                     type="number"
                     autoComplete=""
                     variant="standard"
+                    value={zone?.runtimeHours}
                     InputProps={{ inputProps: { min: 0, max: 24 } }}
                     helperText={
                       <ErrorMessage
@@ -142,6 +153,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                     type="number"
                     autoComplete=""
                     variant="standard"
+                    value={zone?.runtimeMinutes}
                     InputProps={{ inputProps: { min: 0, max: 59 } }}
                     helperText={
                       <ErrorMessage
@@ -162,6 +174,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                   type="number"
                   autoComplete=""
                   variant="standard"
+                  value={zone?.runtimePerWeek}
                   InputProps={{ inputProps: { min: 0, max: 25 } }}
                   helperText={
                     <ErrorMessage
@@ -180,6 +193,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                   type="text"
                   autoComplete=""
                   variant="standard"
+                  value={zone?.imagePath}
                   helperText={
                     <ErrorMessage
                       name="imagePath"
@@ -199,7 +213,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                   variant="standard"
                 />
                 <Button className="submit-btn" type="submit">
-                  Add
+                  Submit
                 </Button>
               </Form>
             )}

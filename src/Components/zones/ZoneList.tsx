@@ -12,6 +12,7 @@ type ZoneBarProps = {
 
 export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
+  const [zoneId, setZoneId] = useState<number>(0)
 
   return (
     <>
@@ -39,6 +40,7 @@ export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
                   zone={zone}
                   fetchZones={fetchZones}
                   setIsShowEdit={setIsShowEdit}
+                  setZoneId={setZoneId}
                 />
               </Grid>
             ))}
@@ -48,6 +50,7 @@ export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
                 fetchZones={fetchZones}
                 setIsShowEdit={setIsShowEdit}
                 isShowEdit={isShowEdit}
+                zoneId={zoneId}
               />
             </Grid>
           </Grid>
