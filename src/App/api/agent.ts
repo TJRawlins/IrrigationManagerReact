@@ -24,6 +24,7 @@ const Zones = {
   list: () => requests.get("zones"),
   details: (id: number) => requests.get(`zones/${id}`),
   createZone: (zone: object) => requests.post("zones", zone),
+  editZone: (id: number, zone: object) => requests.put(`zones/${id}`, zone),
   removeZone: (id: number) => requests.delete(`zones/${id}`),
 };
 
