@@ -2,6 +2,8 @@ import { Box, Container, CssBaseline, Grid } from "@mui/material";
 import ZoneCard from "./ZoneCard";
 import { Zone } from "../../app/models/Zone";
 import AddZone from "./AddZone";
+import EditZone from "./EditZone";
+import { useState } from "react";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
@@ -9,6 +11,8 @@ type ZoneBarProps = {
 };
 
 export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
+  const [isShowEdit, setIsShowEdit] = useState(false);
+
   return (
     <>
       <CssBaseline />
@@ -31,11 +35,20 @@ export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
           >
             {zones.map((zone) => (
               <Grid item key={zone.id}>
-                <ZoneCard zone={zone} fetchZones={fetchZones} />
+                <ZoneCard
+                  zone={zone}
+                  fetchZones={fetchZones}
+                  setIsShowEdit={setIsShowEdit}
+                />
               </Grid>
             ))}
             <Grid>
               <AddZone fetchZones={fetchZones} />
+              <EditZone
+                fetchZones={fetchZones}
+                setIsShowEdit={setIsShowEdit}
+                isShowEdit={isShowEdit}
+              />
             </Grid>
           </Grid>
         </Box>

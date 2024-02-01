@@ -10,16 +10,19 @@ import { SeasonContext } from "../../app/context/context";
 
 type ZoneCardProps = {
     fetchZones(args: string): void;
+    setIsShowEdit(args: boolean): void;
     zoneId: number;
     isHovering: boolean;
   };
 
-export const ZoneCardActionMenu = ({ zoneId, fetchZones, isHovering }: ZoneCardProps) => {
+export const ZoneCardActionMenu = ({ zoneId, fetchZones, setIsShowEdit, isHovering }: ZoneCardProps) => {
   const [seasonContext] = useContext(SeasonContext);
 
   const deleteZone = () => {
     agent.Zones.removeZone(zoneId).then(() => fetchZones(seasonContext));
   };
+
+  const showEdit = () => setIsShowEdit(true)
 
   return (
     <CardActions
@@ -42,7 +45,7 @@ export const ZoneCardActionMenu = ({ zoneId, fetchZones, isHovering }: ZoneCardP
         <Button className="card-btn" size="small">
           <VisibilityIcon className="action-icon" />
         </Button>
-        <Button className="card-btn" size="small">
+        <Button className="card-btn" size="small" onClick={showEdit}>
           <EditIcon className="action-icon" />
         </Button>
         <Button className="card-btn" size="small" onClick={deleteZone}>

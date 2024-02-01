@@ -19,10 +19,11 @@ import { ZoneCardActionMenu } from "./ZoneCardActionMenu";
 //* Get a zone from list of zones from ZoneList.tsx (list obtained from App.tsx)
 type ZoneCardProps = {
   fetchZones(args: string): void;
+  setIsShowEdit(args: boolean): void;
   zone: Zone;
 };
 
-export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
+export default function ZoneCard({ zone, fetchZones, setIsShowEdit }: ZoneCardProps) {
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -244,6 +245,7 @@ export default function ZoneCard({ zone, fetchZones }: ZoneCardProps) {
         <CardData />
         <ZoneCardActionMenu
           fetchZones={fetchZones}
+          setIsShowEdit={setIsShowEdit}
           zoneId={zone.id}
           isHovering={isHovering}
         />

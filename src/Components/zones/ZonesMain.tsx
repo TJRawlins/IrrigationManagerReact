@@ -7,10 +7,8 @@ import ZoneBar from "./ZoneBar";
 import { Grid } from "@mui/material";
 
 const ZonesMain = () => {
-  //TODO - STEP 2: SET INITIAL CONTEXT
   const [seasonContext, setSeasonContext] = useState("Summer");
 
-  //TODO STEP 5: FETCH FILTERED DATA BASED ON CURRENT CONTEXT
   //* Initial zone list
   const [zones, setZones] = useState<Zone[]>([]);
 
