@@ -70,6 +70,7 @@
 
 .card-btn {
   width: 100% !important;
+  min-width: 50px !important;
   background-color: #ffffffa8 !important;
   color: #002b49 !important;
   border-radius: 20px !important;

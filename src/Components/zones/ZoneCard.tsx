@@ -9,6 +9,7 @@ import {
   Chip,
   ChipProps,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import {
@@ -18,6 +19,7 @@ import {
 } from "@mui/icons-material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
+import { BiSolidCopyAlt } from "react-icons/bi";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
 import { useContext, useState } from "react";
@@ -267,15 +269,36 @@ export default function ZoneCard({
               justifyContent: "space-around",
             }}
           >
-            <Button className="card-btn" id="card-details" size="small">
-              <VisibilityIcon className="action-icon" />
-            </Button>
-            <Button className="card-btn" id="card-edit" size="small" onClick={showEdit}>
-              <EditIcon className="action-icon" />
-            </Button>
-            <Button className="card-btn" id="card-delete" size="small" onClick={deleteZone}>
-              <ClearIcon className="action-icon" />
-            </Button>
+            <Tooltip title="View Plants">
+              <Button className="card-btn" id="card-details" size="small">
+                <VisibilityIcon className="action-icon" />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Copy Zone">
+              <Button className="card-btn" id="card-copy" size="small">
+                <BiSolidCopyAlt className="action-icon" size="1.5rem" />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Edit Zone">
+              <Button
+                className="card-btn"
+                id="card-edit"
+                size="small"
+                onClick={showEdit}
+              >
+                <EditIcon className="action-icon" />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Delete Zone">
+              <Button
+                className="card-btn"
+                id="card-delete"
+                size="small"
+                onClick={deleteZone}
+              >
+                <ClearIcon className="action-icon" />
+              </Button>
+            </Tooltip>
           </Box>
         </CardActions>
       </Card>
