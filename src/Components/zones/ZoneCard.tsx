@@ -1,7 +1,9 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
+  CardActions,
   CardContent,
   CardMedia,
   Chip,
@@ -9,14 +11,21 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import {
+  Visibility as VisibilityIcon,
+  Edit as EditIcon,
+  Clear as ClearIcon,
+} from "@mui/icons-material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
-import { useState } from "react";
-import { ZoneCardActionMenu } from "./ZoneCardActionMenu";
+import { useContext, useState } from "react";
+// import { ZoneCardActionMenu } from "./ZoneCardActionMenu";
+import agent from "../../app/api/agent";
+import { SeasonContext } from "../../app/context/context";
 
-//* Get a zone from list of zones from ZoneList.tsx (list obtained from App.tsx)
+//* Get a zone from list of zones from ZoneList.tsx (list obtained from ZoneMain.tsx)
 type ZoneCardProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
@@ -24,7 +33,14 @@ type ZoneCardProps = {
   zone: Zone;
 };
 
-export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }: ZoneCardProps) {
+export default function ZoneCard({
+  zone,
+  fetchZones,
+  setIsShowEdit,
+  setZoneId,
+}: ZoneCardProps) {
+  // State Variables
+  const [seasonContext] = useContext(SeasonContext);
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -33,6 +49,15 @@ export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }:
   function handelMouseLeave() {
     setIsHovering(false);
   }
+
+  const deleteZone = () => {
+    agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonContext));
+  };
+
+  const showEdit = () => {
+    setIsShowEdit(true);
+    setZoneId(zone.id);
+  };
 
   //* -*-*-*-*-*-*-*-*-*-*-*-* TOTAL GALLONS CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
   const CardAvatarChips = () => {
@@ -124,7 +149,6 @@ export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }:
   };
 
   // * -*-*-*-*-*-*-*-*-*-*-*-* SEASON ICON CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
-
   function getChipProps(params: string): ChipProps {
     if (params === "Spring") {
       return {
@@ -164,66 +188,6 @@ export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }:
     }
   }
 
-  //* -*-*-*-*-*-*-*-*-*-*-*-* CARD DATA SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
-
-  const CardData = () => {
-    return (
-      <CardContent>
-        <Chip
-          className="chip"
-          variant="filled"
-          size="small"
-          sx={{ position: "absolute", top: "5px", left: "20px" }}
-          {...getChipProps(zone.season)}
-        />
-        <Typography
-          className="zone-name"
-          gutterBottom
-          variant="h6"
-          component="div"
-        >
-          {zone.name.toLocaleUpperCase()}
-        </Typography>
-        <Box className="card-data-container">
-          <Typography
-            className="card-data"
-            variant="body2"
-            color="text.secondary"
-          >
-            <span>Runtime:</span>
-            <span>
-              {zone.runtimeHours}:
-              {zone.runtimeMinutes.toString().length == 1
-                ? "0" + zone.runtimeMinutes
-                : zone.runtimeMinutes}
-            </span>
-          </Typography>
-          <Typography
-            className="card-data"
-            variant="body2"
-            color="text.secondary"
-          >
-            <span>Per Week:</span>
-            <span>{zone.runtimePerWeek}</span>
-          </Typography>
-          <Typography
-            className="card-data"
-            variant="body2"
-            color="text.secondary"
-          >
-            <span>Total Plants:</span>
-            <span>{zone.totalPlants}</span>
-          </Typography>
-        </Box>
-        <Box>
-          <CardAvatarChips />
-        </Box>
-      </CardContent>
-    );
-  };
-
-  //* -*-*-*-*-*-*-*-*-*-*-*-* RETURN MAIN COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
-
   return (
     <>
       <Card
@@ -243,14 +207,87 @@ export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }:
           image={zone.imagePath}
           title={zone.name}
         />
-        <CardData />
-        <ZoneCardActionMenu
-          fetchZones={fetchZones}
-          setIsShowEdit={setIsShowEdit}
-          setZoneId={setZoneId}
-          zoneId={zone.id}
-          isHovering={isHovering}
-        />
+        {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  C A R D   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
+        <CardContent>
+          <Chip
+            className="chip"
+            variant="filled"
+            size="small"
+            sx={{ position: "absolute", top: "5px", left: "20px" }}
+            {...getChipProps(zone.season)}
+          />
+          <Typography
+            className="zone-name"
+            gutterBottom
+            variant="h6"
+            component="div"
+          >
+            {zone.name.toLocaleUpperCase()}
+          </Typography>
+          <Box className="card-data-container">
+            <Typography
+              className="card-data"
+              variant="body2"
+              color="text.secondary"
+            >
+              <span>Runtime:</span>
+              <span>
+                {zone.runtimeHours}:
+                {zone.runtimeMinutes.toString().length == 1
+                  ? "0" + zone.runtimeMinutes
+                  : zone.runtimeMinutes}
+              </span>
+            </Typography>
+            <Typography
+              className="card-data"
+              variant="body2"
+              color="text.secondary"
+            >
+              <span>Per Week:</span>
+              <span>{zone.runtimePerWeek}</span>
+            </Typography>
+            <Typography
+              className="card-data"
+              variant="body2"
+              color="text.secondary"
+            >
+              <span>Total Plants:</span>
+              <span>{zone.totalPlants}</span>
+            </Typography>
+          </Box>
+          <Box>
+            <CardAvatarChips />
+          </Box>
+        </CardContent>
+        {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  A C T I O N   M E N U  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
+        <CardActions
+          sx={{
+            height: "48px",
+            width: "94%",
+            position: "absolute",
+            top: "90px",
+          }}
+        >
+          <Box
+            className={isHovering ? "" : "hidden"}
+            sx={{
+              gap: 1,
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <Button className="card-btn" size="small">
+              <VisibilityIcon className="action-icon" />
+            </Button>
+            <Button className="card-btn" size="small" onClick={showEdit}>
+              <EditIcon className="action-icon" />
+            </Button>
+            <Button className="card-btn" size="small" onClick={deleteZone}>
+              <ClearIcon className="action-icon" />
+            </Button>
+          </Box>
+        </CardActions>
       </Card>
     </>
   );
