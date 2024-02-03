@@ -35,15 +35,10 @@ function EditZone({
 }: ZoneBarProps) {
   const handleClose = () => setIsShowEdit(false);
   const [seasonContext] = useContext(SeasonContext);
-  // const [zone, setZone] = useState<Zone>();
 
   const editZone = (id: number, values: object) => {
     agent.Zones.editZone(id, values).then(() => fetchZones(seasonContext));
   };
-
-  // useEffect(() => {
-  //   agent.Zones.details(selectedZoneRef.id);
-  // });
 
   // Form submission
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
@@ -114,7 +109,7 @@ function EditZone({
                   helperText={
                     <ErrorMessage
                       name="name"
-                      component="div"
+                      component="span"
                       className="error-text"
                     />
                   }
@@ -134,12 +129,13 @@ function EditZone({
                     helperText={
                       <ErrorMessage
                         name="runtimeHours"
-                        component="div"
+                        component="span"
                         className="error-text"
                       />
                     }
                   />
                   <Typography
+                    component="span"
                     sx={{ textAlign: "center !important", paddingTop: "30px" }}
                   >
                     :
@@ -158,7 +154,7 @@ function EditZone({
                     helperText={
                       <ErrorMessage
                         name="runtimeMinutes"
-                        component="div"
+                        component="span"
                         className="error-text"
                       />
                     }
@@ -178,7 +174,7 @@ function EditZone({
                   helperText={
                     <ErrorMessage
                       name="runtimePerWeek"
-                      component="div"
+                      component="span"
                       className="error-text"
                     />
                   }
@@ -195,7 +191,7 @@ function EditZone({
                   helperText={
                     <ErrorMessage
                       name="imagePath"
-                      component="div"
+                      component="span"
                       className="error-text"
                     />
                   }
