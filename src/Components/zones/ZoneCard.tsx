@@ -270,9 +270,6 @@ export default function ZoneCard({
             <Button className="card-btn" id="card-details" size="small">
               <VisibilityIcon className="action-icon" />
             </Button>
-            <Button className="card-btn" id="card-details" size="small">
-              <VisibilityIcon className="action-icon" />
-            </Button>
             <Button className="card-btn" id="card-edit" size="small" onClick={showEdit}>
               <EditIcon className="action-icon" />
             </Button>
