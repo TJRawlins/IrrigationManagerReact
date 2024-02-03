@@ -1,7 +1,9 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
+  CardActions,
   CardContent,
   CardMedia,
   Chip,
@@ -9,22 +11,33 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import {
+  Visibility as VisibilityIcon,
+  Edit as EditIcon,
+  Clear as ClearIcon,
+} from "@mui/icons-material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
-import { useState } from "react";
-import { ZoneCardActionMenu } from "./ZoneCardActionMenu";
+import { useContext, useState } from "react";
+import agent from "../../app/api/agent";
+import { SeasonContext } from "../../app/context/context";
 
-//* Get a zone from list of zones from ZoneList.tsx (list obtained from App.tsx)
 type ZoneCardProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
-  setZoneId(args: number): void;
+  setSelectedZone(args: Zone): void;
   zone: Zone;
 };
 
-export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }: ZoneCardProps) {
+export default function ZoneCard({
+  zone,
+  fetchZones,
+  setIsShowEdit,
+  setSelectedZone,
+}: ZoneCardProps) {
+  const [seasonContext] = useContext(SeasonContext);
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -34,97 +47,17 @@ export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }:
     setIsHovering(false);
   }
 
-  //* -*-*-*-*-*-*-*-*-*-*-*-* TOTAL GALLONS CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
-  const CardAvatarChips = () => {
-    return (
-      <>
-        <Stack
-          direction="row"
-          spacing={1}
-          mt={2}
-          mb={0}
-          sx={{
-            display: { xs: "flex", sm: "flex", md: "flex" },
-            justifyContent: "space-between",
-            maxWidth: "100%",
-            flexWrap: "nowrap",
-          }}
-        >
-          <Chip
-            sx={{
-              width: "100%",
-              bgcolor: "#f5f5f5",
-              color: "#969696",
-              justifyContent: "left",
-              borderRadius: "10px",
-              margin: "0 !important",
-              padding: "0 !important",
-            }}
-            avatar={
-              <Avatar
-                sx={{
-                  minWidth: "fit-content",
-                  background: "rgba(0, 0, 0, 0.08)",
-                  fontWeight: "700",
-                  color: "#969696 !important",
-                }}
-              >
-                W
-              </Avatar>
-            }
-            label={zone.totalGalPerWeek}
-          />
-          <Chip
-            sx={{
-              width: "100%",
-              bgcolor: "#f5f5f5",
-              color: "#969696",
-              justifyContent: "left",
-              borderRadius: "10px",
-            }}
-            avatar={
-              <Avatar
-                sx={{
-                  minWidth: "fit-content",
-                  background: "rgba(0, 0, 0, 0.08)",
-                  fontWeight: "700",
-                  color: "#969696 !important",
-                }}
-              >
-                M
-              </Avatar>
-            }
-            label={zone.totalGalPerMonth}
-          />
-          <Chip
-            sx={{
-              width: "100%",
-              bgcolor: "#f5f5f5",
-              color: "#969696",
-              justifyContent: "left",
-              borderRadius: "10px",
-            }}
-            avatar={
-              <Avatar
-                sx={{
-                  minWidth: "fit-content",
-                  background: "rgba(0, 0, 0, 0.08)",
-                  fontWeight: "700",
-                  color: "#969696 !important",
-                }}
-              >
-                Y
-              </Avatar>
-            }
-            label={zone.totalGalPerYear}
-          />
-        </Stack>
-      </>
-    );
+  const deleteZone = () => {
+    agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonContext));
   };
 
-  // * -*-*-*-*-*-*-*-*-*-*-*-* SEASON ICON CHIPS -*-*-*-*-*-*-*-*-*-*-*-*
+  const showEdit = () => {
+    setIsShowEdit(true);
+    setSelectedZone(zone);
+    console.log(zone);
+  };
 
+  /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
   function getChipProps(params: string): ChipProps {
     if (params === "Spring") {
       return {
@@ -164,66 +97,6 @@ export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }:
     }
   }
 
-  //* -*-*-*-*-*-*-*-*-*-*-*-* CARD DATA SUB-COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
-
-  const CardData = () => {
-    return (
-      <CardContent>
-        <Chip
-          className="chip"
-          variant="filled"
-          size="small"
-          sx={{ position: "absolute", top: "5px", left: "20px" }}
-          {...getChipProps(zone.season)}
-        />
-        <Typography
-          className="zone-name"
-          gutterBottom
-          variant="h6"
-          component="div"
-        >
-          {zone.name.toLocaleUpperCase()}
-        </Typography>
-        <Box className="card-data-container">
-          <Typography
-            className="card-data"
-            variant="body2"
-            color="text.secondary"
-          >
-            <span>Runtime:</span>
-            <span>
-              {zone.runtimeHours}:
-              {zone.runtimeMinutes.toString().length == 1
-                ? "0" + zone.runtimeMinutes
-                : zone.runtimeMinutes}
-            </span>
-          </Typography>
-          <Typography
-            className="card-data"
-            variant="body2"
-            color="text.secondary"
-          >
-            <span>Per Week:</span>
-            <span>{zone.runtimePerWeek}</span>
-          </Typography>
-          <Typography
-            className="card-data"
-            variant="body2"
-            color="text.secondary"
-          >
-            <span>Total Plants:</span>
-            <span>{zone.totalPlants}</span>
-          </Typography>
-        </Box>
-        <Box>
-          <CardAvatarChips />
-        </Box>
-      </CardContent>
-    );
-  };
-
-  //* -*-*-*-*-*-*-*-*-*-*-*-* RETURN MAIN COMPONENT -*-*-*-*-*-*-*-*-*-*-*-*
-
   return (
     <>
       <Card
@@ -243,14 +116,168 @@ export default function ZoneCard({ zone, fetchZones, setIsShowEdit, setZoneId }:
           image={zone.imagePath}
           title={zone.name}
         />
-        <CardData />
-        <ZoneCardActionMenu
-          fetchZones={fetchZones}
-          setIsShowEdit={setIsShowEdit}
-          setZoneId={setZoneId}
-          zoneId={zone.id}
-          isHovering={isHovering}
-        />
+        {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
+        <CardContent>
+          <Chip
+            className="chip"
+            variant="filled"
+            size="small"
+            sx={{ position: "absolute", top: "5px", left: "20px" }}
+            {...getChipProps(zone.season)}
+          />
+          <Typography
+            className="zone-name"
+            gutterBottom
+            variant="h6"
+            component="div"
+          >
+            {zone.name.toLocaleUpperCase()}
+          </Typography>
+          <Box className="card-data-container">
+            <Typography
+              className="card-data"
+              variant="body2"
+              color="text.secondary"
+            >
+              <span>Runtime:</span>
+              <span>
+                {zone.runtimeHours}:
+                {zone.runtimeMinutes.toString().length == 1
+                  ? "0" + zone.runtimeMinutes
+                  : zone.runtimeMinutes}
+              </span>
+            </Typography>
+            <Typography
+              className="card-data"
+              variant="body2"
+              color="text.secondary"
+            >
+              <span>Per Week:</span>
+              <span>{zone.runtimePerWeek}</span>
+            </Typography>
+            <Typography
+              className="card-data"
+              variant="body2"
+              color="text.secondary"
+            >
+              <span>Total Plants:</span>
+              <span>{zone.totalPlants}</span>
+            </Typography>
+          </Box>
+          {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  T O T A L   G A L L O N S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
+          <Box>
+            <Stack
+              direction="row"
+              spacing={1}
+              mt={2}
+              mb={0}
+              sx={{
+                display: { xs: "flex", sm: "flex", md: "flex" },
+                justifyContent: "space-between",
+                maxWidth: "100%",
+                flexWrap: "nowrap",
+              }}
+            >
+              <Chip
+                sx={{
+                  width: "100%",
+                  bgcolor: "#f5f5f5",
+                  color: "#969696",
+                  justifyContent: "left",
+                  borderRadius: "10px",
+                  margin: "0 !important",
+                  padding: "0 !important",
+                }}
+                avatar={
+                  <Avatar
+                    sx={{
+                      minWidth: "fit-content",
+                      background: "rgba(0, 0, 0, 0.08)",
+                      fontWeight: "700",
+                      color: "#969696 !important",
+                    }}
+                  >
+                    W
+                  </Avatar>
+                }
+                label={zone.totalGalPerWeek}
+              />
+              <Chip
+                sx={{
+                  width: "100%",
+                  bgcolor: "#f5f5f5",
+                  color: "#969696",
+                  justifyContent: "left",
+                  borderRadius: "10px",
+                }}
+                avatar={
+                  <Avatar
+                    sx={{
+                      minWidth: "fit-content",
+                      background: "rgba(0, 0, 0, 0.08)",
+                      fontWeight: "700",
+                      color: "#969696 !important",
+                    }}
+                  >
+                    M
+                  </Avatar>
+                }
+                label={zone.totalGalPerMonth}
+              />
+              <Chip
+                sx={{
+                  width: "100%",
+                  bgcolor: "#f5f5f5",
+                  color: "#969696",
+                  justifyContent: "left",
+                  borderRadius: "10px",
+                }}
+                avatar={
+                  <Avatar
+                    sx={{
+                      minWidth: "fit-content",
+                      background: "rgba(0, 0, 0, 0.08)",
+                      fontWeight: "700",
+                      color: "#969696 !important",
+                    }}
+                  >
+                    Y
+                  </Avatar>
+                }
+                label={zone.totalGalPerYear}
+              />
+            </Stack>
+          </Box>
+        </CardContent>
+        {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  A C T I O N   M E N U  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
+        <CardActions
+          sx={{
+            height: "48px",
+            width: "94%",
+            position: "absolute",
+            top: "90px",
+          }}
+        >
+          <Box
+            className={isHovering ? "" : "hidden"}
+            sx={{
+              gap: 1,
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <Button className="card-btn" id="card-details" size="small">
+              <VisibilityIcon className="action-icon" />
+            </Button>
+            <Button className="card-btn" id="card-edit" size="small" onClick={showEdit}>
+              <EditIcon className="action-icon" />
+            </Button>
+            <Button className="card-btn" id="card-delete" size="small" onClick={deleteZone}>
+              <ClearIcon className="action-icon" />
+            </Button>
+          </Box>
+        </CardActions>
       </Card>
     </>
   );

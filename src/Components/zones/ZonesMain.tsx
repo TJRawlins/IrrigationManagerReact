@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { SeasonContext } from "../../app/context/context";
 import { Zone } from "../../app/models/Zone";
@@ -25,7 +26,6 @@ const ZonesMain = () => {
 
   useEffect(() => {
     fetchZones(seasonContext);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

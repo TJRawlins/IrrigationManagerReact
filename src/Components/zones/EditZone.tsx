@@ -1,7 +1,7 @@
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import "./AddZone.css";
 import Button from "@mui/material/Button";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import agent from "../../app/api/agent";
 import { SeasonContext } from "../../app/context/context";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -12,7 +12,7 @@ type ZoneBarProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
-  zoneId: number;
+  selectedZoneRef: Zone;
 };
 
 const style = {
@@ -30,25 +30,33 @@ const style = {
 function EditZone({
   fetchZones,
   setIsShowEdit,
-  zoneId,
   isShowEdit,
+  selectedZoneRef,
 }: ZoneBarProps) {
   const handleClose = () => setIsShowEdit(false);
   const [seasonContext] = useContext(SeasonContext);
-  const [zone, setZone] = useState<Zone>();
 
-  useEffect(() => {
-    agent.Zones.details(zoneId).then((zone) => setZone(zone));
-  });
+  const editZone = (id: number, values: object) => {
+    agent.Zones.editZone(id, values).then(() => fetchZones(seasonContext));
+  };
 
   // Form submission
+  const onSubmit = (values: object, props: { resetForm: () => void }) => {
+    console.log(values);
+    editZone(selectedZoneRef.id, values);
+    console.log("zone edited");
+    props.resetForm();
+    handleClose();
+  };
+
   const initialValues = {
-    name: "",
-    runtimeHours: 0,
-    runtimeMinutes: 0,
-    runtimePerWeek: 0,
-    imagePath: undefined,
-    season: seasonContext,
+    id: selectedZoneRef.id,
+    name: selectedZoneRef.name,
+    runtimeHours: selectedZoneRef.runtimeHours,
+    runtimeMinutes: selectedZoneRef.runtimeMinutes,
+    runtimePerWeek: selectedZoneRef.runtimePerWeek,
+    imagePath: selectedZoneRef.imagePath,
+    season: selectedZoneRef.season,
   };
 
   const validationSchema = Yup.object().shape({
@@ -58,16 +66,6 @@ function EditZone({
     runtimePerWeek: Yup.number().required("Required field"),
     imagePath: Yup.string().url("Please enter valid URL"),
   });
-
-  const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    console.log(values);
-    console.log(props);
-    agent.Zones.createZone(values)
-      .catch((error) => alert(error))
-      .then(() => fetchZones(seasonContext));
-    props.resetForm();
-    handleClose();
-  };
 
   return (
     <div>
@@ -108,11 +106,10 @@ function EditZone({
                   type="text"
                   autoComplete=""
                   variant="standard"
-                  value={zone?.name}
                   helperText={
                     <ErrorMessage
                       name="name"
-                      component="div"
+                      component="span"
                       className="error-text"
                     />
                   }
@@ -128,17 +125,17 @@ function EditZone({
                     type="number"
                     autoComplete=""
                     variant="standard"
-                    value={zone?.runtimeHours}
                     InputProps={{ inputProps: { min: 0, max: 24 } }}
                     helperText={
                       <ErrorMessage
                         name="runtimeHours"
-                        component="div"
+                        component="span"
                         className="error-text"
                       />
                     }
                   />
                   <Typography
+                    component="span"
                     sx={{ textAlign: "center !important", paddingTop: "30px" }}
                   >
                     :
@@ -153,12 +150,11 @@ function EditZone({
                     type="number"
                     autoComplete=""
                     variant="standard"
-                    value={zone?.runtimeMinutes}
                     InputProps={{ inputProps: { min: 0, max: 59 } }}
                     helperText={
                       <ErrorMessage
                         name="runtimeMinutes"
-                        component="div"
+                        component="span"
                         className="error-text"
                       />
                     }
@@ -174,12 +170,11 @@ function EditZone({
                   type="number"
                   autoComplete=""
                   variant="standard"
-                  value={zone?.runtimePerWeek}
                   InputProps={{ inputProps: { min: 0, max: 25 } }}
                   helperText={
                     <ErrorMessage
                       name="runtimePerWeek"
-                      component="div"
+                      component="span"
                       className="error-text"
                     />
                   }
@@ -193,11 +188,10 @@ function EditZone({
                   type="text"
                   autoComplete=""
                   variant="standard"
-                  value={zone?.imagePath}
                   helperText={
                     <ErrorMessage
                       name="imagePath"
-                      component="div"
+                      component="span"
                       className="error-text"
                     />
                   }
