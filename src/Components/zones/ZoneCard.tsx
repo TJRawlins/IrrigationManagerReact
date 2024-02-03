@@ -29,7 +29,7 @@ import { SeasonContext } from "../../app/context/context";
 type ZoneCardProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
-  setZoneId(args: number): void;
+  setSelectedZone(args: Zone): void;
   zone: Zone;
 };
 
@@ -37,7 +37,7 @@ export default function ZoneCard({
   zone,
   fetchZones,
   setIsShowEdit,
-  setZoneId,
+  setSelectedZone,
 }: ZoneCardProps) {
   // State Variables
   const [seasonContext] = useContext(SeasonContext);
@@ -56,7 +56,8 @@ export default function ZoneCard({
 
   const showEdit = () => {
     setIsShowEdit(true);
-    setZoneId(zone.id);
+    setSelectedZone(zone);
+    console.log(zone)
   };
 
   //* -*-*-*-*-*-*-*-*-*-*-*-* TOTAL GALLONS CHIPS -*-*-*-*-*-*-*-*-*-*-*-*

@@ -3,7 +3,7 @@ import ZoneCard from "./ZoneCard";
 import { Zone } from "../../app/models/Zone";
 import AddZone from "./AddZone";
 import EditZone from "./EditZone";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
@@ -12,7 +12,22 @@ type ZoneBarProps = {
 
 export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
-  const [zoneId, setZoneId] = useState<number>(0)
+  const [selectedZone, setSelectedZone] = useState<Zone>({
+    id: 1,
+    name: "",
+    season: "",
+    imagePath: "",
+    runtimeHours: 0,
+    runtimeMinutes: 0,
+    runtimePerWeek: 0,
+    totalPlants: 0,
+    totalGalPerWeek: "",
+    totalGalPerMonth: "",
+    totalGalPerYear: "",
+    plants: null,
+  });
+  const selectedZoneRef = useRef(selectedZone);
+  selectedZoneRef.current = selectedZone;
 
   return (
     <>
@@ -40,7 +55,7 @@ export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
                   zone={zone}
                   fetchZones={fetchZones}
                   setIsShowEdit={setIsShowEdit}
-                  setZoneId={setZoneId}
+                  setSelectedZone={setSelectedZone}
                 />
               </Grid>
             ))}
@@ -50,7 +65,7 @@ export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
                 fetchZones={fetchZones}
                 setIsShowEdit={setIsShowEdit}
                 isShowEdit={isShowEdit}
-                zoneId={zoneId}
+                selectedZoneRef={selectedZoneRef.current}
               />
             </Grid>
           </Grid>
