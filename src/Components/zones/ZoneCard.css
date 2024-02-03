@@ -69,6 +69,7 @@
 }
 
 .card-btn {
+  font-size: 1.5rem !important;
   width: 100% !important;
   min-width: 50px !important;
   background-color: #ffffffa8 !important;

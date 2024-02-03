@@ -12,14 +12,11 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import {
-  Visibility as VisibilityIcon,
-  Edit as EditIcon,
-  Clear as ClearIcon,
-} from "@mui/icons-material";
+import { Edit as EditIcon, Clear as ClearIcon } from "@mui/icons-material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
 import { BiSolidCopyAlt } from "react-icons/bi";
+import { PiTreeFill } from "react-icons/pi";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
 import { useContext, useState } from "react";
@@ -180,74 +177,80 @@ export default function ZoneCard({
                 flexWrap: "nowrap",
               }}
             >
-              <Chip
-                sx={{
-                  width: "100%",
-                  bgcolor: "#f5f5f5",
-                  color: "#969696",
-                  justifyContent: "left",
-                  borderRadius: "10px",
-                  margin: "0 !important",
-                  padding: "0 !important",
-                }}
-                avatar={
-                  <Avatar
-                    sx={{
-                      minWidth: "fit-content",
-                      background: "rgba(0, 0, 0, 0.08)",
-                      fontWeight: "700",
-                      color: "#969696 !important",
-                    }}
-                  >
-                    W
-                  </Avatar>
-                }
-                label={zone.totalGalPerWeek}
-              />
-              <Chip
-                sx={{
-                  width: "100%",
-                  bgcolor: "#f5f5f5",
-                  color: "#969696",
-                  justifyContent: "left",
-                  borderRadius: "10px",
-                }}
-                avatar={
-                  <Avatar
-                    sx={{
-                      minWidth: "fit-content",
-                      background: "rgba(0, 0, 0, 0.08)",
-                      fontWeight: "700",
-                      color: "#969696 !important",
-                    }}
-                  >
-                    M
-                  </Avatar>
-                }
-                label={zone.totalGalPerMonth}
-              />
-              <Chip
-                sx={{
-                  width: "100%",
-                  bgcolor: "#f5f5f5",
-                  color: "#969696",
-                  justifyContent: "left",
-                  borderRadius: "10px",
-                }}
-                avatar={
-                  <Avatar
-                    sx={{
-                      minWidth: "fit-content",
-                      background: "rgba(0, 0, 0, 0.08)",
-                      fontWeight: "700",
-                      color: "#969696 !important",
-                    }}
-                  >
-                    Y
-                  </Avatar>
-                }
-                label={zone.totalGalPerYear}
-              />
+              <Tooltip title="Total Weekly Gallons" arrow>
+                <Chip
+                  sx={{
+                    width: "100%",
+                    bgcolor: "#f5f5f5",
+                    color: "#969696",
+                    justifyContent: "left",
+                    borderRadius: "10px",
+                    margin: "0 !important",
+                    padding: "0 !important",
+                  }}
+                  avatar={
+                    <Avatar
+                      sx={{
+                        minWidth: "fit-content",
+                        background: "rgba(0, 0, 0, 0.08)",
+                        fontWeight: "700",
+                        color: "#969696 !important",
+                      }}
+                    >
+                      W
+                    </Avatar>
+                  }
+                  label={zone.totalGalPerWeek}
+                />
+              </Tooltip>
+              <Tooltip title="Total Monthly Gallons" arrow>
+                <Chip
+                  sx={{
+                    width: "100%",
+                    bgcolor: "#f5f5f5",
+                    color: "#969696",
+                    justifyContent: "left",
+                    borderRadius: "10px",
+                  }}
+                  avatar={
+                    <Avatar
+                      sx={{
+                        minWidth: "fit-content",
+                        background: "rgba(0, 0, 0, 0.08)",
+                        fontWeight: "700",
+                        color: "#969696 !important",
+                      }}
+                    >
+                      M
+                    </Avatar>
+                  }
+                  label={zone.totalGalPerMonth}
+                />
+              </Tooltip>
+              <Tooltip title="Total Yearly Gallons" arrow>
+                <Chip
+                  sx={{
+                    width: "100%",
+                    bgcolor: "#f5f5f5",
+                    color: "#969696",
+                    justifyContent: "left",
+                    borderRadius: "10px",
+                  }}
+                  avatar={
+                    <Avatar
+                      sx={{
+                        minWidth: "fit-content",
+                        background: "rgba(0, 0, 0, 0.08)",
+                        fontWeight: "700",
+                        color: "#969696 !important",
+                      }}
+                    >
+                      Y
+                    </Avatar>
+                  }
+                  label={zone.totalGalPerYear}
+                />
+              </Tooltip>
             </Stack>
           </Box>
         </CardContent>
@@ -257,7 +260,7 @@ export default function ZoneCard({
             height: "48px",
             width: "94%",
             position: "absolute",
-            top: "90px",
+            top: "100px",
           }}
         >
           <Box
@@ -269,17 +272,17 @@ export default function ZoneCard({
               justifyContent: "space-around",
             }}
           >
-            <Tooltip title="View Plants">
+            <Tooltip title="Plants" arrow>
               <Button className="card-btn" id="card-details" size="small">
-                <VisibilityIcon className="action-icon" />
+                <PiTreeFill className="action-icon" />
               </Button>
             </Tooltip>
-            <Tooltip title="Copy Zone">
+            <Tooltip title="Copy Zone" arrow>
               <Button className="card-btn" id="card-copy" size="small">
                 <BiSolidCopyAlt className="action-icon" size="1.5rem" />
               </Button>
             </Tooltip>
-            <Tooltip title="Edit Zone">
+            <Tooltip title="Edit Zone" arrow>
               <Button
                 className="card-btn"
                 id="card-edit"
@@ -289,7 +292,7 @@ export default function ZoneCard({
                 <EditIcon className="action-icon" />
               </Button>
             </Tooltip>
-            <Tooltip title="Delete Zone">
+            <Tooltip title="Delete Zone" arrow>
               <Button
                 className="card-btn"
                 id="card-delete"
