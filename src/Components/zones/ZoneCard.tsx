@@ -50,6 +50,25 @@ export default function ZoneCard({
     agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonContext));
   };
 
+  const copyZone = () => {
+    const {
+      name,
+      runtimeHours,
+      runtimeMinutes,
+      runtimePerWeek,
+      imagePath,
+      season,
+    } = zone;
+    agent.Zones.createZone({
+      name,
+      runtimeHours,
+      runtimeMinutes,
+      runtimePerWeek,
+      imagePath,
+      season,
+    }).then(() => fetchZones(seasonContext));
+  };
+
   const showEdit = () => {
     setIsShowEdit(true);
     setSelectedZone(zone);
@@ -278,7 +297,12 @@ export default function ZoneCard({
               </Button>
             </Tooltip>
             <Tooltip title="Copy Zone" arrow>
-              <Button className="card-btn" id="card-copy" size="small">
+              <Button
+                className="card-btn"
+                id="card-copy"
+                size="small"
+                onClick={copyZone}
+              >
                 <BiSolidCopyAlt className="action-icon" size="1.5rem" />
               </Button>
             </Tooltip>

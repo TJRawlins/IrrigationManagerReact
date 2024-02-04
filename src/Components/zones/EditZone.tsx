@@ -198,12 +198,10 @@ function EditZone({
                 />
                 <Field
                   as={TextField}
-                  disabled
                   className="input"
-                  id="standard-disabled"
-                  name={seasonContext}
+                  id="season-input"
+                  name="season"
                   label="Season"
-                  defaultValue={seasonContext}
                   variant="standard"
                 />
                 <Button className="submit-btn" type="submit">
