@@ -72,7 +72,7 @@ export default function ZoneCard({
   const showEdit = () => {
     setIsShowEdit(true);
     setSelectedZone(zone);
-    console.log(zone);
+    console.log("Edit Clicked");
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -291,41 +291,33 @@ export default function ZoneCard({
               justifyContent: "space-around",
             }}
           >
-            <Tooltip title="Plants" arrow>
-              <Button className="card-btn" id="card-details" size="small">
-                <PiTreeFill className="action-icon" />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Copy Zone" arrow>
-              <Button
-                className="card-btn"
-                id="card-copy"
-                size="small"
-                onClick={copyZone}
-              >
-                <BiSolidCopyAlt className="action-icon" size="1.5rem" />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Edit Zone" arrow>
-              <Button
-                className="card-btn"
-                id="card-edit"
-                size="small"
-                onClick={showEdit}
-              >
-                <EditIcon className="action-icon" />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Delete Zone" arrow>
-              <Button
-                className="card-btn"
-                id="card-delete"
-                size="small"
-                onClick={deleteZone}
-              >
-                <ClearIcon className="action-icon" />
-              </Button>
-            </Tooltip>
+            <Button className="card-btn" id="card-details" size="small">
+              <PiTreeFill className="action-icon" />
+            </Button>
+            <Button
+              className="card-btn"
+              id="card-copy"
+              size="small"
+              onClick={copyZone}
+            >
+              <BiSolidCopyAlt className="action-icon" size="1.5rem" />
+            </Button>
+            <Button
+              className="card-btn"
+              id="card-edit"
+              size="small"
+              onClick={showEdit}
+            >
+              <EditIcon className="action-icon" />
+            </Button>
+            <Button
+              className="card-btn"
+              id="card-delete"
+              size="small"
+              onClick={deleteZone}
+            >
+              <ClearIcon className="action-icon" />
+            </Button>
           </Box>
         </CardActions>
       </Card>
