@@ -12,9 +12,9 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Edit as EditIcon, Clear as ClearIcon } from "@mui/icons-material";
+import { Edit as EditIcon } from "@mui/icons-material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
-import { FaCanadianMapleLeaf } from "react-icons/fa";
+import { FaCanadianMapleLeaf, FaTrashAlt } from "react-icons/fa";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { PiTreeFill } from "react-icons/pi";
 import { Zone } from "../../app/models/Zone";
@@ -277,7 +277,7 @@ export default function ZoneCard({
         <CardActions
           sx={{
             height: "48px",
-            width: "94%",
+            width: "93%",
             position: "absolute",
             top: "100px",
           }}
@@ -294,29 +294,14 @@ export default function ZoneCard({
             <Button className="card-btn" id="card-details" size="small">
               <PiTreeFill className="action-icon" />
             </Button>
-            <Button
-              className="card-btn"
-              id="card-copy"
-              size="small"
-              onClick={copyZone}
-            >
-              <BiSolidCopyAlt className="action-icon" size="1.5rem" />
+            <Button className="card-btn" id="card-copy" onClick={copyZone}>
+              <BiSolidCopyAlt className="action-icon" />
             </Button>
-            <Button
-              className="card-btn"
-              id="card-edit"
-              size="small"
-              onClick={showEdit}
-            >
+            <Button className="card-btn" id="card-edit" onClick={showEdit}>
               <EditIcon className="action-icon" />
             </Button>
-            <Button
-              className="card-btn"
-              id="card-delete"
-              size="small"
-              onClick={deleteZone}
-            >
-              <ClearIcon className="action-icon" />
+            <Button className="card-btn" id="card-delete" onClick={deleteZone}>
+              <FaTrashAlt className="action-icon" />
             </Button>
           </Box>
         </CardActions>
