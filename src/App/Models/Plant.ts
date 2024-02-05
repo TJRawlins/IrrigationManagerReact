@@ -1,6 +1,6 @@
 export interface Plant {
     id: number;
-    type: number;
+    type: string;
     name: string;
     galsPerWk: number;
     quantity: number;

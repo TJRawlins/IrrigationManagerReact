@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Button, ButtonGroup, Chip, ChipProps } from "@mui/material";
-import { DataGrid, GridRenderCellParams } from "@mui/x-data-grid";
+import { Box, Button, ButtonGroup } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { Plant } from "../../app/models/Plant";
-import { Park, Grass, HighlightOff } from "@mui/icons-material";
+import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect } from "react";
+import "./PlantList.css";
 
 interface PlantListProps {
   plants: Plant[];
@@ -11,48 +12,29 @@ interface PlantListProps {
 }
 
 export default function PlantList({ plants, fetchPlants }: PlantListProps) {
-  function getChipProps(params: GridRenderCellParams): ChipProps {
-    if (params.value === "Tree") {
-      return {
-        icon: <Park />,
-        label: params.value,
-      };
-    } else {
-      return {
-        icon: <Grass />,
-        label: params.value,
-      };
-    }
-  }
-
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    { field: "name", headerName: "Plant Name", width: 150 },
-    { field: "galsPerWk", headerName: "Gals / Wk", width: 100 },
-    { field: "quantity", headerName: "Qty", width: 80 },
-    { field: "emittersPerPlant", headerName: "Emitters / Plant", width: 150 },
-    { field: "emitterGph", headerName: "GPH / Emitter", width: 150 },
-    {
-      field: "type",
-      headerName: "Plant Type",
-      width: 150,
-      renderCell: (params: GridRenderCellParams) => {
-        return <Chip variant="outlined" {...getChipProps(params)} />;
-      },
-    },
-    { field: "zoneId", headerName: "Zone", width: 80 },
-    {
-      field: "Delete",
-      headerName: "Delete",
-      width: 100,
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "name", headerName: "Plant", flex: 1 },
+    { field: "galsPerWk", headerName: "Gals. / Wk.", flex: 1 },
+    { field: "quantity", headerName: "Qty.", flex: 1 },
+    { field: "emittersPerPlant", headerName: "Emitters", flex: 1 },
+    { field: "emitterGph", headerName: "GPH / Emitter", flex: 1 },
+    { field: "type", headerName: "Type", flex: 1 },
+    { field: "action",
+      headerName: "Action",
+      sortable: false,
+      flex: 1,
       renderCell: () => {
         return (
-          <ButtonGroup>
-            <Button sx={{ color: "red" }}>
-              <HighlightOff />
+          <ButtonGroup id="action-btn-group">
+            <Button className="action-btn">
+              <FaRegEye className="action-btn-icon" style={{fontSize: 20}}/>
             </Button>
-            <Button sx={{ color: "red" }}>
-              <HighlightOff />
+            <Button className="action-btn">
+              <FaEdit className="action-btn-icon" />
+            </Button>
+            <Button className="action-btn">
+              <FaTrashAlt className="action-btn-icon" />
             </Button>
           </ButtonGroup>
         );
@@ -68,7 +50,6 @@ export default function PlantList({ plants, fetchPlants }: PlantListProps) {
     emittersPerPlant: plant.emittersPerPlant,
     emitterGph: plant.emitterGPH,
     type: plant.type,
-    zoneId: plant.zoneId,
   }));
 
   useEffect(() => {
@@ -77,11 +58,11 @@ export default function PlantList({ plants, fetchPlants }: PlantListProps) {
 
   return (
     <>
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box sx={{ height: "100%", width: "100%" }}>
         <DataGrid
           rows={rows}
           columns={columns}
-          sx={{ border: "none" }}
+          sx={{ border: "none", width: "100%" }}
           initialState={{
             pagination: {
               paginationModel: {

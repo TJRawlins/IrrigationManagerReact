@@ -34,6 +34,7 @@ const PlantMain = () => {
           bgcolor: "#eef2f6",
           borderRadius: "20px",
           width: "100vw",
+          height: "70vh",
           marginTop: "30px",
         }}
       >

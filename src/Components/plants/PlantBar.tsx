@@ -97,7 +97,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
         <FormControl fullWidth>
           <Select
             className="season-btn"
-            value='Front Yard'
+            value='Summer'
             onChange={handleChange}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
