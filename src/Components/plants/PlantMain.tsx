@@ -33,8 +33,7 @@ const PlantMain = () => {
         sx={{
           bgcolor: "#eef2f6",
           borderRadius: "20px",
-          width: "100vw",
-          height: "70vh",
+          width: "100%",
           marginTop: "30px",
         }}
       >
