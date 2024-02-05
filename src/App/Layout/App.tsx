@@ -2,7 +2,8 @@ import Navbar from "./Navbar";
 import "/src/App.css";
 import { Container, CssBaseline, Grid, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
-import ZonesMain from "../../Components/zones/ZonesMain";
+// import ZonesMain from "../../Components/zones/ZonesMain";
+import PlantMain from "../../Components/plants/PlantMain";
 
 const theme = createTheme({
   palette: {
@@ -36,7 +37,8 @@ function App() {
           flexGrow={0}
           sx={{ bgcolor: "#fff", padding: "30px" }}
         >
-          <ZonesMain />
+          {/* <ZonesMain /> */}
+          <PlantMain />
         </Grid>
         <Container maxWidth={false} disableGutters></Container>
       </ThemeProvider>

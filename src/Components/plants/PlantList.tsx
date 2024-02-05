@@ -1,13 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, ButtonGroup, Chip, ChipProps } from "@mui/material";
 import { DataGrid, GridRenderCellParams } from "@mui/x-data-grid";
 import { Plant } from "../../app/models/Plant";
 import { Park, Grass, HighlightOff } from "@mui/icons-material";
+import { useEffect } from "react";
 
-interface Props {
+interface PlantListProps {
   plants: Plant[];
+  fetchPlants: () => void;
 }
 
-export default function PlantList({ plants }: Props) {
+export default function PlantList({ plants, fetchPlants }: PlantListProps) {
   function getChipProps(params: GridRenderCellParams): ChipProps {
     if (params.value === "Tree") {
       return {
@@ -68,12 +71,17 @@ export default function PlantList({ plants }: Props) {
     zoneId: plant.zoneId,
   }));
 
+  useEffect(() => {
+    fetchPlants();
+  }, []);
+
   return (
     <>
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={rows}
           columns={columns}
+          sx={{ border: "none" }}
           initialState={{
             pagination: {
               paginationModel: {
