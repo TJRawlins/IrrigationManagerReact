@@ -17,6 +17,7 @@ export default function PlantList({ plants, fetchPlants }: PlantListProps) {
     quantity: false,
     type: false,
     id: false,
+    timeStamp: false,
   };
   const ALL_COLUMNS = {
     quantity: true,
@@ -36,13 +37,14 @@ export default function PlantList({ plants, fetchPlants }: PlantListProps) {
   }, [matches]);
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 1 },
+    { field: "id", headerName: "ID", width: 90 },
     { field: "name", headerName: "Plant", flex: 1 },
-    { field: "galsPerWk", headerName: "Gals. / Wk.", flex: 1 },
+    { field: "type", headerName: "Type", flex: 1 },
     { field: "quantity", headerName: "Qty.", flex: 1 },
+    { field: "galsPerWk", headerName: "Gals. / Wk.", flex: 1 },
     { field: "emittersPerPlant", headerName: "Emitters", flex: 1 },
     { field: "emitterGph", headerName: "GPH / Emitter", flex: 1 },
-    { field: "type", headerName: "Type", flex: 1 },
+    { field: "timeStamp", headerName: "Date Added", flex: 1 },
     {
       field: "action",
       headerName: "Action",
@@ -74,6 +76,7 @@ export default function PlantList({ plants, fetchPlants }: PlantListProps) {
     quantity: plant.quantity,
     emittersPerPlant: plant.emittersPerPlant,
     emitterGph: plant.emitterGPH,
+    timeStamp: plant.timeStamp,
     type: plant.type,
   }));
 
