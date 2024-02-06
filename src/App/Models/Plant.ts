@@ -1,10 +1,11 @@
 export interface Plant {
-    id: number;
-    type: number;
-    name: string;
-    galsPerWk: number;
-    quantity: number;
-    emittersPerPlant: number;
-    emitterGPH: number;
-    zoneId: number;
+  id: number;
+  type: string;
+  name: string;
+  galsPerWk: number;
+  quantity: number;
+  emittersPerPlant: number;
+  emitterGPH: number;
+  timeStamp: Date;
+  zoneId: number;
 }

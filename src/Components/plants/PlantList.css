@@ -1,0 +1,28 @@
+.action-btn-group {
+  min-width: 20px !important;
+}
+.action-btn-group,
+.action-btn {
+  border: none !important;
+  padding: 0 !important;
+  min-width: 15px !important;
+  /* background-color: yellow !important; */
+}
+
+.action-btn,
+.action-btn-icon {
+  padding: 0 !important;
+}
+
+.action-btn {
+  font-size: 1rem !important;
+  margin-left: 0.5rem !important;
+  border-radius: 5px !important;
+  width: 25px !important;
+}
+
+@media screen and (max-width: 810px) {
+  .action-btn {
+    margin-left: 0.05rem !important;
+  }
+}

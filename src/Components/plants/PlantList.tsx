@@ -1,55 +1,67 @@
-import { Box, Button, ButtonGroup, Chip, ChipProps } from "@mui/material";
-import { DataGrid, GridRenderCellParams } from "@mui/x-data-grid";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { Plant } from "../../app/models/Plant";
-import { Park, Grass, HighlightOff } from "@mui/icons-material";
+import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import "./PlantList.css";
 
-interface Props {
+interface PlantListProps {
   plants: Plant[];
+  fetchPlants: () => void;
 }
 
-export default function PlantList({ plants }: Props) {
-  function getChipProps(params: GridRenderCellParams): ChipProps {
-    if (params.value === "Tree") {
-      return {
-        icon: <Park />,
-        label: params.value,
-      };
-    } else {
-      return {
-        icon: <Grass />,
-        label: params.value,
-      };
-    }
-  }
+export default function PlantList({ plants, fetchPlants }: PlantListProps) {
+  const MOBILE_COLUMNS = {
+    quantity: false,
+    type: false,
+    id: false,
+    timeStamp: false,
+  };
+  const ALL_COLUMNS = {
+    quantity: true,
+    type: true,
+    id: true,
+  };
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("md"));
+
+  const [columnVisible, setColumnVisible] = useState(ALL_COLUMNS);
+
+  useEffect(() => {
+    const newColumns = matches ? ALL_COLUMNS : MOBILE_COLUMNS;
+    setColumnVisible(newColumns);
+    fetchPlants();
+  }, [matches]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
-    { field: "name", headerName: "Plant Name", width: 150 },
-    { field: "galsPerWk", headerName: "Gals / Wk", width: 100 },
-    { field: "quantity", headerName: "Qty", width: 80 },
-    { field: "emittersPerPlant", headerName: "Emitters / Plant", width: 150 },
-    { field: "emitterGph", headerName: "GPH / Emitter", width: 150 },
+    { field: "name", headerName: "Plant", flex: 1 },
+    { field: "type", headerName: "Type", flex: 1 },
+    { field: "quantity", headerName: "Qty.", flex: 1 },
+    { field: "galsPerWk", headerName: "Gals. / Wk.", flex: 1 },
+    { field: "emittersPerPlant", headerName: "Emitters", flex: 1 },
+    { field: "emitterGph", headerName: "GPH / Emitter", flex: 1 },
+    { field: "timeStamp", headerName: "Date Added", flex: 1 },
     {
-      field: "type",
-      headerName: "Plant Type",
-      width: 150,
-      renderCell: (params: GridRenderCellParams) => {
-        return <Chip variant="outlined" {...getChipProps(params)} />;
-      },
-    },
-    { field: "zoneId", headerName: "Zone", width: 80 },
-    {
-      field: "Delete",
-      headerName: "Delete",
-      width: 100,
+      field: "action",
+      headerName: "Action",
+      sortable: false,
+      flex: 1,
+      type: "number",
       renderCell: () => {
         return (
-          <ButtonGroup>
-            <Button sx={{ color: "red" }}>
-              <HighlightOff />
+          <ButtonGroup id="action-btn-group">
+            <Button className="action-btn">
+              <FaRegEye className="action-btn-icon" style={{ fontSize: 20 }} />
             </Button>
-            <Button sx={{ color: "red" }}>
-              <HighlightOff />
+            <Button className="action-btn">
+              <FaEdit className="action-btn-icon" />
+            </Button>
+            <Button className="action-btn">
+              <FaTrashAlt className="action-btn-icon" />
             </Button>
           </ButtonGroup>
         );
@@ -64,16 +76,18 @@ export default function PlantList({ plants }: Props) {
     quantity: plant.quantity,
     emittersPerPlant: plant.emittersPerPlant,
     emitterGph: plant.emitterGPH,
+    timeStamp: plant.timeStamp,
     type: plant.type,
-    zoneId: plant.zoneId,
   }));
 
   return (
     <>
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box sx={{ width: "100%" }}>
         <DataGrid
+          columnVisibilityModel={columnVisible}
           rows={rows}
           columns={columns}
+          sx={{ border: "none", width: "100%" }}
           initialState={{
             pagination: {
               paginationModel: {
@@ -81,7 +95,8 @@ export default function PlantList({ plants }: Props) {
               },
             },
           }}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[5, 10, 15]}
+          paginationMode="client"
           checkboxSelection
           disableRowSelectionOnClick
         />
