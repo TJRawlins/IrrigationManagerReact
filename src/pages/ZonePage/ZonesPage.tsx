@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import { SeasonContext } from "../../app/context/context";
 import { Zone } from "../../app/models/Zone";
-import ZoneList from "./ZoneList";
+import ZoneList from "../../Components/zones/ZoneList";
 import agent from "../../app/api/agent";
-import ZoneBar from "./ZoneBar";
+import ZoneBar from "../../Components/zones/ZoneBar";
 import { Grid } from "@mui/material";
 
-const ZonesMain = () => {
+const ZonesPage = () => {
   const [seasonContext, setSeasonContext] = useState("Summer");
 
   //* Initial zone list
@@ -30,7 +30,7 @@ const ZonesMain = () => {
 
   return (
     <SeasonContext.Provider value={[seasonContext, setSeasonContext]}>
-        <ZoneBar fetchZones={fetchZones} />
+      <ZoneBar fetchZones={fetchZones} />
       <Grid
         sx={{
           bgcolor: "#eef2f6",
@@ -44,4 +44,4 @@ const ZonesMain = () => {
     </SeasonContext.Provider>
   );
 };
-export default ZonesMain;
+export default ZonesPage;

@@ -2,7 +2,9 @@ import Navbar from "./Navbar";
 import "/src/App.css";
 import { Container, CssBaseline, Grid, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
-import ZonesMain from "../../Components/zones/ZonesMain";
+import RouterComponent from "../../routes/RouterComponent";
+import { BrowserRouter } from 'react-router-dom'
+// import ZonesMain from "../../Components/zones/ZonesMain";
 // import PlantMain from "../../Components/plants/PlantMain";
 
 const theme = createTheme({
@@ -19,6 +21,7 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <BrowserRouter>
         <Grid
           className="nav-grid"
           container
@@ -37,9 +40,11 @@ function App() {
           flexGrow={0}
           sx={{ bgcolor: "#fff", padding: "30px" }}
         >
-          <ZonesMain />
+          <RouterComponent />
+          {/* <ZonesMain /> */}
           {/* <PlantMain /> */}
         </Grid>
+        </BrowserRouter>
         <Container maxWidth={false} disableGutters></Container>
       </ThemeProvider>
     </>

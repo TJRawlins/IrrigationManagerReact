@@ -71,3 +71,37 @@
 .nav-toggle .icon:after {
   top: 9px;
 }
+
+.route-link-list {
+  /* border: 1px black solid; */
+  padding: 0.5rem 0 !important;
+  margin: 0 !important;
+}
+
+.route-link-item {
+  /* border: 1px black solid;
+  background-color: yellow; */
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.route-link-btn {
+  padding: 0 !important;
+  margin: 0 !important;
+  /* background-color: purple; */
+}
+
+.route-link {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 5;
+  width: 100%;
+  text-decoration: none;
+  color: #333;
+  /* background-color: red; */
+}
+
+.route-link-icon {
+ /* background-color: gray; */
+ height: 100%;
+}
