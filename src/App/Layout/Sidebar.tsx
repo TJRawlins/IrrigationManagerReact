@@ -11,16 +11,16 @@ import {
   Speed as SpeedIcon,
   DashboardOutlined as DashboardOutlinedIcon,
   Grass as GrassIcon,
-  // CalculateOutlined as CalculateOutlinedIcon,
   QuestionMarkOutlined as QuestionMarkOutlinedIcon,
   AccountCircleOutlined as AccountCircleIcon,
   SettingsSuggestOutlined as SettingsSuggestOutlinedIcon,
   Logout as LogoutIcon,
   WaterDropOutlined as WaterDropIcon,
 } from "@mui/icons-material";
-import "/src/app/layout/Sidebar.css";
 import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
+import { Link } from "react-router-dom";
+import "/src/app/layout/Sidebar.css";
 
 type Anchor = "left";
 
@@ -54,35 +54,57 @@ export default function Sidebar() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        {["Dashboard", "Zones", "Plants", "Emitter Calculator", "About"].map(
-          (text) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {(() => {
-                    if (text === "Dashboard") {
-                      return <SpeedIcon />;
-                    }
-                    if (text === "Zones") {
-                      return <DashboardOutlinedIcon />;
-                    }
-                    if (text === "Plants") {
-                      return <GrassIcon />;
-                    }
-                    if (text === "Emitter Calculator") {
-                      return <WaterDropIcon />;
-                    }
-                    if (text === "About") {
-                      return <QuestionMarkOutlinedIcon />;
-                    }
-                  })()}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
+      <List className="route-link-list">
+        <ListItem className="route-link-item">
+          <Link className="route-link" to="/dashboard">
+            <ListItemButton className=".route-link-btn">
+              <ListItemIcon className="route-link-icon">
+                <SpeedIcon />
+              </ListItemIcon>
+              Dashboard
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem className="route-link-item">
+          <Link className="route-link" to="/zones">
+            <ListItemButton className=".route-link-btn">
+              <ListItemIcon className="route-link-icon">
+                <DashboardOutlinedIcon />
+              </ListItemIcon>
+              Zones
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem className="route-link-item">
+          <Link className="route-link" to="/plants">
+            <ListItemButton className=".route-link-btn">
+              <ListItemIcon className="route-link-icon">
+                <GrassIcon />
+              </ListItemIcon>
+              Plants
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem className="route-link-item">
+          <Link className="route-link" to="/emitter-calculator">
+            <ListItemButton className=".route-link-btn">
+              <ListItemIcon className="route-link-icon">
+                <WaterDropIcon />
+              </ListItemIcon>
+              Emitter Calculator
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem className="route-link-item">
+          <Link className="route-link" to="/about">
+            <ListItemButton className=".route-link-btn">
+              <ListItemIcon className="route-link-icon">
+                <QuestionMarkOutlinedIcon />
+              </ListItemIcon>
+              About
+            </ListItemButton>
+          </Link>
+        </ListItem>
       </List>
       <Divider />
       <List>
@@ -133,9 +155,7 @@ export default function Sidebar() {
           >
             <HamburgerIcon />
           </Button>
-          <Grid>
-            
-          </Grid>
+          <Grid></Grid>
           <SwipeableDrawer
             className="sidebar"
             anchor={anchor}

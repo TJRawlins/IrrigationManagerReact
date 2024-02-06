@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 
-import PlantList from "./PlantList";
+import PlantList from "../../Components/plants/PlantList";
 import agent from "../../app/api/agent";
-import PlantBar from "./PlantBar";
+import PlantBar from "../../Components/plants/PlantBar";
 import { Grid } from "@mui/material";
 import { Plant } from "../../app/models/Plant";
 
-const PlantMain = () => {
+const PlantPage = () => {
   //* Initial zone list
   const [plants, setPlants] = useState<Plant[]>([]);
 
@@ -42,4 +42,4 @@ const PlantMain = () => {
     </>
   );
 };
-export default PlantMain;
+export default PlantPage;
