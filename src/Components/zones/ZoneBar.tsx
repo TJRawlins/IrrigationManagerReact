@@ -139,20 +139,28 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
             }}
           >
             <MenuItem value={"Summer"}>
-              <MdSunny className="menuIcon" />
-              <Typography className="menuText">Summer</Typography>
+              <div className="menu-wrapper">
+                <MdSunny className="menuIcon" />
+                <Typography className="menuText">Summer</Typography>
+              </div>
             </MenuItem>
             <MenuItem value={"Fall"}>
-              <FaCanadianMapleLeaf className="menuIcon iconRotate" />
-              <Typography className="menuText">Fall</Typography>
+              <div className="menu-wrapper">
+                <FaCanadianMapleLeaf className="menuIcon iconRotate" />
+                <Typography className="menuText">Fall</Typography>
+              </div>
             </MenuItem>
             <MenuItem value={"Winter"}>
-              <MdAcUnit className="menuIcon" />
-              <Typography className="menuText">Winter</Typography>
+              <div className="menu-wrapper">
+                <MdAcUnit className="menuIcon" />
+                <Typography className="menuText">Winter</Typography>
+              </div>
             </MenuItem>
             <MenuItem value={"Spring"}>
-              <MdLocalFlorist className="menuIcon" />
-              <Typography className="menuText">Spring</Typography>
+              <div className="menu-wrapper">
+                <MdLocalFlorist className="menuIcon" />
+                <Typography className="menuText">Spring</Typography>
+              </div>
             </MenuItem>
           </Select>
         </FormControl>
