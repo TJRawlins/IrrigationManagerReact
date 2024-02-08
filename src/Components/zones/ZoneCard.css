@@ -85,6 +85,10 @@
   font-size: 1.75rem !important;
 }
 
+#card-delete .action-icon {
+  font-size: 1.25rem !important;
+}
+
 .card-btn:hover {
   background-color: #ffffffe8 !important;
 }
