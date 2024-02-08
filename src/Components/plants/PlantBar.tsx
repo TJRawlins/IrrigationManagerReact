@@ -2,43 +2,47 @@ import "./PlantBar.css";
 import {
   Avatar,
   Box,
+  Button,
   Chip,
   CssBaseline,
   Divider,
-  FormControl,
-  MenuItem,
-  Select,
   Stack,
   Tooltip,
   Typography,
 } from "@mui/material";
-import {Grass as GrassIcon,} from "@mui/icons-material"
-import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
-import { FaCanadianMapleLeaf } from "react-icons/fa";
-import {
-  FlipCameraAndroid as FlipCameraAndroidIcon,
-} from "@mui/icons-material";
+import { Grass as GrassIcon } from "@mui/icons-material";
+import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 
 type PlantBarProps = {
-  fetchPlants(): void;
+  weekly: string;
+  monthly: string;
+  yearly: string;
+  zoneName: string;
+  season: string | undefined;
 };
 
-export default function PlantBar({ fetchPlants }: PlantBarProps) {
+export default function PlantBar({
+  weekly,
+  monthly,
+  yearly,
+  zoneName,
+  season,
+}: PlantBarProps) {
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */
-  const galsList: Array<string> = [
-    "Weekly Gallons",
-    "Monthly Gallons",
-    "Yearly Gallons",
-  ];
+
+  console.log(weekly);
   const AvatarChips = () => {
     return (
       <>
         <Box
           ml={2}
           mt={0.5}
-          sx={{ display: { sm: "none", xs: "flex" }, alignItems: "center" }}
+          sx={{
+            display: { md: "none", sm: "flex", xs: "flex" },
+            alignItems: "center",
+          }}
         >
           <FlipCameraAndroidIcon sx={{ color: "silver" }} />
           <Typography ml={1} sx={{ color: "silver", fontSize: 13 }}>
@@ -50,87 +54,82 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
           spacing={1}
           ml={2}
           mt={0.5}
-          sx={{ display: { xs: "none", sm: "block" } }}
+          sx={{ display: { md: "block", sm: "none", xs: "none" } }}
         >
-          {galsList.map((gals) => (
-            <Tooltip key={gals} title={gals} arrow>
-              <Chip
-                sx={{
-                  width: "fit-content",
-                  borderBottom: "1px solid silver",
-                  bgcolor: "#ffffff",
-                  color: "#919191",
-                  justifyContent: "left",
-                }}
-                avatar={
-                  <Avatar
-                    sx={{
-                      minWidth: "fit-content",
-                      background: "rgba(0, 0, 0, 0.08)",
-                      fontWeight: "700",
-                      color: "#919191 !important",
-                    }}
-                  >
-                    {gals[0].toLocaleUpperCase()}
-                  </Avatar>
-                }
-                label="615"
-              />
-            </Tooltip>
-          ))}
+          <Tooltip title="Weekly Gallons" arrow>
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {"Weekly Gallons"[0].toLocaleUpperCase()}
+                </Avatar>
+              }
+              label={weekly}
+            />
+          </Tooltip>
+          <Tooltip title="Monthly Gallons" arrow>
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {"Monthly Gallons"[0].toLocaleUpperCase()}
+                </Avatar>
+              }
+              label={monthly}
+            />
+          </Tooltip>
+          <Tooltip title="Yearly Gallons" arrow>
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {"Yearly Gallons"[0].toLocaleUpperCase()}
+                </Avatar>
+              }
+              label={yearly}
+            />
+          </Tooltip>
         </Stack>
       </>
-    );
-  };
-
-  // *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
-
-
-  const SeasonMenu = () => {
-    const handleChange = () => {
-      console.log("handleChange Called");
-      fetchPlants();
-    };
-
-    return (
-      <Box sx={{ minWidth: 150 }}>
-        <FormControl fullWidth>
-          <Select
-            className="season-btn"
-            value='Summer'
-            onChange={handleChange}
-            displayEmpty
-            inputProps={{ "aria-label": "Without label" }}
-            sx={{
-              boxShadow: "none",
-              ".MuiOutlinedInput-notchedOutline": { border: 0 },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                border: "none",
-                borderRadius: "5px 5px 0 0",
-              },
-              height: "40px",
-              mt: 0.5,
-            }}
-          >
-            <MenuItem value={"Summer"}>
-              <MdSunny className="menuIcon" />
-              <Typography className="menuText">Summer</Typography>
-            </MenuItem>
-            <MenuItem value={"Fall"}>
-              <FaCanadianMapleLeaf className="menuIcon iconRotate" />
-              <Typography className="menuText">Fall</Typography>
-            </MenuItem>
-            <MenuItem value={"Winter"}>
-              <MdAcUnit className="menuIcon" />
-              <Typography className="menuText">Winter</Typography>
-            </MenuItem>
-            <MenuItem value={"Spring"}>
-              <MdLocalFlorist className="menuIcon" />
-              <Typography className="menuText">Spring</Typography>
-            </MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
     );
   };
 
@@ -143,7 +142,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
       <div className="main-container">
         <div className="content-container">
           <div className="title-container">
-            <GrassIcon sx={{ m: 2 }} />
+            <GrassIcon sx={{ m: 1 }} />
             <Typography className="bar-title" variant="h6" noWrap component="a">
               PLANTS
             </Typography>
@@ -162,7 +161,21 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
               orientation="vertical"
               flexItem
             />
-            <SeasonMenu />
+            {/* // *-*-*-*-*-*-*-*-*-*-*-*-* ZONE & SEASON TITLE *-*-*-*-*-*-*-*-*-*-*-*-* */}
+            <Box sx={{ display: { md: "block", sm: "none", xs: "none" } }}>
+              <div className="season-title-wrapper">
+                <Typography component="div" className="zone-name-text">
+                  {zoneName}
+                </Typography>
+                <div id="season-name">{season}</div>
+              </div>
+            </Box>
+            <Divider
+              sx={{ height: "60%", marginTop: "12px" }}
+              orientation="vertical"
+              flexItem
+            />
+            <Button className="add-plant-btn">+ Add Plant</Button>
             <Divider
               sx={{ height: "60%", marginTop: "12px" }}
               orientation="vertical"

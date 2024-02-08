@@ -9,10 +9,10 @@ import "./PlantList.css";
 
 interface PlantListProps {
   plants: Plant[];
-  fetchPlants: () => void;
+  // fetchPlants: () => void;
 }
 
-export default function PlantList({ plants, fetchPlants }: PlantListProps) {
+export default function PlantList({ plants }: PlantListProps) {
   const MOBILE_COLUMNS = {
     quantity: false,
     type: false,
@@ -33,7 +33,6 @@ export default function PlantList({ plants, fetchPlants }: PlantListProps) {
   useEffect(() => {
     const newColumns = matches ? ALL_COLUMNS : MOBILE_COLUMNS;
     setColumnVisible(newColumns);
-    fetchPlants();
   }, [matches]);
 
   const columns = [

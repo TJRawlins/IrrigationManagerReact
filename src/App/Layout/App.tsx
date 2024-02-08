@@ -4,8 +4,6 @@ import { CssBaseline, Grid, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import RouterComponent from "../../routes/RouterComponent";
 import { BrowserRouter as Router } from "react-router-dom";
-// import ZonesMain from "../../Components/zones/ZonesMain";
-// import PlantMain from "../../Components/plants/PlantMain";
 
 const theme = createTheme({
   palette: {
