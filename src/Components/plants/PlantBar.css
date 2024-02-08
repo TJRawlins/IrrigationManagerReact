@@ -39,27 +39,49 @@ div.main-container {
   background: rgb(235, 235, 235) !important;
 }
 
-.menuText {
-  width: 0;
+.season-title-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem !important;
+  margin-top: 0.2rem;
+}
+
+.zone-name-text {
   color: #777;
+  font-size: 2rem;
+  align-self: center;
 }
 
-.menuIcon {
+#season-name {
+  background-color: #eef2f6;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 5px;
+  margin-left: 0.75rem;
+}
+
+.season-icon {
   color: silver;
-  transform: scale(1.5);
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
 }
 
-svg.menuIcon {
+svg.seaons-icon {
   height: 1.5em;
   margin-right: 0.75rem;
 }
 
-.menuIcon.iconRotate {
+.seaons-icon.iconRotate {
   transform: rotate(-45deg) scale(1.5);
 }
 
 .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
   display: flex;
   color: #777;
+}
+
+.add-plant-btn {
+  margin-top: 0.25rem !important;
+  font-size: 13px !important;
+  padding: 0.5rem 1rem !important;
 }

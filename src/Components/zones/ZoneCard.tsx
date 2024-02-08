@@ -16,12 +16,13 @@ import { Edit as EditIcon } from "@mui/icons-material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf, FaTrashAlt } from "react-icons/fa";
 import { BiSolidCopyAlt } from "react-icons/bi";
-import { PiTreeFill } from "react-icons/pi";
+import { Grass as GrassIcon } from "@mui/icons-material";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
 import { useContext, useState } from "react";
 import agent from "../../app/api/agent";
 import { SeasonContext } from "../../app/context/context";
+import { Link } from "react-router-dom";
 
 type ZoneCardProps = {
   fetchZones(args: string): void;
@@ -291,9 +292,11 @@ export default function ZoneCard({
               justifyContent: "space-around",
             }}
           >
-            <Button className="card-btn" id="card-details" size="small">
-              <PiTreeFill className="action-icon" />
-            </Button>
+            <Link to={`/plants/zone/${zone.id}`}>
+              <Button className="card-btn" id="card-details" >
+                <GrassIcon className="action-icon" />
+              </Button>
+            </Link>
             <Button className="card-btn" id="card-copy" onClick={copyZone}>
               <BiSolidCopyAlt className="action-icon" />
             </Button>
