@@ -150,7 +150,9 @@ export default function ZoneCard({
             variant="h6"
             component="div"
           >
-            {zone.name.toLocaleUpperCase()}
+            {zone.name.length > 15
+              ? zone.name.toLocaleUpperCase().substring(0, 18) + "..."
+              : zone.name.toLocaleUpperCase()}
           </Typography>
           <Box className="card-data-container">
             <Typography
@@ -293,7 +295,7 @@ export default function ZoneCard({
             }}
           >
             <Link to={`/plants/zone/${zone.id}`}>
-              <Button className="card-btn" id="card-details" >
+              <Button className="card-btn" id="card-details">
                 <GrassIcon className="action-icon" />
               </Button>
             </Link>
