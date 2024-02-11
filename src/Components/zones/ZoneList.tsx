@@ -24,6 +24,7 @@ export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
     totalGalPerWeek: "",
     totalGalPerMonth: "",
     totalGalPerYear: "",
+    seasonId: 0,
     plants: null,
   });
   const selectedZoneRef = useRef(selectedZone);

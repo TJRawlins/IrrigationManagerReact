@@ -23,6 +23,8 @@ import { useContext, useState } from "react";
 import agent from "../../app/api/agent";
 import { SeasonContext } from "../../app/context/context";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 type ZoneCardProps = {
   fetchZones(args: string): void;
@@ -37,6 +39,7 @@ export default function ZoneCard({
   setIsShowEdit,
   setSelectedZone,
 }: ZoneCardProps) {
+  const { seasonName } = useSelector((state: RootState) => state.seasonName);
   const [seasonContext] = useContext(SeasonContext);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -74,6 +77,7 @@ export default function ZoneCard({
     setIsShowEdit(true);
     setSelectedZone(zone);
     console.log("Edit Clicked");
+    console.log(seasonName)
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */

@@ -19,8 +19,10 @@ import {
   DashboardOutlined as DashboardOutlinedIcon,
   FlipCameraAndroid as FlipCameraAndroidIcon,
 } from "@mui/icons-material";
-import { useContext } from "react";
-import { SeasonContext } from "../../app/context/context";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { updateCurrentSeason } from "../../redux/seasonSlice";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
@@ -88,34 +90,15 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
 
   // *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
 
-  /**
-   * ://TODO CONTEXT STEPS
-   * ://TODO [1] STEP 6: CONSUME CONTEXT, GET SEASON STRING
-   * ://TODO [2] STEP 7: UPDATE CONTEXT VALUE WITH DROPDOWN SELECTION
-   */
-  /**
-   * ://! BUG FIX: DISPLAYS PREVIOUS SELECTION INSTEAD OF CURRENT
-   * ://! [1] Variable to assign the most current seasonContext (currentState)
-   * ://! [2] Assign the most current seasonContext (currentState)
-   * ://! [3] Pass in the most current seasonContext (currentState)
-   */
-
   const SeasonMenu = () => {
-    //TODO [1]
-    const [seasonContext, setSeasonContext] = useContext(SeasonContext);
-    //TODO [2]
+    // Set season name using Redux toolkit and fetch zones
+    const { seasonName } = useSelector((state: RootState) => state.seasonName);
+    const dispatch = useDispatch();
+
     const handleChange = (event: SelectChangeEvent) => {
       console.log("handleChange Called");
-      //! [1]
-      let currentStateSeason = "";
-      setSeasonContext((currentState: string) => {
-        currentState = event.target.value;
-        //! [2]
-        currentStateSeason = currentState;
-        return currentState;
-      });
-      //! [3]
-      fetchZones(currentStateSeason);
+      dispatch(updateCurrentSeason(event.target.value));
+      fetchZones(event.target.value);
     };
 
     return (
@@ -123,7 +106,7 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
         <FormControl fullWidth>
           <Select
             className="season-btn"
-            value={seasonContext}
+            value={seasonName}
             onChange={handleChange}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
