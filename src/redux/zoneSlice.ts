@@ -8,21 +8,7 @@ export interface ZoneState {
 
 // State
 const initialState: ZoneState = {
-  zone: {
-    id: 0,
-    name: "",
-    runtimeHours: 0,
-    runtimeMinutes: 0,
-    runtimePerWeek: 0,
-    imagePath: "",
-    season: "",
-    totalPlants: 0,
-    totalGalPerWeek: "",
-    totalGalPerMonth: "",
-    totalGalPerYear: "",
-    seasonId: 0,
-    plants: null,
-  },
+  zone: new Zone(),
 };
 
 export const zoneSlice = createSlice({

@@ -22,13 +22,13 @@ import "./ZoneCard.css";
 import { useState } from "react";
 import agent from "../../app/api/agent";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { updateCurrentZone } from "../../redux/zoneSlice";
 
 type ZoneCardProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
-  setSelectedZone(args: Zone): void;
   zone: Zone;
 };
 
@@ -36,9 +36,9 @@ export default function ZoneCard({
   zone,
   fetchZones,
   setIsShowEdit,
-  setSelectedZone,
 }: ZoneCardProps) {
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  const dispatch = useDispatch();
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -75,7 +75,7 @@ export default function ZoneCard({
 
   const showEdit = () => {
     setIsShowEdit(true);
-    setSelectedZone(zone);
+    dispatch(updateCurrentZone(zone))
     console.log("Edit Clicked");
     console.log(seasonName);
   };

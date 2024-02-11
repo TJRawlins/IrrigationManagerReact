@@ -4,6 +4,8 @@ import { Zone } from "../../app/models/Zone";
 import AddZone from "./AddZone";
 import EditZone from "./EditZone";
 import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
@@ -12,23 +14,9 @@ type ZoneBarProps = {
 
 export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
-  const [selectedZone, setSelectedZone] = useState<Zone>({
-    id: 1,
-    name: "",
-    season: "",
-    imagePath: "",
-    runtimeHours: 0,
-    runtimeMinutes: 0,
-    runtimePerWeek: 0,
-    totalPlants: 0,
-    totalGalPerWeek: "",
-    totalGalPerMonth: "",
-    totalGalPerYear: "",
-    seasonId: 0,
-    plants: null,
-  });
-  const selectedZoneRef = useRef(selectedZone);
-  selectedZoneRef.current = selectedZone;
+  const { zone } = useSelector((state: RootState) => state.zone);
+  const selectedZoneRef = useRef(zone);
+  selectedZoneRef.current = zone;
 
   return (
     <>
@@ -56,7 +44,6 @@ export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
                   zone={zone}
                   fetchZones={fetchZones}
                   setIsShowEdit={setIsShowEdit}
-                  setSelectedZone={setSelectedZone}
                 />
               </Grid>
             ))}
