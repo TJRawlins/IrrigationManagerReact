@@ -1,12 +1,12 @@
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import "./AddZone.css";
 import Button from "@mui/material/Button";
-import { useContext } from "react";
 import agent from "../../app/api/agent";
-import { SeasonContext } from "../../app/context/context";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Zone } from "../../app/models/Zone";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
@@ -33,11 +33,12 @@ function EditZone({
   isShowEdit,
   selectedZoneRef,
 }: ZoneBarProps) {
+  const { seasonName } = useSelector((state: RootState) => state.seasonName);
+
   const handleClose = () => setIsShowEdit(false);
-  const [seasonContext] = useContext(SeasonContext);
 
   const editZone = (id: number, values: object) => {
-    agent.Zones.editZone(id, values).then(() => fetchZones(seasonContext));
+    agent.Zones.editZone(id, values).then(() => fetchZones(seasonName));
   };
 
   // Form submission
@@ -57,6 +58,7 @@ function EditZone({
     runtimePerWeek: selectedZoneRef.runtimePerWeek,
     imagePath: selectedZoneRef.imagePath,
     season: selectedZoneRef.season,
+    seasonId: selectedZoneRef.seasonId,
   };
 
   const validationSchema = Yup.object().shape({
@@ -202,6 +204,14 @@ function EditZone({
                   id="season-input"
                   name="season"
                   label="Season"
+                  variant="standard"
+                />
+                <Field
+                  as={TextField}
+                  className="input"
+                  id="season-id-input"
+                  name="seasonId"
+                  label="Season ID"
                   variant="standard"
                 />
                 <Button className="submit-btn" type="submit">

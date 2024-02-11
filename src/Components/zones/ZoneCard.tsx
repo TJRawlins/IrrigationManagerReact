@@ -19,9 +19,8 @@ import { BiSolidCopyAlt } from "react-icons/bi";
 import { Grass as GrassIcon } from "@mui/icons-material";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import agent from "../../app/api/agent";
-import { SeasonContext } from "../../app/context/context";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -40,7 +39,6 @@ export default function ZoneCard({
   setSelectedZone,
 }: ZoneCardProps) {
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
-  const [seasonContext] = useContext(SeasonContext);
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -51,7 +49,7 @@ export default function ZoneCard({
   }
 
   const deleteZone = () => {
-    agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonContext));
+    agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonName));
   };
 
   const copyZone = () => {
@@ -62,6 +60,7 @@ export default function ZoneCard({
       runtimePerWeek,
       imagePath,
       season,
+      seasonId,
     } = zone;
     agent.Zones.createZone({
       name,
@@ -70,14 +69,15 @@ export default function ZoneCard({
       runtimePerWeek,
       imagePath,
       season,
-    }).then(() => fetchZones(seasonContext));
+      seasonId,
+    }).then(() => fetchZones(seasonName));
   };
 
   const showEdit = () => {
     setIsShowEdit(true);
     setSelectedZone(zone);
     console.log("Edit Clicked");
-    console.log(seasonName)
+    console.log(seasonName);
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */

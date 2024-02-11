@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { SeasonContext } from "../../app/context/context";
 import { Zone } from "../../app/models/Zone";
 import ZoneList from "../../Components/zones/ZoneList";
 import agent from "../../app/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
 import { Grid } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const ZonesPage = () => {
-  const [seasonContext, setSeasonContext] = useState("Summer");
+  const { seasonName } = useSelector((state: RootState) => state.seasonName);
 
   //* Initial zone list
   const [zones, setZones] = useState<Zone[]>([]);
@@ -20,16 +21,17 @@ const ZonesPage = () => {
           zone.season === seasonString
       );
       setZones(filterZones);
+      console.log(filterZones[1].seasonId);
       console.log("Zones fetched!");
     });
   };
 
   useEffect(() => {
-    fetchZones(seasonContext);
+    fetchZones(seasonName);
   }, []);
 
   return (
-    <SeasonContext.Provider value={[seasonContext, setSeasonContext]}>
+    <>
       <ZoneBar fetchZones={fetchZones} />
       <Grid
         sx={{
@@ -41,7 +43,7 @@ const ZonesPage = () => {
       >
         <ZoneList fetchZones={fetchZones} zones={zones} />
       </Grid>
-    </SeasonContext.Provider>
+    </>
   );
 };
 export default ZonesPage;
