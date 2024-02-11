@@ -12,5 +12,6 @@ export interface Zone {
   totalGalPerWeek: string;
   totalGalPerMonth: string;
   totalGalPerYear: string;
+  seasonId: number;
   plants: Plant[] | null;
 }
