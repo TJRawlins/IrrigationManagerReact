@@ -53,8 +53,8 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   });
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    console.log(values);
-    console.log(props);
+    // console.log(values);
+    // console.log(props);
     agent.Zones.createZone(values)
       .catch((error) => alert(error))
       .then(() => fetchZones(seasonName));

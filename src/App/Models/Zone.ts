@@ -1,6 +1,6 @@
 import { Plant } from "./Plant";
 
-export class Zone {
+export class  Zone {
   id!: number;
   name!: string;
   runtimeHours!: number;

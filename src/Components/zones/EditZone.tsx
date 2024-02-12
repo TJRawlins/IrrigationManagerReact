@@ -41,7 +41,7 @@ function EditZone({
 
   // Form submission
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    console.log(values);
+    // console.log(values);
     editZone(zone.id, values);
     console.log("zone edited");
     props.resetForm();

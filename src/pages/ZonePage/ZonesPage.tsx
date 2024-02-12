@@ -7,6 +7,7 @@ import { Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateCurrentZoneList } from "../../redux/zoneSlice";
+import { Zone } from "../../app/models/Zone";
 
 const ZonesPage = () => {
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
@@ -15,12 +16,14 @@ const ZonesPage = () => {
   //* Initial zone list
   const fetchZones = (seasonString: string) => {
     agent.Zones.list().then((zones) => {
-      const filterZones = zones.filter(
-        (zone: { season: string | ((_value: string) => void) }) =>
-          zone.season === seasonString
+      dispatch(
+        updateCurrentZoneList(
+          zones.filter(
+            (zone: Zone) =>
+              zone.season === seasonString
+          )
+        )
       );
-      dispatch(updateCurrentZoneList(filterZones));
-      console.log(filterZones[1].seasonId);
       console.log("Zones fetched!");
     });
   };

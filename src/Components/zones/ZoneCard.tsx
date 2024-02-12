@@ -77,7 +77,7 @@ export default function ZoneCard({
     setIsShowEdit(true);
     dispatch(updateCurrentZone(zone))
     console.log("Edit Clicked");
-    console.log(seasonName);
+    // console.log(seasonName);
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
