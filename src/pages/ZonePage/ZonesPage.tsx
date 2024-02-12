@@ -1,26 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { Zone } from "../../app/models/Zone";
+import { useEffect } from "react";
 import ZoneList from "../../Components/zones/ZoneList";
 import agent from "../../app/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
 import { Grid } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { updateCurrentZoneList } from "../../redux/zoneSlice";
 
 const ZonesPage = () => {
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  const dispatch = useDispatch();
 
   //* Initial zone list
-  const [zones, setZones] = useState<Zone[]>([]);
-
   const fetchZones = (seasonString: string) => {
     agent.Zones.list().then((zones) => {
       const filterZones = zones.filter(
         (zone: { season: string | ((_value: string) => void) }) =>
           zone.season === seasonString
       );
-      setZones(filterZones);
+      dispatch(updateCurrentZoneList(filterZones));
       console.log(filterZones[1].seasonId);
       console.log("Zones fetched!");
     });
@@ -41,7 +40,7 @@ const ZonesPage = () => {
           marginTop: "30px",
         }}
       >
-        <ZoneList fetchZones={fetchZones} zones={zones} />
+        <ZoneList fetchZones={fetchZones} />
       </Grid>
     </>
   );

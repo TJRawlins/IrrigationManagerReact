@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import agent from "../../app/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Zone } from "../../app/models/Zone";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
@@ -12,7 +11,6 @@ type ZoneBarProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
-  selectedZoneRef: Zone;
 };
 
 const style = {
@@ -31,8 +29,8 @@ function EditZone({
   fetchZones,
   setIsShowEdit,
   isShowEdit,
-  selectedZoneRef,
 }: ZoneBarProps) {
+  const { zone } = useSelector((state: RootState) => state.zone);
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
 
   const handleClose = () => setIsShowEdit(false);
@@ -44,21 +42,21 @@ function EditZone({
   // Form submission
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     console.log(values);
-    editZone(selectedZoneRef.id, values);
+    editZone(zone.id, values);
     console.log("zone edited");
     props.resetForm();
     handleClose();
   };
 
   const initialValues = {
-    id: selectedZoneRef.id,
-    name: selectedZoneRef.name,
-    runtimeHours: selectedZoneRef.runtimeHours,
-    runtimeMinutes: selectedZoneRef.runtimeMinutes,
-    runtimePerWeek: selectedZoneRef.runtimePerWeek,
-    imagePath: selectedZoneRef.imagePath,
-    season: selectedZoneRef.season,
-    seasonId: selectedZoneRef.seasonId,
+    id: zone.id,
+    name: zone.name,
+    runtimeHours: zone.runtimeHours,
+    runtimeMinutes: zone.runtimeMinutes,
+    runtimePerWeek: zone.runtimePerWeek,
+    imagePath: zone.imagePath,
+    season: zone.season,
+    seasonId: zone.seasonId,
   };
 
   const validationSchema = Yup.object().shape({

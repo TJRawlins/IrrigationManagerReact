@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import seasonReducer from "./seasonSlice";
 import seasonIdReducer from "./seasonSlice";
 import zoneReducer from "./zoneSlice";
+import zoneListReducer from "./zoneSlice";
 // ...
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     seasonName: seasonReducer,
     seasonId: seasonIdReducer,
     zone: zoneReducer,
+    zoneList: zoneListReducer,
   },
 });
 
