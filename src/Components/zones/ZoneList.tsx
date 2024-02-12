@@ -1,34 +1,18 @@
 import { Box, Container, CssBaseline, Grid } from "@mui/material";
 import ZoneCard from "./ZoneCard";
-import { Zone } from "../../app/models/Zone";
 import AddZone from "./AddZone";
 import EditZone from "./EditZone";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
-  zones: Zone[];
 };
 
-export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
+export default function ZoneList({ fetchZones }: ZoneBarProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
-  const [selectedZone, setSelectedZone] = useState<Zone>({
-    id: 1,
-    name: "",
-    season: "",
-    imagePath: "",
-    runtimeHours: 0,
-    runtimeMinutes: 0,
-    runtimePerWeek: 0,
-    totalPlants: 0,
-    totalGalPerWeek: "",
-    totalGalPerMonth: "",
-    totalGalPerYear: "",
-    seasonId: 0,
-    plants: null,
-  });
-  const selectedZoneRef = useRef(selectedZone);
-  selectedZoneRef.current = selectedZone;
+  const { zoneList } = useSelector((state: RootState) => state.zoneList);
 
   return (
     <>
@@ -50,13 +34,12 @@ export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
             justifyContent={{ xs: "center", sm: "center", md: "left" }}
             sx={{ height: "auto" }}
           >
-            {zones.map((zone) => (
+            {zoneList.map((zone) => (
               <Grid item key={zone.id}>
                 <ZoneCard
                   zone={zone}
                   fetchZones={fetchZones}
                   setIsShowEdit={setIsShowEdit}
-                  setSelectedZone={setSelectedZone}
                 />
               </Grid>
             ))}
@@ -66,7 +49,6 @@ export default function ZoneList({ zones, fetchZones }: ZoneBarProps) {
                 fetchZones={fetchZones}
                 setIsShowEdit={setIsShowEdit}
                 isShowEdit={isShowEdit}
-                selectedZoneRef={selectedZoneRef.current}
               />
             </Grid>
           </Grid>

@@ -1,35 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { SeasonContext } from "../../app/context/context";
-import { Zone } from "../../app/models/Zone";
+import { useEffect } from "react";
 import ZoneList from "../../Components/zones/ZoneList";
 import agent from "../../app/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
 import { Grid } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { updateCurrentZoneList } from "../../redux/zoneSlice";
+import { Zone } from "../../app/models/Zone";
 
 const ZonesPage = () => {
-  const [seasonContext, setSeasonContext] = useState("Summer");
+  const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  const dispatch = useDispatch();
 
   //* Initial zone list
-  const [zones, setZones] = useState<Zone[]>([]);
-
   const fetchZones = (seasonString: string) => {
     agent.Zones.list().then((zones) => {
-      const filterZones = zones.filter(
-        (zone: { season: string | ((_value: string) => void) }) =>
-          zone.season === seasonString
+      dispatch(
+        updateCurrentZoneList(
+          zones.filter(
+            (zone: Zone) =>
+              zone.season === seasonString
+          )
+        )
       );
-      setZones(filterZones);
-      console.log("Zones fetched!");
+      console.log("%cZones: Zone Fetched", "color:#1CA1E6");
     });
   };
 
   useEffect(() => {
-    fetchZones(seasonContext);
+    fetchZones(seasonName);
   }, []);
 
   return (
-    <SeasonContext.Provider value={[seasonContext, setSeasonContext]}>
+    <>
       <ZoneBar fetchZones={fetchZones} />
       <Grid
         sx={{
@@ -39,9 +43,9 @@ const ZonesPage = () => {
           marginTop: "30px",
         }}
       >
-        <ZoneList fetchZones={fetchZones} zones={zones} />
+        <ZoneList fetchZones={fetchZones} />
       </Grid>
-    </SeasonContext.Provider>
+    </>
   );
 };
 export default ZonesPage;

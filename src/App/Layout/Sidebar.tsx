@@ -10,7 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import {
   Speed as SpeedIcon,
   DashboardOutlined as DashboardOutlinedIcon,
-  Grass as GrassIcon,
+  // Grass as GrassIcon,
   QuestionMarkOutlined as QuestionMarkOutlinedIcon,
   AccountCircleOutlined as AccountCircleIcon,
   SettingsSuggestOutlined as SettingsSuggestOutlinedIcon,
@@ -20,12 +20,13 @@ import {
 import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useState } from 'react'
 import "/src/app/layout/Sidebar.css";
 
 type Anchor = "left";
 
 export default function Sidebar() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     left: false,
   });
 
@@ -75,7 +76,7 @@ export default function Sidebar() {
             </ListItemButton>
           </Link>
         </ListItem>
-        <ListItem className="route-link-item">
+        {/* <ListItem className="route-link-item">
           <Link className="route-link" to="/plants">
             <ListItemButton className=".route-link-btn">
               <ListItemIcon className="route-link-icon">
@@ -84,7 +85,7 @@ export default function Sidebar() {
               Plants
             </ListItemButton>
           </Link>
-        </ListItem>
+        </ListItem> */}
         <ListItem className="route-link-item">
           <Link className="route-link" to="/emitter-calculator">
             <ListItemButton className=".route-link-btn">

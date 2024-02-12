@@ -2,11 +2,12 @@ import { Box, Modal, TextField, Typography } from "@mui/material";
 import "./AddZone.css";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
-import React, { useContext } from "react";
+import { useState } from "react";
 import agent from "../../app/api/agent";
-import { SeasonContext } from "../../app/context/context";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
@@ -25,11 +26,12 @@ const style = {
 };
 
 function AddZone({ fetchZones }: ZoneBarProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [seasonContext] = useContext(SeasonContext);
+  const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  const { seasonId } = useSelector((state: RootState) => state.seasonId);
 
   // Form submission
   const initialValues = {
@@ -38,7 +40,8 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimeMinutes: 0,
     runtimePerWeek: 0,
     imagePath: undefined,
-    season: seasonContext,
+    season: seasonName,
+    seasonId: seasonId,
   };
 
   const validationSchema = Yup.object().shape({
@@ -50,13 +53,14 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   });
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    console.log(values);
-    console.log(props);
+    // console.log(values);
+    // console.log(props);
     agent.Zones.createZone(values)
       .catch((error) => alert(error))
-      .then(() => fetchZones(seasonContext));
+      .then(() => fetchZones(seasonName));
     props.resetForm();
     handleClose();
+    console.log("%cAddZone: Zone Created", "color:#1CA1E6");
   };
 
   return (
@@ -202,9 +206,9 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                   disabled
                   className="input"
                   id="standard-disabled"
-                  name={seasonContext}
+                  name={seasonName}
                   label="Season"
-                  defaultValue={seasonContext}
+                  defaultValue={seasonName}
                   variant="standard"
                 />
                 <Button className="submit-btn" type="submit">

@@ -1,18 +1,16 @@
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import "./AddZone.css";
 import Button from "@mui/material/Button";
-import { useContext } from "react";
 import agent from "../../app/api/agent";
-import { SeasonContext } from "../../app/context/context";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Zone } from "../../app/models/Zone";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
-  selectedZoneRef: Zone;
 };
 
 const style = {
@@ -31,32 +29,34 @@ function EditZone({
   fetchZones,
   setIsShowEdit,
   isShowEdit,
-  selectedZoneRef,
 }: ZoneBarProps) {
+  const { zone } = useSelector((state: RootState) => state.zone);
+  const { seasonName } = useSelector((state: RootState) => state.seasonName);
+
   const handleClose = () => setIsShowEdit(false);
-  const [seasonContext] = useContext(SeasonContext);
 
   const editZone = (id: number, values: object) => {
-    agent.Zones.editZone(id, values).then(() => fetchZones(seasonContext));
+    agent.Zones.editZone(id, values).then(() => fetchZones(seasonName));
   };
 
   // Form submission
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    console.log(values);
-    editZone(selectedZoneRef.id, values);
+    // console.log(values);
+    editZone(zone.id, values);
     console.log("zone edited");
     props.resetForm();
     handleClose();
   };
 
   const initialValues = {
-    id: selectedZoneRef.id,
-    name: selectedZoneRef.name,
-    runtimeHours: selectedZoneRef.runtimeHours,
-    runtimeMinutes: selectedZoneRef.runtimeMinutes,
-    runtimePerWeek: selectedZoneRef.runtimePerWeek,
-    imagePath: selectedZoneRef.imagePath,
-    season: selectedZoneRef.season,
+    id: zone.id,
+    name: zone.name,
+    runtimeHours: zone.runtimeHours,
+    runtimeMinutes: zone.runtimeMinutes,
+    runtimePerWeek: zone.runtimePerWeek,
+    imagePath: zone.imagePath,
+    season: zone.season,
+    seasonId: zone.seasonId,
   };
 
   const validationSchema = Yup.object().shape({
@@ -202,6 +202,14 @@ function EditZone({
                   id="season-input"
                   name="season"
                   label="Season"
+                  variant="standard"
+                />
+                <Field
+                  as={TextField}
+                  className="input"
+                  id="season-id-input"
+                  name="seasonId"
+                  label="Season ID"
                   variant="standard"
                 />
                 <Button className="submit-btn" type="submit">

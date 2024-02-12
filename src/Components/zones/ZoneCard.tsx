@@ -19,17 +19,16 @@ import { BiSolidCopyAlt } from "react-icons/bi";
 import { Grass as GrassIcon } from "@mui/icons-material";
 import { Zone } from "../../app/models/Zone";
 import "./ZoneCard.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import agent from "../../app/api/agent";
-import { SeasonContext } from "../../app/context/context";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { updateCurrentZone } from "../../redux/zoneSlice";
 
 type ZoneCardProps = {
   fetchZones(args: string): void;
   setIsShowEdit(args: boolean): void;
-  setSelectedZone(args: Zone): void;
   zone: Zone;
 };
 
@@ -37,10 +36,9 @@ export default function ZoneCard({
   zone,
   fetchZones,
   setIsShowEdit,
-  setSelectedZone,
 }: ZoneCardProps) {
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
-  const [seasonContext] = useContext(SeasonContext);
+  const dispatch = useDispatch();
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -51,7 +49,8 @@ export default function ZoneCard({
   }
 
   const deleteZone = () => {
-    agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonContext));
+    agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonName));
+    console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
   };
 
   const copyZone = () => {
@@ -62,6 +61,7 @@ export default function ZoneCard({
       runtimePerWeek,
       imagePath,
       season,
+      seasonId,
     } = zone;
     agent.Zones.createZone({
       name,
@@ -70,14 +70,15 @@ export default function ZoneCard({
       runtimePerWeek,
       imagePath,
       season,
-    }).then(() => fetchZones(seasonContext));
+      seasonId,
+    }).then(() => fetchZones(seasonName));
   };
 
   const showEdit = () => {
     setIsShowEdit(true);
-    setSelectedZone(zone);
-    console.log("Edit Clicked");
-    console.log(seasonName)
+    dispatch(updateCurrentZone(zone))
+    console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
+    // console.log(seasonName);
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */

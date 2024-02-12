@@ -32,7 +32,7 @@ export default function PlantBar({
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */
 
-  console.log(weekly);
+  // console.log(weekly);
   const AvatarChips = () => {
     return (
       <>
