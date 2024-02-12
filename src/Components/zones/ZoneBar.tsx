@@ -96,7 +96,7 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
     const dispatch = useDispatch();
 
     const handleChange = (event: SelectChangeEvent) => {
-      console.log("handleChange Called");
+      console.info("%cZoneBar: handleChange Called", "color:#1CA1E6");
       dispatch(updateCurrentSeason(event.target.value));
       fetchZones(event.target.value);
     };

@@ -60,6 +60,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
       .then(() => fetchZones(seasonName));
     props.resetForm();
     handleClose();
+    console.log("%cAddZone: Zone Created", "color:#1CA1E6");
   };
 
   return (

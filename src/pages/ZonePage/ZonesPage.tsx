@@ -24,7 +24,7 @@ const ZonesPage = () => {
           )
         )
       );
-      console.log("Zones fetched!");
+      console.log("%cZones: Zone Fetched", "color:#1CA1E6");
     });
   };
 

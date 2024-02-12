@@ -50,6 +50,7 @@ export default function ZoneCard({
 
   const deleteZone = () => {
     agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonName));
+    console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
   };
 
   const copyZone = () => {
@@ -76,7 +77,7 @@ export default function ZoneCard({
   const showEdit = () => {
     setIsShowEdit(true);
     dispatch(updateCurrentZone(zone))
-    console.log("Edit Clicked");
+    console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
     // console.log(seasonName);
   };
 

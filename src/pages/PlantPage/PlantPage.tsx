@@ -51,7 +51,7 @@ const PlantPage = () => {
       );
       setPlants(filterPlants);
     });
-    console.log("Zones fetched!");
+    console.log("%cPlants: Zone Fetched", "color:#1CA1E6");
   };
 
   useEffect(() => {
