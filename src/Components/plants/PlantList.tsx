@@ -81,8 +81,9 @@ export default function PlantList({ plants }: PlantListProps) {
 
   return (
     <>
-      <Box sx={{ width: "100%" }}>
+      <Box component="div" sx={{ width: "100%" }}>
         <DataGrid
+          className="data-grid"
           columnVisibilityModel={columnVisible}
           rows={rows}
           columns={columns}

@@ -1,13 +1,14 @@
 import { Box, Modal, TextField, Typography } from "@mui/material";
-import "./AddPlant.css";
 import Button from "@mui/material/Button";
-import { FaPlus } from "react-icons/fa";
+import { Grass as GrassIcon } from "@mui/icons-material";
+import { MdAddCircle } from "react-icons/md";
 import { useState } from "react";
 // import agent from "../../app/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
+import "./AddPlant.css";
 
 // type PlantBarProps = {
 //   fetchZones(args: string): void;
@@ -67,14 +68,19 @@ function AddPlant() {
   return (
     <div>
       <Button
-        className="add-btn"
+        className="add-btn-plant"
         onClick={handleOpen}
         sx={{
           position: "relative",
           boxShadow: "none !important",
         }}
       >
-        <FaPlus className="add-plus-icon" />
+        <div className="icon-container">
+          <GrassIcon className="grass-icon" />
+          <div className="add-plant-icon-wrapper">
+            <MdAddCircle className="add-plant-icon" />
+          </div>
+        </div>
       </Button>
       <Modal
         open={open}

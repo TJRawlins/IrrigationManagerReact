@@ -73,7 +73,7 @@ const PlantPage = () => {
             borderRadius: "20px",
             width: "100%",
             marginTop: "30px",
-            paddingTop: "0.5rem",
+            padding: "0.75rem",
           }}
         >
           <PlantList plants={plants} />

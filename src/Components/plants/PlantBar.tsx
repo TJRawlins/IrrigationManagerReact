@@ -10,10 +10,11 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { IoChevronBack } from "react-icons/io5";
 import { Grass as GrassIcon } from "@mui/icons-material";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import AddPlant from "./addPlant";
+import AddPlant from "./AddPlant";
 
 type PlantBarProps = {
   weekly: string;
@@ -189,9 +190,12 @@ export default function PlantBar({
               orientation="vertical"
               flexItem
             />
-              <Link className="route-link bar-btn" to="/zones">
-                <Button className="add-plant-btn">{`< Back to Zone`}</Button>
-              </Link>
+            <Link className="route-link bar-btn" to="/zones">
+              <Button className="back-btn">
+                <IoChevronBack className="back-arrow-icon" />
+                <Typography className="btn-text">go back</Typography>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

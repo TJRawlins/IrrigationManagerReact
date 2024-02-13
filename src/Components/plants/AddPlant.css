@@ -1,54 +1,96 @@
 .split-container {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .add-btn {
-    margin: 0.25rem 0.25rem 0 0.25rem !important;
-    padding: 0.5rem .25rem !important;
-    height: fit-content !important;
-    width: fit-content !important;
-    border-radius: 10px !important;
-    background-color: transparent !important;
-    color: #c3c3c3;
-  }
+  display: flex;
+  gap: 1rem;
+}
 
-  .add-btn:hover {
-    background-color: rgb(241, 254, 254) !important;
-    color: #00c997;
-  }
-  
-  .add-plus-icon {
-      font-size: 1rem !important;
-    }
-  
-  .modal-box {
-    border: none !important;
-    border-radius: 15px;
-  }
-  
-  .modal-title {
-    color: #666666;
-    font-weight: 700 !important;
-    font-family: "Outfit", sans-serif !important;
-  }
-  
-  .input {
-    width: 100%;
-    margin-top: 0.5rem !important;
-  }
-  
-  .submit-btn {
-    width: 100%;
-    background-color: #002b49 !important;
-    color: #ffff !important;
-    margin-top: 2rem !important;
-  }
-  
-  .submit-btn:hover {
-    background-color: #01497c !important;
-  }
-  
-  .error-text {
-      color: red !important;
-  }
+.add-btn-plant {
+  margin: 0.25rem 0.25rem 0 0.25rem !important;
+  padding: 0 !important;
+  /* padding: 0.5rem 0.25rem !important; */
+  height: fit-content !important;
+  width: 50px !important;
+  border-radius: 10px !important;
+  background-color: transparent !important;
+  color: #c3c3c3;
+}
+
+.add-btn-plant:hover {
+  background-color: #e8feff !important;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  width: 50px;
+  position: relative;
+  /* background-color: #e8feff; */
+}
+
+.grass-icon {
+  font-size: 2rem !important;
+}
+
+.add-plant-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px !important;
+  height: 15px !important;
+  background-color: #ffffff !important;
+  border-radius: 50%;
+  position: absolute;
+  right: 9px;
+  bottom: 3px;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.add-plant-icon {
+  width: fit-content !important;
+  height: fit-content !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transform: translateX(0.2px);
+}
+
+/* .add-btn-plant:hover {
+  background-color: rgb(241, 254, 254) !important;
+  color: #00c997;
+}
+
+.add-plus-icon-plant {
+  font-size: 16px !important;
+} */
+
+.modal-box {
+  border: none !important;
+  border-radius: 15px;
+}
+
+.modal-title {
+  color: #666666;
+  font-weight: 700 !important;
+  font-family: "Outfit", sans-serif !important;
+}
+
+.input {
+  width: 100%;
+  margin-top: 0.5rem !important;
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: #002b49 !important;
+  color: #ffff !important;
+  margin-top: 2rem !important;
+}
+
+.submit-btn:hover {
+  background-color: #01497c !important;
+}
+
+.error-text {
+  color: red !important;
+}
