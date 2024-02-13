@@ -13,6 +13,7 @@ import {
 import { Grass as GrassIcon } from "@mui/icons-material";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import AddPlant from "./addPlant";
 
 type PlantBarProps = {
   weekly: string;
@@ -182,7 +183,7 @@ export default function PlantBar({
               orientation="vertical"
               flexItem
             />
-            <Button className="add-plant-btn">+ Add Plant</Button>
+            <AddPlant />
             <Divider
               sx={{ height: "60%", marginTop: "12px" }}
               orientation="vertical"
