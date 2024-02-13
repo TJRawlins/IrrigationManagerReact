@@ -176,6 +176,12 @@ export default function PlantBar({
               orientation="vertical"
               flexItem
             />
+            <AvatarChips />
+            <Divider
+              sx={{ height: "60%", marginTop: "12px", marginLeft: "16px" }}
+              orientation="vertical"
+              flexItem
+            />
             <Button className="add-plant-btn">+ Add Plant</Button>
             <Divider
               sx={{ height: "60%", marginTop: "12px" }}
@@ -185,12 +191,6 @@ export default function PlantBar({
               <Link className="route-link bar-btn" to="/zones">
                 <Button className="add-plant-btn">{`< Back to Zone`}</Button>
               </Link>
-            <Divider
-              sx={{ height: "60%", marginTop: "12px" }}
-              orientation="vertical"
-              flexItem
-            />
-            <AvatarChips />
           </div>
         </div>
       </div>
