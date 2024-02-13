@@ -15,8 +15,10 @@
 .iconStyle {
   background: #ffffff;
   border-radius: 50%;
-  font-size: 1.25rem;
+  font-size: 1.5rem !important;
   padding: 0.1rem;
+  margin-left: 0 !important;
+  margin-right: 0.1rem !important;
 }
 
 .iconStyleFA {
@@ -27,11 +29,22 @@
   transform: rotate(-45deg);
 }
 
-.chip {
+.chip:has(.iconStyle) {
+  justify-content: flex-start !important;
+  height: 30px !important;
+  width: 130px !important;
+  position: absolute !important;
+  top: -6px !important;
+  left: 11px !important;
+  border-radius: 0 !important;
+  border-top-left-radius: 10px !important;
+  clip-path: polygon(0% 0%, 100% 0, 80% 100%, 0% 100%);
+  padding: 0px !important;
+  padding-right: 1rem !important;
+  padding-left: 0.5rem !important;
   margin: 1rem 0 1rem -0.1rem;
   font-size: 0.75rem;
   color: #ffff !important;
-  border: 1px #ffffff85 solid !important;
 }
 
 .action-icon {
@@ -42,6 +55,7 @@
   color: #666666;
   font-weight: 700 !important;
   font-family: "Outfit", sans-serif !important;
+  margin-left: .75rem !important;
 }
 
 .card-data-container {
@@ -54,6 +68,7 @@
   font-size: 1rem !important;
   color: #33333386 !important;
   margin-bottom: 2px !important;
+  margin-left: .75rem !important;
   color: #8d8d8d !important;
   border-radius: 5px;
 }
@@ -75,6 +90,7 @@
   background-color: #ffffffa8 !important;
   color: #002b49 !important;
   border-radius: 20px !important;
+  padding: 0 !important;
 }
 
 #card-details {
@@ -91,6 +107,93 @@
 
 .card-btn:hover {
   background-color: #ffffffe8 !important;
+}
+
+.card-zone-data {
+  padding: 16px 0 0 0 !important;
+  border-radius: 0 0 15px 15px!important;
+}
+
+/* .gallons-chip {
+  width: 100% !important;
+  width: 80px !important;
+  justify-content: left !important;
+  border-radius: 10px !important;
+  background-color: #f5f5f5 !important;
+  color: #969696 !important;
+}
+.gallons-chip-avatar {
+  min-width: fit-content !important;
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  font-weight: 700 !important;
+  color: #969696 !important;
+} */
+
+/* .gallons-chip {
+  width: 100% !important;
+  width: 92px !important;
+  justify-content: left !important;
+  border-radius: 0px !important;
+  background-color: #f5f5f5 !important;
+  color: #969696 !important;
+  margin-left: 0 !important;
+}
+.gallons-chip-avatar {
+  min-width: fit-content !important;
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  font-weight: 700 !important;
+  color: #969696 !important;
+}
+.gallons-chip.week {
+  border-radius: 0 0 0 10px!important;
+}
+.gallons-chip.year {
+  border-radius: 0 0 10px 0 !important;
+} */
+
+.gallons-chip {
+  width: 100% !important;
+  width: 93px !important;
+  justify-content: left !important;
+  border-radius: 0px !important;
+  color: #ffffff !important;
+  margin-left: 0 !important;
+}
+.gallons-chip-avatar {
+  min-width: fit-content !important;
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+}
+.gallons-chip.week {
+  border-radius: 0 0 0 10px!important;
+}
+.gallons-chip.year {
+  border-radius: 0 0 10px 0 !important;
+}
+.gallons-chip.summer {
+  background-color: #ebad00 !important;
+}
+.gallons-chip-avatar.summer {
+  background-color: #c69203 !important;
+}
+.gallons-chip.fall {
+  background-color: #da3e00 !important;
+}
+.gallons-chip-avatar.fall {
+  background-color: #b93501 !important;
+}
+.gallons-chip.winter {
+  background-color: #00aeff !important;
+}
+.gallons-chip-avatar.winter {
+  background-color: #0092d6 !important;
+}
+.gallons-chip.spring {
+  background-color: #ff00aa !important;
+}
+.gallons-chip-avatar.spring {
+  background-color: #d4028e !important;
 }
 
 .hidden {

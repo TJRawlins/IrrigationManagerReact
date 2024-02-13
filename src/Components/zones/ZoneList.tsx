@@ -32,7 +32,7 @@ export default function ZoneList({ fetchZones }: ZoneBarProps) {
             columns={{ xs: 4, sm: 6, md: 9 }}
             padding={"1.5rem"}
             justifyContent={{ xs: "center", sm: "center", md: "left" }}
-            sx={{ height: "auto" }}
+            sx={{ height: "auto", minHeight: "80vh" }}
           >
             {zoneList.map((zone) => (
               <Grid item key={zone.id}>

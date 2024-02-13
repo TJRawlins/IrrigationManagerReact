@@ -76,7 +76,7 @@ export default function ZoneCard({
 
   const showEdit = () => {
     setIsShowEdit(true);
-    dispatch(updateCurrentZone(zone))
+    dispatch(updateCurrentZone(zone));
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
     // console.log(seasonName);
   };
@@ -93,9 +93,9 @@ export default function ZoneCard({
       };
     } else if (params === "Summer") {
       return {
-        icon: <MdSunny className="iconStyle" style={{ fill: "#ffbc00" }} />,
+        icon: <MdSunny className="iconStyle" style={{ fill: "#f1b100" }} />,
         label: params,
-        style: { background: "#e9ab00" },
+        style: { background: "#e2a600" },
       };
     } else if (params === "Fall") {
       return {
@@ -141,7 +141,7 @@ export default function ZoneCard({
           title={zone.name}
         />
         {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
-        <CardContent>
+        <CardContent className="card-zone-data">
           <Chip
             className="chip"
             variant="filled"
@@ -206,10 +206,11 @@ export default function ZoneCard({
             >
               <Tooltip title="Total Weekly Gallons" arrow>
                 <Chip
+                  className={
+                    "gallons-chip week " + zone.season.toString().toLocaleLowerCase()
+                  }
                   sx={{
                     width: "100%",
-                    bgcolor: "#f5f5f5",
-                    color: "#969696",
                     justifyContent: "left",
                     borderRadius: "10px",
                     margin: "0 !important",
@@ -217,12 +218,10 @@ export default function ZoneCard({
                   }}
                   avatar={
                     <Avatar
-                      sx={{
-                        minWidth: "fit-content",
-                        background: "rgba(0, 0, 0, 0.08)",
-                        fontWeight: "700",
-                        color: "#969696 !important",
-                      }}
+                      className={
+                        "gallons-chip-avatar " +
+                        zone.season.toString().toLocaleLowerCase()
+                      }
                     >
                       W
                     </Avatar>
@@ -232,21 +231,15 @@ export default function ZoneCard({
               </Tooltip>
               <Tooltip title="Total Monthly Gallons" arrow>
                 <Chip
-                  sx={{
-                    width: "100%",
-                    bgcolor: "#f5f5f5",
-                    color: "#969696",
-                    justifyContent: "left",
-                    borderRadius: "10px",
-                  }}
+                  className={
+                    "gallons-chip " + zone.season.toString().toLocaleLowerCase()
+                  }
                   avatar={
                     <Avatar
-                      sx={{
-                        minWidth: "fit-content",
-                        background: "rgba(0, 0, 0, 0.08)",
-                        fontWeight: "700",
-                        color: "#969696 !important",
-                      }}
+                      className={
+                        "gallons-chip-avatar " +
+                        zone.season.toString().toLocaleLowerCase()
+                      }
                     >
                       M
                     </Avatar>
@@ -256,21 +249,15 @@ export default function ZoneCard({
               </Tooltip>
               <Tooltip title="Total Yearly Gallons" arrow>
                 <Chip
-                  sx={{
-                    width: "100%",
-                    bgcolor: "#f5f5f5",
-                    color: "#969696",
-                    justifyContent: "left",
-                    borderRadius: "10px",
-                  }}
+                  className={
+                    "gallons-chip year " + zone.season.toString().toLocaleLowerCase()
+                  }
                   avatar={
                     <Avatar
-                      sx={{
-                        minWidth: "fit-content",
-                        background: "rgba(0, 0, 0, 0.08)",
-                        fontWeight: "700",
-                        color: "#969696 !important",
-                      }}
+                      className={
+                        "gallons-chip-avatar " +
+                        zone.season.toString().toLocaleLowerCase()
+                      }
                     >
                       Y
                     </Avatar>
