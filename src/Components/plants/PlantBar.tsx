@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Grass as GrassIcon } from "@mui/icons-material";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 type PlantBarProps = {
   weekly: string;
@@ -176,6 +177,14 @@ export default function PlantBar({
               flexItem
             />
             <Button className="add-plant-btn">+ Add Plant</Button>
+            <Divider
+              sx={{ height: "60%", marginTop: "12px" }}
+              orientation="vertical"
+              flexItem
+            />
+              <Link className="route-link bar-btn" to="/zones">
+                <Button className="add-plant-btn">{`< Back to Zone`}</Button>
+              </Link>
             <Divider
               sx={{ height: "60%", marginTop: "12px" }}
               orientation="vertical"
