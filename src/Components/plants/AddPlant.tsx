@@ -3,16 +3,16 @@ import Button from "@mui/material/Button";
 import { Grass as GrassIcon } from "@mui/icons-material";
 import { MdAddCircle } from "react-icons/md";
 import { useState } from "react";
-// import agent from "../../app/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-// import { RootState } from "../../redux/store";
-// import { useSelector } from "react-redux";
 import "./AddPlant.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import agent from "../../app/api/agent";
 
-// type PlantBarProps = {
-//   fetchZones(args: string): void;
-// };
+type PlantBarProps = {
+  fetchPlants: (id: number) => void;
+};
 
 const style = {
   position: "absolute" as const,
@@ -26,41 +26,39 @@ const style = {
   p: 4,
 };
 
-// function AddPlant({ fetchZones }: PlantBarProps) {
-function AddPlant() {
+function AddPlant({ fetchPlants }: PlantBarProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // const { seasonName } = useSelector((state: RootState) => state.seasonName);
-  // const { seasonId } = useSelector((state: RootState) => state.seasonId);
+  const { zone } = useSelector((state: RootState) => state.zone);
 
   // Form submission
   const initialValues = {
     name: "",
     type: "",
     quantity: 0,
-    galsPerWeek: 0,
+    galsPerWk: 0,
     emittersPerPlant: 0,
     emitterGPH: 0,
-    zoneId: 0, //TODO Need to add the zone id
+    zoneId: zone.id,
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required field"),
     type: Yup.string().required("Required field"),
     quantity: Yup.number().required("Required field"),
-    galsPerWeek: Yup.number().required("Required field"),
+    galsPerWk: Yup.number().required("Required field"),
     emittersPerPlant: Yup.number().required("Required field"),
     emitterGPH: Yup.number().required("Required field"),
   });
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     console.log(values);
-    // console.log(props);
-    // agent.Zones.createZone(values)
-    //   .catch((error) => alert(error))
-    //   .then(() => fetchZones(seasonName));
+    agent.Plants.createPlant(values)
+      .catch((error) => alert(error))
+      .then(() => fetchPlants(zone.id));
+    fetchPlants(zone.id);
     props.resetForm();
     handleClose();
     console.log("%cAddPlant: Plant Added", "color:#1CA1E6");
@@ -171,7 +169,7 @@ function AddPlant() {
                     required
                     className="input"
                     id="gals-wk-input"
-                    name="galsPerWeek"
+                    name="galsPerWk"
                     label="Gallons per week"
                     type="number"
                     autoComplete=""
@@ -179,7 +177,7 @@ function AddPlant() {
                     InputProps={{ inputProps: { min: 0, max: 150 } }}
                     helperText={
                       <ErrorMessage
-                        name="galsPerWeek"
+                        name="galsPerWk"
                         component="div"
                         className="error-text"
                       />

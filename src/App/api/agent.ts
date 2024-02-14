@@ -19,6 +19,9 @@ const Users = {
 const Plants = {
   list: () => requests.get("plants"),
   details: (id: number) => requests.get(`plants/${id}`),
+  createPlant: (plant: object) => requests.post("plants", plant),
+  editPlant: (id: number, plant: object) => requests.put(`plants/${id}`, plant),
+  removePlant: (id: number) => requests.delete(`plants/${id}`),
 };
 const Zones = {
   list: () => requests.get("zones"),

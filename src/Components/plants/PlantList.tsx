@@ -8,13 +8,12 @@ import "./PlantList.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-// interface PlantListProps {
-//   plants: Plant[];
-//   fetchPlants: () => void;
-// }
+interface PlantListProps {
+  fetchPlants: (id: number) => void;
+}
 
-// export default function PlantList({ plants }: PlantListProps) {
-export default function PlantList() {
+export default function PlantList({ fetchPlants }: PlantListProps) {
+  const { zone } = useSelector((state: RootState) => state.zone);
   const { plantList } = useSelector((state: RootState) => state.plant);
 
   const MOBILE_COLUMNS = {
@@ -37,6 +36,7 @@ export default function PlantList() {
   useEffect(() => {
     const newColumns = matches ? ALL_COLUMNS : MOBILE_COLUMNS;
     setColumnVisible(newColumns);
+    fetchPlants(zone.id); //TODO move this to any CRUD action function
   }, [matches]);
 
   const columns = [

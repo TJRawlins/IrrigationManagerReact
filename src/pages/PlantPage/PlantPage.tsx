@@ -5,12 +5,12 @@ import agent from "../../app/api/agent";
 import PlantBar from "../../Components/plants/PlantBar";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateCurrentPlantList } from "../../redux/plantSlice";
-import { RootState } from "../../redux/store";
+// import { RootState } from "../../redux/store";
 
 const PlantPage = () => {
-  const { zone } = useSelector((state: RootState) => state.zone);
+  // const { zone } = useSelector((state: RootState) => state.zone);
   const dispatch = useDispatch();
 
   // Params passed through router url
@@ -24,7 +24,7 @@ const PlantPage = () => {
       );
       dispatch(updateCurrentPlantList(filterPlants));
     });
-    console.log("%cPlants: Plants Fetched", "color:#1CA1E6");
+    console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
   };
 
   useEffect(() => {
@@ -33,11 +33,12 @@ const PlantPage = () => {
   return (
     <>
       <PlantBar
-        weekly={zone.totalGalPerWeek.toString()}
-        monthly={zone.totalGalPerMonth.toString()}
-        yearly={zone.totalGalPerYear.toString()}
-        zoneName={zone.name}
-        season={zone.season}
+        fetchPlants={fetchPlants}
+        // weekly={zone.totalGalPerWeek.toString()}
+        // monthly={zone.totalGalPerMonth.toString()}
+        // yearly={zone.totalGalPerYear.toString()}
+        // zoneName={zone.name}
+        // season={zone.season}
       />
       <Grid
         sx={{
@@ -48,7 +49,7 @@ const PlantPage = () => {
           padding: "0.75rem",
         }}
       >
-        <PlantList />
+        <PlantList fetchPlants={fetchPlants} />
       </Grid>
     </>
   );
