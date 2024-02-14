@@ -6,7 +6,6 @@
 .add-btn-plant {
   margin: 0.25rem 0.25rem 0 0.25rem !important;
   padding: 0 !important;
-  /* padding: 0.5rem 0.25rem !important; */
   height: fit-content !important;
   width: 50px !important;
   border-radius: 10px !important;
@@ -25,7 +24,6 @@
   height: 35px;
   width: 50px;
   position: relative;
-  /* background-color: #e8feff; */
 }
 
 .grass-icon {
@@ -54,15 +52,6 @@
   margin: 0 !important;
   transform: translateX(0.2px);
 }
-
-/* .add-btn-plant:hover {
-  background-color: rgb(241, 254, 254) !important;
-  color: #00c997;
-}
-
-.add-plus-icon-plant {
-  font-size: 16px !important;
-} */
 
 .modal-box {
   border: none !important;

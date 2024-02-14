@@ -25,13 +25,10 @@ const style = {
   p: 4,
 };
 
-function EditZone({
-  fetchZones,
-  setIsShowEdit,
-  isShowEdit,
-}: ZoneBarProps) {
+function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  console.log(zone)
 
   const handleClose = () => setIsShowEdit(false);
 
@@ -56,6 +53,10 @@ function EditZone({
     runtimePerWeek: zone.runtimePerWeek,
     imagePath: zone.imagePath,
     season: zone.season,
+    totalPlants: zone.totalPlants,
+    totalGalPerMonth: zone.totalGalPerMonth,
+    totalGalPerWeek: zone.totalGalPerWeek,
+    totalGalPerYear: zone.totalGalPerYear,
     seasonId: zone.seasonId,
   };
 

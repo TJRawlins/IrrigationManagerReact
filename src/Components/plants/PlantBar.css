@@ -81,8 +81,8 @@ svg.seaons-icon {
 }
 
 .back-btn {
-  margin-top: 0.25rem !important;
-  padding: 0.5rem 1rem 0.5rem 0.5rem !important;
+  margin-top: 0.3rem !important;
+  padding: 0.4rem 1rem 0.4rem 0.4rem !important;
 }
 
 .back-btn:hover {
@@ -98,6 +98,7 @@ svg.seaons-icon {
 }
 
 .back-arrow-icon {
+  margin-top: 0.15rem;
   font-size: 1.35rem !important;
   margin-right: 0.2rem;
 }

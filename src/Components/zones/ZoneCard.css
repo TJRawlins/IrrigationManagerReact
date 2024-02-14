@@ -55,7 +55,7 @@
   color: #666666;
   font-weight: 700 !important;
   font-family: "Outfit", sans-serif !important;
-  margin-left: .75rem !important;
+  margin-left: 0.75rem !important;
 }
 
 .card-data-container {
@@ -68,7 +68,7 @@
   font-size: 1rem !important;
   color: #33333386 !important;
   margin-bottom: 2px !important;
-  margin-left: .75rem !important;
+  margin-left: 0.75rem !important;
   color: #8d8d8d !important;
   border-radius: 5px;
 }
@@ -111,7 +111,7 @@
 
 .card-zone-data {
   padding: 16px 0 0 0 !important;
-  border-radius: 0 0 15px 15px!important;
+  border-radius: 0 0 15px 15px !important;
 }
 
 /* .gallons-chip {
@@ -166,7 +166,7 @@
   color: #ffffff !important;
 }
 .gallons-chip.week {
-  border-radius: 0 0 0 10px!important;
+  border-radius: 0 0 0 10px !important;
 }
 .gallons-chip.year {
   border-radius: 0 0 10px 0 !important;
@@ -175,7 +175,7 @@
   background-color: #ebad00 !important;
 }
 .gallons-chip-avatar.summer {
-  background-color: #c69203 !important;
+  background-color: #c69c03b0 !important;
 }
 .gallons-chip.fall {
   background-color: #da3e00 !important;
