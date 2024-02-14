@@ -1,12 +1,19 @@
+.data-grid {
+  border-radius: 10px !important;
+  padding: 5px !important;
+  margin: 0 !important;
+  background-color: #ffff;
+}
+
 .action-btn-group {
   min-width: 20px !important;
 }
+
 .action-btn-group,
 .action-btn {
   border: none !important;
   padding: 0 !important;
   min-width: 15px !important;
-  /* background-color: yellow !important; */
 }
 
 .action-btn,

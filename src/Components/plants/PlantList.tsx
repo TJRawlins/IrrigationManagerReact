@@ -1,18 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Plant } from "../../app/models/Plant";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "./PlantList.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface PlantListProps {
-  plants: Plant[];
-  // fetchPlants: () => void;
+  fetchPlants: (id: number) => void;
 }
 
-export default function PlantList({ plants }: PlantListProps) {
+export default function PlantList({ fetchPlants }: PlantListProps) {
+  const { zone } = useSelector((state: RootState) => state.zone);
+  const { plantList } = useSelector((state: RootState) => state.plant);
+
   const MOBILE_COLUMNS = {
     quantity: false,
     type: false,
@@ -33,6 +36,7 @@ export default function PlantList({ plants }: PlantListProps) {
   useEffect(() => {
     const newColumns = matches ? ALL_COLUMNS : MOBILE_COLUMNS;
     setColumnVisible(newColumns);
+    fetchPlants(zone.id); //TODO move this to any CRUD action function
   }, [matches]);
 
   const columns = [
@@ -68,7 +72,7 @@ export default function PlantList({ plants }: PlantListProps) {
     },
   ];
 
-  const rows = plants.map((plant) => ({
+  const rows = plantList.map((plant) => ({
     id: plant.id,
     name: plant.name,
     galsPerWk: plant.galsPerWk,
@@ -81,8 +85,9 @@ export default function PlantList({ plants }: PlantListProps) {
 
   return (
     <>
-      <Box sx={{ width: "100%" }}>
+      <Box component="div" sx={{ width: "100%" }}>
         <DataGrid
+          className="data-grid"
           columnVisibilityModel={columnVisible}
           rows={rows}
           columns={columns}

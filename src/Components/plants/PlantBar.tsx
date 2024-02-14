@@ -10,30 +10,24 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { IoChevronBack } from "react-icons/io5";
 import { Grass as GrassIcon } from "@mui/icons-material";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import AddPlant from "./AddPlant";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 type PlantBarProps = {
-  weekly: string;
-  monthly: string;
-  yearly: string;
-  zoneName: string;
-  season: string | undefined;
+  fetchPlants: (id: number) => void;
 };
 
-export default function PlantBar({
-  weekly,
-  monthly,
-  yearly,
-  zoneName,
-  season,
-}: PlantBarProps) {
+export default function PlantBar({ fetchPlants }: PlantBarProps) {
+  const { zone } = useSelector((state: RootState) => state.zone);
+
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */
-
-  // console.log(weekly);
   const AvatarChips = () => {
     return (
       <>
@@ -78,7 +72,7 @@ export default function PlantBar({
                   {"Weekly Gallons"[0].toLocaleUpperCase()}
                 </Avatar>
               }
-              label={weekly}
+              label={zone.totalGalPerWeek}
             />
           </Tooltip>
           <Tooltip title="Monthly Gallons" arrow>
@@ -102,7 +96,7 @@ export default function PlantBar({
                   {"Monthly Gallons"[0].toLocaleUpperCase()}
                 </Avatar>
               }
-              label={monthly}
+              label={zone.totalGalPerMonth}
             />
           </Tooltip>
           <Tooltip title="Yearly Gallons" arrow>
@@ -126,7 +120,7 @@ export default function PlantBar({
                   {"Yearly Gallons"[0].toLocaleUpperCase()}
                 </Avatar>
               }
-              label={yearly}
+              label={zone.totalGalPerYear}
             />
           </Tooltip>
         </Stack>
@@ -166,9 +160,9 @@ export default function PlantBar({
             <Box sx={{ display: { md: "block", sm: "none", xs: "none" } }}>
               <div className="season-title-wrapper">
                 <Typography component="div" className="zone-name-text">
-                  {zoneName}
+                  {zone.name}
                 </Typography>
-                <div id="season-name">{season}</div>
+                <div id="season-name">{zone.season}</div>
               </div>
             </Box>
             <Divider
@@ -182,15 +176,18 @@ export default function PlantBar({
               orientation="vertical"
               flexItem
             />
-            <Button className="add-plant-btn">+ Add Plant</Button>
+            <AddPlant fetchPlants={fetchPlants} />
             <Divider
               sx={{ height: "60%", marginTop: "12px" }}
               orientation="vertical"
               flexItem
             />
-              <Link className="route-link bar-btn" to="/zones">
-                <Button className="add-plant-btn">{`< Back to Zone`}</Button>
-              </Link>
+            <Link className="route-link bar-btn" to="/zones">
+              <Button className="back-btn">
+                <IoChevronBack className="back-arrow-icon" />
+                <Typography className="btn-text">go back</Typography>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

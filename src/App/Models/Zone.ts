@@ -1,6 +1,6 @@
 import { Plant } from "./Plant";
 
-export class  Zone {
+export class Zone {
   id!: number;
   name!: string;
   runtimeHours!: number;
@@ -13,5 +13,5 @@ export class  Zone {
   totalGalPerMonth!: number;
   totalGalPerYear!: number;
   seasonId!: number;
-  plants!: Plant[] | null;
+  plants!: Plant[];
 }

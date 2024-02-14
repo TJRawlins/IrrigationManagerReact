@@ -22,7 +22,7 @@ const initialState: ZoneState = {
     totalGalPerMonth: 0,
     totalGalPerYear: 0,
     seasonId: 0,
-    plants: null,
+    plants: [],
   },
   zoneList: [],
 };

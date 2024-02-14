@@ -44,13 +44,14 @@ div.main-container {
   justify-content: center;
   align-items: center;
   padding: 0 1rem !important;
-  margin-top: 0.2rem;
+  margin-top: 5px;
 }
 
 .zone-name-text {
   color: #777;
   font-size: 2rem;
   align-self: center;
+  text-transform: capitalize;
 }
 
 #season-name {
@@ -80,14 +81,30 @@ svg.seaons-icon {
   color: #777;
 }
 
-.add-plant-btn {
-  margin-top: 0.25rem !important;
-  font-size: 13px !important;
-  padding: 0.5rem 1rem !important;
+.back-btn {
+  margin-top: 0.3rem !important;
+  padding: 0.4rem 1rem 0.4rem 0.4rem !important;
+}
+
+.back-btn:hover {
+  background-color: #e8feff !important;
+  border-radius: 10px !important;
 }
 
 .bar-btn {
   margin: 0 !important;
+  margin-left: 0.25rem !important;
   padding: 0 !important;
   width: fit-content !important;
+}
+
+.back-arrow-icon {
+  margin-top: 0.15rem;
+  font-size: 1.35rem !important;
+  margin-right: 0.2rem;
+}
+
+.btn-text {
+  font-size: 0.85rem !important;
+  transform: translateY(1px);
 }
