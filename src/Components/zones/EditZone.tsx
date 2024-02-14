@@ -28,12 +28,13 @@ const style = {
 function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
-  console.log(zone)
+  console.log(zone);
 
   const handleClose = () => setIsShowEdit(false);
 
   const editZone = (id: number, values: object) => {
     agent.Zones.editZone(id, values).then(() => fetchZones(seasonName));
+    console.log(zone.plants);
   };
 
   // Form submission

@@ -1,18 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Plant } from "../../app/models/Plant";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "./PlantList.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
-interface PlantListProps {
-  plants: Plant[];
-  // fetchPlants: () => void;
-}
+// interface PlantListProps {
+//   plants: Plant[];
+//   fetchPlants: () => void;
+// }
 
-export default function PlantList({ plants }: PlantListProps) {
+// export default function PlantList({ plants }: PlantListProps) {
+export default function PlantList() {
+  const { plantList } = useSelector((state: RootState) => state.plant);
+
   const MOBILE_COLUMNS = {
     quantity: false,
     type: false,
@@ -68,7 +72,7 @@ export default function PlantList({ plants }: PlantListProps) {
     },
   ];
 
-  const rows = plants.map((plant) => ({
+  const rows = plantList.map((plant) => ({
     id: plant.id,
     name: plant.name,
     galsPerWk: plant.galsPerWk,

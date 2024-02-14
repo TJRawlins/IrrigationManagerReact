@@ -51,6 +51,7 @@ div.main-container {
   color: #777;
   font-size: 2rem;
   align-self: center;
+  text-transform: capitalize;
 }
 
 #season-name {

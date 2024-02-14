@@ -6,8 +6,8 @@ import { useState } from "react";
 // import agent from "../../app/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { RootState } from "../../redux/store";
-import { useSelector } from "react-redux";
+// import { RootState } from "../../redux/store";
+// import { useSelector } from "react-redux";
 import "./AddPlant.css";
 
 // type PlantBarProps = {
@@ -32,26 +32,27 @@ function AddPlant() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { seasonName } = useSelector((state: RootState) => state.seasonName);
-  const { seasonId } = useSelector((state: RootState) => state.seasonId);
+  // const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  // const { seasonId } = useSelector((state: RootState) => state.seasonId);
 
   // Form submission
   const initialValues = {
     name: "",
-    runtimeHours: 0,
-    runtimeMinutes: 0,
-    runtimePerWeek: 0,
-    imagePath: undefined,
-    season: seasonName,
-    seasonId: seasonId,
+    type: "",
+    quantity: 0,
+    galsPerWeek: 0,
+    emittersPerPlant: 0,
+    emitterGPH: 0,
+    zoneId: 0, //TODO Need to add the zone id
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required field"),
-    runtimeHours: Yup.number().required("Required field"),
-    runtimeMinutes: Yup.number().required("Required field"),
-    runtimePerWeek: Yup.number().required("Required field"),
-    imagePath: Yup.string().url("Please enter valid URL"),
+    type: Yup.string().required("Required field"),
+    quantity: Yup.number().required("Required field"),
+    galsPerWeek: Yup.number().required("Required field"),
+    emittersPerPlant: Yup.number().required("Required field"),
+    emitterGPH: Yup.number().required("Required field"),
   });
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
@@ -62,7 +63,7 @@ function AddPlant() {
     //   .then(() => fetchZones(seasonName));
     props.resetForm();
     handleClose();
-    console.log("%cAddZone: Zone Created", "color:#1CA1E6");
+    console.log("%cAddPlant: Plant Added", "color:#1CA1E6");
   };
 
   return (
@@ -113,7 +114,7 @@ function AddPlant() {
                   as={TextField}
                   required
                   className="input"
-                  id="zone-name-input"
+                  id="plant-name-input"
                   name="name"
                   label="Plant name"
                   type="text"
@@ -127,97 +128,104 @@ function AddPlant() {
                     />
                   }
                 />
+                <Field
+                  as={TextField}
+                  required
+                  className="input"
+                  id="plant-type-input"
+                  name="type"
+                  label="Plant type"
+                  type="text"
+                  autoComplete=""
+                  variant="standard"
+                  helperText={
+                    <ErrorMessage
+                      name="type"
+                      component="div"
+                      className="error-text"
+                    />
+                  }
+                />
                 <div className="split-container">
                   <Field
                     as={TextField}
                     required
                     className="input"
-                    id="runtime-hours-input"
-                    name="runtimeHours"
-                    label="Runtime hours"
+                    id="quantity-input"
+                    name="quantity"
+                    label="Quantity"
                     type="number"
                     autoComplete=""
                     variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 24 } }}
+                    InputProps={{ inputProps: { min: 0, max: 150 } }}
                     helperText={
                       <ErrorMessage
-                        name="runtimeHours"
+                        name="quantity"
                         component="div"
                         className="error-text"
                       />
                     }
                   />
-                  <Typography
-                    sx={{ textAlign: "center !important", paddingTop: "30px" }}
-                  >
-                    :
-                  </Typography>
                   <Field
                     as={TextField}
                     required
                     className="input"
-                    id="runtime-minutes-input"
-                    name="runtimeMinutes"
-                    label="Runtime minutes"
+                    id="gals-wk-input"
+                    name="galsPerWeek"
+                    label="Gallons per week"
                     type="number"
                     autoComplete=""
                     variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 59 } }}
+                    InputProps={{ inputProps: { min: 0, max: 150 } }}
                     helperText={
                       <ErrorMessage
-                        name="runtimeMinutes"
+                        name="galsPerWeek"
                         component="div"
                         className="error-text"
                       />
                     }
                   />
                 </div>
-                <Field
-                  as={TextField}
-                  required
-                  className="input"
-                  id="per-week-input"
-                  label="Times per week"
-                  name="runtimePerWeek"
-                  type="number"
-                  autoComplete=""
-                  variant="standard"
-                  InputProps={{ inputProps: { min: 0, max: 25 } }}
-                  helperText={
-                    <ErrorMessage
-                      name="runtimePerWeek"
-                      component="div"
-                      className="error-text"
-                    />
-                  }
-                />
-                <Field
-                  as={TextField}
-                  className="input"
-                  id="image-path-input"
-                  label="Image path"
-                  name="imagePath"
-                  type="text"
-                  autoComplete=""
-                  variant="standard"
-                  helperText={
-                    <ErrorMessage
-                      name="imagePath"
-                      component="div"
-                      className="error-text"
-                    />
-                  }
-                />
-                <Field
-                  as={TextField}
-                  disabled
-                  className="input"
-                  id="standard-disabled"
-                  name={seasonName}
-                  label="Season"
-                  defaultValue={seasonName}
-                  variant="standard"
-                />
+                <div className="split-container">
+                  <Field
+                    as={TextField}
+                    required
+                    className="input"
+                    id="emitters-input"
+                    label="Emitters per plant"
+                    name="emittersPerPlant"
+                    type="number"
+                    autoComplete=""
+                    variant="standard"
+                    InputProps={{ inputProps: { min: 0, max: 150 } }}
+                    helperText={
+                      <ErrorMessage
+                        name="emittersPerPlant"
+                        component="div"
+                        className="error-text"
+                      />
+                    }
+                  />
+                  <Field
+                    as={TextField}
+                    required
+                    className="input"
+                    id="emitters-gph-input"
+                    label="Emitter GPH flow rate"
+                    name="emitterGPH"
+                    type="float"
+                    autoComplete=""
+                    variant="standard"
+                    InputProps={{ inputProps: { min: 0, max: 150.0 } }}
+                    helperText={
+                      <ErrorMessage
+                        name="emitterGPH"
+                        component="div"
+                        className="error-text"
+                      />
+                    }
+                  />
+                </div>
                 <Button className="submit-btn" type="submit">
                   Add
                 </Button>

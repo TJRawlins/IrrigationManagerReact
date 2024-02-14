@@ -53,6 +53,12 @@ export default function ZoneCard({
     console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
   };
 
+  const fetchZone = () => {
+    agent.Zones.details(zone.id).then((zone) => {
+      dispatch(updateCurrentZone(zone));
+    });
+  };
+
   const copyZone = () => {
     const {
       name,
@@ -207,7 +213,8 @@ export default function ZoneCard({
               <Tooltip title="Total Weekly Gallons" arrow>
                 <Chip
                   className={
-                    "gallons-chip week " + zone.season.toString().toLocaleLowerCase()
+                    "gallons-chip week " +
+                    zone.season.toString().toLocaleLowerCase()
                   }
                   sx={{
                     width: "100%",
@@ -250,7 +257,8 @@ export default function ZoneCard({
               <Tooltip title="Total Yearly Gallons" arrow>
                 <Chip
                   className={
-                    "gallons-chip year " + zone.season.toString().toLocaleLowerCase()
+                    "gallons-chip year " +
+                    zone.season.toString().toLocaleLowerCase()
                   }
                   avatar={
                     <Avatar
@@ -287,7 +295,11 @@ export default function ZoneCard({
             }}
           >
             <Link to={`/plants/zone/${zone.id}`}>
-              <Button className="card-btn" id="card-details">
+              <Button
+                className="card-btn"
+                id="card-details"
+                onClick={fetchZone}
+              >
                 <GrassIcon className="action-icon" />
               </Button>
             </Link>
