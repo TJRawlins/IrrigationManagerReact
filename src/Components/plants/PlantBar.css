@@ -82,13 +82,15 @@ svg.seaons-icon {
 }
 
 .back-btn {
+  color: #8b8b8b !important;
   margin-top: 0.3rem !important;
   padding: 0.4rem 1rem 0.4rem 0.4rem !important;
 }
 
 .back-btn:hover {
-  background-color: #e8feff !important;
+  background-color: #02c0a014 !important;
   border-radius: 10px !important;
+  color: #02c0a0 !important;
 }
 
 .bar-btn {
