@@ -48,12 +48,8 @@ export default function ZoneCard({
     setIsHovering(false);
   }
 
-  const deleteZone = () => {
-    agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonName));
-    console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
-  };
-
-  const fetchZone = () => {
+  // This gets passed to AddPlant to update and persist gallons on PlantBar
+  const updateLocalStorageZone = () => {
     agent.Zones.details(zone.id).then((zone) => {
       dispatch(updateCurrentZone(zone));
     });
@@ -80,11 +76,14 @@ export default function ZoneCard({
     }).then(() => fetchZones(seasonName));
   };
 
+  const deleteZone = () => {
+    agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonName));
+    console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
+  };
+
   const showEdit = () => {
     setIsShowEdit(true);
-    dispatch(updateCurrentZone(zone));
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
-    // console.log(seasonName);
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -298,7 +297,7 @@ export default function ZoneCard({
               <Button
                 className="card-btn"
                 id="card-details"
-                onClick={fetchZone}
+                onClick={updateLocalStorageZone}
               >
                 <GrassIcon className="action-icon" />
               </Button>

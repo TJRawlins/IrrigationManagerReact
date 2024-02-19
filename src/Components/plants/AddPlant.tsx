@@ -6,9 +6,10 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./AddPlant.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import agent from "../../app/api/agent";
+import { updateCurrentZone } from "../../redux/zoneSlice";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -30,8 +31,16 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const dispatch = useDispatch();
 
   const { zone } = useSelector((state: RootState) => state.zone);
+
+  // TODO - Update local storage for zone. Added to onSubmit
+  const updateLocalStorageZone = () => {
+    agent.Zones.details(zone.id).then((zone) => {
+      dispatch(updateCurrentZone(zone));
+    });
+  };
 
   // Form submission
   const initialValues = {
@@ -55,10 +64,11 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     console.log(values);
+    // updateLocalStorageZone was added to update and persist gallons on PlantBar
     agent.Plants.createPlant(values)
       .catch((error) => alert(error))
-      .then(() => fetchPlants(zone.id));
-    fetchPlants(zone.id);
+      .then(() => fetchPlants(zone.id))
+      .then(() => updateLocalStorageZone());
     props.resetForm();
     handleClose();
     console.log("%cAddPlant: Plant Added", "color:#1CA1E6");

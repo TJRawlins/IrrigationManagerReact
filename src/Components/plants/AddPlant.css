@@ -10,11 +10,12 @@
   width: 50px !important;
   border-radius: 10px !important;
   background-color: transparent !important;
-  color: #c3c3c3;
+  color: #8b8b8b !important;
 }
 
 .add-btn-plant:hover {
-  background-color: #e8feff !important;
+  color: #02c0a0 !important;
+  background-color: #02c0a014 !important;
 }
 
 .icon-container {

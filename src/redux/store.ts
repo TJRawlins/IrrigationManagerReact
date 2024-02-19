@@ -16,6 +16,10 @@ export const store = configureStore({
     plant: plantReducer,
     plantList: plantListReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // Disable serializable check due to localStorage usage
+    }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

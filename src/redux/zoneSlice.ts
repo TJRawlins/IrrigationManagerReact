@@ -7,24 +7,19 @@ export interface ZoneState {
   zoneList: Zone[];
 }
 
+const zone =
+  localStorage.getItem("zone") !== null
+    ? JSON.parse(localStorage.getItem("zone")!)
+    : {};
+const zones =
+  localStorage.getItem("zones") !== null
+    ? JSON.parse(localStorage.getItem("zones")!)
+    : [];
+
 // State
 const initialState: ZoneState = {
-  zone: {
-    id: 0,
-    name: "",
-    runtimeHours: 0,
-    runtimeMinutes: 0,
-    runtimePerWeek: 0,
-    imagePath: "",
-    season: "",
-    totalPlants: 0,
-    totalGalPerWeek: 0,
-    totalGalPerMonth: 0,
-    totalGalPerYear: 0,
-    seasonId: 0,
-    plants: [],
-  },
-  zoneList: [],
+  zone: zone,
+  zoneList: zones,
 };
 
 export const zoneSlice = createSlice({
@@ -34,9 +29,11 @@ export const zoneSlice = createSlice({
   reducers: {
     updateCurrentZone: (state, action: PayloadAction<Zone>) => {
       state.zone = action.payload;
+      localStorage.setItem("zone", JSON.stringify(action.payload));
     },
     updateCurrentZoneList: (state, action: PayloadAction<Zone[]>) => {
       state.zoneList = action.payload;
+      localStorage.setItem("zones", JSON.stringify(action.payload));
     },
   },
 });
