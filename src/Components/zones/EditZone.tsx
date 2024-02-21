@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { useEffect } from "react";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
@@ -28,13 +29,12 @@ const style = {
 function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
-  console.log(zone);
+  // ! Component renders twice. First render shows previous zone. Second render shows current
 
   const handleClose = () => setIsShowEdit(false);
 
   const editZone = (id: number, values: object) => {
     agent.Zones.editZone(id, values).then(() => fetchZones(seasonName));
-    console.log(zone.plants);
   };
 
   // Form submission
@@ -61,6 +61,8 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     seasonId: zone.seasonId,
   };
 
+  // console.log("Zone values showing up in fields", initialValues);
+
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required field"),
     runtimeHours: Yup.number().required("Required field"),
@@ -68,6 +70,12 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     runtimePerWeek: Yup.number().required("Required field"),
     imagePath: Yup.string().url("Please enter valid URL"),
   });
+
+  useEffect(() => {
+    console.log("useEffect zone: ", zone);
+    console.log("useEffect initialValues: ", initialValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zone]);
 
   return (
     <div>
@@ -138,7 +146,10 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                   />
                   <Typography
                     component="span"
-                    sx={{ textAlign: "center !important", paddingTop: "30px" }}
+                    sx={{
+                      textAlign: "center !important",
+                      paddingTop: "30px",
+                    }}
                   >
                     :
                   </Typography>

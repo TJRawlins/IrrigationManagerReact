@@ -81,8 +81,13 @@ export default function ZoneCard({
     console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
   };
 
+  // Temporary fix: Used setTimeout to delay so that the edit modal will grab the most recent local storage value
+  // See EditZone for bug comment
   const showEdit = () => {
-    setIsShowEdit(true);
+    updateLocalStorageZone();
+    setTimeout(() => {
+      setIsShowEdit(true);
+    }, 50);
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
   };
 
