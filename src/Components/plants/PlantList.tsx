@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
+import { Box, Button, ButtonGroup, Popover, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "./PlantList.css";
 import { useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import { RootState } from "../../redux/store";
 import agent from "../../app/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { useDispatch } from "react-redux";
+import React from "react";
 
 interface PlantListProps {
   fetchPlants: (id: number) => void;
@@ -44,11 +45,33 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
     });
   };
 
-  const deletePlant = (plantId: number) => {
-    agent.Plants.removePlant(plantId)
+  // Delete Plant
+  const [plantId, setPlantId] = useState<number>();
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
+  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+    setPlantId(
+      Number(
+        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
+      )
+    );
+  };
+
+  const handleDeleteClose = () => {
+    setAnchorEl(null);
+  };
+
+  const deletePlant = () => {
+    agent.Plants.removePlant(plantId!)
       .catch((error) => alert(error))
       .then(() => fetchPlants(zone.id))
       .then(() => updateLocalStorageZone());
+    handleDeleteClose();
     console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
   };
 
@@ -84,18 +107,30 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
             </Button>
             <Button
               className="action-btn"
-              onClick={(e: SyntheticEvent) =>
-                deletePlant(
-                  Number(
-                    e.currentTarget.parentNode?.parentNode?.parentElement?.getAttribute(
-                      "data-id"
-                    )
-                  )
-                )
-              }
+              aria-describedby={id}
+              // GET DATA-ID (PLANT ID) AND SET IT - DISPLAY CONFIRM BUTTON
+              onClick={handleDeleteClick}
             >
               <FaTrashAlt className="action-btn-icon" />
             </Button>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleDeleteClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <Button
+                sx={{ p: 2 }}
+                // USE DELETE PLANT CALLBACK FUNCTION
+                onClick={deletePlant}
+              >
+                Confirm
+              </Button>
+            </Popover>
           </ButtonGroup>
         );
       },
