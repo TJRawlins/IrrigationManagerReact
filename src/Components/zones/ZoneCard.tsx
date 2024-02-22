@@ -87,7 +87,7 @@ export default function ZoneCard({
     updateLocalStorageZone();
     setTimeout(() => {
       setIsShowEdit(true);
-    }, 50);
+    }, 100);
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
   };
 
