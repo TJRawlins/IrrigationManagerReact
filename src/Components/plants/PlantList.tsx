@@ -123,11 +123,7 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
                 horizontal: "left",
               }}
             >
-              <Button
-                sx={{ p: 2 }}
-                // USE DELETE PLANT CALLBACK FUNCTION
-                onClick={deletePlant}
-              >
+              <Button sx={{ p: 2 }} onClick={deletePlant}>
                 Confirm
               </Button>
             </Popover>

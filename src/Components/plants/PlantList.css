@@ -28,6 +28,10 @@
   width: 25px !important;
 }
 
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper {
+  box-shadow: none !important;
+}
+
 @media screen and (max-width: 810px) {
   .action-btn {
     margin-left: 0.05rem !important;
