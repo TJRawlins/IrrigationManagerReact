@@ -2,11 +2,14 @@
 import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "./PlantList.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import agent from "../../app/api/agent";
+import { updateCurrentZone } from "../../redux/zoneSlice";
+import { useDispatch } from "react-redux";
 
 interface PlantListProps {
   fetchPlants: (id: number) => void;
@@ -32,6 +35,22 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   const [columnVisible, setColumnVisible] = useState(ALL_COLUMNS);
+
+  const dispatch = useDispatch();
+
+  const updateLocalStorageZone = () => {
+    agent.Zones.details(zone.id).then((zone) => {
+      dispatch(updateCurrentZone(zone));
+    });
+  };
+
+  const deletePlant = (plantId: number) => {
+    agent.Plants.removePlant(plantId)
+      .catch((error) => alert(error))
+      .then(() => fetchPlants(zone.id))
+      .then(() => updateLocalStorageZone());
+    console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
+  };
 
   useEffect(() => {
     const newColumns = matches ? ALL_COLUMNS : MOBILE_COLUMNS;
@@ -63,7 +82,18 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
             <Button className="action-btn">
               <FaEdit className="action-btn-icon" />
             </Button>
-            <Button className="action-btn">
+            <Button
+              className="action-btn"
+              onClick={(e: SyntheticEvent) =>
+                deletePlant(
+                  Number(
+                    e.currentTarget.parentNode?.parentNode?.parentElement?.getAttribute(
+                      "data-id"
+                    )
+                  )
+                )
+              }
+            >
               <FaTrashAlt className="action-btn-icon" />
             </Button>
           </ButtonGroup>
