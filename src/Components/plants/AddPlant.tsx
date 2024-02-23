@@ -5,11 +5,11 @@ import { MdAddCircle } from "react-icons/md";
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import "./AddPlant.css";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import agent from "../../app/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
+import "./PlantModal.css";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
