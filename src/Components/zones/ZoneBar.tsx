@@ -102,8 +102,8 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
     };
 
     return (
-      <Box sx={{ minWidth: 150 }}>
-        <FormControl fullWidth>
+      <Box sx={{ minWidth: 140 }}>
+        <FormControl sx={{ width: "140px" }}>
           <Select
             className="season-btn"
             value={seasonName}

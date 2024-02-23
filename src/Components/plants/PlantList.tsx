@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
+import { Box, Button, ButtonGroup, Popover, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -7,6 +7,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import "./PlantList.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import agent from "../../app/api/agent";
+import { updateCurrentZone } from "../../redux/zoneSlice";
+import { useDispatch } from "react-redux";
+import React from "react";
 
 interface PlantListProps {
   fetchPlants: (id: number) => void;
@@ -32,6 +36,44 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   const [columnVisible, setColumnVisible] = useState(ALL_COLUMNS);
+
+  const dispatch = useDispatch();
+
+  const updateLocalStorageZone = () => {
+    agent.Zones.details(zone.id).then((zone) => {
+      dispatch(updateCurrentZone(zone));
+    });
+  };
+
+  // Delete Plant
+  const [plantId, setPlantId] = useState<number>();
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
+  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+    setPlantId(
+      Number(
+        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
+      )
+    );
+  };
+
+  const handleDeleteClose = () => {
+    setAnchorEl(null);
+  };
+
+  const deletePlant = () => {
+    agent.Plants.removePlant(plantId!)
+      .catch((error) => alert(error))
+      .then(() => fetchPlants(zone.id))
+      .then(() => updateLocalStorageZone());
+    handleDeleteClose();
+    console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
+  };
 
   useEffect(() => {
     const newColumns = matches ? ALL_COLUMNS : MOBILE_COLUMNS;
@@ -63,9 +105,28 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
             <Button className="action-btn">
               <FaEdit className="action-btn-icon" />
             </Button>
-            <Button className="action-btn">
+            <Button
+              className="action-btn"
+              aria-describedby={id}
+              // GET DATA-ID (PLANT ID) AND SET IT - DISPLAY CONFIRM BUTTON
+              onClick={handleDeleteClick}
+            >
               <FaTrashAlt className="action-btn-icon" />
             </Button>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleDeleteClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <Button sx={{ p: 2 }} onClick={deletePlant}>
+                Confirm
+              </Button>
+            </Popover>
           </ButtonGroup>
         );
       },
