@@ -7,20 +7,19 @@ export interface PlantState {
   plantList: Plant[];
 }
 
+const plant =
+  localStorage.getItem("plant") !== null
+    ? JSON.parse(localStorage.getItem("plant")!)
+    : {};
+const plants =
+  localStorage.getItem("plants") !== null
+    ? JSON.parse(localStorage.getItem("plants")!)
+    : [];
+
 // State
 const initialState: PlantState = {
-  plant: {
-    id: 0,
-    name: "",
-    type: "",
-    quantity: 0,
-    galsPerWk: 0,
-    emittersPerPlant: 0,
-    emitterGPH: 0,
-    timeStamp: null,
-    zoneId: 0,
-  },
-  plantList: [],
+  plant: plant,
+  plantList: plants,
 };
 
 export const plantSlice = createSlice({
@@ -30,9 +29,11 @@ export const plantSlice = createSlice({
   reducers: {
     updateCurrentPlant: (state, action: PayloadAction<Plant>) => {
       state.plant = action.payload;
+      localStorage.setItem("plant", JSON.stringify(action.payload));
     },
     updateCurrentPlantList: (state, action: PayloadAction<Plant[]>) => {
       state.plantList = action.payload;
+      localStorage.setItem("plants", JSON.stringify(action.payload));
     },
   },
 });

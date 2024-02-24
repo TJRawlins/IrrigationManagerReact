@@ -4,13 +4,15 @@ import { DataGrid } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import "./PlantList.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import agent from "../../app/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { useDispatch } from "react-redux";
 import React from "react";
+import ViewPlant from "./ViewPlant";
+import "./PlantList.css";
+import { updateCurrentPlant } from "../../redux/plantSlice";
 
 interface PlantListProps {
   fetchPlants: (id: number) => void;
@@ -46,7 +48,6 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
   };
 
   // Delete Plant
-  const [plantId, setPlantId] = useState<number>();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -75,10 +76,37 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
     console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
   };
 
+  // TODO : View Plant
+  const [plantId, setPlantId] = useState<number>();
+  const [showViewPlant, setShowViewPlant] = useState<boolean>(false);
+
+  const handleViewClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setTimeout(() => {
+      setShowViewPlant(true);
+    }, 100);
+    setPlantId(
+      Number(
+        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
+      )
+    );
+    // TODO : Update Plant in local storage
+    agent.Plants.details(
+      Number(
+        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
+      )!
+    )
+      .then((plant) => {
+        dispatch(updateCurrentPlant(plant));
+      })
+      .then((plant) => console.log("axios plant", plant));
+    console.log("%cPlantList: Plant View Clicked", "color:#1CA1E6");
+  };
+
   useEffect(() => {
     const newColumns = matches ? ALL_COLUMNS : MOBILE_COLUMNS;
     setColumnVisible(newColumns);
     fetchPlants(zone.id); //TODO move this to any CRUD action function
+    console.log("PlantList => useEffect => plantID: ", plantId);
   }, [matches]);
 
   const columns = [
@@ -99,7 +127,7 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
       renderCell: () => {
         return (
           <ButtonGroup id="action-btn-group">
-            <Button className="action-btn">
+            <Button className="action-btn" onClick={handleViewClick}>
               <FaRegEye className="action-btn-icon" style={{ fontSize: 20 }} />
             </Button>
             <Button className="action-btn">
@@ -166,6 +194,11 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
           disableRowSelectionOnClick
         />
       </Box>
+      <ViewPlant
+        fetchPlants={fetchPlants}
+        setShowViewPlant={setShowViewPlant}
+        showViewPlant={showViewPlant}
+      />
     </>
   );
 }
