@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import agent from "../../app/api/agent";
+import agent from "../../App/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { useDispatch } from "react-redux";
 import React from "react";

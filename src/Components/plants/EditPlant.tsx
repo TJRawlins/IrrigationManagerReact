@@ -8,7 +8,7 @@ import { RootState } from "../../redux/store";
 import "./PlantModal.css";
 // import { updateCurrentPlant } from "../../redux/plantSlice";
 import { useEffect } from "react";
-// import { Plant } from "../../app/models/Plant";
+// import { Plant } from "../../App/models/Plant";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;

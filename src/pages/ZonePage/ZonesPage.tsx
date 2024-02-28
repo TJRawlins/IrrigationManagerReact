@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import ZoneList from "../../Components/zones/ZoneList";
-import agent from "../../app/api/agent";
+import agent from "../../App/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
 import { Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateCurrentZoneList } from "../../redux/zoneSlice";
-import { Zone } from "../../app/models/Zone";
+import { Zone } from "../../App/models/Zone";
 
 const ZonesPage = () => {
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
@@ -18,10 +18,7 @@ const ZonesPage = () => {
     agent.Zones.list().then((zones) => {
       dispatch(
         updateCurrentZoneList(
-          zones.filter(
-            (zone: Zone) =>
-              zone.season === seasonString
-          )
+          zones.filter((zone: Zone) => zone.season === seasonString)
         )
       );
       console.log("%cZones: Zone Fetched", "color:#1CA1E6");

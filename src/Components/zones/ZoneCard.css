@@ -114,43 +114,6 @@
   border-radius: 0 0 15px 15px !important;
 }
 
-/* .gallons-chip {
-  width: 100% !important;
-  width: 80px !important;
-  justify-content: left !important;
-  border-radius: 10px !important;
-  background-color: #f5f5f5 !important;
-  color: #969696 !important;
-}
-.gallons-chip-avatar {
-  min-width: fit-content !important;
-  background-color: rgba(0, 0, 0, 0.08) !important;
-  font-weight: 700 !important;
-  color: #969696 !important;
-} */
-
-/* .gallons-chip {
-  width: 100% !important;
-  width: 92px !important;
-  justify-content: left !important;
-  border-radius: 0px !important;
-  background-color: #f5f5f5 !important;
-  color: #969696 !important;
-  margin-left: 0 !important;
-}
-.gallons-chip-avatar {
-  min-width: fit-content !important;
-  background-color: rgba(0, 0, 0, 0.08) !important;
-  font-weight: 700 !important;
-  color: #969696 !important;
-}
-.gallons-chip.week {
-  border-radius: 0 0 0 10px!important;
-}
-.gallons-chip.year {
-  border-radius: 0 0 10px 0 !important;
-} */
-
 .gallons-chip {
   width: 100% !important;
   width: 90px !important;

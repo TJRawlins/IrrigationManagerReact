@@ -1,6 +1,12 @@
 .split-container {
   display: flex;
-  gap: 1rem;
+  gap: 1rem;  
+}
+
+.split-label {
+  display: flex;
+  gap: .25rem;
+
 }
 
 .add-btn-plant {

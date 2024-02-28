@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import PlantList from "../../Components/plants/PlantList";
-import agent from "../../app/api/agent";
+import agent from "../../App/api/agent";
 import PlantBar from "../../Components/plants/PlantBar";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router";

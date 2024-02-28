@@ -7,7 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import agent from "../../app/api/agent";
+import agent from "../../App/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import "./PlantModal.css";
 

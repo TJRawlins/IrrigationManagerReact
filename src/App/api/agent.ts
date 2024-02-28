@@ -3,6 +3,12 @@ import axios, { AxiosResponse } from "axios";
 
 axios.defaults.baseURL = "https://localhost:5555/api/";
 
+// const mainAxios = axios.create({
+//   baseURL: "https://localhost:5555/api/"
+// })
+
+// const TREFLE_KEY = import.meta.env.VITE_TREFLE_API_KEY
+
 const responseBody = (response: AxiosResponse) => response.data;
 
 const requests = {

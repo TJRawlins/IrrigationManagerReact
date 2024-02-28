@@ -1,11 +1,23 @@
-import { Box, Modal, TextField, Typography } from "@mui/material";
-import Button from "@mui/material/Button";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import Avatar from "@mui/material/Avatar";
+import {
+  Box,
+  Chip,
+  ChipProps,
+  Modal,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+// import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import "./PlantModal.css";
 import { useEffect } from "react";
+import { MdAcUnit, MdLocalFlorist, MdSunny } from "react-icons/md";
+import { FaCanadianMapleLeaf } from "react-icons/fa";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -18,47 +30,65 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
+  borderRadius: 20,
   boxShadow: 24,
-  p: 4,
+  padding: 0,
 };
 
-function ViewPlant({
-  setShowViewPlant,
-  showViewPlant,
-}: PlantBarProps) {
+function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
   const handleClose = () => setShowViewPlant(false);
 
   // !BUG: When clicking view plant, it saves the previously clicked plant to local storage
   const { plant } = useSelector((state: RootState) => state.plant);
+  const { zone } = useSelector((state: RootState) => state.zone);
   console.log("ViewPlant: ", plant);
-
-  // Form submission
-  const initialValues = {
-    name: plant?.name,
-    type: plant?.type,
-    quantity: plant?.quantity,
-    galsPerWk: plant?.galsPerWk,
-    emittersPerPlant: plant?.emittersPerPlant,
-    emitterGPH: plant?.emitterGPH,
-    zoneId: plant?.zoneId,
-  };
-  console.log("ViewPlant => initialValues: ", initialValues);
-
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Required field"),
-    type: Yup.string().required("Required field"),
-    quantity: Yup.number().required("Required field"),
-    galsPerWk: Yup.number().required("Required field"),
-    emittersPerPlant: Yup.number().required("Required field"),
-    emitterGPH: Yup.number().required("Required field"),
-  });
 
   useEffect(() => {
     console.log("ViewPlant => useEffect");
   }, [plant]);
+
+  // TODO : New Card ===================================================
+  /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
+  function getChipProps(params: string): ChipProps {
+    if (params === "Spring") {
+      return {
+        icon: (
+          <MdLocalFlorist className="iconStyle" style={{ fill: "#ff00aa" }} />
+        ),
+        label: params,
+        style: { background: "#d4028e" },
+      };
+    } else if (params === "Summer") {
+      return {
+        icon: <MdSunny className="iconStyle" style={{ fill: "#f1b100" }} />,
+        label: params,
+        style: { background: "#e2a600" },
+      };
+    } else if (params === "Fall") {
+      return {
+        icon: (
+          <FaCanadianMapleLeaf
+            className="iconStyle rotateIcon"
+            style={{ fill: "#ff4800" }}
+          />
+        ),
+        label: params,
+        style: { background: "#dd3f01" },
+      };
+    } else if (params === "Winter") {
+      return {
+        icon: <MdAcUnit className="iconStyle" style={{ fill: "#00aeff" }} />,
+        label: params,
+        style: { background: "#0092d6" },
+      };
+    } else {
+      return {
+        label: params,
+      };
+    }
+  }
 
   return (
     <div>
@@ -74,143 +104,170 @@ function ViewPlant({
         }}
       >
         <Box className="modal-box" sx={style}>
-          <Typography
-            className="modal-title"
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
+          {/* CARD COMPONENT */}
+          <Card
+            sx={{
+              position: "relative",
+              boxShadow: "none !important",
+              borderRadius: "15px",
+              padding: "10px",
+              width: "300px",
+            }}
           >
-            ADD NEW PLANT
-          </Typography>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={() => setShowViewPlant(false)}
-            validationSchema={validationSchema}
-          >
-            {() => (
-              <Form style={{ width: "100%" }}>
-                <Field
-                  as={TextField}
-                  required
-                  className="input"
-                  id="plant-name-input"
-                  name="name"
-                  label="Plant name"
-                  type="text"
-                  autoComplete=""
-                  variant="standard"
-                  helperText={
-                    <ErrorMessage
-                      name="name"
-                      component="div"
-                      className="error-text"
+            <CardMedia
+              className="card-img"
+              sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
+              image={`https://source.unsplash.com/random/?${plant.name
+                .replace(/\s*\([^)]*\)\s*/g, "")
+                .replace(" ", ",")}`}
+              title={plant.name}
+            />
+            {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
+            <CardContent className="card-zone-data">
+              <Chip
+                className="chip"
+                variant="filled"
+                size="small"
+                sx={{ position: "absolute", top: "5px", left: "20px" }}
+                {...getChipProps(zone.season)}
+              />
+              <Box sx={{marginBottom: 1}}>
+                <Typography
+                  className="zone-name"
+                  gutterBottom
+                  variant="h6"
+                  component="div"
+                  sx={{ marginBottom: 0, lineHeight: 1 }}
+                >
+                  {plant.name.length > 15
+                    ? plant.name.toLocaleUpperCase().substring(0, 18) + "..."
+                    : plant.name.toLocaleUpperCase()}
+                </Typography>
+                <Typography sx={{ fontSize: ".8rem", marginLeft: 1.5, color: '#b8b5b5' }}>
+                  {plant.timeStamp?.toString()}
+                </Typography>
+              </Box>
+              <Box className="card-data-container">
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Zone:</span>
+                  <span style={{fontSize: ".85rem"}}>{zone.name}</span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Runtime:</span>
+                  <span style={{fontSize: ".85rem"}}>
+                    {zone.runtimeHours}:
+                    {zone.runtimeMinutes.toString().length == 1
+                      ? "0" + zone.runtimeMinutes
+                      : zone.runtimeMinutes}
+                  </span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Per Week:</span>
+                  <span style={{fontSize: ".85rem"}}>{zone.runtimePerWeek}</span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Total Plants:</span>
+                  <span style={{fontSize: ".85rem"}}>{zone.totalPlants}</span>
+                </Typography>
+              </Box>
+              {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  T O T A L   G A L L O N S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
+              <Box>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  mt={2}
+                  mb={0}
+                  sx={{
+                    display: { xs: "flex", sm: "flex", md: "flex" },
+                    justifyContent: "space-between",
+                    maxWidth: "100%",
+                    flexWrap: "nowrap",
+                  }}
+                >
+                  <Tooltip title="Total Weekly Gallons" arrow>
+                    <Chip
+                      className={
+                        "gallons-chip week " +
+                        zone.season.toString().toLocaleLowerCase()
+                      }
+                      sx={{
+                        width: "100%",
+                        justifyContent: "left",
+                        borderRadius: "10px",
+                        margin: "0 !important",
+                        padding: "0 !important",
+                      }}
+                      avatar={
+                        <Avatar
+                          className={
+                            "gallons-chip-avatar " +
+                            zone.season.toString().toLocaleLowerCase()
+                          }
+                        >
+                          W
+                        </Avatar>
+                      }
+                      label={plant.galsPerWk}
                     />
-                  }
-                />
-                <Field
-                  as={TextField}
-                  required
-                  className="input"
-                  id="plant-type-input"
-                  name="type"
-                  label="Plant type"
-                  type="text"
-                  autoComplete=""
-                  variant="standard"
-                  helperText={
-                    <ErrorMessage
-                      name="type"
-                      component="div"
-                      className="error-text"
+                  </Tooltip>
+                  <Tooltip title="Total Monthly Gallons" arrow>
+                    <Chip
+                      className={
+                        "gallons-chip " +
+                        zone.season.toString().toLocaleLowerCase()
+                      }
+                      avatar={
+                        <Avatar
+                          className={
+                            "gallons-chip-avatar " +
+                            zone.season.toString().toLocaleLowerCase()
+                          }
+                        >
+                          M
+                        </Avatar>
+                      }
+                      label={plant.galsPerWk * 4}
                     />
-                  }
-                />
-                <div className="split-container">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="quantity-input"
-                    name="quantity"
-                    label="Quantity"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="quantity"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="gals-wk-input"
-                    name="galsPerWk"
-                    label="Gallons per week"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="galsPerWk"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                </div>
-                <div className="split-container">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="emitters-input"
-                    label="Emitters per plant"
-                    name="emittersPerPlant"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="emittersPerPlant"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="emitters-gph-input"
-                    label="Emitter GPH flow rate"
-                    name="emitterGPH"
-                    type="float"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150.0 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="emitterGPH"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                </div>
-                <Button className="submit-btn" type="submit">
-                  Add
-                </Button>
-              </Form>
-            )}
-          </Formik>
+                  </Tooltip>
+                  <Tooltip title="Total Yearly Gallons" arrow>
+                    <Chip
+                      className={
+                        "gallons-chip year " +
+                        zone.season.toString().toLocaleLowerCase()
+                      }
+                      avatar={
+                        <Avatar
+                          className={
+                            "gallons-chip-avatar " +
+                            zone.season.toString().toLocaleLowerCase()
+                          }
+                        >
+                          Y
+                        </Avatar>
+                      }
+                      label={plant.galsPerWk * 52}
+                    />
+                  </Tooltip>
+                </Stack>
+              </Box>
+            </CardContent>
+          </Card>
         </Box>
       </Modal>
     </div>

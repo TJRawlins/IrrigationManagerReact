@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Plant } from "../app/models/Plant";
+import { Plant } from "../App/models/Plant";
 
 export interface PlantState {
   plant: Plant;
