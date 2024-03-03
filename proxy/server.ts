@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import axios from "axios";
 import url from "url";
 
+// TODO : ADD .ENV VARIABLE FOR REACT APP DEV URL
 dotenv.config();
 const BASE_URL: string | undefined = process.env.VITE_BASE_URL;
 const PORT: string | number = process.env.VITE_API_PORT || 5000;

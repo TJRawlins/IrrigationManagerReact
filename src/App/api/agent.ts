@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-// TODO : NEED TO ADD TREFLE PROXY SERVER URL WITH PORT 5000
+// TODO : ADD .ENV VARIABLES FOR DEV PROXY SERVER URL AND DEV .NET BACKEND URL
 axios.defaults.baseURL = "https://localhost:5555/";
 
 const trefleAxios = axios.create({
