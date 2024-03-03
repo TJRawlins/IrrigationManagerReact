@@ -12,6 +12,12 @@ const API_KEY: string | undefined = process.env.VITE_TREFLE_API_KEY;
 const app = express();
 
 app.get(`/trefle/api/`, (req, res) => {
+  // Set headers for cors
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   // Params after ? http://localhost:5000/trefle/api/?apple
   const params = url.parse(req.url, true).search?.toString().replace("?", "");
   // Axios call with .env variables and params
