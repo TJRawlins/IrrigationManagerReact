@@ -18,7 +18,6 @@ import "./PlantModal.css";
 import { useEffect } from "react";
 import { MdAcUnit, MdLocalFlorist, MdSunny } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
-import agent from "../../App/api/agent";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -42,15 +41,15 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
   const handleClose = () => setShowViewPlant(false);
 
   // !BUG: When clicking view plant, it saves the previously clicked plant to local storage
+  const { treflePlant } = useSelector((state: RootState) => state.treflePlant);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
-  // const [treflePlant, setTreflePlant] = useState();
   console.log("ViewPlant: ", plant);
 
   useEffect(() => {
     console.log("ViewPlant => useEffect");
-    agent.Trefle.details(plant.name).then((plant) => console.log(plant.data[0]));
-  }, [plant]);
+    console.log(treflePlant);
+  }, [plant, treflePlant]);
 
   // TODO : New Card ===================================================
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -120,9 +119,11 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
             <CardMedia
               className="card-img"
               sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
-              image={`https://source.unsplash.com/random/?${plant.name
-                .replace(/\s*\([^)]*\)\s*/g, "")
-                .replace(" ", ",")}`}
+              // UNSPLASH RANDOM PICTURE
+              // image={`https://source.unsplash.com/random/?${plant.name
+              //   .replace(/\s*\([^)]*\)\s*/g, "")
+              //   .replace(" ", ",")}`}
+              image={treflePlant.image_url}
               title={plant.name}
             />
             {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
@@ -153,6 +154,16 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                 </Typography>
               </Box>
               <Box className="card-data-container">
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Family:</span>
+                  <span style={{ fontSize: ".85rem" }}>
+                    {treflePlant.family}
+                  </span>
+                </Typography>
                 <Typography
                   className="card-data"
                   variant="body2"
