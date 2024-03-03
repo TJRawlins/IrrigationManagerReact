@@ -144,7 +144,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   sx={{ marginBottom: 0, lineHeight: 1 }}
                 >
                   {plant.name.length > 15
-                    ? plant.name.toLocaleUpperCase().substring(0, 18) + "..."
+                    ? plant.name.toLocaleUpperCase().substring(0, 20) + "..."
                     : plant.name.toLocaleUpperCase()}
                 </Typography>
                 <Typography
