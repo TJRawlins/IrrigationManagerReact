@@ -6,14 +6,13 @@ import axios from "axios";
 
 dotenv.config();
 const PORT = process.env.VITE_API_PORT || 5000;
+const API_KEY = process.env.VITE_TREFLE_API_KEY;
 const app = express();
 
 app.get("/trefle/api", (req, res) => {
   console.log(req);
   axios
-    .get(
-      `https://trefle.io/api/v1/plants/search?token=${process.env.VITE_TREFLE_API_KEY}&q=peach`
-    )
+    .get(`https://trefle.io/api/v1/plants/search?token=${API_KEY}&q=peach`)
     .then((response) => res.json(response.data));
 });
 
