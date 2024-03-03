@@ -1,6 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 
+// TODO : NEED TO ADD TREFLE PROXY SERVER URL WITH PORT 5000
 axios.defaults.baseURL = "https://localhost:5555/";
+
+const trefleAxios = axios.create({
+  baseURL: "http://localhost:5000/",
+});
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -9,6 +14,9 @@ const requests = {
   post: (url: string, body: object) => axios.post(url, body).then(responseBody),
   put: (url: string, body: object) => axios.put(url, body).then(responseBody),
   delete: (url: string) => axios.delete(url).then(responseBody),
+};
+const trefleRequests = {
+  get: (url: string) => trefleAxios.get(url).then(responseBody),
 };
 
 const Users = {
@@ -32,7 +40,7 @@ const Zones = {
 };
 
 const Trefle = {
-  details: (plant: string) => requests.get(`trefle/api/${plant}`),
+  details: (plant: string) => trefleRequests.get(`trefle/api/?${plant}`),
 };
 
 const agent = {
