@@ -12,7 +12,10 @@ import { useDispatch } from "react-redux";
 import React from "react";
 import ViewPlant from "./ViewPlant";
 import "./PlantList.css";
-import { updateCurrentPlant } from "../../redux/plantSlice";
+import {
+  updateCurrentPlant,
+  updateCurrentTreflePlant,
+} from "../../redux/plantSlice";
 
 interface PlantListProps {
   fetchPlants: (id: number) => void;
@@ -97,8 +100,12 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
     )
       .then((plant) => {
         dispatch(updateCurrentPlant(plant));
+        agent.Trefle.details(
+          plant.name.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
+        ).then((plant) => dispatch(updateCurrentTreflePlant(plant.data[0])));
       })
       .then((plant) => console.log("axios plant", plant));
+
     console.log("%cPlantList: Plant View Clicked", "color:#1CA1E6");
   };
 
