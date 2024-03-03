@@ -12,8 +12,8 @@ const API_KEY: string | undefined = process.env.VITE_TREFLE_API_KEY;
 const app = express();
 
 app.get(`/trefle/api/`, (req, res) => {
-  // Set headers for cors
-  res.header("Access-Control-Allow-Origin", "*");
+  // Set headers for cors to allow requests from the react app
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
