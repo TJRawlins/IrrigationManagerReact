@@ -18,6 +18,7 @@ import "./PlantModal.css";
 import { useEffect } from "react";
 import { MdAcUnit, MdLocalFlorist, MdSunny } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
+import agent from "../../App/api/agent";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -43,10 +44,12 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
   // !BUG: When clicking view plant, it saves the previously clicked plant to local storage
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
+  // const [treflePlant, setTreflePlant] = useState();
   console.log("ViewPlant: ", plant);
 
   useEffect(() => {
     console.log("ViewPlant => useEffect");
+    agent.Trefle.details(plant.name).then((plant) => console.log(plant.data[0]));
   }, [plant]);
 
   // TODO : New Card ===================================================
@@ -131,7 +134,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                 sx={{ position: "absolute", top: "5px", left: "20px" }}
                 {...getChipProps(zone.season)}
               />
-              <Box sx={{marginBottom: 1}}>
+              <Box sx={{ marginBottom: 1 }}>
                 <Typography
                   className="zone-name"
                   gutterBottom
@@ -143,7 +146,9 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     ? plant.name.toLocaleUpperCase().substring(0, 18) + "..."
                     : plant.name.toLocaleUpperCase()}
                 </Typography>
-                <Typography sx={{ fontSize: ".8rem", marginLeft: 1.5, color: '#b8b5b5' }}>
+                <Typography
+                  sx={{ fontSize: ".8rem", marginLeft: 1.5, color: "#b8b5b5" }}
+                >
                   {plant.timeStamp?.toString()}
                 </Typography>
               </Box>
@@ -154,7 +159,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   color="text.secondary"
                 >
                   <span>Zone:</span>
-                  <span style={{fontSize: ".85rem"}}>{zone.name}</span>
+                  <span style={{ fontSize: ".85rem" }}>{zone.name}</span>
                 </Typography>
                 <Typography
                   className="card-data"
@@ -162,7 +167,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   color="text.secondary"
                 >
                   <span>Runtime:</span>
-                  <span style={{fontSize: ".85rem"}}>
+                  <span style={{ fontSize: ".85rem" }}>
                     {zone.runtimeHours}:
                     {zone.runtimeMinutes.toString().length == 1
                       ? "0" + zone.runtimeMinutes
@@ -175,7 +180,9 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   color="text.secondary"
                 >
                   <span>Per Week:</span>
-                  <span style={{fontSize: ".85rem"}}>{zone.runtimePerWeek}</span>
+                  <span style={{ fontSize: ".85rem" }}>
+                    {zone.runtimePerWeek}
+                  </span>
                 </Typography>
                 <Typography
                   className="card-data"
@@ -183,7 +190,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   color="text.secondary"
                 >
                   <span>Total Plants:</span>
-                  <span style={{fontSize: ".85rem"}}>{zone.totalPlants}</span>
+                  <span style={{ fontSize: ".85rem" }}>{zone.totalPlants}</span>
                 </Typography>
               </Box>
               {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  T O T A L   G A L L O N S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
