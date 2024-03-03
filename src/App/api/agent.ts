@@ -1,13 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-// import { Zone } from "../models/Zone";
 
-axios.defaults.baseURL = "https://localhost:5555/api/";
-
-// const mainAxios = axios.create({
-//   baseURL: "https://localhost:5555/api/"
-// })
-
-// const TREFLE_KEY = import.meta.env.VITE_TREFLE_API_KEY
+axios.defaults.baseURL = "https://localhost:5555/";
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -19,28 +12,34 @@ const requests = {
 };
 
 const Users = {
-  list: () => requests.get("users"),
-  details: (id: number) => requests.get(`users/${id}`),
+  list: () => requests.get("api/users"),
+  details: (id: number) => requests.get(`api/users/${id}`),
 };
 const Plants = {
-  list: () => requests.get("plants"),
-  details: (id: number) => requests.get(`plants/${id}`),
-  createPlant: (plant: object) => requests.post("plants", plant),
-  editPlant: (id: number, plant: object) => requests.put(`plants/${id}`, plant),
-  removePlant: (id: number) => requests.delete(`plants/${id}`),
+  list: () => requests.get("api/plants"),
+  details: (id: number) => requests.get(`api/plants/${id}`),
+  createPlant: (plant: object) => requests.post("api/plants", plant),
+  editPlant: (id: number, plant: object) =>
+    requests.put(`api/plants/${id}`, plant),
+  removePlant: (id: number) => requests.delete(`api/plants/${id}`),
 };
 const Zones = {
-  list: () => requests.get("zones"),
-  details: (id: number) => requests.get(`zones/${id}`),
-  createZone: (zone: object) => requests.post("zones", zone),
-  editZone: (id: number, zone: object) => requests.put(`zones/${id}`, zone),
-  removeZone: (id: number) => requests.delete(`zones/${id}`),
+  list: () => requests.get("api/zones"),
+  details: (id: number) => requests.get(`api/zones/${id}`),
+  createZone: (zone: object) => requests.post("api/zones", zone),
+  editZone: (id: number, zone: object) => requests.put(`api/zones/${id}`, zone),
+  removeZone: (id: number) => requests.delete(`api/zones/${id}`),
+};
+
+const Trefle = {
+  details: (plant: string) => requests.get(`trefle/api/${plant}`),
 };
 
 const agent = {
   Users,
   Plants,
   Zones,
+  Trefle,
 };
 
 export default agent;
