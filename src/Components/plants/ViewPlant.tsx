@@ -113,7 +113,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
               boxShadow: "none !important",
               borderRadius: "15px",
               padding: "10px",
-              width: "300px",
+              maxWidth: "400px",
             }}
           >
             <CardMedia
@@ -147,13 +147,27 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     ? plant.name.toLocaleUpperCase().substring(0, 20) + "..."
                     : plant.name.toLocaleUpperCase()}
                 </Typography>
-                <Typography
-                  sx={{ fontSize: ".8rem", marginLeft: 1.5, color: "#b8b5b5" }}
-                >
-                  {plant.timeStamp?.toString()}
-                </Typography>
               </Box>
-              <Box className="card-data-container">
+              <Box
+                className="card-data-container plant-container"
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  bgcolor: "#f5f5f5",
+                  borderRadius: "10px",
+                  padding: ".5rem 0.25rem",
+                }}
+              >
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Added:</span>
+                  <span style={{ fontSize: ".85rem" }}>
+                    {plant.timeStamp?.toString()}
+                  </span>
+                </Typography>
                 <Typography
                   className="card-data"
                   variant="body2"
@@ -164,6 +178,37 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     {treflePlant.family}
                   </span>
                 </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Common Name:</span>
+                  <span style={{ fontSize: ".85rem" }}>
+                    {treflePlant.common_name}
+                  </span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Genus:</span>
+                  <span style={{ fontSize: ".85rem" }}>
+                    {treflePlant.genus}
+                  </span>
+                </Typography>
+              </Box>
+              <Box
+                className="card-data-container zone-container"
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  bgcolor: "#f5f5f5",
+                  borderRadius: "10px",
+                  padding: ".5rem 0",
+                }}
+              >
                 <Typography
                   className="card-data"
                   variant="body2"
@@ -225,7 +270,6 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                         zone.season.toString().toLocaleLowerCase()
                       }
                       sx={{
-                        width: "100%",
                         justifyContent: "left",
                         borderRadius: "10px",
                         margin: "0 !important",
