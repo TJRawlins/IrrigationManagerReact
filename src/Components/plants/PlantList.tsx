@@ -22,6 +22,7 @@ interface PlantListProps {
 }
 
 export default function PlantList({ fetchPlants }: PlantListProps) {
+  const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
   const { plantList } = useSelector((state: RootState) => state.plant);
 
@@ -97,14 +98,12 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
       Number(
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
       )!
-    )
-      .then((plant) => {
-        dispatch(updateCurrentPlant(plant));
-        agent.Trefle.details(
-          plant.name.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
-        ).then((plant) => dispatch(updateCurrentTreflePlant(plant.data[0])));
-      })
-      .then((plant) => console.log("axios plant", plant));
+    ).then((plant) => {
+      dispatch(updateCurrentPlant(plant));
+      console.log("axios plant", plant);
+    });
+
+    console.log("plant name passed in", plant.name);
 
     console.log("%cPlantList: Plant View Clicked", "color:#1CA1E6");
   };
@@ -114,7 +113,13 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
     setColumnVisible(newColumns);
     fetchPlants(zone.id); //TODO move this to any CRUD action function
     console.log("PlantList => useEffect => plantID: ", plantId);
-  }, [matches]);
+    // TODO : Fetch trefle plant and update local storage
+    agent.Trefle.details(
+      plant.name.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
+    ).then((teflePlant) =>
+      dispatch(updateCurrentTreflePlant(teflePlant.data[0]))
+    );
+  }, [matches, plant]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
