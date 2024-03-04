@@ -6,7 +6,6 @@
 .split-label {
   display: flex;
   gap: .25rem;
-
 }
 
 .add-btn-plant {
@@ -90,3 +89,8 @@
 .error-text {
   color: red !important;
 }
+
+.gallons-chip {
+  width: 100% !important
+}
+

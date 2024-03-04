@@ -115,12 +115,14 @@
 }
 
 .gallons-chip {
-  width: 100% !important;
-  width: 90px !important;
   justify-content: left !important;
   border-radius: 0px !important;
   color: #ffffff !important;
   margin-left: 0 !important;
+}
+.gallons-chip:nth-of-type(2) {
+  border-right: 1px solid white;
+  border-left: 1px solid white;
 }
 .gallons-chip-avatar {
   min-width: fit-content !important;
