@@ -15,6 +15,7 @@ const requests = {
   put: (url: string, body: object) => axios.put(url, body).then(responseBody),
   delete: (url: string) => axios.delete(url).then(responseBody),
 };
+
 const trefleRequests = {
   get: (url: string) => trefleAxios.get(url).then(responseBody),
 };
