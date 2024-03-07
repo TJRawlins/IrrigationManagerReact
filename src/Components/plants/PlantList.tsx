@@ -7,25 +7,22 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
-import { updateCurrentZone } from "../../redux/zoneSlice";
-import { useDispatch } from "react-redux";
 import React from "react";
 import ViewPlant from "./ViewPlant";
 import "./PlantList.css";
-import {
-  updateCurrentPlant,
-  updateCurrentTreflePlant,
-} from "../../redux/plantSlice";
-
 interface PlantListProps {
-  fetchPlants: (id: number) => void;
+  fetchPlants: (zoneId: number) => void;
+  updateLocalStorageZone: (zoneId: number) => void;
+  updateLocalStoragePlant: (plantId: number) => void;
+  updateLocalStorageTreflePlant: (plantName: string) => void;
 }
 
-export default function PlantList({ fetchPlants }: PlantListProps) {
-  const { plant } = useSelector((state: RootState) => state.plant);
-  const { zone } = useSelector((state: RootState) => state.zone);
-  const { plantList } = useSelector((state: RootState) => state.plant);
-
+export default function PlantList({
+  fetchPlants,
+  updateLocalStorageZone,
+  updateLocalStoragePlant,
+  updateLocalStorageTreflePlant,
+}: PlantListProps) {
   const MOBILE_COLUMNS = {
     quantity: false,
     type: false,
@@ -39,22 +36,19 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
   };
 
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("md"));
 
+  const [plantId, setPlantId] = useState<number>();
+  const [showViewPlant, setShowViewPlant] = useState<boolean>(false);
   const [columnVisible, setColumnVisible] = useState(ALL_COLUMNS);
-
-  const dispatch = useDispatch();
-
-  const updateLocalStorageZone = () => {
-    agent.Zones.details(zone.id).then((zone) => {
-      dispatch(updateCurrentZone(zone));
-    });
-  };
-
-  // Delete Plant
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
+
+  const { zone } = useSelector((state: RootState) => state.zone);
+  const { plantList } = useSelector((state: RootState) => state.plant);
+  const { plant } = useSelector((state: RootState) => state.plant);
+
+  const matches = useMediaQuery(theme.breakpoints.up("md"));
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
@@ -75,50 +69,34 @@ export default function PlantList({ fetchPlants }: PlantListProps) {
     agent.Plants.removePlant(plantId!)
       .catch((error) => alert(error))
       .then(() => fetchPlants(zone.id))
-      .then(() => updateLocalStorageZone());
+      .then(() => updateLocalStorageZone(zone.id));
     handleDeleteClose();
     console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
   };
 
-  // TODO : View Plant
-  const [plantId, setPlantId] = useState<number>();
-  const [showViewPlant, setShowViewPlant] = useState<boolean>(false);
-
   const handleViewClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setTimeout(() => {
       setShowViewPlant(true);
-    }, 100);
+    }, 1000);
     setPlantId(
       Number(
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
       )
     );
-    // TODO : Update Plant in local storage
-    agent.Plants.details(
+    updateLocalStoragePlant(
       Number(
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
       )!
-    ).then((plant) => {
-      dispatch(updateCurrentPlant(plant));
-      console.log("axios plant", plant);
-    });
-
-    console.log("plant name passed in", plant.name);
-
+    );
     console.log("%cPlantList: Plant View Clicked", "color:#1CA1E6");
   };
 
   useEffect(() => {
     const newColumns = matches ? ALL_COLUMNS : MOBILE_COLUMNS;
     setColumnVisible(newColumns);
-    fetchPlants(zone.id); //TODO move this to any CRUD action function
+    fetchPlants(zone.id);
     console.log("PlantList => useEffect => plantID: ", plantId);
-    // TODO : Fetch trefle plant and update local storage
-    agent.Trefle.details(
-      plant.name.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
-    ).then((teflePlant) =>
-      dispatch(updateCurrentTreflePlant(teflePlant.data[0]))
-    );
+    updateLocalStorageTreflePlant(plant.name);
   }, [matches, plant]);
 
   const columns = [
