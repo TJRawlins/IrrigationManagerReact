@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import {
   Avatar,
   Box,
@@ -25,6 +26,11 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateCurrentZone } from "../../redux/zoneSlice";
+import {
+  updateCurrentPlant,
+  updateCurrentPlantList,
+} from "../../redux/plantSlice";
+import { Plant } from "../../App/models/Plant";
 
 type ZoneCardProps = {
   fetchZones(args: string): void;
@@ -37,8 +43,8 @@ export default function ZoneCard({
   fetchZones,
   setIsShowEdit,
 }: ZoneCardProps) {
-  const { seasonName } = useSelector((state: RootState) => state.seasonName);
   const dispatch = useDispatch();
+  const { seasonName } = useSelector((state: RootState) => state.seasonName);
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -53,6 +59,18 @@ export default function ZoneCard({
     agent.Zones.details(zone.id).then((zone) => {
       dispatch(updateCurrentZone(zone));
     });
+  };
+
+  const updateLocalStoragePlants = () => {
+    agent.Plants.list().then((plants) => {
+      const filterPlants: Array<Plant> = plants.filter(
+        (plant: { zoneId: number }) => plant.zoneId === zone.id
+      );
+      const plantList = filterPlants[0] === undefined ? plants : filterPlants;
+      dispatch(updateCurrentPlantList(filterPlants));
+      dispatch(updateCurrentPlant(plantList[0]));
+    });
+    console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
   };
 
   const copyZone = () => {
@@ -89,6 +107,11 @@ export default function ZoneCard({
       setIsShowEdit(true);
     }, 100);
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
+  };
+
+  const showPlants = () => {
+    updateLocalStorageZone();
+    updateLocalStoragePlants();
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -302,7 +325,7 @@ export default function ZoneCard({
               <Button
                 className="card-btn"
                 id="card-details"
-                onClick={updateLocalStorageZone}
+                onClick={showPlants}
               >
                 <GrassIcon className="action-icon" />
               </Button>
