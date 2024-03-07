@@ -6,16 +6,39 @@ import PlantBar from "../../Components/plants/PlantBar";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { updateCurrentPlantList } from "../../redux/plantSlice";
-// import { RootState } from "../../redux/store";
+import {
+  updateCurrentPlant,
+  updateCurrentPlantList,
+  updateCurrentTreflePlant,
+} from "../../redux/plantSlice";
+import { updateCurrentZone } from "../../redux/zoneSlice";
 
 const PlantPage = () => {
-  // const { zone } = useSelector((state: RootState) => state.zone);
-  const dispatch = useDispatch();
-
   // Params passed through router url
   const { zoneId } = useParams();
   const zoneIdNum: number = Number(zoneId);
+  const dispatch = useDispatch();
+
+  const updateLocalStorageZone = (zoneId: number) => {
+    agent.Zones.details(zoneId).then((zone) => {
+      dispatch(updateCurrentZone(zone));
+    });
+  };
+
+  const updateLocalStoragePlant = (plantId: number) => {
+    agent.Plants.details(plantId).then((plant) => {
+      dispatch(updateCurrentPlant(plant));
+    });
+  };
+
+  const updateLocalStorageTreflePlant = (plantName: string) => {
+    agent.Trefle.details(
+      plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
+    ).then((teflePlant) => {
+      dispatch(updateCurrentTreflePlant(teflePlant.data[0]));
+    });
+    console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
+  };
 
   const fetchPlants = (id: number) => {
     agent.Plants.list().then((plants) => {
@@ -23,6 +46,7 @@ const PlantPage = () => {
         (plant: { zoneId: number }) => plant.zoneId === id
       );
       dispatch(updateCurrentPlantList(filterPlants));
+      updateLocalStorageTreflePlant(filterPlants[0].name);
     });
     console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
   };
@@ -32,14 +56,7 @@ const PlantPage = () => {
   }, []);
   return (
     <>
-      <PlantBar
-        fetchPlants={fetchPlants}
-        // weekly={zone.totalGalPerWeek.toString()}
-        // monthly={zone.totalGalPerMonth.toString()}
-        // yearly={zone.totalGalPerYear.toString()}
-        // zoneName={zone.name}
-        // season={zone.season}
-      />
+      <PlantBar fetchPlants={fetchPlants} />
       <Grid
         sx={{
           bgcolor: "#eef2f6",
@@ -49,7 +66,12 @@ const PlantPage = () => {
           padding: "0.75rem",
         }}
       >
-        <PlantList fetchPlants={fetchPlants} />
+        <PlantList
+          fetchPlants={fetchPlants}
+          updateLocalStorageZone={updateLocalStorageZone}
+          updateLocalStoragePlant={updateLocalStoragePlant}
+          updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
+        />
       </Grid>
     </>
   );
