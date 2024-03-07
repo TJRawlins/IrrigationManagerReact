@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -11,11 +12,9 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-// import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import "./PlantModal.css";
-import { useEffect } from "react";
 import { MdAcUnit, MdLocalFlorist, MdSunny } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
 
@@ -38,18 +37,12 @@ const style = {
 };
 
 function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
-  const handleClose = () => setShowViewPlant(false);
-
-  // !BUG: When clicking view plant, it saves the previously clicked plant to local storage
   const { treflePlant } = useSelector((state: RootState) => state.treflePlant);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
+  const handleClose = () => setShowViewPlant(false);
   console.log("ViewPlant: ", plant);
-
-  useEffect(() => {
-    console.log("ViewPlant => useEffect");
-    console.log(treflePlant);
-  }, [plant, treflePlant]);
+  // debugger;
 
   // TODO : New Card ===================================================
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -119,12 +112,15 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
             <CardMedia
               className="card-img"
               sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
-              // UNSPLASH RANDOM PICTURE
-              // image={`https://source.unsplash.com/random/?${plant.name
-              //   .replace(/\s*\([^)]*\)\s*/g, "")
-              //   .replace(" ", ",")}`}
-              image={treflePlant.image_url}
-              title={plant.name}
+              // IF NO TREFLE IMAGE, SHOW UNSPLASH IMAGE
+              image={
+                treflePlant.image_url === undefined
+                  ? `https://source.unsplash.com/random/?${plant.name
+                      .replace(/\s*\([^)]*\)\s*/g, "")
+                      .replace(" ", ",")}`
+                  : treflePlant.image_url
+              }
+              title={plant === undefined ? "No Name" : plant.name}
             />
             {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
             <CardContent className="card-zone-data">
@@ -163,7 +159,15 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   variant="body2"
                   color="text.secondary"
                 >
-                  <span>Added:</span>
+                  <span>Plant ID:</span>
+                  <span style={{ fontSize: ".85rem" }}>{plant.id}</span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Date Added:</span>
                   <span style={{ fontSize: ".85rem" }}>
                     {plant.timeStamp?.toString()}
                   </span>
@@ -196,6 +200,50 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   <span>Genus:</span>
                   <span style={{ fontSize: ".85rem" }}>
                     {treflePlant.genus}
+                  </span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Plant Type:</span>
+                  <span style={{ fontSize: ".85rem" }}>{plant.type}</span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Quantity:</span>
+                  <span style={{ fontSize: ".85rem" }}>{plant.quantity}</span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Gallons Per Week Per Plant:</span>
+                  <span style={{ fontSize: ".85rem" }}>{plant.galsPerWk}</span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Emitter Count Per Plant:</span>
+                  <span style={{ fontSize: ".85rem" }}>
+                    {plant.emittersPerPlant}
+                  </span>
+                </Typography>
+                <Typography
+                  className="card-data"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  <span>Flow Rate Per Emitter:</span>
+                  <span style={{ fontSize: ".85rem" }}>
+                    {plant.emitterGPH} GPH
                   </span>
                 </Typography>
               </Box>
