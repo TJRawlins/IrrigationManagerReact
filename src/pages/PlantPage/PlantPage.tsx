@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import PlantList from "../../Components/plants/PlantList";
@@ -12,6 +13,7 @@ import {
   updateCurrentTreflePlant,
 } from "../../redux/plantSlice";
 import { updateCurrentZone } from "../../redux/zoneSlice";
+import { Plant } from "../../App/models/Plant";
 
 const PlantPage = () => {
   // Params passed through router url
@@ -40,15 +42,19 @@ const PlantPage = () => {
     console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
   };
 
-  const fetchPlants = (id: number) => {
+  const fetchPlants = (zoneId: number) => {
     agent.Plants.list().then((plants) => {
-      const filterPlants = plants.filter(
-        (plant: { zoneId: number }) => plant.zoneId === id
+      const filterPlants: Array<Plant> | [] = plants.filter(
+        (plant: { zoneId: number }) => plant.zoneId === zoneId
       );
       dispatch(updateCurrentPlantList(filterPlants));
-      updateLocalStorageTreflePlant(filterPlants[0].name);
+      if (filterPlants.length !== 0)
+        updateLocalStorageTreflePlant(filterPlants[0].name);
+      console.log(
+        `%cPlant Page: ${filterPlants.length} Plants Fetched`,
+        "color:#1CA1E6"
+      );
     });
-    console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
   };
 
   useEffect(() => {
