@@ -48,8 +48,9 @@ const PlantPage = () => {
         (plant: { zoneId: number }) => plant.zoneId === zoneId
       );
       dispatch(updateCurrentPlantList(filterPlants));
-      if (filterPlants.length !== 0)
+      if (filterPlants.length === 0) {
         updateLocalStorageTreflePlant(filterPlants[0].name);
+      }
       console.log(
         `%cPlant Page: ${filterPlants.length} Plants Fetched`,
         "color:#1CA1E6"
@@ -59,7 +60,8 @@ const PlantPage = () => {
 
   useEffect(() => {
     fetchPlants(zoneIdNum);
-  }, []);
+    console.log('useEffect ran...')
+  }, [zoneIdNum]);
   return (
     <>
       <PlantBar fetchPlants={fetchPlants} />
