@@ -48,7 +48,6 @@ const PlantPage = () => {
         (plant: { zoneId: number }) => plant.zoneId === zoneId
       );
       dispatch(updateCurrentPlantList(filterPlants));
-      debugger;
       if (filterPlants.length !== 0 || filterPlants[0] !== undefined) {
         updateLocalStorageTreflePlant(filterPlants[0].name);
       }
