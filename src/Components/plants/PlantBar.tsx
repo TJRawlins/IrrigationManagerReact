@@ -1,4 +1,3 @@
-import "./PlantBar.css";
 import {
   Avatar,
   Box,
@@ -17,6 +16,7 @@ import { Link } from "react-router-dom";
 import AddPlant from "./AddPlant";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import "../../styles/plants/PlantBar.css";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;

@@ -19,7 +19,6 @@ import { FaCanadianMapleLeaf, FaTrashAlt } from "react-icons/fa";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { Grass as GrassIcon } from "@mui/icons-material";
 import { Zone } from "../../App/models/Zone";
-import "./ZoneCard.css";
 import { useState } from "react";
 import agent from "../../App/api/agent";
 import { Link } from "react-router-dom";
@@ -31,6 +30,8 @@ import {
   updateCurrentPlantList,
 } from "../../redux/plantSlice";
 import { Plant } from "../../App/models/Plant";
+import "../../styles/baseStyles/BaseCard.css";
+import "../../styles/zones/ZoneCard.css";
 
 type ZoneCardProps = {
   fetchZones(args: string): void;
@@ -174,7 +175,7 @@ export default function ZoneCard({
           title={zone.name}
         />
         {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
-        <CardContent className="card-zone-data">
+        <CardContent className="card-content-wrapper">
           <Chip
             className="chip"
             variant="filled"
@@ -183,7 +184,7 @@ export default function ZoneCard({
             {...getChipProps(zone.season)}
           />
           <Typography
-            className="zone-name"
+            className="card-name"
             gutterBottom
             variant="h6"
             component="div"
@@ -323,20 +324,32 @@ export default function ZoneCard({
           >
             <Link to={`/plants/zone/${zone.id}`}>
               <Button
-                className="card-btn"
-                id="card-details"
+                className="zone-card-action-button"
+                id="zone-card-details"
                 onClick={showPlants}
               >
                 <GrassIcon className="action-icon" />
               </Button>
             </Link>
-            <Button className="card-btn" id="card-copy" onClick={copyZone}>
+            <Button
+              className="zone-card-action-button"
+              id="zone-card-copy"
+              onClick={copyZone}
+            >
               <BiSolidCopyAlt className="action-icon" />
             </Button>
-            <Button className="card-btn" id="card-edit" onClick={showEdit}>
+            <Button
+              className="zone-card-action-button"
+              id="zone-card-edit"
+              onClick={showEdit}
+            >
               <EditIcon className="action-icon" />
             </Button>
-            <Button className="card-btn" id="card-delete" onClick={deleteZone}>
+            <Button
+              className="zone-card-action-button"
+              id="zone-card-delete"
+              onClick={deleteZone}
+            >
               <FaTrashAlt className="action-icon" />
             </Button>
           </Box>

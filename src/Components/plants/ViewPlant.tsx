@@ -14,9 +14,11 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import "./PlantModal.css";
 import { MdAcUnit, MdLocalFlorist, MdSunny } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
+import { PiHashStraightFill } from "react-icons/pi";
+import "../../styles/baseStyles/BaseCard.css";
+import "../../styles/plants/ViewPlant.css";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -37,13 +39,11 @@ const style = {
 };
 
 function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
-  // debugger;
   const { treflePlant } = useSelector((state: RootState) => state.treflePlant);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
   const handleClose = () => setShowViewPlant(false);
   console.log("ViewPlant: ", plant);
-  // debugger;
 
   // TODO : New Card ===================================================
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -124,7 +124,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
               title={plant === undefined ? "No Name" : plant.name}
             />
             {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
-            <CardContent className="card-zone-data">
+            <CardContent className="card-content-wrapper">
               <Chip
                 className="chip"
                 variant="filled"
@@ -134,7 +134,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
               />
               <Box sx={{ marginBottom: 1 }}>
                 <Typography
-                  className="zone-name"
+                  className="card-name"
                   gutterBottom
                   variant="h6"
                   component="div"
@@ -160,7 +160,8 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   variant="body2"
                   color="text.secondary"
                 >
-                  <span>Plant ID:</span>
+                  <PiHashStraightFill />
+                  <span style={{ fontSize: ".85rem" }}>Plant ID:</span>
                   <span style={{ fontSize: ".85rem" }}>{plant.id}</span>
                 </Typography>
                 <Typography

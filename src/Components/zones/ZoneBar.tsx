@@ -1,4 +1,3 @@
-import "./ZoneBar.css";
 import {
   Avatar,
   Box,
@@ -23,6 +22,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
+import "../../styles/zones/ZoneBar.css";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
