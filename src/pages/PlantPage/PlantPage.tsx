@@ -48,7 +48,8 @@ const PlantPage = () => {
         (plant: { zoneId: number }) => plant.zoneId === zoneId
       );
       dispatch(updateCurrentPlantList(filterPlants));
-      if (filterPlants.length === 0) {
+      debugger;
+      if (filterPlants.length !== 0 || filterPlants[0] !== undefined) {
         updateLocalStorageTreflePlant(filterPlants[0].name);
       }
       console.log(
@@ -60,7 +61,7 @@ const PlantPage = () => {
 
   useEffect(() => {
     fetchPlants(zoneIdNum);
-    console.log('useEffect ran...')
+    console.log("useEffect ran...");
   }, [zoneIdNum]);
   return (
     <>
