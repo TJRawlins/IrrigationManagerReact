@@ -1,4 +1,18 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { axiosErrorHandler } from "./axiosErrorHandler";
+
+const errorHandler = () => {
+  axiosErrorHandler<AxiosError | Error>((res) => {
+    if (res.type === "axios-error") {
+      //type is available here
+      const axiosError = res.error;
+      console.debug("Axios Error: ", axiosError);
+    } else {
+      const stockError = res.error;
+      console.debug("Stock Error: ", stockError);
+    }
+  });
+};
 
 // TODO : ADD .ENV VARIABLES FOR DEV PROXY SERVER URL AND DEV .NET BACKEND URL
 axios.defaults.baseURL = "https://localhost:5555/";
@@ -10,14 +24,34 @@ const trefleAxios = axios.create({
 const responseBody = (response: AxiosResponse) => response.data;
 
 const requests = {
-  get: (url: string) => axios.get(url).then(responseBody),
-  post: (url: string, body: object) => axios.post(url, body).then(responseBody),
-  put: (url: string, body: object) => axios.put(url, body).then(responseBody),
-  delete: (url: string) => axios.delete(url).then(responseBody),
+  get: (url: string) =>
+    axios
+      .get(url)
+      .then(responseBody)
+      .catch(() => errorHandler()),
+  post: (url: string, body: object) =>
+    axios
+      .post(url, body)
+      .then(responseBody)
+      .catch(() => errorHandler()),
+  put: (url: string, body: object) =>
+    axios
+      .put(url, body)
+      .then(responseBody)
+      .catch(() => errorHandler()),
+  delete: (url: string) =>
+    axios
+      .delete(url)
+      .then(responseBody)
+      .catch(() => errorHandler()),
 };
 
 const trefleRequests = {
-  get: (url: string) => trefleAxios.get(url).then(responseBody),
+  get: (url: string) =>
+    trefleAxios
+      .get(url)
+      .then(responseBody)
+      .catch(() => errorHandler()),
 };
 
 const Users = {
