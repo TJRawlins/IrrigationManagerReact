@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, ButtonGroup, Popover, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
