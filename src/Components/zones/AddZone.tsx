@@ -1,5 +1,4 @@
 import { Box, Modal, TextField, Typography } from "@mui/material";
-import "./AddZone.css";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
@@ -8,6 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
+import "../../styles/zones/AddZone.css";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;

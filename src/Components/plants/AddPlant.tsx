@@ -9,7 +9,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
-import "./PlantModal.css";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;

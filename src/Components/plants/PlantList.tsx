@@ -10,7 +10,8 @@ import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
 import React from "react";
 import ViewPlant from "./ViewPlant";
-import "./PlantList.css";
+import "../../styles/plants/PlantList.css";
+
 interface PlantListProps {
   fetchPlants: (zoneId: number) => void;
   updateLocalStorageZone: (zoneId: number) => void;
