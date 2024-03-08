@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import AddPlant from "./AddPlant";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import "../../styles/baseStyles/BaseBar.css";
 import "../../styles/plants/PlantBar.css";
 
 type PlantBarProps = {
@@ -137,7 +138,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
       <div className="main-container">
         <div className="content-container">
           <div className="title-container">
-            <GrassIcon sx={{ m: 1 }} />
+            <GrassIcon className="bar-title-icon" />
             <Typography className="bar-title" variant="h6" noWrap component="a">
               PLANTS
             </Typography>
