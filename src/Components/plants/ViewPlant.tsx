@@ -37,6 +37,7 @@ const style = {
 };
 
 function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
+  // debugger;
   const { treflePlant } = useSelector((state: RootState) => state.treflePlant);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);

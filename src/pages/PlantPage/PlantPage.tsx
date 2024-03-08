@@ -6,7 +6,7 @@ import agent from "../../App/api/agent";
 import PlantBar from "../../Components/plants/PlantBar";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   updateCurrentPlant,
   updateCurrentPlantList,
@@ -14,10 +14,12 @@ import {
 } from "../../redux/plantSlice";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { Plant } from "../../App/models/Plant";
+import { RootState } from "../../redux/store";
 
 const PlantPage = () => {
   // Params passed through router url
   const { zoneId } = useParams();
+  const { plant } = useSelector((state: RootState) => state.plant);
   const zoneIdNum: number = Number(zoneId);
   const dispatch = useDispatch();
 
@@ -48,8 +50,9 @@ const PlantPage = () => {
         (plant: { zoneId: number }) => plant.zoneId === zoneId
       );
       dispatch(updateCurrentPlantList(filterPlants));
-      if (filterPlants.length !== 0 || filterPlants[0] !== undefined) {
-        updateLocalStorageTreflePlant(filterPlants[0].name);
+      // Set treflePlant based on plant
+      if (filterPlants[0] !== undefined) {
+        updateLocalStorageTreflePlant(plant.name);
       }
       console.log(
         `%cPlant Page: ${filterPlants.length} Plants Fetched`,
@@ -78,7 +81,6 @@ const PlantPage = () => {
           fetchPlants={fetchPlants}
           updateLocalStorageZone={updateLocalStorageZone}
           updateLocalStoragePlant={updateLocalStoragePlant}
-          updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
         />
       </Grid>
     </>

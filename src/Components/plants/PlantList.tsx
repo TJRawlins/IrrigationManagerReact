@@ -15,14 +15,12 @@ interface PlantListProps {
   fetchPlants: (zoneId: number) => void;
   updateLocalStorageZone: (zoneId: number) => void;
   updateLocalStoragePlant: (plantId: number) => void;
-  updateLocalStorageTreflePlant: (plantName: string) => void;
 }
 
 export default function PlantList({
   fetchPlants,
   updateLocalStorageZone,
   updateLocalStoragePlant,
-  updateLocalStorageTreflePlant,
 }: PlantListProps) {
   const MOBILE_COLUMNS = {
     quantity: false,
@@ -97,7 +95,6 @@ export default function PlantList({
     setColumnVisible(newColumns);
     fetchPlants(zone.id);
     console.log("PlantList => useEffect => plantID: ", plantId);
-    updateLocalStorageTreflePlant(plant.name);
   }, [matches, plant]);
 
   const columns = [
