@@ -7,6 +7,7 @@ import {
   Box,
   Chip,
   ChipProps,
+  Divider,
   Modal,
   Stack,
   Tooltip,
@@ -14,12 +15,29 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { MdAcUnit, MdLocalFlorist, MdSunny } from "react-icons/md";
-import { FaCanadianMapleLeaf } from "react-icons/fa";
-import { PiHashStraightFill } from "react-icons/pi";
+import {
+  MdAcUnit,
+  MdFamilyRestroom,
+  MdLocalFlorist,
+  MdSunny,
+  MdTextSnippet,
+} from "react-icons/md";
+import {
+  FaCanadianMapleLeaf,
+  FaCalendarAlt,
+  FaDna,
+  FaFingerprint,
+  FaTachometerAlt,
+  FaHandHoldingWater,
+  FaCalendarCheck,
+  FaPlus,
+} from "react-icons/fa";
+import { PiFunnelFill, PiPlantFill } from "react-icons/pi";
+import { FaClockRotateLeft } from "react-icons/fa6";
+import { DashboardOutlined as DashboardOutlinedIcon } from "@mui/icons-material";
+import { FaTree } from "react-icons/fa6";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/ViewPlant.css";
-
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
   setShowViewPlant: (show: boolean) => void;
@@ -107,7 +125,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
               boxShadow: "none !important",
               borderRadius: "15px",
               padding: "10px",
-              maxWidth: "400px",
+              width: "500px",
             }}
           >
             <CardMedia
@@ -146,108 +164,125 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                 </Typography>
               </Box>
               <Box
-                className="card-data-container plant-container"
+                className="card-data-container"
                 sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
+                  // display: "flex",
+                  // flexWrap: "wrap",
                   bgcolor: "#f5f5f5",
                   borderRadius: "10px",
                   padding: ".5rem 0.25rem",
                 }}
               >
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <PiHashStraightFill />
-                  <span style={{ fontSize: ".85rem" }}>Plant ID:</span>
-                  <span style={{ fontSize: ".85rem" }}>{plant.id}</span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Date Added:</span>
-                  <span style={{ fontSize: ".85rem" }}>
-                    {plant.timeStamp?.toString()}
-                  </span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Family:</span>
-                  <span style={{ fontSize: ".85rem" }}>
-                    {treflePlant.family}
-                  </span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Common Name:</span>
-                  <span style={{ fontSize: ".85rem" }}>
-                    {treflePlant.common_name}
-                  </span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Genus:</span>
-                  <span style={{ fontSize: ".85rem" }}>
-                    {treflePlant.genus}
-                  </span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Plant Type:</span>
-                  <span style={{ fontSize: ".85rem" }}>{plant.type}</span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Quantity:</span>
-                  <span style={{ fontSize: ".85rem" }}>{plant.quantity}</span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Gallons Per Week Per Plant:</span>
-                  <span style={{ fontSize: ".85rem" }}>{plant.galsPerWk}</span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Emitter Count Per Plant:</span>
-                  <span style={{ fontSize: ".85rem" }}>
-                    {plant.emittersPerPlant}
-                  </span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Flow Rate Per Emitter:</span>
-                  <span style={{ fontSize: ".85rem" }}>
-                    {plant.emitterGPH} GPH
-                  </span>
-                </Typography>
+                <Box className="data-set">
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <FaFingerprint className="card-item-icon " />
+                    <span className="bold">Plant ID:</span>
+                    <span>{plant.id}</span>
+                  </Typography>
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    {/* <FaSlackHash className="card-item-icon " /> */}
+                    <div className="icon-float-container">
+                      <FaTree style={{ transform: "translateY(3px)" }} />
+                      <FaPlus className="icon-float" />
+                    </div>
+                    <span className="bold">Quantity:</span>
+                    <span>{plant.quantity}</span>
+                  </Typography>
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <FaHandHoldingWater className="card-item-icon" />
+                    <span className="bold">Gals Per Week Per Plant:</span>
+                    <span>{plant.galsPerWk}</span>
+                  </Typography>
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <PiFunnelFill
+                      className="card-item-icon"
+                      style={{ transform: "rotate(45deg)" }}
+                    />
+                    <span className="bold">Emitter Count Per Plant:</span>
+                    <span>{plant.emittersPerPlant}</span>
+                  </Typography>
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <FaTachometerAlt className="card-item-icon" />
+                    <span className="bold">Emitter Flow Rate:</span>
+                    <span>{plant.emitterGPH} GPH</span>
+                  </Typography>
+                </Box>
+                <Box className="data-set">
+                  <Divider
+                    sx={{ height: "100%" }}
+                    orientation="vertical"
+                    flexItem
+                  />
+                </Box>
+                <Box className="data-set">
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <MdTextSnippet className="card-item-icon" />
+                    <span className="bold">Common Name:</span>
+                    <span>{treflePlant.common_name}</span>
+                  </Typography>
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <MdFamilyRestroom className="card-item-icon" />
+                    <span className="bold">Family:</span>
+                    <span style={{ fontSize: ".85rem" }}>
+                      {treflePlant.family}
+                    </span>
+                  </Typography>
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <FaDna className="card-item-icon " />
+                    <span className="bold">Genus:</span>
+                    <span>{treflePlant.genus}</span>
+                  </Typography>
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <PiPlantFill className="card-item-icon" />
+                    <span className="bold">Plant Type:</span>
+                    <span>{plant.type}</span>
+                  </Typography>
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <FaCalendarAlt className="card-item-icon" />
+                    <span className="bold">Added:</span>
+                    <span>{plant.timeStamp?.toString()}</span>
+                  </Typography>
+                </Box>
               </Box>
               <Box
                 className="card-data-container zone-container"
@@ -259,45 +294,58 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   padding: ".5rem 0",
                 }}
               >
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Zone:</span>
-                  <span style={{ fontSize: ".85rem" }}>{zone.name}</span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Runtime:</span>
-                  <span style={{ fontSize: ".85rem" }}>
-                    {zone.runtimeHours}:
-                    {zone.runtimeMinutes.toString().length == 1
-                      ? "0" + zone.runtimeMinutes
-                      : zone.runtimeMinutes}
-                  </span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Per Week:</span>
-                  <span style={{ fontSize: ".85rem" }}>
-                    {zone.runtimePerWeek}
-                  </span>
-                </Typography>
-                <Typography
-                  className="card-data"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  <span>Total Plants:</span>
-                  <span style={{ fontSize: ".85rem" }}>{zone.totalPlants}</span>
-                </Typography>
+                <Box className="data-set">
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <DashboardOutlinedIcon className="card-item-icon" />
+                    <span className="bold">Zone:</span>
+                    <span>{zone.name}</span>
+                  </Typography>
+                </Box>
+                <Box className="data-set">
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <FaClockRotateLeft className="card-item-icon" />
+                    <span className="bold">Runtime:</span>
+                    <span>
+                      {zone.runtimeHours}:
+                      {zone.runtimeMinutes.toString().length == 1
+                        ? "0" + zone.runtimeMinutes
+                        : zone.runtimeMinutes}
+                    </span>
+                  </Typography>
+                </Box>
+                <Box className="data-set">
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <FaCalendarCheck className="card-item-icon" />
+                    <span className="bold">Per Week:</span>
+                    <span>{zone.runtimePerWeek}</span>
+                  </Typography>
+                </Box>
+                <Box className="data-set">
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <div className="icon-float-container">
+                      <FaTree style={{ transform: "translateY(3px)" }} />
+                      <FaPlus className="icon-float" />
+                    </div>
+                    <span className="bold">Total Plants:</span>
+                    <span>{zone.totalPlants}</span>
+                  </Typography>
+                </Box>
               </Box>
               {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  T O T A L   G A L L O N S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
               <Box>
