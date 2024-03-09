@@ -28,6 +28,7 @@ import { updateCurrentZone } from "../../redux/zoneSlice";
 import {
   updateCurrentPlant,
   updateCurrentPlantList,
+  updateCurrentTreflePlant,
 } from "../../redux/plantSlice";
 import { Plant } from "../../App/models/Plant";
 import "../../styles/baseStyles/BaseCard.css";
@@ -60,6 +61,15 @@ export default function ZoneCard({
     agent.Zones.details(zone.id).then((zone) => {
       dispatch(updateCurrentZone(zone));
     });
+  };
+
+  const updateLocalStorageTreflePlant = (plantName: string) => {
+    agent.Trefle.details(
+      plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
+    ).then((teflePlant) => {
+      dispatch(updateCurrentTreflePlant(teflePlant.data[0]));
+    });
+    console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
   };
 
   const updateLocalStoragePlants = () => {
@@ -109,10 +119,11 @@ export default function ZoneCard({
     }, 100);
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
   };
-
+  
   const showPlants = () => {
     updateLocalStorageZone();
     updateLocalStoragePlants();
+    updateLocalStorageTreflePlant("Peach");
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
