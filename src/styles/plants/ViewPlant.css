@@ -1,8 +1,14 @@
 .card-data-container:has(.data-set) {
   display: flex;
+  text-transform: capitalize;
 }
 
 .data-set {
+  padding: 0 8px;
+  width: 50%;
+}
+
+.data-set-divider {
   padding: 0 8px;
 }
 

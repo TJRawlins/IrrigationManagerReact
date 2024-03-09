@@ -188,7 +188,6 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     variant="body2"
                     color="text.secondary"
                   >
-                    {/* <FaSlackHash className="card-item-icon " /> */}
                     <div className="icon-float-container">
                       <FaTree style={{ transform: "translateY(3px)" }} />
                       <FaPlus className="icon-float" />
@@ -202,7 +201,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     color="text.secondary"
                   >
                     <FaHandHoldingWater className="card-item-icon" />
-                    <span className="bold">Gals Per Week Per Plant:</span>
+                    <span className="bold">Gals Per Week:</span>
                     <span>{plant.galsPerWk}</span>
                   </Typography>
                   <Typography
@@ -214,7 +213,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                       className="card-item-icon"
                       style={{ transform: "rotate(45deg)" }}
                     />
-                    <span className="bold">Emitter Count Per Plant:</span>
+                    <span className="bold">Emitter Count:</span>
                     <span>{plant.emittersPerPlant}</span>
                   </Typography>
                   <Typography
@@ -223,11 +222,11 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     color="text.secondary"
                   >
                     <FaTachometerAlt className="card-item-icon" />
-                    <span className="bold">Emitter Flow Rate:</span>
-                    <span>{plant.emitterGPH} GPH</span>
+                    <span className="bold">Emitter GPH:</span>
+                    <span>{plant.emitterGPH}</span>
                   </Typography>
                 </Box>
-                <Box className="data-set">
+                <Box className="data-set-divider">
                   <Divider
                     sx={{ height: "100%" }}
                     orientation="vertical"
@@ -241,8 +240,12 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     color="text.secondary"
                   >
                     <MdTextSnippet className="card-item-icon" />
-                    <span className="bold">Common Name:</span>
-                    <span>{treflePlant.common_name}</span>
+                    <span className="bold">Common:</span>
+                    <span>
+                      {treflePlant.common_name.length > 18
+                        ? treflePlant.common_name.substring(0, 19) + "..."
+                        : treflePlant.common_name}
+                    </span>
                   </Typography>
                   <Typography
                     className="card-data flex size"
