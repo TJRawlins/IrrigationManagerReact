@@ -3,6 +3,7 @@ import seasonReducer from "./seasonSlice";
 import seasonIdReducer from "./seasonSlice";
 import zoneReducer from "./zoneSlice";
 import zoneListReducer from "./zoneSlice";
+import treflePlantReducer from "./plantSlice";
 import plantReducer from "./plantSlice";
 import plantListReducer from "./plantSlice";
 // ...
@@ -13,6 +14,7 @@ export const store = configureStore({
     seasonId: seasonIdReducer,
     zone: zoneReducer,
     zoneList: zoneListReducer,
+    treflePlant: treflePlantReducer,
     plant: plantReducer,
     plantList: plantListReducer,
   },

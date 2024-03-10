@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Zone } from "../app/models/Zone";
+import { Zone } from "../App/models/Zone";
 
 export interface ZoneState {
   zone: Zone;

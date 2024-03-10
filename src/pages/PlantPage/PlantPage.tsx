@@ -1,45 +1,70 @@
+/* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import PlantList from "../../Components/plants/PlantList";
-import agent from "../../app/api/agent";
+import agent from "../../App/api/agent";
 import PlantBar from "../../Components/plants/PlantBar";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { updateCurrentPlantList } from "../../redux/plantSlice";
-// import { RootState } from "../../redux/store";
+import {
+  updateCurrentPlant,
+  updateCurrentPlantList,
+  updateCurrentTreflePlant,
+} from "../../redux/plantSlice";
+import { updateCurrentZone } from "../../redux/zoneSlice";
+import { Plant } from "../../App/models/Plant";
+import { TreflePlant } from "../../App/models/TreflePlant";
 
 const PlantPage = () => {
-  // const { zone } = useSelector((state: RootState) => state.zone);
-  const dispatch = useDispatch();
-
-  // Params passed through router url
   const { zoneId } = useParams();
   const zoneIdNum: number = Number(zoneId);
+  const dispatch = useDispatch();
 
-  const fetchPlants = (id: number) => {
+  const updateLocalStorageZone = (zoneId: number) => {
+    agent.Zones.details(zoneId).then((zone) => {
+      dispatch(updateCurrentZone(zone));
+    });
+  };
+
+  const updateLocalStoragePlant = (plantId: number) => {
+    agent.Plants.details(plantId).then((plant) => {
+      dispatch(updateCurrentPlant(plant));
+    });
+  };
+
+  // TODO : INITIALIZE > GET AND UPDATE TREFLE
+  const updateLocalStorageTreflePlant = (plantName: string) => {
+    agent.Trefle.details(
+      plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
+    ).then((treflePlant) => {
+      treflePlant.name === undefined
+        ? dispatch(updateCurrentTreflePlant(new TreflePlant()))
+        : dispatch(updateCurrentTreflePlant(treflePlant.data[0]));
+    });
+    console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
+  };
+
+  const fetchPlants = (zoneId: number) => {
     agent.Plants.list().then((plants) => {
-      const filterPlants = plants.filter(
-        (plant: { zoneId: number }) => plant.zoneId === id
+      const filterPlants: Array<Plant> | [] = plants.filter(
+        (plant: { zoneId: number }) => plant.zoneId === zoneId
       );
       dispatch(updateCurrentPlantList(filterPlants));
+      console.log(
+        `%cPlant Page: ${filterPlants.length} Plants Fetched`,
+        "color:#1CA1E6"
+      );
     });
-    console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
   };
 
   useEffect(() => {
     fetchPlants(zoneIdNum);
-  }, []);
+    console.log("useEffect ran...");
+  }, [zoneIdNum]);
   return (
     <>
-      <PlantBar
-        fetchPlants={fetchPlants}
-        // weekly={zone.totalGalPerWeek.toString()}
-        // monthly={zone.totalGalPerMonth.toString()}
-        // yearly={zone.totalGalPerYear.toString()}
-        // zoneName={zone.name}
-        // season={zone.season}
-      />
+      <PlantBar fetchPlants={fetchPlants} />
       <Grid
         sx={{
           bgcolor: "#eef2f6",
@@ -49,7 +74,12 @@ const PlantPage = () => {
           padding: "0.75rem",
         }}
       >
-        <PlantList fetchPlants={fetchPlants} />
+        <PlantList
+          fetchPlants={fetchPlants}
+          updateLocalStorageZone={updateLocalStorageZone}
+          updateLocalStoragePlant={updateLocalStoragePlant}
+          updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
+        />
       </Grid>
     </>
   );

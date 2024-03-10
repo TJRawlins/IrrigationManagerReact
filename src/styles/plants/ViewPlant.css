@@ -1,6 +1,74 @@
+.card-data-container.zone-container {
+border: 1px #dad9d9 solid;
+background: none !important;
+}
+
+.card-data-container.zone-container .data-set span {
+  margin: 0 0 0 5px;
+}
+
+.card-data-container:has(.data-set) {
+  display: flex;
+  text-transform: capitalize;
+  justify-content: space-evenly;
+}
+
+.data-set {
+  padding: 0 8px;
+}
+
+/* .data-set:nth-of-type(1) {
+  width: 40%;
+} */
+
+.data-set-divider {
+  padding: 0 8px;
+}
+
 .split-container {
   display: flex;
   gap: 1rem;
+}
+
+.split-label {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.card-data.flex {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center;
+  margin: 0.5rem 0 !important;
+}
+
+.card-data.flex .card-item-icon {
+  /* font-size: 1.15rem; */
+  font-size: 1rem;
+}
+
+.card-data.flex span {
+  padding: 0 !important;
+  font-weight: 100 !important;
+  margin-left: 10px;
+  font-size: 0.8rem;
+}
+
+.card-data.flex span.bold {
+  font-weight: 700 !important;
+}
+
+.icon-float-container {
+  position: relative !important;
+}
+
+.icon-float {
+  position: absolute !important;
+  top: 8px;
+  left: 4px;
+  font-size: 0.5rem;
+  z-index: 9 !important;
+  color: white;
 }
 
 .add-btn-plant {
@@ -83,4 +151,8 @@
 
 .error-text {
   color: red !important;
+}
+
+.gallons-chip {
+  width: 100% !important;
 }

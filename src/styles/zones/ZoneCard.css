@@ -1,0 +1,29 @@
+.action-icon {
+  transform: scale(0.8);
+}
+
+.zone-card-action-button {
+  font-size: 1.5rem !important;
+  width: 100% !important;
+  min-width: 50px !important;
+  background-color: #ffffffa8 !important;
+  color: #002b49 !important;
+  border-radius: 20px !important;
+  padding: 0 !important;
+}
+
+.zone-card-action-button:hover {
+  background-color: #ffffffe8 !important;
+}
+
+#zone-card-details {
+  width: 3.75rem !important;
+}
+
+#zone-card-details .action-icon {
+  font-size: 1.75rem !important;
+}
+
+#zone-card-delete .action-icon {
+  font-size: 1.25rem !important;
+}

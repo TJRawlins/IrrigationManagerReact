@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
 import UsersList from "./UsersList";
-import { User } from "../../app/models/User";
+import { User } from "../../App/models/User";
 import { useEffect, useState } from "react";
-import agent from "../../app/api/agent";
+import agent from "../../App/api/agent";
 
 interface Props {
   users: User[];
@@ -11,6 +11,7 @@ interface Props {
 export default function ManageUsers({ users }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState<User[]>([]);
+  console.log(user);
 
   useEffect(() => {
     agent.Users.list().then((user) => setUser(user));
