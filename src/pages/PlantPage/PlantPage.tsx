@@ -38,7 +38,7 @@ const PlantPage = () => {
     agent.Trefle.details(
       plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
     ).then((treflePlant) => {
-      treflePlant.name === undefined
+      treflePlant.meta.total === 0
         ? dispatch(updateCurrentTreflePlant(new TreflePlant()))
         : dispatch(updateCurrentTreflePlant(treflePlant.data[0]));
     });
