@@ -28,7 +28,6 @@ import { updateCurrentZone } from "../../redux/zoneSlice";
 import {
   updateCurrentPlant,
   updateCurrentPlantList,
-  updateCurrentTreflePlant,
 } from "../../redux/plantSlice";
 import { Plant } from "../../App/models/Plant";
 import "../../styles/baseStyles/BaseCard.css";
@@ -62,27 +61,33 @@ export default function ZoneCard({
       dispatch(updateCurrentZone(zone));
     });
   };
-
-  const updateLocalStorageTreflePlant = (plantName: string) => {
-    agent.Trefle.details(
-      plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
-    ).then((teflePlant) => {
-      dispatch(updateCurrentTreflePlant(teflePlant.data[0]));
-    });
-    console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
-  };
-
+  
   const updateLocalStoragePlants = () => {
     agent.Plants.list().then((plants) => {
       const filterPlants: Array<Plant> = plants.filter(
         (plant: { zoneId: number }) => plant.zoneId === zone.id
-      );
-      const plantList = filterPlants[0] === undefined ? plants : filterPlants;
-      dispatch(updateCurrentPlantList(filterPlants));
-      dispatch(updateCurrentPlant(plantList[0]));
-    });
-    console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
-  };
+        );
+        const plantList = filterPlants[0] === undefined ? plants : filterPlants;
+        dispatch(updateCurrentPlantList(filterPlants));
+        dispatch(updateCurrentPlant(plantList[0]));
+      });
+      console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
+    };
+    
+    const showPlants = () => {
+      updateLocalStorageZone();
+      updateLocalStoragePlants();
+    };
+    
+    // Temporary fix: Used setTimeout to delay so that the edit modal will grab the most recent local storage value
+    // See EditZone for bug comment
+    const showEdit = () => {
+      updateLocalStorageZone();
+      setTimeout(() => {
+        setIsShowEdit(true);
+      }, 100);
+      console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
+    };
 
   const copyZone = () => {
     const {
@@ -108,22 +113,6 @@ export default function ZoneCard({
   const deleteZone = () => {
     agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonName));
     console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
-  };
-
-  // Temporary fix: Used setTimeout to delay so that the edit modal will grab the most recent local storage value
-  // See EditZone for bug comment
-  const showEdit = () => {
-    updateLocalStorageZone();
-    setTimeout(() => {
-      setIsShowEdit(true);
-    }, 100);
-    console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
-  };
-  
-  const showPlants = () => {
-    updateLocalStorageZone();
-    updateLocalStoragePlants();
-    updateLocalStorageTreflePlant("Peach");
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
