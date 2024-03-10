@@ -1,12 +1,25 @@
+.card-data-container.zone-container {
+border: 1px #dad9d9 solid;
+background: none !important;
+}
+
+.card-data-container.zone-container .data-set span {
+  margin: 0 0 0 5px;
+}
+
 .card-data-container:has(.data-set) {
   display: flex;
   text-transform: capitalize;
+  justify-content: space-evenly;
 }
 
 .data-set {
   padding: 0 8px;
-  width: 50%;
 }
+
+/* .data-set:nth-of-type(1) {
+  width: 40%;
+} */
 
 .data-set-divider {
   padding: 0 8px;

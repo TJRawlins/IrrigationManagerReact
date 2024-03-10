@@ -125,7 +125,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
               boxShadow: "none !important",
               borderRadius: "15px",
               padding: "10px",
-              width: "500px",
+              width: "440px",
             }}
           >
             <CardMedia
@@ -154,8 +154,8 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                 <Typography
                   className="card-name"
                   gutterBottom
-                  variant="h6"
                   component="div"
+                  variant="h6"
                   sx={{ marginBottom: 0, lineHeight: 1 }}
                 >
                   {plant.name.length > 15
@@ -166,8 +166,6 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
               <Box
                 className="card-data-container"
                 sx={{
-                  // display: "flex",
-                  // flexWrap: "wrap",
                   bgcolor: "#f5f5f5",
                   borderRadius: "10px",
                   padding: ".5rem 0.25rem",
@@ -185,7 +183,8 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   </Typography>
                   <Typography
                     className="card-data flex size"
-                    variant="body2"
+                    // variant="body2"
+                    component="div"
                     color="text.secondary"
                   >
                     <div className="icon-float-container">
@@ -305,7 +304,11 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   >
                     <DashboardOutlinedIcon className="card-item-icon" />
                     <span className="bold">Zone:</span>
-                    <span>{zone.name}</span>
+                    <span>
+                      {zone.name.length > 12
+                        ? zone.name.substring(0, 13) + "..."
+                        : zone.name}
+                    </span>
                   </Typography>
                 </Box>
                 <Box className="data-set">
@@ -333,20 +336,6 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     <FaCalendarCheck className="card-item-icon" />
                     <span className="bold">Per Week:</span>
                     <span>{zone.runtimePerWeek}</span>
-                  </Typography>
-                </Box>
-                <Box className="data-set">
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <div className="icon-float-container">
-                      <FaTree style={{ transform: "translateY(3px)" }} />
-                      <FaPlus className="icon-float" />
-                    </div>
-                    <span className="bold">Total Plants:</span>
-                    <span>{zone.totalPlants}</span>
                   </Typography>
                 </Box>
               </Box>
