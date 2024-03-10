@@ -1,17 +1,20 @@
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
-import { Grass as GrassIcon } from "@mui/icons-material";
-import { MdAddCircle } from "react-icons/md";
-import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import agent from "../../App/api/agent";
-import { updateCurrentZone } from "../../redux/zoneSlice";
+// import { updateCurrentZone } from "../../redux/zoneSlice";
+import "./PlantModal.css";
+// import { updateCurrentPlant } from "../../redux/plantSlice";
+import { useEffect } from "react";
+// import { Plant } from "../../App/models/Plant";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
+  setShowViewPlant: (show: boolean) => void;
+  showViewPlant: boolean;
+  // plant: Plant | undefined;
 };
 
 const style = {
@@ -26,31 +29,30 @@ const style = {
   p: 4,
 };
 
-function AddPlant({ fetchPlants }: PlantBarProps) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const dispatch = useDispatch();
+function EditPlant({
+  // fetchPlants,
+  setShowViewPlant,
+  showViewPlant,
+}: // plant
+PlantBarProps) {
+  const handleClose = () => setShowViewPlant(false);
+  // const dispatch = useDispatch();
 
-  const { zone } = useSelector((state: RootState) => state.zone);
-
-  // TODO - Update local storage for zone. Added to onSubmit
-  const updateLocalStorageZone = () => {
-    agent.Zones.details(zone.id).then((zone) => {
-      dispatch(updateCurrentZone(zone));
-    });
-  };
+  // !BUG: When clicking view plant, it saves the previously clicked plant to local storage
+  const { plant } = useSelector((state: RootState) => state.plant);
+  console.log("ViewPlant: ", plant);
 
   // Form submission
   const initialValues = {
-    name: "",
-    type: "",
-    quantity: 0,
-    galsPerWk: 0,
-    emittersPerPlant: 0,
-    emitterGPH: 0,
-    zoneId: zone.id,
+    name: plant?.name,
+    type: plant?.type,
+    quantity: plant?.quantity,
+    galsPerWk: plant?.galsPerWk,
+    emittersPerPlant: plant?.emittersPerPlant,
+    emitterGPH: plant?.emitterGPH,
+    zoneId: plant?.zoneId,
   };
+  console.log("ViewPlant => initialValues: ", initialValues);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required field"),
@@ -61,37 +63,14 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     emitterGPH: Yup.number().required("Required field"),
   });
 
-  const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    console.log(values);
-    // updateLocalStorageZone was added to update and persist gallons on PlantBar
-    agent.Plants.createPlant(values)
-      .catch((error) => alert(error))
-      .then(() => fetchPlants(zone.id))
-      .then(() => updateLocalStorageZone());
-    props.resetForm();
-    handleClose();
-    console.log("%cAddPlant: Plant Added", "color:#1CA1E6");
-  };
+  useEffect(() => {
+    console.log("ViewPlant => useEffect");
+  }, [plant]);
 
   return (
     <div>
-      <Button
-        className="add-btn-plant"
-        onClick={handleOpen}
-        sx={{
-          position: "relative",
-          boxShadow: "none !important",
-        }}
-      >
-        <div className="icon-container">
-          <GrassIcon className="grass-icon" />
-          <div className="add-plant-icon-wrapper">
-            <MdAddCircle className="add-plant-icon" />
-          </div>
-        </div>
-      </Button>
       <Modal
-        open={open}
+        open={showViewPlant}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -112,7 +91,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
           </Typography>
           <Formik
             initialValues={initialValues}
-            onSubmit={onSubmit}
+            onSubmit={() => setShowViewPlant(false)}
             validationSchema={validationSchema}
           >
             {() => (
@@ -244,4 +223,4 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     </div>
   );
 }
-export default AddPlant;
+export default EditPlant;

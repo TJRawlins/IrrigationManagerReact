@@ -1,0 +1,27 @@
+.menu-wrapper {
+  display: flex;
+}
+
+.menuText {
+  margin-top: 0.1rem !important;
+  color: #777;
+}
+
+.menuIcon {
+  color: silver;
+  transform: scale(1.5);
+}
+
+svg.menuIcon {
+  height: 1.5em;
+  margin-right: 0.75rem;
+}
+
+.menuIcon.iconRotate {
+  transform: rotate(-45deg) scale(1.5);
+}
+
+/* .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
+  display: flex;
+  color: #777;
+} */

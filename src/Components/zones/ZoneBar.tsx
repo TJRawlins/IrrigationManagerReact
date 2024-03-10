@@ -1,4 +1,3 @@
-import "./ZoneBar.css";
 import {
   Avatar,
   Box,
@@ -23,6 +22,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
+import "../../styles/baseStyles/BaseBar.css";
+import "../../styles/zones/ZoneBar.css";
 
 type ZoneBarProps = {
   fetchZones(args: string): void;
@@ -160,7 +161,7 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
       <div className="main-container">
         <div className="content-container">
           <div className="title-container">
-            <DashboardOutlinedIcon sx={{ m: 2 }} />
+            <DashboardOutlinedIcon className="bar-title-icon" />
             <Typography className="bar-title" variant="h6" noWrap component="a">
               ZONES
             </Typography>

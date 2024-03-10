@@ -1,40 +1,88 @@
-import axios, { AxiosResponse } from "axios";
-// import { Zone } from "../models/Zone";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { axiosErrorHandler } from "./axiosErrorHandler";
 
-axios.defaults.baseURL = "https://localhost:5555/api/";
+const errorHandler = () => {
+  axiosErrorHandler<AxiosError | Error>((res) => {
+    if (res.type === "axios-error") {
+      //type is available here
+      const axiosError = res.error;
+      console.debug("Axios Error: ", axiosError);
+    } else {
+      const stockError = res.error;
+      console.debug("Stock Error: ", stockError);
+    }
+  });
+};
+
+// TODO : ADD .ENV VARIABLES FOR DEV PROXY SERVER URL AND DEV .NET BACKEND URL
+axios.defaults.baseURL = "https://localhost:5555/";
+
+const trefleAxios = axios.create({
+  baseURL: "http://localhost:5000/",
+});
 
 const responseBody = (response: AxiosResponse) => response.data;
 
 const requests = {
-  get: (url: string) => axios.get(url).then(responseBody),
-  post: (url: string, body: object) => axios.post(url, body).then(responseBody),
-  put: (url: string, body: object) => axios.put(url, body).then(responseBody),
-  delete: (url: string) => axios.delete(url).then(responseBody),
+  get: (url: string) =>
+    axios
+      .get(url)
+      .then(responseBody)
+      .catch(() => errorHandler()),
+  post: (url: string, body: object) =>
+    axios
+      .post(url, body)
+      .then(responseBody)
+      .catch(() => errorHandler()),
+  put: (url: string, body: object) =>
+    axios
+      .put(url, body)
+      .then(responseBody)
+      .catch(() => errorHandler()),
+  delete: (url: string) =>
+    axios
+      .delete(url)
+      .then(responseBody)
+      .catch(() => errorHandler()),
+};
+
+const trefleRequests = {
+  get: (url: string) =>
+    trefleAxios
+      .get(url)
+      .then(responseBody)
+      .catch(() => errorHandler()),
 };
 
 const Users = {
-  list: () => requests.get("users"),
-  details: (id: number) => requests.get(`users/${id}`),
+  list: () => requests.get("api/users"),
+  details: (id: number) => requests.get(`api/users/${id}`),
 };
 const Plants = {
-  list: () => requests.get("plants"),
-  details: (id: number) => requests.get(`plants/${id}`),
-  createPlant: (plant: object) => requests.post("plants", plant),
-  editPlant: (id: number, plant: object) => requests.put(`plants/${id}`, plant),
-  removePlant: (id: number) => requests.delete(`plants/${id}`),
+  list: () => requests.get("api/plants"),
+  details: (id: number) => requests.get(`api/plants/${id}`),
+  createPlant: (plant: object) => requests.post("api/plants", plant),
+  editPlant: (id: number, plant: object) =>
+    requests.put(`api/plants/${id}`, plant),
+  removePlant: (id: number) => requests.delete(`api/plants/${id}`),
 };
 const Zones = {
-  list: () => requests.get("zones"),
-  details: (id: number) => requests.get(`zones/${id}`),
-  createZone: (zone: object) => requests.post("zones", zone),
-  editZone: (id: number, zone: object) => requests.put(`zones/${id}`, zone),
-  removeZone: (id: number) => requests.delete(`zones/${id}`),
+  list: () => requests.get("api/zones"),
+  details: (id: number) => requests.get(`api/zones/${id}`),
+  createZone: (zone: object) => requests.post("api/zones", zone),
+  editZone: (id: number, zone: object) => requests.put(`api/zones/${id}`, zone),
+  removeZone: (id: number) => requests.delete(`api/zones/${id}`),
+};
+
+const Trefle = {
+  details: (plant: string) => trefleRequests.get(`trefle/api/?${plant}`),
 };
 
 const agent = {
   Users,
   Plants,
   Zones,
+  Trefle,
 };
 
 export default agent;

@@ -6,7 +6,7 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import { User } from "../../app/models/User";
+import { User } from "../../App/models/User";
 
 interface Props {
   user: User;

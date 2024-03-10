@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import {
   Avatar,
   Box,
@@ -17,14 +18,20 @@ import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf, FaTrashAlt } from "react-icons/fa";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { Grass as GrassIcon } from "@mui/icons-material";
-import { Zone } from "../../app/models/Zone";
-import "./ZoneCard.css";
+import { Zone } from "../../App/models/Zone";
 import { useState } from "react";
-import agent from "../../app/api/agent";
+import agent from "../../App/api/agent";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateCurrentZone } from "../../redux/zoneSlice";
+import {
+  updateCurrentPlant,
+  updateCurrentPlantList,
+} from "../../redux/plantSlice";
+import { Plant } from "../../App/models/Plant";
+import "../../styles/baseStyles/BaseCard.css";
+import "../../styles/zones/ZoneCard.css";
 
 type ZoneCardProps = {
   fetchZones(args: string): void;
@@ -37,8 +44,8 @@ export default function ZoneCard({
   fetchZones,
   setIsShowEdit,
 }: ZoneCardProps) {
-  const { seasonName } = useSelector((state: RootState) => state.seasonName);
   const dispatch = useDispatch();
+  const { seasonName } = useSelector((state: RootState) => state.seasonName);
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -54,6 +61,33 @@ export default function ZoneCard({
       dispatch(updateCurrentZone(zone));
     });
   };
+  
+  const updateLocalStoragePlants = () => {
+    agent.Plants.list().then((plants) => {
+      const filterPlants: Array<Plant> = plants.filter(
+        (plant: { zoneId: number }) => plant.zoneId === zone.id
+        );
+        const plantList = filterPlants[0] === undefined ? plants : filterPlants;
+        dispatch(updateCurrentPlantList(filterPlants));
+        dispatch(updateCurrentPlant(plantList[0]));
+      });
+      console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
+    };
+    
+    const showPlants = () => {
+      updateLocalStorageZone();
+      updateLocalStoragePlants();
+    };
+    
+    // Temporary fix: Used setTimeout to delay so that the edit modal will grab the most recent local storage value
+    // See EditZone for bug comment
+    const showEdit = () => {
+      updateLocalStorageZone();
+      setTimeout(() => {
+        setIsShowEdit(true);
+      }, 100);
+      console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
+    };
 
   const copyZone = () => {
     const {
@@ -79,16 +113,6 @@ export default function ZoneCard({
   const deleteZone = () => {
     agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonName));
     console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
-  };
-
-  // Temporary fix: Used setTimeout to delay so that the edit modal will grab the most recent local storage value
-  // See EditZone for bug comment
-  const showEdit = () => {
-    updateLocalStorageZone();
-    setTimeout(() => {
-      setIsShowEdit(true);
-    }, 100);
-    console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -151,7 +175,7 @@ export default function ZoneCard({
           title={zone.name}
         />
         {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
-        <CardContent className="card-zone-data">
+        <CardContent className="card-content-wrapper">
           <Chip
             className="chip"
             variant="filled"
@@ -160,7 +184,7 @@ export default function ZoneCard({
             {...getChipProps(zone.season)}
           />
           <Typography
-            className="zone-name"
+            className="card-name"
             gutterBottom
             variant="h6"
             component="div"
@@ -300,20 +324,32 @@ export default function ZoneCard({
           >
             <Link to={`/plants/zone/${zone.id}`}>
               <Button
-                className="card-btn"
-                id="card-details"
-                onClick={updateLocalStorageZone}
+                className="zone-card-action-button"
+                id="zone-card-details"
+                onClick={showPlants}
               >
                 <GrassIcon className="action-icon" />
               </Button>
             </Link>
-            <Button className="card-btn" id="card-copy" onClick={copyZone}>
+            <Button
+              className="zone-card-action-button"
+              id="zone-card-copy"
+              onClick={copyZone}
+            >
               <BiSolidCopyAlt className="action-icon" />
             </Button>
-            <Button className="card-btn" id="card-edit" onClick={showEdit}>
+            <Button
+              className="zone-card-action-button"
+              id="zone-card-edit"
+              onClick={showEdit}
+            >
               <EditIcon className="action-icon" />
             </Button>
-            <Button className="card-btn" id="card-delete" onClick={deleteZone}>
+            <Button
+              className="zone-card-action-button"
+              id="zone-card-delete"
+              onClick={deleteZone}
+            >
               <FaTrashAlt className="action-icon" />
             </Button>
           </Box>
