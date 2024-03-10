@@ -16,12 +16,14 @@ interface PlantListProps {
   fetchPlants: (zoneId: number) => void;
   updateLocalStorageZone: (zoneId: number) => void;
   updateLocalStoragePlant: (plantId: number) => void;
+  updateLocalStorageTreflePlant: (plantName: string) => void;
 }
 
 export default function PlantList({
   fetchPlants,
   updateLocalStorageZone,
   updateLocalStoragePlant,
+  updateLocalStorageTreflePlant,
 }: PlantListProps) {
   const MOBILE_COLUMNS = {
     quantity: false,
@@ -74,7 +76,7 @@ export default function PlantList({
     console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
   };
 
-  const handleViewClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleViewPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setTimeout(() => {
       setShowViewPlant(true);
     }, 1000);
@@ -88,6 +90,14 @@ export default function PlantList({
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
       )!
     );
+    agent.Plants.details(
+      Number(
+        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
+      )!
+    )
+      .catch((error) => alert(error))
+      .then((plant) => updateLocalStorageTreflePlant(plant.name));
+
     console.log("%cPlantList: Plant View Clicked", "color:#1CA1E6");
   };
 
@@ -116,7 +126,7 @@ export default function PlantList({
       renderCell: () => {
         return (
           <ButtonGroup id="action-btn-group">
-            <Button className="action-btn" onClick={handleViewClick}>
+            <Button className="action-btn" onClick={handleViewPlantClick}>
               <FaRegEye className="action-btn-icon" style={{ fontSize: 20 }} />
             </Button>
             <Button className="action-btn">
