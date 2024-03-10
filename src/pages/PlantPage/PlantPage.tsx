@@ -14,6 +14,7 @@ import {
 } from "../../redux/plantSlice";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { Plant } from "../../App/models/Plant";
+import { TreflePlant } from "../../App/models/TreflePlant";
 
 const PlantPage = () => {
   const { zoneId } = useParams();
@@ -36,8 +37,10 @@ const PlantPage = () => {
   const updateLocalStorageTreflePlant = (plantName: string) => {
     agent.Trefle.details(
       plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
-    ).then((teflePlant) => {
-      dispatch(updateCurrentTreflePlant(teflePlant.data[0]));
+    ).then((treflePlant) => {
+      treflePlant.name === undefined
+        ? dispatch(updateCurrentTreflePlant(new TreflePlant()))
+        : dispatch(updateCurrentTreflePlant(treflePlant.data[0]));
     });
     console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
   };
