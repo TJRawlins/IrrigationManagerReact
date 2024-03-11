@@ -1,7 +1,7 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, ButtonGroup, Popover, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -31,17 +31,11 @@ export default function PlantList({
     id: false,
     timeStamp: false,
   };
-  const ALL_COLUMNS = {
-    quantity: true,
-    type: true,
-    id: true,
-  };
 
   const theme = useTheme();
 
   const [plantId, setPlantId] = useState<number>();
   const [showViewPlant, setShowViewPlant] = useState<boolean>(false);
-  const [columnVisible, setColumnVisible] = useState(ALL_COLUMNS);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -50,7 +44,8 @@ export default function PlantList({
   const { plantList } = useSelector((state: RootState) => state.plant);
   const { plant } = useSelector((state: RootState) => state.plant);
 
-  const matches = useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const isFull = !useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
@@ -102,11 +97,10 @@ export default function PlantList({
   };
 
   useEffect(() => {
-    const newColumns = matches ? ALL_COLUMNS : MOBILE_COLUMNS;
-    setColumnVisible(newColumns);
     fetchPlants(zone.id);
     console.log("PlantList => useEffect => plantID: ", plantId);
-  }, [matches, plant]);
+    console.log(isMobile)
+  }, [isMobile, plant]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -174,24 +168,52 @@ export default function PlantList({
   return (
     <>
       <Box component="div" sx={{ width: "100%" }}>
-        <DataGrid
-          className="data-grid"
-          columnVisibilityModel={columnVisible}
-          rows={rows}
-          columns={columns}
-          sx={{ border: "none", width: "100%" }}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
+
+        {isMobile && (
+          <DataGrid
+            className="data-grid"
+            columnVisibilityModel={MOBILE_COLUMNS}
+            columns={columns}
+            rows={rows}
+            slots={{
+              toolbar: GridToolbar,
+            }}
+            sx={{ border: "none", width: "100%" }}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
               },
-            },
-          }}
-          pageSizeOptions={[5, 10, 15]}
-          paginationMode="client"
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
+            }}
+            pageSizeOptions={[5, 10, 15]}
+            paginationMode="client"
+            checkboxSelection
+            disableRowSelectionOnClick
+          />
+        ) }
+        { isFull && (
+          <DataGrid
+            className="data-grid"
+            columns={columns}
+            rows={rows}
+            slots={{
+              toolbar: GridToolbar,
+            }}
+            sx={{ border: "none", width: "100%" }}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
+              },
+            }}
+            pageSizeOptions={[5, 10, 15]}
+            paginationMode="client"
+            checkboxSelection
+            disableRowSelectionOnClick
+          />
+        )}
       </Box>
       <ViewPlant
         fetchPlants={fetchPlants}
