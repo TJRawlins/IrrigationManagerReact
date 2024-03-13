@@ -241,9 +241,11 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     <MdTextSnippet className="card-item-icon" />
                     <span className="bold">Common:</span>
                     <span>
-                      {treflePlant.common_name.length > 18
-                        ? treflePlant.common_name.substring(0, 19) + "..."
-                        : treflePlant.common_name}
+                      {treflePlant.common_name !== null
+                        ? treflePlant.common_name!.length > 18
+                          ? treflePlant.common_name!.substring(0, 19) + "..."
+                          : treflePlant.common_name
+                        : "Unavailable"}
                     </span>
                   </Typography>
                   <Typography

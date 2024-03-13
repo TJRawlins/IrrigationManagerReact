@@ -5,16 +5,21 @@ import dotenv from "dotenv";
 import axios from "axios";
 import url from "url";
 
-// TODO : ADD .ENV VARIABLE FOR REACT APP DEV URL
 dotenv.config();
-const BASE_URL: string | undefined = process.env.VITE_BASE_URL;
-const PORT: string | number = process.env.VITE_API_PORT || 5000;
+const DEV_SECURE_URL: string | undefined = process.env.VITE_DEV_SECURE_URL;
+const REACT_DEV_PORT: string | undefined = process.env.VITE_REACT_DEV_PORT;
+const PROXY_SERVER_PORT: string | number =
+  process.env.VITE_PROXY_SERVER_PORT || 5000;
+const TREFLE_API_URL: string | undefined = process.env.VITE_TREFLE_API_URL;
 const API_KEY: string | undefined = process.env.VITE_TREFLE_API_KEY;
 const app = express();
 
 app.get(`/trefle/api/`, (req, res) => {
   // Set headers for cors to allow requests from the react app
-  res.header("Access-Control-Allow-Origin", "https://localhost:3000");
+  res.header(
+    "Access-Control-Allow-Origin",
+    `${DEV_SECURE_URL}:${REACT_DEV_PORT}`
+  );
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
@@ -23,10 +28,12 @@ app.get(`/trefle/api/`, (req, res) => {
   const params = url.parse(req.url, true).search?.toString().replace("?", "");
   // Axios call with .env variables and params
   axios
-    .get(`${BASE_URL}${API_KEY}&q=${params}`)
+    .get(`${TREFLE_API_URL}${API_KEY}&q=${params}`)
     .then((response) => res.json(response.data));
 });
 
 // Enable Cors
 app.use(cors());
-app.listen(PORT, () => console.log(`Proxy server running on port ${PORT}...`));
+app.listen(PROXY_SERVER_PORT, () =>
+  console.log(`Proxy server running on port ${PROXY_SERVER_PORT}...`)
+);
