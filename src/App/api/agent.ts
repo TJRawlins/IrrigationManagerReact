@@ -14,11 +14,14 @@ const errorHandler = () => {
   });
 };
 
-// TODO : ADD .ENV VARIABLES FOR DEV PROXY SERVER URL AND DEV .NET BACKEND URL
-axios.defaults.baseURL = "https://localhost:5555/";
+axios.defaults.baseURL = `${import.meta.env.VITE_DEV_SECURE_URL}:${
+  import.meta.env.VITE_BACKEND_API_DEV_PORT
+}/`;
 
 const trefleAxios = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: `${import.meta.env.VITE_DEV_URL}:${
+    import.meta.env.VITE_PROXY_SERVER_PORT
+  }/`,
 });
 
 const responseBody = (response: AxiosResponse) => response.data;
