@@ -11,6 +11,7 @@ import agent from "../../App/api/agent";
 import React from "react";
 import ViewPlant from "./ViewPlant";
 import "../../styles/plants/PlantList.css";
+import EditPlant from "./EditPlant";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => void;
@@ -34,6 +35,7 @@ export default function PlantList({
 
   const theme = useTheme();
 
+  const [isShowEdit, setIsShowEdit] = useState(false);
   const [plantId, setPlantId] = useState<number>();
   const [showViewPlant, setShowViewPlant] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -71,6 +73,18 @@ export default function PlantList({
     console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
   };
 
+  const handleEditPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    updateLocalStoragePlant(
+      Number(
+        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
+      )!
+    );
+    setTimeout(() => {
+      setIsShowEdit(true);
+    }, 100);
+    console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
+  };
+
   const handleViewPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setTimeout(() => {
       setShowViewPlant(true);
@@ -99,7 +113,7 @@ export default function PlantList({
   useEffect(() => {
     fetchPlants(zone.id);
     console.log("PlantList => useEffect => plantID: ", plantId);
-    console.log(isMobile)
+    console.log(isMobile);
   }, [isMobile, plant]);
 
   const columns = [
@@ -123,7 +137,7 @@ export default function PlantList({
             <Button className="action-btn" onClick={handleViewPlantClick}>
               <FaRegEye className="action-btn-icon" style={{ fontSize: 20 }} />
             </Button>
-            <Button className="action-btn">
+            <Button className="action-btn" onClick={handleEditPlantClick}>
               <FaEdit className="action-btn-icon" />
             </Button>
             <Button
@@ -168,7 +182,6 @@ export default function PlantList({
   return (
     <>
       <Box component="div" sx={{ width: "100%" }}>
-
         {isMobile && (
           <DataGrid
             className="data-grid"
@@ -191,8 +204,8 @@ export default function PlantList({
             checkboxSelection
             disableRowSelectionOnClick
           />
-        ) }
-        { isFull && (
+        )}
+        {isFull && (
           <DataGrid
             className="data-grid"
             columns={columns}
@@ -219,6 +232,11 @@ export default function PlantList({
         fetchPlants={fetchPlants}
         setShowViewPlant={setShowViewPlant}
         showViewPlant={showViewPlant}
+      />
+      <EditPlant
+        fetchPlants={fetchPlants}
+        setIsShowEdit={setIsShowEdit}
+        isShowEdit={isShowEdit}
       />
     </>
   );
