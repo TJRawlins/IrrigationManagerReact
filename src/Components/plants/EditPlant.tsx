@@ -4,17 +4,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-// import { updateCurrentZone } from "../../redux/zoneSlice";
-import "./PlantModal.css";
-// import { updateCurrentPlant } from "../../redux/plantSlice";
 import { useEffect } from "react";
-// import { Plant } from "../../App/models/Plant";
+import agent from "../../App/api/agent";
+import "../../styles/zones/AddZone.css";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
-  setShowViewPlant: (show: boolean) => void;
-  showViewPlant: boolean;
-  // plant: Plant | undefined;
+  setIsShowEdit(args: boolean): void;
+  isShowEdit: boolean;
 };
 
 const style = {
@@ -29,21 +26,28 @@ const style = {
   p: 4,
 };
 
-function EditPlant({
-  // fetchPlants,
-  setShowViewPlant,
-  showViewPlant,
-}: // plant
-PlantBarProps) {
-  const handleClose = () => setShowViewPlant(false);
-  // const dispatch = useDispatch();
-
-  // !BUG: When clicking view plant, it saves the previously clicked plant to local storage
+function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
   const { plant } = useSelector((state: RootState) => state.plant);
-  console.log("ViewPlant: ", plant);
+  const { zone } = useSelector((state: RootState) => state.zone);
+
+  const handleClose = () => setIsShowEdit(false);
+
+  const editPlant = (id: number, values: object) => {
+    agent.Plants.editPlant(id, values).then(() => fetchPlants(zone.id));
+  };
+
+  // Form submission
+  const onSubmit = (values: object, props: { resetForm: () => void }) => {
+    // console.log(values);
+    editPlant(plant.id, values);
+    console.log("plant edited");
+    props.resetForm();
+    handleClose();
+  };
 
   // Form submission
   const initialValues = {
+    id: plant?.id,
     name: plant?.name,
     type: plant?.type,
     quantity: plant?.quantity,
@@ -52,7 +56,6 @@ PlantBarProps) {
     emitterGPH: plant?.emitterGPH,
     zoneId: plant?.zoneId,
   };
-  console.log("ViewPlant => initialValues: ", initialValues);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required field"),
@@ -64,13 +67,15 @@ PlantBarProps) {
   });
 
   useEffect(() => {
-    console.log("ViewPlant => useEffect");
+    console.log("useEffect plant: ", plant);
+    console.log("ViewPlant => useEffect => initialValues: ", initialValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plant]);
 
   return (
     <div>
       <Modal
-        open={showViewPlant}
+        open={isShowEdit}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -87,11 +92,11 @@ PlantBarProps) {
             variant="h6"
             component="h2"
           >
-            ADD NEW PLANT
+            EDIT PLANT
           </Typography>
           <Formik
             initialValues={initialValues}
-            onSubmit={() => setShowViewPlant(false)}
+            onSubmit={onSubmit}
             validationSchema={validationSchema}
           >
             {() => (
