@@ -218,7 +218,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                   />
                 </div>
                 <Button className="submit-btn" type="submit">
-                  Add
+                  Submit Changes
                 </Button>
               </Form>
             )}

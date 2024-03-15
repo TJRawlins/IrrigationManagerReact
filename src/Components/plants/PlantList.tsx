@@ -118,7 +118,12 @@ export default function PlantList({
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
-    { field: "name", headerName: "Plant", flex: 1 },
+    {
+      field: "name",
+      headerName: "Plant",
+      flex: 1,
+      cellClassName: "plant-name",
+    },
     { field: "type", headerName: "Type", flex: 1 },
     { field: "quantity", headerName: "Qty.", flex: 1 },
     { field: "galsPerWk", headerName: "Gals. / Wk.", flex: 1 },
