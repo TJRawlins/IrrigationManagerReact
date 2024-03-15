@@ -1,3 +1,7 @@
+.plant-name {
+  text-transform: capitalize;
+}
+
 .data-grid {
   border-radius: 10px !important;
   padding: 5px !important;
