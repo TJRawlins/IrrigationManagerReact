@@ -1,6 +1,6 @@
 .card-data-container.zone-container {
-border: 1px #dad9d9 solid;
-background: none !important;
+  border: 1px #dad9d9 solid;
+  background: none !important;
 }
 
 .card-data-container.zone-container .data-set span {
@@ -16,10 +16,6 @@ background: none !important;
 .data-set {
   padding: 0 8px;
 }
-
-/* .data-set:nth-of-type(1) {
-  width: 40%;
-} */
 
 .data-set-divider {
   padding: 0 8px;
@@ -38,12 +34,10 @@ background: none !important;
 .card-data.flex {
   margin-left: 0 !important;
   display: flex !important;
-  align-items: center;
   margin: 0.5rem 0 !important;
 }
 
 .card-data.flex .card-item-icon {
-  /* font-size: 1.15rem; */
   font-size: 1rem;
 }
 
@@ -71,19 +65,23 @@ background: none !important;
   color: white;
 }
 
-.add-btn-plant {
+.btn-plantbar {
+  font-size: 0.85rem !important;
   margin: 0.25rem 0.25rem 0 0.25rem !important;
-  padding: 0 !important;
+  padding: 0.45rem 0.25rem !important;
   height: fit-content !important;
-  width: 50px !important;
   border-radius: 10px !important;
-  background-color: transparent !important;
+  background-color: #eef2f6 !important;
   color: #8b8b8b !important;
 }
 
-.add-btn-plant:hover {
+.btn-plantbar:hover {
   color: #02c0a0 !important;
   background-color: #02c0a014 !important;
+}
+
+.btn-icon {
+  margin-right: 0.25rem;
 }
 
 .icon-container {
@@ -93,33 +91,6 @@ background: none !important;
   height: 35px;
   width: 50px;
   position: relative;
-}
-
-.grass-icon {
-  font-size: 2rem !important;
-}
-
-.add-plant-icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 15px !important;
-  height: 15px !important;
-  background-color: #ffffff !important;
-  border-radius: 50%;
-  position: absolute;
-  right: 9px;
-  bottom: 3px;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-.add-plant-icon {
-  width: fit-content !important;
-  height: fit-content !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  transform: translateX(0.2px);
 }
 
 .modal-box {

@@ -186,9 +186,9 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
               orientation="vertical"
               flexItem
             />
-            <AvatarChips />
           </div>
         </div>
+            <AvatarChips />
       </div>
     </>
   );
