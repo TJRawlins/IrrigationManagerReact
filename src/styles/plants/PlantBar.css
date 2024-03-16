@@ -6,33 +6,16 @@
   margin-top: 5px;
 }
 
-.zone-name-text {
-  color: #777;
-  font-size: 2rem;
-  align-self: center;
+.zone-season-name.season {
+  margin-left: 1rem !important;
+}
+
+.zone-season-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-transform: capitalize;
-}
-
-#season-name {
-  background-color: #eef2f6;
-  font-size: 0.75rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 5px;
-  margin-left: 0.75rem;
-}
-
-.season-icon {
-  color: silver;
-  margin-right: 0.75rem;
-}
-
-svg.seaons-icon {
-  height: 1.5em;
-  margin-right: 0.75rem;
-}
-
-.seaons-icon.iconRotate {
-  transform: rotate(-45deg) scale(1.5);
+  gap: 0.4rem;
 }
 
 .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
@@ -40,29 +23,24 @@ svg.seaons-icon {
   color: #777;
 }
 
-.back-btn {
-  color: #8b8b8b !important;
-  margin-top: 0.3rem !important;
-  padding: 0.4rem 1rem 0.4rem 0.4rem !important;
-}
-
-.back-btn:hover {
-  background-color: #02c0a014 !important;
+.btn-plantbar {
+  font-size: 0.85rem !important;
+  margin: 0.25rem 0.25rem 0 0.25rem !important;
+  padding: 0.3rem 0.55rem !important;
+  height: fit-content !important;
   border-radius: 10px !important;
+  background-color: #eef2f6 !important;
+  color: #8b8b8b !important;
+  text-transform: capitalize !important;
+}
+
+.btn-plantbar:hover {
   color: #02c0a0 !important;
+  background-color: #02c0a014 !important;
 }
 
-.bar-btn {
-  margin: 0 !important;
-  margin-left: 0.25rem !important;
-  padding: 0 !important;
-  width: fit-content !important;
-}
-
-.back-arrow-icon {
-  margin-top: 0.15rem;
-  font-size: 1.35rem !important;
-  margin-right: 0.2rem;
+.btn-icon {
+  margin-right: 0.25rem;
 }
 
 .btn-text {
