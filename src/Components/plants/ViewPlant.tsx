@@ -21,6 +21,7 @@ import {
   MdLocalFlorist,
   MdSunny,
   MdTextSnippet,
+  MdDashboard,
 } from "react-icons/md";
 import {
   FaCanadianMapleLeaf,
@@ -30,12 +31,10 @@ import {
   FaTachometerAlt,
   FaHandHoldingWater,
   FaCalendarCheck,
-  FaPlus,
 } from "react-icons/fa";
 import { PiFunnelFill, PiPlantFill } from "react-icons/pi";
 import { FaClockRotateLeft } from "react-icons/fa6";
-import { DashboardOutlined as DashboardOutlinedIcon } from "@mui/icons-material";
-import { FaTree } from "react-icons/fa6";
+import { TbNumbers } from "react-icons/tb";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/ViewPlant.css";
 type PlantBarProps = {
@@ -187,10 +186,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     component="div"
                     color="text.secondary"
                   >
-                    <div className="icon-float-container">
-                      <FaTree style={{ transform: "translateY(3px)" }} />
-                      <FaPlus className="icon-float" />
-                    </div>
+                    <TbNumbers className="card-item-icon " />{" "}
                     <span className="bold">Quantity:</span>
                     <span>{plant.quantity}</span>
                   </Typography>
@@ -304,7 +300,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     variant="body2"
                     color="text.secondary"
                   >
-                    <DashboardOutlinedIcon className="card-item-icon" />
+                    <MdDashboard className="card-item-icon" />
                     <span className="bold">Zone:</span>
                     <span>
                       {zone.name.length > 12

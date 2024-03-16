@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { IoChevronBack } from "react-icons/io5";
 import { Grass as GrassIcon } from "@mui/icons-material";
+import { MdDashboard } from "react-icons/md";
+import { IoCalendar } from "react-icons/io5";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import AddPlant from "./AddPlant";
@@ -29,7 +31,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */
-  const AvatarChips = () => {
+  const TotalGallonsChips = () => {
     return (
       <>
         <Box
@@ -160,37 +162,37 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
             {/* // *-*-*-*-*-*-*-*-*-*-*-*-* ZONE & SEASON TITLE *-*-*-*-*-*-*-*-*-*-*-*-* */}
             <Box sx={{ display: { md: "block", sm: "none", xs: "none" } }}>
               <div className="season-title-wrapper">
-                <Typography component="div" className="zone-name-text">
+                <Typography component="div" className="zone-season-name zone">
+                  <MdDashboard className="zone-season-icon" />
                   {zone.name}
                 </Typography>
-                <div id="season-name">{zone.season}</div>
+                <Typography component="div" className="zone-season-name season">
+                  <IoCalendar className="zone-season-icon" />
+                  {zone.season}
+                </Typography>
               </div>
             </Box>
             <Divider
-              sx={{ height: "60%", marginTop: "12px" }}
-              orientation="vertical"
-              flexItem
-            />
-            <AvatarChips />
-            <Divider
-              sx={{ height: "60%", marginTop: "12px", marginLeft: "16px" }}
+              sx={{ height: "60%", marginTop: "12px", marginRight: ".75rem" }}
               orientation="vertical"
               flexItem
             />
             <AddPlant fetchPlants={fetchPlants} />
-            <Divider
-              sx={{ height: "60%", marginTop: "12px" }}
-              orientation="vertical"
-              flexItem
-            />
-            <Link className="route-link bar-btn" to="/zones">
-              <Button className="back-btn">
-                <IoChevronBack className="back-arrow-icon" />
-                <Typography className="btn-text">go back</Typography>
+            <Link to="/zones">
+              <Button
+                className="btn-plantbar"
+                sx={{
+                  position: "relative",
+                  boxShadow: "none !important",
+                }}
+              >
+                <IoChevronBack className="btn-icon" />
+                Go Back
               </Button>
             </Link>
           </div>
         </div>
+        <TotalGallonsChips />
       </div>
     </>
   );
