@@ -103,7 +103,7 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
     };
 
     return (
-      <Box sx={{ minWidth: 140 }}>
+      <Box>
         <FormControl sx={{ width: "140px" }}>
           <Select
             className="season-btn"
@@ -118,32 +118,34 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
                 border: "none",
                 borderRadius: "5px 5px 0 0",
               },
-              height: "40px",
+              height: "33px",
+              width: "140px",
+              ml: 2,
               mt: 0.5,
             }}
           >
             <MenuItem value={"Summer"}>
               <div className="menu-wrapper">
                 <MdSunny className="menuIcon" />
-                <Typography className="menuText">Summer</Typography>
+                <Typography className="menu-text">Summer</Typography>
               </div>
             </MenuItem>
             <MenuItem value={"Fall"}>
               <div className="menu-wrapper">
                 <FaCanadianMapleLeaf className="menuIcon iconRotate" />
-                <Typography className="menuText">Fall</Typography>
+                <Typography className="menu-text">Fall</Typography>
               </div>
             </MenuItem>
             <MenuItem value={"Winter"}>
               <div className="menu-wrapper">
                 <MdAcUnit className="menuIcon" />
-                <Typography className="menuText">Winter</Typography>
+                <Typography className="menu-text">Winter</Typography>
               </div>
             </MenuItem>
             <MenuItem value={"Spring"}>
               <div className="menu-wrapper">
                 <MdLocalFlorist className="menuIcon" />
-                <Typography className="menuText">Spring</Typography>
+                <Typography className="menu-text">Spring</Typography>
               </div>
             </MenuItem>
           </Select>
@@ -181,14 +183,9 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
               flexItem
             />
             <SeasonMenu />
-            <Divider
-              sx={{ height: "60%", marginTop: "12px" }}
-              orientation="vertical"
-              flexItem
-            />
           </div>
         </div>
-            <AvatarChips />
+        <AvatarChips />
       </div>
     </>
   );
