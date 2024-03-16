@@ -17,10 +17,6 @@
   padding: 0 8px;
 }
 
-/* .data-set:nth-of-type(1) {
-  width: 40%;
-} */
-
 .data-set-divider {
   padding: 0 8px;
 }
@@ -38,12 +34,10 @@
 .card-data.flex {
   margin-left: 0 !important;
   display: flex !important;
-  /* align-items: center; */
   margin: 0.5rem 0 !important;
 }
 
 .card-data.flex .card-item-icon {
-  /* font-size: 1.15rem; */
   font-size: 1rem;
 }
 
