@@ -23,6 +23,10 @@
   color: #777;
 }
 
+.back-to-zones-link {
+  margin-left: 0.5rem;
+}
+
 .btn-plantbar {
   font-size: 0.85rem !important;
   margin: 0.25rem 0.25rem 0 0.25rem !important;

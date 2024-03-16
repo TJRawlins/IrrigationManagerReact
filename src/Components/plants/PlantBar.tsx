@@ -178,7 +178,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
               flexItem
             />
             <AddPlant fetchPlants={fetchPlants} />
-            <Link to="/zones">
+            <Link to="/zones" className="back-to-zones-link">
               <Button
                 className="btn-plantbar"
                 sx={{
