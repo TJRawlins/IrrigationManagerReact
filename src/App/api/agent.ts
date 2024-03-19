@@ -76,6 +76,14 @@ const Zones = {
   editZone: (id: number, zone: object) => requests.put(`api/zones/${id}`, zone),
   removeZone: (id: number) => requests.delete(`api/zones/${id}`),
 };
+const Seasons = {
+  list: () => requests.get("api/seasons"),
+  details: (id: number) => requests.get(`api/seasons/${id}`),
+  createZone: (season: object) => requests.post("api/seasons", season),
+  editZone: (id: number, season: object) =>
+    requests.put(`api/seasons/${id}`, season),
+  removeZone: (id: number) => requests.delete(`api/seasons/${id}`),
+};
 
 const Trefle = {
   details: (plant: string) => trefleRequests.get(`trefle/api/?${plant}`),
@@ -85,6 +93,7 @@ const agent = {
   Users,
   Plants,
   Zones,
+  Seasons,
   Trefle,
 };
 

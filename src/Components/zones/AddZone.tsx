@@ -30,7 +30,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  const { season } = useSelector((state: RootState) => state.season);
   const { seasonId } = useSelector((state: RootState) => state.seasonId);
 
   // Form submission
@@ -40,7 +40,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimeMinutes: 0,
     runtimePerWeek: 0,
     imagePath: undefined,
-    season: seasonName,
+    season: season.name,
     seasonId: seasonId,
   };
 
@@ -57,7 +57,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     // console.log(props);
     agent.Zones.createZone(values)
       .catch((error) => alert(error))
-      .then(() => fetchZones(seasonName));
+      .then(() => fetchZones(season.name));
     props.resetForm();
     handleClose();
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
@@ -206,9 +206,9 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                   disabled
                   className="input"
                   id="standard-disabled"
-                  name={seasonName}
+                  name={season.name}
                   label="Season"
-                  defaultValue={seasonName}
+                  defaultValue={season.name}
                   variant="standard"
                 />
                 <Button className="submit-btn" type="submit">
