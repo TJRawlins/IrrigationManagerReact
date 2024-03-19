@@ -79,7 +79,6 @@ const ZonesPage = () => {
   useEffect(() => {
     fetchSeasons();
     fetchZones(season.id);
-    debugger;
     if (season.id === 0 || season.id === undefined) {
       dispatch(updateCurrentSeason(new Season()));
     }

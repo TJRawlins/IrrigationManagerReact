@@ -14,6 +14,7 @@ export const store = configureStore({
     seasonId: seasonIdReducer,
     season: seasonIdReducer,
     seasonList: seasonIdReducer,
+    isInitialLoad: seasonIdReducer,
     zone: zoneReducer,
     zoneList: zoneListReducer,
     treflePlant: treflePlantReducer,
