@@ -22,16 +22,12 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
-// import { updateCurrentSeasonId } from "../../redux/seasonSlice";
 import "../../styles/baseStyles/BaseBar.css";
 import "../../styles/zones/ZoneBar.css";
-// import { useState } from "react";
 import {
   updateCurrentSeasonName,
   updateIsInitialLoad,
 } from "../../redux/seasonSlice";
-// import { Season } from "../../App/models/Season";
-// import { ReactElement } from "react";
 
 type ZoneBarProps = {
   fetchZones(args: number): void;
@@ -47,8 +43,6 @@ export default function ZoneBar({
   const { isInitialLoad } = useSelector(
     (state: RootState) => state.isInitialLoad
   );
-  // const [isInitialLoad, setIsInitialLoad] = useState<boolean>(false);
-  // const [seasonName, setSeasonName] = useState<string>("Select Season");
   const dispatch = useDispatch();
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
@@ -157,15 +151,12 @@ export default function ZoneBar({
   // *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
 
   const SeasonMenu = () => {
-    // !BUG - Select value resets to default "Select Season" after clicking back on PlantBar
     const handleChange = (event: SelectChangeEvent) => {
       if (event.target.value !== "Select Season") {
         dispatch(updateCurrentSeasonName(event.target.value));
-        // setSeasonName(event.target.value);
         updateLocalStorageSeason(seasonNameToSeasonId(event.target.value));
         fetchZones(seasonNameToSeasonId(event.target.value));
       }
-      // setIsInitialLoad(true);
       dispatch(updateIsInitialLoad(true));
       console.info("%cZoneBar: handleChange Called", "color:#1CA1E6");
     };
