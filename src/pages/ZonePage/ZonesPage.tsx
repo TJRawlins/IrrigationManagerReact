@@ -47,13 +47,10 @@ const ZonesPage = () => {
   };
 
   const updateLocalStorageSeason = (seasonId: number) => {
-    // debugger;
-    // if (season.id !== 0 || season.id === undefined) {
     agent.Seasons.details(seasonId).then((season) => {
       dispatch(updateCurrentSeason(season));
       console.log("%cZonePage: Season Updated", "color:#1CA1E6", season);
     });
-    // }
   };
 
   const updateLocalStorageZone = () => {
