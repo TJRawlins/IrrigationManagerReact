@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import "../../styles/zones/AddZone.css";
 
 type ZoneBarProps = {
-  fetchZones(args: string): void;
+  fetchZones(args: number): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
 };
@@ -28,13 +28,13 @@ const style = {
 
 function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
-  const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  const { season } = useSelector((state: RootState) => state.season);
   // ! Component renders twice. First render shows previous zone. Second render shows current
 
   const handleClose = () => setIsShowEdit(false);
 
   const editZone = (id: number, values: object) => {
-    agent.Zones.editZone(id, values).then(() => fetchZones(seasonName));
+    agent.Zones.editZone(id, values).then(() => fetchZones(season.id));
   };
 
   // Form submission

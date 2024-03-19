@@ -34,7 +34,7 @@ import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/zones/ZoneCard.css";
 
 type ZoneCardProps = {
-  fetchZones(args: string): void;
+  fetchZones(args: number): void;
   setIsShowEdit(args: boolean): void;
   zone: Zone;
 };
@@ -45,7 +45,7 @@ export default function ZoneCard({
   setIsShowEdit,
 }: ZoneCardProps) {
   const dispatch = useDispatch();
-  const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  const { season } = useSelector((state: RootState) => state.season);
   const [isHovering, setIsHovering] = useState(false);
 
   function handelMouseEnter() {
@@ -89,7 +89,8 @@ export default function ZoneCard({
       console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
     };
 
-  const copyZone = () => {
+    const seasonID: number = season.id;
+    const copyZone = () => {
     const {
       name,
       runtimeHours,
@@ -107,11 +108,11 @@ export default function ZoneCard({
       imagePath,
       season,
       seasonId,
-    }).then(() => fetchZones(seasonName));
+    }).then(() => fetchZones(seasonID));
   };
 
   const deleteZone = () => {
-    agent.Zones.removeZone(zone.id).then(() => fetchZones(seasonName));
+    agent.Zones.removeZone(zone.id).then(() => fetchZones(season.id));
     console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
   };
 

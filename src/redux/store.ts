@@ -12,6 +12,8 @@ export const store = configureStore({
   reducer: {
     seasonName: seasonReducer,
     seasonId: seasonIdReducer,
+    season: seasonIdReducer,
+    seasonList: seasonIdReducer,
     zone: zoneReducer,
     zoneList: zoneListReducer,
     treflePlant: treflePlantReducer,

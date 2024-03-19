@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import {
   Avatar,
   Box,
@@ -20,31 +21,39 @@ import {
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useDispatch } from "react-redux";
-import { updateCurrentSeason } from "../../redux/seasonSlice";
+// import { useDispatch } from "react-redux";
+// import { updateCurrentSeasonId } from "../../redux/seasonSlice";
 import "../../styles/baseStyles/BaseBar.css";
 import "../../styles/zones/ZoneBar.css";
+import { useState } from "react";
+// import { Season } from "../../App/models/Season";
+// import { ReactElement } from "react";
 
 type ZoneBarProps = {
-  fetchZones(args: string): void;
+  fetchZones(args: number): void;
+  updateLocalStorageSeason(args: number): void;
 };
 
-export default function ZoneBar({ fetchZones }: ZoneBarProps) {
+export default function ZoneBar({
+  fetchZones,
+  updateLocalStorageSeason,
+}: ZoneBarProps) {
+  const { season } = useSelector((state: RootState) => state.season);
+  const [seasonName, setSeasonName] = useState<string>("Select Season");
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */
-  const galsList: Array<string> = [
-    "Weekly Gallons",
-    "Monthly Gallons",
-    "Yearly Gallons",
-  ];
-  const AvatarChips = () => {
+
+  const TotalGallonsChips = () => {
     return (
       <>
         <Box
           ml={2}
           mt={0.5}
-          sx={{ display: { sm: "none", xs: "flex" }, alignItems: "center" }}
+          sx={{
+            display: { md: "none", sm: "flex", xs: "flex" },
+            alignItems: "center",
+          }}
         >
           <FlipCameraAndroidIcon sx={{ color: "silver" }} />
           <Typography ml={1} sx={{ color: "silver", fontSize: 13 }}>
@@ -56,34 +65,80 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
           spacing={1}
           ml={2}
           mt={0.5}
-          sx={{ display: { xs: "none", sm: "block" } }}
+          sx={{ display: { md: "block", sm: "none", xs: "none" } }}
         >
-          {galsList.map((gals) => (
-            <Tooltip key={gals} title={gals} arrow>
-              <Chip
-                sx={{
-                  width: "fit-content",
-                  borderBottom: "1px solid silver",
-                  bgcolor: "#ffffff",
-                  color: "#919191",
-                  justifyContent: "left",
-                }}
-                avatar={
-                  <Avatar
-                    sx={{
-                      minWidth: "fit-content",
-                      background: "rgba(0, 0, 0, 0.08)",
-                      fontWeight: "700",
-                      color: "#919191 !important",
-                    }}
-                  >
-                    {gals[0].toLocaleUpperCase()}
-                  </Avatar>
-                }
-                label="615"
-              />
-            </Tooltip>
-          ))}
+          <Tooltip title="Weekly Gallons" arrow>
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {"Weekly Gallons"[0].toLocaleUpperCase()}
+                </Avatar>
+              }
+              label={season.totalGalPerWeek}
+            />
+          </Tooltip>
+          <Tooltip title="Monthly Gallons" arrow>
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {"Monthly Gallons"[0].toLocaleUpperCase()}
+                </Avatar>
+              }
+              label={season.totalGalPerMonth}
+            />
+          </Tooltip>
+          <Tooltip title="Yearly Gallons" arrow>
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {"Yearly Gallons"[0].toLocaleUpperCase()}
+                </Avatar>
+              }
+              label={season.totalGalPerYear}
+            />
+          </Tooltip>
         </Stack>
       </>
     );
@@ -92,14 +147,34 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
   // *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
 
   const SeasonMenu = () => {
-    // Set season name using Redux toolkit and fetch zones
-    const { seasonName } = useSelector((state: RootState) => state.seasonName);
-    const dispatch = useDispatch();
-
+    // !BUG - Select value resets to default "Select Season" after clicking back on PlantBar
     const handleChange = (event: SelectChangeEvent) => {
+      if (event.target.value !== "Select Season") {
+        setSeasonName(event.target.value);
+        updateLocalStorageSeason(seasonNameToSeasonId(event.target.value));
+        fetchZones(seasonNameToSeasonId(event.target.value));
+      }
       console.info("%cZoneBar: handleChange Called", "color:#1CA1E6");
-      dispatch(updateCurrentSeason(event.target.value));
-      fetchZones(event.target.value);
+    };
+
+    // Get dropdown selection name (string) and convert it to corresponding ID number
+    const seasonNameToSeasonId = (seasonName: string): number => {
+      let seasonId: number = 1;
+      switch (seasonName.toLowerCase()) {
+        case "summer":
+          seasonId = 1;
+          break;
+        case "fall":
+          seasonId = 2;
+          break;
+        case "winter":
+          seasonId = 3;
+          break;
+        case "spring":
+          seasonId = 4;
+          break;
+      }
+      return seasonId;
     };
 
     return (
@@ -109,7 +184,6 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
             className="season-btn"
             value={seasonName}
             onChange={handleChange}
-            displayEmpty
             inputProps={{ "aria-label": "Without label" }}
             sx={{
               boxShadow: "none",
@@ -119,11 +193,16 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
                 borderRadius: "5px 5px 0 0",
               },
               height: "33px",
-              width: "140px",
+              width: "150px",
               ml: 2,
               mt: 0.5,
             }}
           >
+            {seasonName === "Select Season" && (
+              <MenuItem value={"Select Season"}>
+                <em>Select Season</em>
+              </MenuItem>
+            )}
             <MenuItem value={"Summer"}>
               <div className="menu-wrapper">
                 <MdSunny className="menuIcon" />
@@ -185,7 +264,7 @@ export default function ZoneBar({ fetchZones }: ZoneBarProps) {
             <SeasonMenu />
           </div>
         </div>
-        <AvatarChips />
+        <TotalGallonsChips />
       </div>
     </>
   );

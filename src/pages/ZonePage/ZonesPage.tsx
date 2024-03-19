@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import ZoneList from "../../Components/zones/ZoneList";
@@ -16,29 +17,53 @@ import {
   updateCurrentTreflePlant,
 } from "../../redux/plantSlice";
 import { Plant } from "../../App/models/Plant";
+import {
+  updateCurrentSeason,
+  updateCurrentSeasonList,
+} from "../../redux/seasonSlice";
+import { Season } from "../../App/models/Season";
 
 const ZonesPage = () => {
-  const { seasonName } = useSelector((state: RootState) => state.seasonName);
+  const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
 
+  const fetchSeasons = () => {
+    agent.Seasons.list().then((seasons) => {
+      dispatch(updateCurrentSeasonList(seasons));
+      console.log("%cZones: Seasons Fetched", "color:#1CA1E6");
+    });
+  };
+
   //* Initial zone list
-  const fetchZones = (seasonString: string) => {
+  const fetchZones = (seasonString: number) => {
     agent.Zones.list().then((zones) => {
       dispatch(
         updateCurrentZoneList(
-          zones.filter((zone: Zone) => zone.season === seasonString)
+          zones.filter((zone: Zone) => zone.seasonId === seasonString)
         )
       );
       console.log("%cZones: Zone Fetched", "color:#1CA1E6");
     });
   };
 
+  const updateLocalStorageSeason = (seasonId: number) => {
+    // debugger;
+    // if (season.id !== 0 || season.id === undefined) {
+    agent.Seasons.details(seasonId).then((season) => {
+      dispatch(updateCurrentSeason(season));
+      console.log("%cZonePage: Season Updated", "color:#1CA1E6", season);
+    });
+    // }
+  };
+
   const updateLocalStorageZone = () => {
     dispatch(updateCurrentZone(new Zone()));
+    console.log("%cZonePage: Initial Empty Zone Added", "color:#1CA1E6");
   };
 
   const updateLocalStoragePlant = () => {
     dispatch(updateCurrentPlant(new Plant()));
+    console.log("%cZonePage: Initial Empty Plant Added", "color:#1CA1E6");
   };
 
   // TODO : INITIALIZE > GET AND UPDATE TREFLE
@@ -52,7 +77,12 @@ const ZonesPage = () => {
   };
 
   useEffect(() => {
-    fetchZones(seasonName);
+    fetchSeasons();
+    fetchZones(season.id);
+    debugger;
+    if (season.id === 0 || season.id === undefined) {
+      dispatch(updateCurrentSeason(new Season()));
+    }
     updateLocalStorageZone();
     updateLocalStoragePlant();
     // TODO : CALL > GET AND UPDATE TREFLE
@@ -61,7 +91,10 @@ const ZonesPage = () => {
 
   return (
     <>
-      <ZoneBar fetchZones={fetchZones} />
+      <ZoneBar
+        fetchZones={fetchZones}
+        updateLocalStorageSeason={updateLocalStorageSeason}
+      />
       <Grid
         sx={{
           bgcolor: "#eef2f6",
