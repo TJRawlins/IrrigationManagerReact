@@ -60,7 +60,6 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
   const handleClose = () => setShowViewPlant(false);
-  console.log("ViewPlant: ", plant);
 
   // TODO : New Card ===================================================
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -373,7 +372,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                           W
                         </Avatar>
                       }
-                      label={plant.galsPerWk}
+                      label={plant.galsPerWk * plant.quantity}
                     />
                   </Tooltip>
                   <Tooltip title="Total Monthly Gallons" arrow>
@@ -392,7 +391,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                           M
                         </Avatar>
                       }
-                      label={plant.galsPerWk * 4}
+                      label={plant.galsPerWk * 4 * plant.quantity}
                     />
                   </Tooltip>
                   <Tooltip title="Total Yearly Gallons" arrow>
@@ -411,7 +410,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                           Y
                         </Avatar>
                       }
-                      label={plant.galsPerWk * 52}
+                      label={plant.galsPerWk * 52 * plant.quantity}
                     />
                   </Tooltip>
                 </Stack>

@@ -16,10 +16,13 @@ import { IoCalendar } from "react-icons/io5";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import AddPlant from "./AddPlant";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import "../../styles/baseStyles/BaseBar.css";
 import "../../styles/plants/PlantBar.css";
+import { useEffect } from "react";
+import agent from "../../App/api/agent";
+import { updateCurrentSeason } from "../../redux/seasonSlice";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -27,6 +30,23 @@ type PlantBarProps = {
 
 export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
+  const { plant } = useSelector((state: RootState) => state.plant);
+  const { season } = useSelector((state: RootState) => state.season);
+  const dispatch = useDispatch();
+
+  const updateLocalStorageSeason = (seasonId: number) => {
+    agent.Seasons.details(seasonId).then((season) => {
+      dispatch(updateCurrentSeason(season));
+      console.log("%cZonePage: Season Updated", "color:#1CA1E6", season);
+    });
+  };
+  const backToSeason = () => {
+    updateLocalStorageSeason(season.id);
+  };
+
+  useEffect(() => {
+    console.log("%cPlantBar: useEffect", "color:#1CA1E6");
+  }, [plant, zone, season]);
 
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
@@ -185,6 +205,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
                   position: "relative",
                   boxShadow: "none !important",
                 }}
+                onClick={backToSeason}
               >
                 <IoChevronBack className="btn-icon" />
                 Go Back

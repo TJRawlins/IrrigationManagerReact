@@ -112,8 +112,6 @@ export default function PlantList({
 
   useEffect(() => {
     fetchPlants(zone.id);
-    console.log("PlantList => useEffect => plantID: ", plantId);
-    console.log(isMobile);
   }, [isMobile, plant]);
 
   const columns = [

@@ -62,7 +62,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   });
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    console.log(values);
     // updateLocalStorageZone was added to update and persist gallons on PlantBar
     agent.Plants.createPlant(values)
       .catch((error) => alert(error))
