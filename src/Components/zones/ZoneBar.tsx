@@ -44,6 +44,7 @@ export default function ZoneBar({
     (state: RootState) => state.isInitialLoad
   );
   const dispatch = useDispatch();
+  console.log("ZONE BAR RENDERED");
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */

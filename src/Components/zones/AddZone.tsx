@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
@@ -10,7 +11,7 @@ import { useSelector } from "react-redux";
 import "../../styles/zones/AddZone.css";
 
 type ZoneBarProps = {
-  fetchZones(args: string): void;
+  fetchZones(args: number): void;
 };
 
 const style = {
@@ -31,7 +32,6 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   const handleClose = () => setOpen(false);
 
   const { season } = useSelector((state: RootState) => state.season);
-  const { seasonId } = useSelector((state: RootState) => state.seasonId);
 
   // Form submission
   const initialValues = {
@@ -41,7 +41,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimePerWeek: 0,
     imagePath: undefined,
     season: season.name,
-    seasonId: seasonId,
+    seasonId: season.id,
   };
 
   const validationSchema = Yup.object().shape({
@@ -53,11 +53,9 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   });
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    // console.log(values);
-    // console.log(props);
     agent.Zones.createZone(values)
       .catch((error) => alert(error))
-      .then(() => fetchZones(season.name));
+      .then(() => fetchZones(season.id));
     props.resetForm();
     handleClose();
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
