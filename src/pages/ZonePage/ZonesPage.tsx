@@ -83,7 +83,6 @@ const ZonesPage = () => {
     updateLocalStoragePlant();
     // TODO : CALL > GET AND UPDATE TREFLE
     updateLocalStorageTreflePlant("Peach");
-    console.log("LOCATION UPDATED");
   }, []);
 
   return (

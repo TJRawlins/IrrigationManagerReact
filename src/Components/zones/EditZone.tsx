@@ -72,8 +72,6 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   });
 
   useEffect(() => {
-    console.log("useEffect zone: ", zone);
-    console.log("useEffect initialValues: ", initialValues);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [zone]);
 
