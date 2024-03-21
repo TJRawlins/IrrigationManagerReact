@@ -1,15 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { Season } from "../App/models/Season";
 
 export interface SeasonState {
+  season: Season;
+  seasonList: Season[];
   seasonName: string;
   seasonId: number;
+  isInitialLoad: boolean;
 }
+
+const season =
+  localStorage.getItem("season") !== null
+    ? JSON.parse(localStorage.getItem("season")!)
+    : {};
+const seasons =
+  localStorage.getItem("seasons") !== null
+    ? JSON.parse(localStorage.getItem("seasons")!)
+    : [];
+const seasonName =
+  localStorage.getItem("seasonName") !== null
+    ? JSON.parse(localStorage.getItem("seasonName")!)
+    : "Summer";
+const seasonId =
+  localStorage.getItem("seasonId") !== null
+    ? JSON.parse(localStorage.getItem("seasonId")!)
+    : 1;
+const isInitialLoad =
+  localStorage.getItem("isInitialLoad") !== null
+    ? JSON.parse(localStorage.getItem("isInitialLoad")!)
+    : false;
 
 // State
 const initialState: SeasonState = {
-  seasonName: "Summer",
-  seasonId: 1,
+  season: season,
+  seasonList: seasons,
+  seasonName: seasonName,
+  seasonId: seasonId,
+  isInitialLoad: isInitialLoad,
 };
 
 export const seasonSlice = createSlice({
@@ -17,30 +45,31 @@ export const seasonSlice = createSlice({
   initialState,
   // Reducers
   reducers: {
-    updateCurrentSeason: (state, action: PayloadAction<string>) => {
+    updateCurrentSeasonName: (state, action: PayloadAction<string>) => {
       state.seasonName = action.payload;
-      switch (state.seasonName) {
-        case "Summer":
-          state.seasonId = 1;
-          break;
-        case "Fall":
-          state.seasonId = 2;
-          break;
-        case "Winter":
-          state.seasonId = 3;
-          break;
-        case "Spring":
-          state.seasonId = 4;
-          break;
-        default:
-          alert(`Season name ${action.payload} not valid`);
-          break;
-      }
+      localStorage.setItem("seasonName", JSON.stringify(action.payload));
+    },
+    updateCurrentSeason: (state, action: PayloadAction<Season>) => {
+      state.season = action.payload;
+      localStorage.setItem("season", JSON.stringify(action.payload));
+    },
+    updateCurrentSeasonList: (state, action: PayloadAction<Season[]>) => {
+      state.seasonList = action.payload;
+      localStorage.setItem("seasons", JSON.stringify(action.payload));
+    },
+    updateIsInitialLoad: (state, action: PayloadAction<boolean>) => {
+      state.isInitialLoad = action.payload;
+      localStorage.setItem("isInitialLoad", JSON.stringify(action.payload));
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { updateCurrentSeason } = seasonSlice.actions;
+export const {
+  updateCurrentSeasonName,
+  updateCurrentSeason,
+  updateCurrentSeasonList,
+  updateIsInitialLoad,
+} = seasonSlice.actions;
 
 export default seasonSlice.reducer;

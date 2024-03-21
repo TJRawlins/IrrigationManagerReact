@@ -3,6 +3,7 @@ import PlantPage from "../pages/PlantPage/PlantPage";
 import ZonesPage from "../pages/ZonePage/ZonesPage";
 
 const RouterComponent = () => (
+
     <Routes>
       <Route path="/zones" element={<ZonesPage />} />
       <Route path="/plants" element={<PlantPage />} />
