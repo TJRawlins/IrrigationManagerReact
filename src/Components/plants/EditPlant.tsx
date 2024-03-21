@@ -2,11 +2,12 @@ import { Box, Modal, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
 import agent from "../../App/api/agent";
 import "../../styles/zones/AddZone.css";
+import { updateCurrentZone } from "../../redux/zoneSlice";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -29,18 +30,27 @@ const style = {
 function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
+  const dispatch = useDispatch();
 
   const handleClose = () => setIsShowEdit(false);
 
+  const updateLocalStorageZone = () => {
+    agent.Zones.details(zone.id).then((zone) => {
+      dispatch(updateCurrentZone(zone));
+    });
+  };
+
   const editPlant = (id: number, values: object) => {
-    agent.Plants.editPlant(id, values).then(() => fetchPlants(zone.id));
+    agent.Plants.editPlant(id, values)
+      .catch((error) => alert(error))
+      .then(() => fetchPlants(zone.id))
+      .then(() => updateLocalStorageZone());
   };
 
   // Form submission
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    // console.log(values);
     editPlant(plant.id, values);
-    console.log("plant edited");
+    console.log("%cEditPlant: Plant Edited", "color:#1CA1E6");
     props.resetForm();
     handleClose();
   };
@@ -67,8 +77,6 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
   });
 
   useEffect(() => {
-    console.log("useEffect plant: ", plant);
-    console.log("ViewPlant => useEffect => initialValues: ", initialValues);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plant]);
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
@@ -10,7 +11,7 @@ import { useSelector } from "react-redux";
 import "../../styles/zones/AddZone.css";
 
 type ZoneBarProps = {
-  fetchZones(args: string): void;
+  fetchZones(args: number): void;
 };
 
 const style = {
@@ -30,8 +31,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { seasonName } = useSelector((state: RootState) => state.seasonName);
-  const { seasonId } = useSelector((state: RootState) => state.seasonId);
+  const { season } = useSelector((state: RootState) => state.season);
 
   // Form submission
   const initialValues = {
@@ -40,8 +40,8 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimeMinutes: 0,
     runtimePerWeek: 0,
     imagePath: undefined,
-    season: seasonName,
-    seasonId: seasonId,
+    season: season.name,
+    seasonId: season.id,
   };
 
   const validationSchema = Yup.object().shape({
@@ -53,11 +53,9 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   });
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    // console.log(values);
-    // console.log(props);
     agent.Zones.createZone(values)
       .catch((error) => alert(error))
-      .then(() => fetchZones(seasonName));
+      .then(() => fetchZones(season.id));
     props.resetForm();
     handleClose();
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
@@ -206,9 +204,9 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                   disabled
                   className="input"
                   id="standard-disabled"
-                  name={seasonName}
+                  name={season.name}
                   label="Season"
-                  defaultValue={seasonName}
+                  defaultValue={season.name}
                   variant="standard"
                 />
                 <Button className="submit-btn" type="submit">

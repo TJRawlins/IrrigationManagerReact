@@ -60,7 +60,6 @@ const PlantPage = () => {
 
   useEffect(() => {
     fetchPlants(zoneIdNum);
-    console.log("useEffect ran...");
   }, [zoneIdNum]);
   return (
     <>

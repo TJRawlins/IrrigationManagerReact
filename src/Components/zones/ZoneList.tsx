@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 type ZoneBarProps = {
-  fetchZones(args: string): void;
+  fetchZones(args: number): void;
 };
 
 export default function ZoneList({ fetchZones }: ZoneBarProps) {
