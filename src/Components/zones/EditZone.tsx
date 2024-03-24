@@ -1,11 +1,22 @@
-import { Box, Modal, TextField, Typography } from "@mui/material";
+/* eslint-disable no-debugger */
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/zones/AddZone.css";
 
 type ZoneBarProps = {
@@ -29,7 +40,16 @@ const style = {
 function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
-  // ! Component renders twice. First render shows previous zone. Second render shows current
+  const { seasonList } = useSelector((state: RootState) => state.seasonList);
+  const [seasonState, setSeasonState] = useState<number>(
+    zone.seasonId === 0 ? 1 : zone.seasonId
+  );
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSeasonState(Number(event.target.value));
+    console.log("event value: ", event.target.value);
+  };
+  console.log("seasonState: ", seasonState);
 
   const handleClose = () => setIsShowEdit(false);
 
@@ -39,6 +59,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
 
   // Form submission
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
+    debugger;
     // console.log(values);
     editZone(zone.id, values);
     console.log("zone edited");
@@ -53,15 +74,13 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     runtimeMinutes: zone.runtimeMinutes,
     runtimePerWeek: zone.runtimePerWeek,
     imagePath: zone.imagePath,
-    season: zone.season,
+    // season: zone.season,
     totalPlants: zone.totalPlants,
     totalGalPerMonth: zone.totalGalPerMonth,
     totalGalPerWeek: zone.totalGalPerWeek,
     totalGalPerYear: zone.totalGalPerYear,
-    seasonId: zone.seasonId,
+    seasonId: seasonState,
   };
-
-  // console.log("Zone values showing up in fields", initialValues);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required field"),
@@ -207,22 +226,32 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                     />
                   }
                 />
-                <Field
+                {/* <Field
                   as={TextField}
                   className="input"
                   id="season-input"
                   name="season"
                   label="Season"
                   variant="standard"
-                />
-                <Field
-                  as={TextField}
-                  className="input"
-                  id="season-id-input"
-                  name="seasonId"
-                  label="Season ID"
-                  variant="standard"
-                />
+                /> */}
+                <Box sx={{ minWidth: 120, mt: 3 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="season-input">Season</InputLabel>
+                    <Select
+                      labelId="season-label"
+                      id="season-input-select"
+                      value={seasonState.toString()}
+                      label="season"
+                      onChange={handleChange}
+                    >
+                      {seasonList.map((season) => (
+                        <MenuItem key={season.id} value={season.id}>
+                          {season.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
                 <Button className="submit-btn" type="submit">
                   Submit
                 </Button>
