@@ -6,7 +6,6 @@ import {
   MenuItem,
   Modal,
   Select,
-  SelectChangeEvent,
   TextField,
   Typography,
 } from "@mui/material";
@@ -16,7 +15,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "../../styles/zones/AddZone.css";
 
 type ZoneBarProps = {
@@ -40,16 +39,16 @@ const style = {
 function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
-  const { seasonList } = useSelector((state: RootState) => state.seasonList);
-  const [seasonState, setSeasonState] = useState<number>(
-    zone.seasonId === 0 ? 1 : zone.seasonId
-  );
+  // const { seasonList } = useSelector((state: RootState) => state.seasonList);
+  // const [seasonState, setSeasonState] = useState<number>(
+  //   zone.seasonId === 0 ? 1 : zone.seasonId
+  // );
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setSeasonState(Number(event.target.value));
-    console.log("event value: ", event.target.value);
-  };
-  console.log("seasonState: ", seasonState);
+  // !BUG - Updating seasonID with the previous state of seasonState
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setSeasonState(Number(event.target.value));
+  //   console.log("event value: ", event.target.value);
+  // };
 
   const handleClose = () => setIsShowEdit(false);
 
@@ -58,9 +57,14 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   };
 
   // Form submission
-  const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    debugger;
-    // console.log(values);
+  const onSubmit = (
+    values: object,
+    props: {
+      resetForm: () => void;
+    }
+  ) => {
+    console.log("onSubmit values", values);
+    // console.log("seasonState: ", seasonState);
     editZone(zone.id, values);
     console.log("zone edited");
     props.resetForm();
@@ -74,12 +78,11 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     runtimeMinutes: zone.runtimeMinutes,
     runtimePerWeek: zone.runtimePerWeek,
     imagePath: zone.imagePath,
-    // season: zone.season,
     totalPlants: zone.totalPlants,
     totalGalPerMonth: zone.totalGalPerMonth,
     totalGalPerWeek: zone.totalGalPerWeek,
     totalGalPerYear: zone.totalGalPerYear,
-    seasonId: seasonState,
+    seasonId: zone.seasonId,
   };
 
   const validationSchema = Yup.object().shape({
@@ -91,6 +94,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   });
 
   useEffect(() => {
+    console.log("useEffect InitialValues.seasonId", initialValues.seasonId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [zone]);
 
@@ -226,30 +230,15 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                     />
                   }
                 />
-                {/* <Field
-                  as={TextField}
-                  className="input"
-                  id="season-input"
-                  name="season"
-                  label="Season"
-                  variant="standard"
-                /> */}
                 <Box sx={{ minWidth: 120, mt: 3 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="season-input">Season</InputLabel>
-                    <Select
-                      labelId="season-label"
-                      id="season-input-select"
-                      value={seasonState.toString()}
-                      label="season"
-                      onChange={handleChange}
-                    >
-                      {seasonList.map((season) => (
-                        <MenuItem key={season.id} value={season.id}>
-                          {season.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                    <InputLabel id="season-input" sx={{background: "#ffff", padding: "0 5px"}}>Season</InputLabel>
+                    <Field as={Select} name="seasonId">
+                      <MenuItem value={1}>Summer</MenuItem>
+                      <MenuItem value={2}>Fall</MenuItem>
+                      <MenuItem value={3}>Winter</MenuItem>
+                      <MenuItem value={4}>Spring</MenuItem>
+                    </Field>
                   </FormControl>
                 </Box>
                 <Button className="submit-btn" type="submit">
