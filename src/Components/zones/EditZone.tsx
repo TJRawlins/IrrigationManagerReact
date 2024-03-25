@@ -39,16 +39,6 @@ const style = {
 function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
-  // const { seasonList } = useSelector((state: RootState) => state.seasonList);
-  // const [seasonState, setSeasonState] = useState<number>(
-  //   zone.seasonId === 0 ? 1 : zone.seasonId
-  // );
-
-  // !BUG - Updating seasonID with the previous state of seasonState
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setSeasonState(Number(event.target.value));
-  //   console.log("event value: ", event.target.value);
-  // };
 
   const handleClose = () => setIsShowEdit(false);
 
@@ -64,7 +54,6 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     }
   ) => {
     console.log("onSubmit values", values);
-    // console.log("seasonState: ", seasonState);
     editZone(zone.id, values);
     console.log("zone edited");
     props.resetForm();
@@ -94,7 +83,6 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   });
 
   useEffect(() => {
-    console.log("useEffect InitialValues.seasonId", initialValues.seasonId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [zone]);
 
@@ -232,7 +220,12 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                 />
                 <Box sx={{ minWidth: 120, mt: 3 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="season-input" sx={{background: "#ffff", padding: "0 5px"}}>Season</InputLabel>
+                    <InputLabel
+                      id="season-input"
+                      sx={{ background: "#ffff", padding: "0 5px" }}
+                    >
+                      Season
+                    </InputLabel>
                     <Field as={Select} name="seasonId">
                       <MenuItem value={1}>Summer</MenuItem>
                       <MenuItem value={2}>Fall</MenuItem>
