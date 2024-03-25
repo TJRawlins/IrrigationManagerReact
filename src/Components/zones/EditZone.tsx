@@ -1,4 +1,14 @@
-import { Box, Modal, TextField, Typography } from "@mui/material";
+/* eslint-disable no-debugger */
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -29,7 +39,6 @@ const style = {
 function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
-  // ! Component renders twice. First render shows previous zone. Second render shows current
 
   const handleClose = () => setIsShowEdit(false);
 
@@ -38,8 +47,13 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   };
 
   // Form submission
-  const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    // console.log(values);
+  const onSubmit = (
+    values: object,
+    props: {
+      resetForm: () => void;
+    }
+  ) => {
+    console.log("onSubmit values", values);
     editZone(zone.id, values);
     console.log("zone edited");
     props.resetForm();
@@ -53,15 +67,12 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     runtimeMinutes: zone.runtimeMinutes,
     runtimePerWeek: zone.runtimePerWeek,
     imagePath: zone.imagePath,
-    season: zone.season,
     totalPlants: zone.totalPlants,
     totalGalPerMonth: zone.totalGalPerMonth,
     totalGalPerWeek: zone.totalGalPerWeek,
     totalGalPerYear: zone.totalGalPerYear,
     seasonId: zone.seasonId,
   };
-
-  // console.log("Zone values showing up in fields", initialValues);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required field"),
@@ -207,22 +218,22 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                     />
                   }
                 />
-                <Field
-                  as={TextField}
-                  className="input"
-                  id="season-input"
-                  name="season"
-                  label="Season"
-                  variant="standard"
-                />
-                <Field
-                  as={TextField}
-                  className="input"
-                  id="season-id-input"
-                  name="seasonId"
-                  label="Season ID"
-                  variant="standard"
-                />
+                <Box sx={{ minWidth: 120, mt: 3 }}>
+                  <FormControl fullWidth>
+                    <InputLabel
+                      id="season-input"
+                      sx={{ background: "#ffff", padding: "0 5px" }}
+                    >
+                      Season
+                    </InputLabel>
+                    <Field as={Select} name="seasonId">
+                      <MenuItem value={1}>Summer</MenuItem>
+                      <MenuItem value={2}>Fall</MenuItem>
+                      <MenuItem value={3}>Winter</MenuItem>
+                      <MenuItem value={4}>Spring</MenuItem>
+                    </Field>
+                  </FormControl>
+                </Box>
                 <Button className="submit-btn" type="submit">
                   Submit
                 </Button>

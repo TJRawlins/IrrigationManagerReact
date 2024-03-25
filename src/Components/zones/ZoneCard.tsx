@@ -61,36 +61,36 @@ export default function ZoneCard({
       dispatch(updateCurrentZone(zone));
     });
   };
-  
+
   const updateLocalStoragePlants = () => {
     agent.Plants.list().then((plants) => {
       const filterPlants: Array<Plant> = plants.filter(
         (plant: { zoneId: number }) => plant.zoneId === zone.id
-        );
-        const plantList = filterPlants[0] === undefined ? plants : filterPlants;
-        dispatch(updateCurrentPlantList(filterPlants));
-        dispatch(updateCurrentPlant(plantList[0]));
-      });
-      console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
-    };
-    
-    const showPlants = () => {
-      updateLocalStorageZone();
-      updateLocalStoragePlants();
-    };
-    
-    // Temporary fix: Used setTimeout to delay so that the edit modal will grab the most recent local storage value
-    // See EditZone for bug comment
-    const showEdit = () => {
-      updateLocalStorageZone();
-      setTimeout(() => {
-        setIsShowEdit(true);
-      }, 100);
-      console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
-    };
+      );
+      const plantList = filterPlants[0] === undefined ? plants : filterPlants;
+      dispatch(updateCurrentPlantList(filterPlants));
+      dispatch(updateCurrentPlant(plantList[0]));
+    });
+    console.log("%cPlant Page: Plants Fetched", "color:#1CA1E6");
+  };
 
-    const seasonID: number = season.id;
-    const copyZone = () => {
+  const showPlants = () => {
+    updateLocalStorageZone();
+    updateLocalStoragePlants();
+  };
+
+  // Temporary fix: Used setTimeout to delay so that the edit modal will grab the most recent local storage value
+  // See EditZone for bug comment
+  const showEdit = () => {
+    updateLocalStorageZone();
+    setTimeout(() => {
+      setIsShowEdit(true);
+    }, 100);
+    console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
+  };
+
+  const seasonID: number = season.id;
+  const copyZone = () => {
     const {
       name,
       runtimeHours,
@@ -182,7 +182,8 @@ export default function ZoneCard({
             variant="filled"
             size="small"
             sx={{ position: "absolute", top: "5px", left: "20px" }}
-            {...getChipProps(zone.season)}
+            // {...getChipProps(zone.season)}
+            {...getChipProps(season.name)}
           />
           <Typography
             className="card-name"
@@ -243,7 +244,7 @@ export default function ZoneCard({
                 <Chip
                   className={
                     "gallons-chip week " +
-                    zone.season.toString().toLocaleLowerCase()
+                    season.name.toString().toLocaleLowerCase()
                   }
                   sx={{
                     width: "100%",
@@ -256,7 +257,7 @@ export default function ZoneCard({
                     <Avatar
                       className={
                         "gallons-chip-avatar " +
-                        zone.season.toString().toLocaleLowerCase()
+                        season.name.toString().toLocaleLowerCase()
                       }
                     >
                       W
@@ -268,13 +269,13 @@ export default function ZoneCard({
               <Tooltip title="Total Monthly Gallons" arrow>
                 <Chip
                   className={
-                    "gallons-chip " + zone.season.toString().toLocaleLowerCase()
+                    "gallons-chip " + season.name.toString().toLocaleLowerCase()
                   }
                   avatar={
                     <Avatar
                       className={
                         "gallons-chip-avatar " +
-                        zone.season.toString().toLocaleLowerCase()
+                        season.name.toString().toLocaleLowerCase()
                       }
                     >
                       M
@@ -287,13 +288,13 @@ export default function ZoneCard({
                 <Chip
                   className={
                     "gallons-chip year " +
-                    zone.season.toString().toLocaleLowerCase()
+                    season.name.toString().toLocaleLowerCase()
                   }
                   avatar={
                     <Avatar
                       className={
                         "gallons-chip-avatar " +
-                        zone.season.toString().toLocaleLowerCase()
+                        season.name.toString().toLocaleLowerCase()
                       }
                     >
                       Y
