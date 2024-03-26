@@ -1,4 +1,13 @@
-import { Box, Modal, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa6";
 import { useState } from "react";
@@ -44,11 +53,11 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   // Form submission
   const initialValues = {
     name: "",
-    type: "",
-    quantity: 0,
-    galsPerWk: 0,
-    emittersPerPlant: 0,
-    emitterGPH: 0,
+    type: "Tree",
+    quantity: undefined,
+    galsPerWk: undefined,
+    emittersPerPlant: undefined,
+    emitterGPH: undefined,
     zoneId: zone.id,
   };
 
@@ -109,6 +118,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
             initialValues={initialValues}
             onSubmit={onSubmit}
             validationSchema={validationSchema}
+            enableReinitialize={true}
           >
             {() => (
               <Form style={{ width: "100%" }}>
@@ -130,24 +140,38 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     />
                   }
                 />
-                <Field
-                  as={TextField}
-                  required
-                  className="input"
-                  id="plant-type-input"
-                  name="type"
-                  label="Plant type"
-                  type="text"
-                  autoComplete=""
-                  variant="standard"
-                  helperText={
-                    <ErrorMessage
+                <Box sx={{ minWidth: 120, mt: 1.5 }}>
+                  <FormControl fullWidth>
+                    <InputLabel
+                      id="plant-type-input"
+                      sx={{ background: "#ffff", padding: "0 5px" }}
+                    >
+                      Plant type
+                    </InputLabel>
+                    <Field
+                      style={{padding: "5px !important"}}
+                      as={Select}
+                      required
                       name="type"
-                      component="div"
-                      className="error-text"
-                    />
-                  }
-                />
+                      type="select"
+                      helperText={
+                        <ErrorMessage
+                          name="type"
+                          component="div"
+                          className="error-text"
+                        />
+                      }
+                    >
+                      <MenuItem value={"Tree"}>Tree</MenuItem>
+                      <MenuItem value={"Shrub"}>Shrub</MenuItem>
+                      <MenuItem value={"Vegetable"}>Vegetable</MenuItem>
+                      <MenuItem value={"Herb"}>Herb</MenuItem>
+                      <MenuItem value={"Grass"}>Grass</MenuItem>
+                      <MenuItem value={"Vine"}>Vine</MenuItem>
+                      <MenuItem value={"Cacti"}>Cacti</MenuItem>
+                    </Field>
+                  </FormControl>
+                </Box>
                 <div className="split-container">
                   <Field
                     as={TextField}

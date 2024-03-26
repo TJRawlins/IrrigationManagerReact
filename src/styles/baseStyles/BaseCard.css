@@ -138,3 +138,7 @@
 .hidden {
   display: none !important;
 }
+
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 10px 10px !important;
+}
