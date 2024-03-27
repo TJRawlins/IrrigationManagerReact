@@ -140,38 +140,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     />
                   }
                 />
-                <Box sx={{ minWidth: 120, mt: 1.5 }}>
-                  <FormControl fullWidth>
-                    <InputLabel
-                      id="plant-type-input"
-                      sx={{ background: "#ffff", padding: "0 5px" }}
-                    >
-                      Plant type
-                    </InputLabel>
-                    <Field
-                      style={{padding: "5px !important"}}
-                      as={Select}
-                      required
-                      name="type"
-                      type="select"
-                      helperText={
-                        <ErrorMessage
-                          name="type"
-                          component="div"
-                          className="error-text"
-                        />
-                      }
-                    >
-                      <MenuItem value={"Tree"}>Tree</MenuItem>
-                      <MenuItem value={"Shrub"}>Shrub</MenuItem>
-                      <MenuItem value={"Vegetable"}>Vegetable</MenuItem>
-                      <MenuItem value={"Herb"}>Herb</MenuItem>
-                      <MenuItem value={"Grass"}>Grass</MenuItem>
-                      <MenuItem value={"Vine"}>Vine</MenuItem>
-                      <MenuItem value={"Cacti"}>Cacti</MenuItem>
-                    </Field>
-                  </FormControl>
-                </Box>
                 <div className="split-container">
                   <Field
                     as={TextField}
@@ -252,6 +220,38 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     }
                   />
                 </div>
+                <Box sx={{ minWidth: 120, mt: 1.5 }}>
+                  <FormControl fullWidth>
+                    <InputLabel
+                      id="plant-type-input"
+                      sx={{ background: "#ffff", padding: "0 5px" }}
+                    >
+                      Plant type
+                    </InputLabel>
+                    <Field
+                      style={{ padding: "5px !important" }}
+                      as={Select}
+                      required
+                      name="type"
+                      type="select"
+                      helperText={
+                        <ErrorMessage
+                          name="type"
+                          component="div"
+                          className="error-text"
+                        />
+                      }
+                    >
+                      <MenuItem value={"Tree"}>Tree</MenuItem>
+                      <MenuItem value={"Shrub"}>Shrub</MenuItem>
+                      <MenuItem value={"Vegetable"}>Vegetable</MenuItem>
+                      <MenuItem value={"Herb"}>Herb</MenuItem>
+                      <MenuItem value={"Grass"}>Grass</MenuItem>
+                      <MenuItem value={"Vine"}>Vine</MenuItem>
+                      <MenuItem value={"Cacti"}>Cacti</MenuItem>
+                    </Field>
+                  </FormControl>
+                </Box>
                 <Button className="submit-btn" type="submit">
                   Add
                 </Button>
