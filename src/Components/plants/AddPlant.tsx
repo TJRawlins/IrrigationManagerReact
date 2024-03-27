@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa6";
+import { Grass as GrassIcon } from "@mui/icons-material";
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -18,6 +19,7 @@ import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import "../../styles/plants/PlantBar.css";
+import "../../styles/baseStyles/BaseCard.css";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -106,14 +108,17 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         }}
       >
         <Box className="modal-box" sx={style}>
-          <Typography
-            className="modal-title"
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >
-            ADD NEW PLANT
-          </Typography>
+          <div className="modal-title-container">
+            <GrassIcon className="modal-title-icon" />
+            <Typography
+              className="modal-title"
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              ADD NEW PLANT
+            </Typography>
+          </div>
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
