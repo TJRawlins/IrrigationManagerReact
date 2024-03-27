@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { Grass as GrassIcon } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -15,8 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
 import agent from "../../App/api/agent";
-import "../../styles/zones/AddZone.css";
 import { updateCurrentZone } from "../../redux/zoneSlice";
+import "../../styles/zones/AddZone.css";
+import "../../styles/baseStyles/BaseCard.css";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -103,14 +105,17 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
         }}
       >
         <Box className="modal-box" sx={style}>
-          <Typography
-            className="modal-title"
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >
-            EDIT PLANT
-          </Typography>
+          <div className="modal-title-container">
+            <GrassIcon className="modal-title-icon" />
+            <Typography
+              className="modal-title"
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              EDIT PLANT
+            </Typography>
+          </div>
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
