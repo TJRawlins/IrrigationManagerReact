@@ -1,4 +1,14 @@
-import { Box, FormControl, InputLabel, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Grass as GrassIcon } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -6,8 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
 import agent from "../../App/api/agent";
-import "../../styles/zones/AddZone.css";
 import { updateCurrentZone } from "../../redux/zoneSlice";
+import "../../styles/zones/AddZone.css";
+import "../../styles/baseStyles/BaseCard.css";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
@@ -94,14 +105,17 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
         }}
       >
         <Box className="modal-box" sx={style}>
-          <Typography
-            className="modal-title"
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >
-            EDIT PLANT
-          </Typography>
+          <div className="modal-title-container">
+            <GrassIcon className="modal-title-icon" />
+            <Typography
+              className="modal-title"
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              EDIT PLANT
+            </Typography>
+          </div>
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
@@ -127,38 +141,6 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                     />
                   }
                 />
-                <Box sx={{ minWidth: 120, mt: 1.5 }}>
-                  <FormControl fullWidth>
-                    <InputLabel
-                      id="plant-type-input"
-                      sx={{ background: "#ffff", padding: "0 5px" }}
-                    >
-                      Plant type
-                    </InputLabel>
-                    <Field
-                      style={{padding: "5px !important"}}
-                      as={Select}
-                      required
-                      name="type"
-                      type="select"
-                      helperText={
-                        <ErrorMessage
-                          name="type"
-                          component="div"
-                          className="error-text"
-                        />
-                      }
-                    >
-                      <MenuItem value={"Tree"}>Tree</MenuItem>
-                      <MenuItem value={"Shrub"}>Shrub</MenuItem>
-                      <MenuItem value={"Vegetable"}>Vegetable</MenuItem>
-                      <MenuItem value={"Herb"}>Herb</MenuItem>
-                      <MenuItem value={"Grass"}>Grass</MenuItem>
-                      <MenuItem value={"Vine"}>Vine</MenuItem>
-                      <MenuItem value={"Cacti"}>Cacti</MenuItem>
-                    </Field>
-                  </FormControl>
-                </Box>
                 <div className="split-container">
                   <Field
                     as={TextField}
@@ -239,6 +221,38 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                     }
                   />
                 </div>
+                <Box sx={{ minWidth: 120, mt: 1.5 }}>
+                  <FormControl fullWidth>
+                    <InputLabel
+                      id="plant-type-input"
+                      sx={{ background: "#ffff", padding: "0 5px" }}
+                    >
+                      Plant type
+                    </InputLabel>
+                    <Field
+                      style={{ padding: "5px !important" }}
+                      as={Select}
+                      required
+                      name="type"
+                      type="select"
+                      helperText={
+                        <ErrorMessage
+                          name="type"
+                          component="div"
+                          className="error-text"
+                        />
+                      }
+                    >
+                      <MenuItem value={"Tree"}>Tree</MenuItem>
+                      <MenuItem value={"Shrub"}>Shrub</MenuItem>
+                      <MenuItem value={"Vegetable"}>Vegetable</MenuItem>
+                      <MenuItem value={"Herb"}>Herb</MenuItem>
+                      <MenuItem value={"Grass"}>Grass</MenuItem>
+                      <MenuItem value={"Vine"}>Vine</MenuItem>
+                      <MenuItem value={"Cacti"}>Cacti</MenuItem>
+                    </Field>
+                  </FormControl>
+                </Box>
                 <Button className="submit-btn" type="submit">
                   Submit Changes
                 </Button>

@@ -23,11 +23,12 @@ div.main-container {
 }
 
 .bar-title-icon {
-  margin-top: 5px;
+  margin-top: 3px;
   margin-right: 5px;
 }
 
 .bar-title {
+  font-size: 1.6rem !important;
   margin-right: 1rem !important;
   font-family: monospace !important;
   font-weight: 700 !important;

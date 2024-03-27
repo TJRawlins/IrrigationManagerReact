@@ -1,3 +1,22 @@
+.modal-title-container {
+  display: flex;
+  align-items: center;
+  color: #666666;
+  gap: 0.5rem;
+}
+
+.modal-title-icon {
+  font-size: 2rem !important;
+  transform: translateY(-2px);
+}
+
+.modal-title {
+  color: #666666;
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
+  font-family: "Outfit", sans-serif !important;
+}
+
 .card-content-wrapper {
   padding: 16px 0 0 0 !important;
   border-radius: 0 0 15px 15px !important;
