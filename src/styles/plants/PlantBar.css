@@ -16,6 +16,9 @@
   align-items: center;
   text-transform: capitalize;
   gap: 0.4rem;
+  background: #eef2f6;
+  padding: 4px 8px;
+  border-radius: 8px;
 }
 
 .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
