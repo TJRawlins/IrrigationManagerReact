@@ -53,6 +53,13 @@ const ZonesPage = () => {
     });
   };
 
+  const updateLocalStorageSeasons = () => {
+    agent.Seasons.list().then((seasons) => {
+      dispatch(updateCurrentSeasonList(seasons));
+      console.log("%cZonePage: Seasons Updated", "color:#1CA1E6", season);
+    });
+  };
+
   const updateLocalStorageZone = () => {
     dispatch(updateCurrentZone(new Zone()));
     console.log("%cZonePage: Initial Empty Zone Added", "color:#1CA1E6");
@@ -79,6 +86,7 @@ const ZonesPage = () => {
     if (season.id === 0 || season.id === undefined) {
       dispatch(updateCurrentSeason(new Season()));
     }
+    updateLocalStorageSeasons();
     updateLocalStorageZone();
     updateLocalStoragePlant();
     // TODO : CALL > GET AND UPDATE TREFLE
