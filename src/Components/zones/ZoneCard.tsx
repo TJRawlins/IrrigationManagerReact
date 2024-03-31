@@ -163,7 +163,7 @@ export default function ZoneCard({
         onMouseLeave={handelMouseLeave}
         sx={{
           position: "relative",
-          boxShadow: "none !important",
+          boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important",
           borderRadius: "15px",
           padding: "10px",
           width: "300px",
