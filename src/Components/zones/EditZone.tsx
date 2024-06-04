@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
+import { DashboardOutlined as DashboardOutlinedIcon } from "@mui/icons-material";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -100,14 +101,17 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
         }}
       >
         <Box className="modal-box" sx={style}>
-          <Typography
-            className="modal-title"
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >
-            EDIT ZONE
-          </Typography>
+          <div className="modal-title-container">
+            <DashboardOutlinedIcon className="modal-title-icon" />
+            <Typography
+              className="modal-title"
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              EDIT ZONE
+            </Typography>
+          </div>
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
