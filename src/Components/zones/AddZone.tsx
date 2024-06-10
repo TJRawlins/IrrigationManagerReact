@@ -2,6 +2,7 @@
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
+import { DashboardOutlined as DashboardOutlinedIcon } from "@mui/icons-material";
 import { useState } from "react";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -85,14 +86,17 @@ function AddZone({ fetchZones }: ZoneBarProps) {
         }}
       >
         <Box className="modal-box" sx={style}>
-          <Typography
-            className="modal-title"
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >
-            ADD NEW ZONE
-          </Typography>
+          <div className="modal-title-container">
+            <DashboardOutlinedIcon className="bar-title-icon" />
+            <Typography
+              className="modal-title"
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              ADD NEW ZONE
+            </Typography>
+          </div>
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
