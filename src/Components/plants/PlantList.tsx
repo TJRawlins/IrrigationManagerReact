@@ -17,15 +17,15 @@ interface PlantListProps {
   fetchPlants: (zoneId: number) => void;
   updateLocalStorageZone: (zoneId: number) => void;
   updateLocalStoragePlant: (plantId: number) => void;
-  updateLocalStorageTreflePlant: (plantName: string) => void;
+  // updateLocalStorageTreflePlant: (plantName: string) => void;
 }
 
 export default function PlantList({
   fetchPlants,
   updateLocalStorageZone,
   updateLocalStoragePlant,
-  updateLocalStorageTreflePlant,
-}: PlantListProps) {
+}: // updateLocalStorageTreflePlant,
+PlantListProps) {
   const MOBILE_COLUMNS = {
     quantity: false,
     type: false,
@@ -99,13 +99,13 @@ export default function PlantList({
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
       )!
     );
-    agent.Plants.details(
-      Number(
-        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
-      )!
-    )
-      .catch((error) => alert(error))
-      .then((plant) => updateLocalStorageTreflePlant(plant.name));
+    // agent.Plants.details(
+    //   Number(
+    //     event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
+    //   )!
+    // )
+    //   .catch((error) => alert(error))
+    //   .then((plant) => updateLocalStorageTreflePlant(plant.name));
 
     console.log("%cPlantList: Plant View Clicked", "color:#1CA1E6");
   };
