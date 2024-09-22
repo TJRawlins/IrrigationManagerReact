@@ -6,11 +6,11 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-type ZoneBarProps = {
+type ZoneListProps = {
   fetchZones(args: number): void;
 };
 
-export default function ZoneList({ fetchZones }: ZoneBarProps) {
+export default function ZoneList({ fetchZones }: ZoneListProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
 

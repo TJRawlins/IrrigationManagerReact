@@ -18,11 +18,14 @@ axios.defaults.baseURL = `${import.meta.env.VITE_DEV_SECURE_URL}:${
   import.meta.env.VITE_BACKEND_API_DEV_PORT
 }/`;
 
+// ! Trefle Code
+/*
 const trefleAxios = axios.create({
   baseURL: `${import.meta.env.VITE_DEV_URL}:${
     import.meta.env.VITE_PROXY_SERVER_PORT
   }/`,
 });
+*/
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -49,6 +52,8 @@ const requests = {
       .catch(() => errorHandler()),
 };
 
+// ! Trefle Code
+/*
 const trefleRequests = {
   get: (url: string) =>
     trefleAxios
@@ -56,6 +61,7 @@ const trefleRequests = {
       .then(responseBody)
       .catch(() => errorHandler()),
 };
+*/
 
 const Users = {
   list: () => requests.get("api/users"),
@@ -85,16 +91,20 @@ const Seasons = {
   removeZone: (id: number) => requests.delete(`api/seasons/${id}`),
 };
 
+// ! Trefle Code
+/*
 const Trefle = {
   details: (plant: string) => trefleRequests.get(`trefle/api/?${plant}`),
 };
+*/
 
 const agent = {
   Users,
   Plants,
   Zones,
   Seasons,
-  Trefle,
+  // ! Trefle Code
+  // Trefle,
 };
 
 export default agent;
