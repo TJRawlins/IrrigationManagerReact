@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// ! TREFLE CODE
+/*
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -37,3 +39,4 @@ app.use(cors());
 app.listen(PROXY_SERVER_PORT, () =>
   console.log(`Proxy server running on port ${PROXY_SERVER_PORT}...`)
 );
+*/

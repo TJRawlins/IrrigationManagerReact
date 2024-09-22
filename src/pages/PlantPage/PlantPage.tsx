@@ -10,11 +10,11 @@ import { useDispatch } from "react-redux";
 import {
   updateCurrentPlant,
   updateCurrentPlantList,
-  updateCurrentTreflePlant,
+  // updateCurrentTreflePlant,
 } from "../../redux/plantSlice";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { Plant } from "../../App/models/Plant";
-import { TreflePlant } from "../../App/models/TreflePlant";
+// import { TreflePlant } from "../../App/models/TreflePlant";
 
 const PlantPage = () => {
   const { zoneId } = useParams();
@@ -34,16 +34,16 @@ const PlantPage = () => {
   };
 
   // TODO : INITIALIZE > GET AND UPDATE TREFLE
-  const updateLocalStorageTreflePlant = (plantName: string) => {
-    agent.Trefle.details(
-      plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
-    ).then((treflePlant) => {
-      treflePlant.meta.total === 0
-        ? dispatch(updateCurrentTreflePlant(new TreflePlant()))
-        : dispatch(updateCurrentTreflePlant(treflePlant.data[0]));
-    });
-    console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
-  };
+  // const updateLocalStorageTreflePlant = (plantName: string) => {
+  //   agent.Trefle.details(
+  //     plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
+  //   ).then((treflePlant) => {
+  //     treflePlant.meta.total === 0
+  //       ? dispatch(updateCurrentTreflePlant(new TreflePlant()))
+  //       : dispatch(updateCurrentTreflePlant(treflePlant.data[0]));
+  //   });
+  //   console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
+  // };
 
   const fetchPlants = (zoneId: number) => {
     agent.Plants.list().then((plants) => {
@@ -77,7 +77,7 @@ const PlantPage = () => {
           fetchPlants={fetchPlants}
           updateLocalStorageZone={updateLocalStorageZone}
           updateLocalStoragePlant={updateLocalStoragePlant}
-          updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
+          // updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
         />
       </Grid>
     </>
