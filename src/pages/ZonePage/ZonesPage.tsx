@@ -14,7 +14,7 @@ import {
 import { Zone } from "../../App/models/Zone";
 import {
   updateCurrentPlant,
-  updateCurrentTreflePlant,
+  // updateCurrentTreflePlant,
 } from "../../redux/plantSlice";
 import { Plant } from "../../App/models/Plant";
 import {
@@ -71,14 +71,14 @@ const ZonesPage = () => {
   };
 
   // TODO : INITIALIZE > GET AND UPDATE TREFLE
-  const updateLocalStorageTreflePlant = (plantName: string) => {
-    agent.Trefle.details(
-      plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
-    ).then((teflePlant) => {
-      dispatch(updateCurrentTreflePlant(teflePlant.data[0]));
-    });
-    console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
-  };
+  // const updateLocalStorageTreflePlant = (plantName: string) => {
+  //   agent.Trefle.details(
+  //     plantName.replace(/\s*\([^)]*\)\s*/g, "").replace(" ", ",")
+  //   ).then((teflePlant) => {
+  //     dispatch(updateCurrentTreflePlant(teflePlant.data[0]));
+  //   });
+  //   console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
+  // };
 
   useEffect(() => {
     fetchSeasons();
@@ -90,7 +90,7 @@ const ZonesPage = () => {
     updateLocalStorageZone();
     updateLocalStoragePlant();
     // TODO : CALL > GET AND UPDATE TREFLE
-    updateLocalStorageTreflePlant("Peach");
+    // updateLocalStorageTreflePlant("Peach");
   }, []);
 
   return (

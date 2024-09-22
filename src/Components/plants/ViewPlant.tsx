@@ -56,7 +56,7 @@ const style = {
 };
 
 function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
-  const { treflePlant } = useSelector((state: RootState) => state.treflePlant);
+  // const { treflePlant } = useSelector((state: RootState) => state.treflePlant);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
   const handleClose = () => setShowViewPlant(false);
@@ -130,13 +130,13 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
               className="card-img"
               sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
               // IF NO TREFLE IMAGE, SHOW UNSPLASH IMAGE
-              image={
-                treflePlant.image_url === undefined
-                  ? `https://source.unsplash.com/random/?${plant.name
-                      .replace(/\s*\([^)]*\)\s*/g, "")
-                      .replace(" ", ",")}`
-                  : treflePlant.image_url
-              }
+              // image={
+              //   treflePlant.image_url === undefined
+              //     ? `https://source.unsplash.com/random/?${plant.name
+              //         .replace(/\s*\([^)]*\)\s*/g, "")
+              //         .replace(" ", ",")}`
+              //     : treflePlant.image_url
+              // }
               title={plant === undefined ? "No Name" : plant.name}
             />
             {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
@@ -235,13 +235,13 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   >
                     <MdTextSnippet className="card-item-icon" />
                     <span className="bold">Common:</span>
-                    <span>
+                    {/* <span>
                       {treflePlant.common_name !== null
                         ? treflePlant.common_name!.length > 18
                           ? treflePlant.common_name!.substring(0, 19) + "..."
                           : treflePlant.common_name
                         : "Unavailable"}
-                    </span>
+                    </span> */}
                   </Typography>
                   <Typography
                     className="card-data flex size"
@@ -251,7 +251,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     <MdFamilyRestroom className="card-item-icon" />
                     <span className="bold">Family:</span>
                     <span style={{ fontSize: ".85rem" }}>
-                      {treflePlant.family}
+                      {/* {treflePlant.family} */}
                     </span>
                   </Typography>
                   <Typography
@@ -261,7 +261,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   >
                     <FaDna className="card-item-icon " />
                     <span className="bold">Genus:</span>
-                    <span>{treflePlant.genus}</span>
+                    <span>{/* {treflePlant.genus} */}</span>
                   </Typography>
                   <Typography
                     className="card-data flex size"
