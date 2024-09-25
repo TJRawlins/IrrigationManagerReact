@@ -54,14 +54,18 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
 
   // Form submission
   const initialValues = {
-    name: "",
-    type: "Tree",
-    quantity: undefined,
+    type: undefined,
+    name: undefined,
     galsPerWk: undefined,
+    quantity: undefined,
     emittersPerPlant: undefined,
     emitterGPH: undefined,
-    harvestMonth: "August",
-    exposure: "Full Sun",
+    imagePath: undefined,
+    age: undefined,
+    hardinessZone: undefined,
+    harvestMonth: undefined,
+    exposure: undefined,
+    notes: undefined,
     zoneId: zone.id,
   };
 
@@ -120,7 +124,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
               variant="h6"
               component="h2"
             >
-              ADD NEW PLANT
+              ADD PLANT
             </Typography>
           </div>
           <Formik
@@ -323,7 +327,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                         id="exposure-input"
                         sx={{ background: "#ffff", padding: "0 5px" }}
                       >
-                        Sun Exposure
+                        Exposure
                       </InputLabel>
                       <Field
                         style={{ padding: "5px !important" }}
@@ -347,7 +351,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                         id="harvest-month-input"
                         sx={{ background: "#ffff", padding: "0 5px" }}
                       >
-                        Harvest Month
+                        Harvest
                       </InputLabel>
                       <Field
                         style={{ padding: "5px !important" }}
