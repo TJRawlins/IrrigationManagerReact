@@ -15,25 +15,19 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import {
-  MdAcUnit,
-  MdFamilyRestroom,
-  MdLocalFlorist,
-  MdSunny,
-  MdTextSnippet,
-  MdDashboard,
-} from "react-icons/md";
+import { MdAcUnit, MdLocalFlorist, MdSunny, MdDashboard } from "react-icons/md";
 import {
   FaCanadianMapleLeaf,
   FaCalendarAlt,
-  FaDna,
-  FaFingerprint,
   FaTachometerAlt,
   FaHandHoldingWater,
   FaCalendarCheck,
+  FaSun,
 } from "react-icons/fa";
+import { GiStrawberry } from "react-icons/gi";
+import { LuThermometerSnowflake } from "react-icons/lu";
 import { PiFunnelFill, PiPlantFill } from "react-icons/pi";
-import { FaClockRotateLeft } from "react-icons/fa6";
+import { FaClockRotateLeft, FaPencil } from "react-icons/fa6";
 import { TbNumbers } from "react-icons/tb";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/ViewPlant.css";
@@ -64,42 +58,36 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
   // TODO : New Card ===================================================
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
   function getChipProps(params: string): ChipProps {
+    let seasonIcon: JSX.Element = <></>;
     if (params === "Spring") {
-      return {
-        icon: (
-          <MdLocalFlorist className="iconStyle" style={{ fill: "#ff00aa" }} />
-        ),
-        label: params,
-        style: { background: "#d4028e" },
-      };
+      seasonIcon = (
+        <MdLocalFlorist className="iconStyle" style={{ fill: "#02c0a0" }} />
+      );
     } else if (params === "Summer") {
-      return {
-        icon: <MdSunny className="iconStyle" style={{ fill: "#f1b100" }} />,
-        label: params,
-        style: { background: "#e2a600" },
-      };
+      seasonIcon = (
+        <MdSunny className="iconStyle" style={{ fill: "#02c0a0" }} />
+      );
     } else if (params === "Fall") {
-      return {
-        icon: (
-          <FaCanadianMapleLeaf
-            className="iconStyle rotateIcon"
-            style={{ fill: "#ff4800" }}
-          />
-        ),
-        label: params,
-        style: { background: "#dd3f01" },
-      };
+      seasonIcon = (
+        <FaCanadianMapleLeaf
+          className="iconStyle rotateIcon"
+          style={{ fill: "#02c0a0" }}
+        />
+      );
     } else if (params === "Winter") {
-      return {
-        icon: <MdAcUnit className="iconStyle" style={{ fill: "#00aeff" }} />,
-        label: params,
-        style: { background: "#0092d6" },
-      };
+      seasonIcon = (
+        <MdAcUnit className="iconStyle" style={{ fill: "#02c0a0" }} />
+      );
     } else {
       return {
         label: params,
       };
     }
+    return {
+      icon: seasonIcon,
+      label: params,
+      style: { background: "#02c0a0" },
+    };
   }
 
   return (
@@ -129,14 +117,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
             <CardMedia
               className="card-img"
               sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
-              // IF NO TREFLE IMAGE, SHOW UNSPLASH IMAGE
-              // image={
-              //   treflePlant.image_url === undefined
-              //     ? `https://source.unsplash.com/random/?${plant.name
-              //         .replace(/\s*\([^)]*\)\s*/g, "")
-              //         .replace(" ", ",")}`
-              //     : treflePlant.image_url
-              // }
+              image={plant?.imagePath}
               title={plant === undefined ? "No Name" : plant.name}
             />
             {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
@@ -175,9 +156,9 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     variant="body2"
                     color="text.secondary"
                   >
-                    <FaFingerprint className="card-item-icon " />
-                    <span className="bold">Plant ID:</span>
-                    <span>{plant.id}</span>
+                    <PiPlantFill className="card-item-icon" />
+                    <span className="bold">Plant Type:</span>
+                    <span>{plant.type}</span>
                   </Typography>
                   <Typography
                     className="card-data flex size"
@@ -233,25 +214,19 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     variant="body2"
                     color="text.secondary"
                   >
-                    <MdTextSnippet className="card-item-icon" />
-                    <span className="bold">Common:</span>
-                    {/* <span>
-                      {treflePlant.common_name !== null
-                        ? treflePlant.common_name!.length > 18
-                          ? treflePlant.common_name!.substring(0, 19) + "..."
-                          : treflePlant.common_name
-                        : "Unavailable"}
-                    </span> */}
+                    <FaSun className="card-item-icon" />
+                    <span className="bold">Sun Exposure:</span>
+                    <span>{plant?.exposure}</span>
                   </Typography>
                   <Typography
                     className="card-data flex size"
                     variant="body2"
                     color="text.secondary"
                   >
-                    <MdFamilyRestroom className="card-item-icon" />
-                    <span className="bold">Family:</span>
+                    <LuThermometerSnowflake className="card-item-icon" />
+                    <span className="bold">USDA Zone:</span>
                     <span style={{ fontSize: ".85rem" }}>
-                      {/* {treflePlant.family} */}
+                      {plant?.hardinessZone}
                     </span>
                   </Typography>
                   <Typography
@@ -259,18 +234,9 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     variant="body2"
                     color="text.secondary"
                   >
-                    <FaDna className="card-item-icon " />
-                    <span className="bold">Genus:</span>
-                    <span>{/* {treflePlant.genus} */}</span>
-                  </Typography>
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <PiPlantFill className="card-item-icon" />
-                    <span className="bold">Plant Type:</span>
-                    <span>{plant.type}</span>
+                    <GiStrawberry className="card-item-icon " />
+                    <span className="bold">Harvest:</span>
+                    <span>{plant?.harvestMonth}</span>
                   </Typography>
                   <Typography
                     className="card-data flex size"
@@ -281,6 +247,17 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     <span className="bold">Added:</span>
                     <span>{plant.timeStamp?.toString()}</span>
                   </Typography>
+                  <Tooltip title={plant.notes} arrow>
+                    <Typography
+                      className="card-data flex size"
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      <FaPencil className="card-item-icon" />
+                      <span className="bold">Notes:</span>
+                      <span>Hover over to read...</span>
+                    </Typography>
+                  </Tooltip>
                 </Box>
               </Box>
               <Box
@@ -352,10 +329,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                 >
                   <Tooltip title="Total Weekly Gallons" arrow>
                     <Chip
-                      className={
-                        "gallons-chip week " +
-                        zone.season.toString().toLocaleLowerCase()
-                      }
+                      className={"gallons-chip-plant-card gallons-chip week"}
                       sx={{
                         justifyContent: "left",
                         borderRadius: "10px",
@@ -363,12 +337,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                         padding: "0 !important",
                       }}
                       avatar={
-                        <Avatar
-                          className={
-                            "gallons-chip-avatar " +
-                            zone.season.toString().toLocaleLowerCase()
-                          }
-                        >
+                        <Avatar className={"gallons-chip-avatar plant-card"}>
                           W
                         </Avatar>
                       }
@@ -377,17 +346,9 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   </Tooltip>
                   <Tooltip title="Total Monthly Gallons" arrow>
                     <Chip
-                      className={
-                        "gallons-chip " +
-                        zone.season.toString().toLocaleLowerCase()
-                      }
+                      className={"gallons-chip-plant-card gallons-chip"}
                       avatar={
-                        <Avatar
-                          className={
-                            "gallons-chip-avatar " +
-                            zone.season.toString().toLocaleLowerCase()
-                          }
-                        >
+                        <Avatar className={"gallons-chip-avatar plant-card"}>
                           M
                         </Avatar>
                       }
@@ -396,17 +357,9 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                   </Tooltip>
                   <Tooltip title="Total Yearly Gallons" arrow>
                     <Chip
-                      className={
-                        "gallons-chip year " +
-                        zone.season.toString().toLocaleLowerCase()
-                      }
+                      className={"gallons-chip-plant-card gallons-chip year"}
                       avatar={
-                        <Avatar
-                          className={
-                            "gallons-chip-avatar " +
-                            zone.season.toString().toLocaleLowerCase()
-                          }
-                        >
+                        <Avatar className={"gallons-chip-avatar plant-card"}>
                           Y
                         </Avatar>
                       }

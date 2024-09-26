@@ -121,3 +121,12 @@
 .gallons-chip {
   width: 100% !important;
 }
+
+.gallons-chip-plant-card {
+  background-color: #02c0a01f !important;
+  color: #02c0a0 !important;
+}
+
+.gallons-chip-avatar.plant-card {
+  background-color: #02c0a071 !important;
+}
