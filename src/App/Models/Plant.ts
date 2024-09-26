@@ -9,7 +9,7 @@ export class Plant {
   timeStamp: Date | null = null;
   imagePath: string = "";
   age: number = 0;
-  hardinessZone: number = 1;
+  hardinessZone: number | undefined;
   harvestMonth: string = "";
   exposure: string = "";
   notes: string = "";
