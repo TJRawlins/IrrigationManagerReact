@@ -1,11 +1,11 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import PlantList from "../../Components/plants/PlantList";
 import agent from "../../App/api/agent";
 import PlantBar from "../../Components/plants/PlantBar";
 import { Grid } from "@mui/material";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import {
   updateCurrentPlant,
@@ -17,8 +17,8 @@ import { Plant } from "../../App/models/Plant";
 // import { TreflePlant } from "../../App/models/TreflePlant";
 
 const PlantPage = () => {
-  const { zoneId } = useParams();
-  const zoneIdNum: number = Number(zoneId);
+  // const { zoneId } = useParams();
+  // const zoneIdNum: number = Number(zoneId);
   const dispatch = useDispatch();
 
   const updateLocalStorageZone = (zoneId: number) => {
@@ -58,9 +58,10 @@ const PlantPage = () => {
     });
   };
 
-  useEffect(() => {
-    fetchPlants(zoneIdNum);
-  }, [zoneIdNum]);
+  // useEffect(() => {
+  //   fetchPlants(zoneIdNum);
+  // }, [zoneIdNum]);
+
   return (
     <>
       <PlantBar fetchPlants={fetchPlants} />
