@@ -111,7 +111,7 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
               boxShadow: "none !important",
               borderRadius: "15px",
               padding: "10px",
-              width: "440px",
+              width: "450px",
             }}
           >
             <CardMedia

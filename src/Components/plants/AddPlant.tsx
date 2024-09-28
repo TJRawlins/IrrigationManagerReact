@@ -121,10 +121,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
-            <FaLeaf
-              className="modal-title-icon"
-              style={{ transform: "scaleX(-1)" }}
-            />
+            <FaLeaf className="modal-title-icon" />
             <Typography
               className="modal-title"
               id="modal-modal-title"
@@ -399,7 +396,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                   multiline
                   maxRows={3}
                 />
-                <Button className="submit-btn" type="submit">
                 <Button
                   className="submit-btn"
                   type="submit"
