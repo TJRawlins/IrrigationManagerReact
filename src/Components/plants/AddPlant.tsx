@@ -38,10 +38,11 @@ const style = {
 };
 
 function AddPlant({ fetchPlants }: PlantBarProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const { zone } = useSelector((state: RootState) => state.zone);
 
@@ -74,13 +75,16 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     // updateLocalStorageZone was added to update and persist gallons on PlantBar
-    agent.Plants.createPlant(values)
-      .catch((error) => alert(error))
-      .then(() => fetchPlants(zone.id))
-      .then(() => updateLocalStorageZone());
-    props.resetForm();
-    handleClose();
-    console.log("%cAddPlant: Plant Added", "color:#1CA1E6");
+    if (isClicked) {
+      agent.Plants.createPlant(values)
+        .catch((error) => alert(error))
+        .then(() => fetchPlants(zone.id))
+        .then(() => updateLocalStorageZone());
+      props.resetForm();
+      handleClose();
+      setIsClicked(false);
+      console.log("%cAddPlant: Plant Added", "color:#1CA1E6");
+    }
   };
 
   return (
@@ -260,7 +264,11 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     </Field>
                   </FormControl>
                 </Box>
-                <Button className="submit-btn" type="submit">
+                <Button
+                  className="submit-btn"
+                  type="submit"
+                  onClick={() => setIsClicked(true)}
+                >
                   Add
                 </Button>
               </Form>

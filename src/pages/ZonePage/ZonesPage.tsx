@@ -27,12 +27,12 @@ const ZonesPage = () => {
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
 
-  const fetchSeasons = () => {
-    agent.Seasons.list().then((seasons) => {
-      dispatch(updateCurrentSeasonList(seasons));
-      console.log("%cZones: Seasons Fetched", "color:#1CA1E6");
-    });
-  };
+  // const fetchSeasons = () => {
+  //   agent.Seasons.list().then((seasons) => {
+  //     dispatch(updateCurrentSeasonList(seasons));
+  //     console.log("%cZones: Seasons Fetched", "color:#1CA1E6");
+  //   });
+  // };
 
   //* Initial zone list
   const fetchZones = (seasonString: number) => {
@@ -81,7 +81,7 @@ const ZonesPage = () => {
   // };
 
   useEffect(() => {
-    fetchSeasons();
+    // fetchSeasons();
     fetchZones(season.id);
     if (season.id === 0 || season.id === undefined) {
       dispatch(updateCurrentSeason(new Season()));
