@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Grass as GrassIcon } from "@mui/icons-material";
+import { FaLeaf } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -106,7 +106,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
-            <GrassIcon className="modal-title-icon" />
+            <FaLeaf className="modal-title-icon" />
             <Typography
               className="modal-title"
               id="modal-modal-title"

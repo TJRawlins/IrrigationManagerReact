@@ -17,7 +17,7 @@ import { Edit as EditIcon } from "@mui/icons-material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf, FaTrashAlt } from "react-icons/fa";
 import { BiSolidCopyAlt } from "react-icons/bi";
-import { Grass as GrassIcon } from "@mui/icons-material";
+import { FaLeaf } from "react-icons/fa";
 import { Zone } from "../../App/models/Zone";
 import { useState } from "react";
 import agent from "../../App/api/agent";
@@ -330,7 +330,7 @@ export default function ZoneCard({
                 id="zone-card-details"
                 onClick={showPlants}
               >
-                <GrassIcon className="action-icon" />
+                <FaLeaf className="action-icon" />
               </Button>
             </Link>
             <Button
