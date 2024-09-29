@@ -57,9 +57,11 @@ export default function ZoneCard({
 
   // This gets passed to AddPlant to update and persist gallons on PlantBar
   const updateLocalStorageZone = () => {
-    agent.Zones.details(zone.id).then((zone) => {
-      dispatch(updateCurrentZone(zone));
-    });
+    agent.Zones.details(zone.id)
+      .then((zone) => {
+        dispatch(updateCurrentZone(zone));
+      })
+      .then(() => setIsShowEdit(true));
   };
 
   const updateLocalStoragePlants = () => {
@@ -79,13 +81,8 @@ export default function ZoneCard({
     updateLocalStoragePlants();
   };
 
-  // Temporary fix: Used setTimeout to delay so that the edit modal will grab the most recent local storage value
-  // See EditZone for bug comment
   const showEdit = () => {
     updateLocalStorageZone();
-    setTimeout(() => {
-      setIsShowEdit(true);
-    }, 100);
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
   };
 
