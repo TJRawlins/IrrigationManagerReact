@@ -8,7 +8,6 @@ import { Grid } from "@mui/material";
 // import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import {
-  updateCurrentPlant,
   updateCurrentPlantList,
   // updateCurrentTreflePlant,
 } from "../../redux/plantSlice";
@@ -24,12 +23,6 @@ const PlantPage = () => {
   const updateLocalStorageZone = (zoneId: number) => {
     agent.Zones.details(zoneId).then((zone) => {
       dispatch(updateCurrentZone(zone));
-    });
-  };
-
-  const updateLocalStoragePlant = (plantId: number) => {
-    agent.Plants.details(plantId).then((plant) => {
-      dispatch(updateCurrentPlant(plant));
     });
   };
 
@@ -77,7 +70,6 @@ const PlantPage = () => {
         <PlantList
           fetchPlants={fetchPlants}
           updateLocalStorageZone={updateLocalStorageZone}
-          updateLocalStoragePlant={updateLocalStoragePlant}
           // updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
         />
       </Grid>
