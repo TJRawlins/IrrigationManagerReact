@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa6";
-import { Grass as GrassIcon } from "@mui/icons-material";
+import { FaLeaf } from "react-icons/fa";
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -38,10 +38,11 @@ const style = {
 };
 
 function AddPlant({ fetchPlants }: PlantBarProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const { zone } = useSelector((state: RootState) => state.zone);
 
@@ -80,13 +81,16 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     // updateLocalStorageZone was added to update and persist gallons on PlantBar
-    agent.Plants.createPlant(values)
-      .catch((error) => alert(error))
-      .then(() => fetchPlants(zone.id))
-      .then(() => updateLocalStorageZone());
-    props.resetForm();
-    handleClose();
-    console.log("%cAddPlant: Plant Added", "color:#1CA1E6");
+    if (isClicked) {
+      agent.Plants.createPlant(values)
+        .catch((error) => alert(error))
+        .then(() => fetchPlants(zone.id))
+        .then(() => updateLocalStorageZone());
+      props.resetForm();
+      handleClose();
+      setIsClicked(false);
+      console.log("%cAddPlant: Plant Added", "color:#1CA1E6");
+    }
   };
 
   return (
@@ -117,7 +121,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
-            <GrassIcon className="modal-title-icon" />
+            <FaLeaf className="modal-title-icon" />
             <Typography
               className="modal-title"
               id="modal-modal-title"
@@ -392,7 +396,11 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                   multiline
                   maxRows={3}
                 />
-                <Button className="submit-btn" type="submit">
+                <Button
+                  className="submit-btn"
+                  type="submit"
+                  onClick={() => setIsClicked(true)}
+                >
                   Add
                 </Button>
               </Form>
