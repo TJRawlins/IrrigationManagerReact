@@ -16,7 +16,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useEffect } from "react";
 import "../../styles/zones/AddZone.css";
 
 type ZoneBarProps = {
@@ -82,10 +81,6 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     runtimePerWeek: Yup.number().required("Required field"),
     imagePath: Yup.string().url("Please enter valid URL"),
   });
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [zone]);
 
   return (
     <div>
