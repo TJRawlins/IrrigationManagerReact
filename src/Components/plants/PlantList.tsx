@@ -6,24 +6,24 @@ import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
 import { useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
 import React from "react";
 import ViewPlant from "./ViewPlant";
 import "../../styles/plants/PlantList.css";
 import EditPlant from "./EditPlant";
+import { updateCurrentPlant } from "../../redux/plantSlice";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => void;
   updateLocalStorageZone: (zoneId: number) => void;
-  updateLocalStoragePlant: (plantId: number) => void;
   // updateLocalStorageTreflePlant: (plantName: string) => void;
 }
 
 export default function PlantList({
   fetchPlants,
   updateLocalStorageZone,
-  updateLocalStoragePlant,
 }: // updateLocalStorageTreflePlant,
 PlantListProps) {
   const MOBILE_COLUMNS = {
@@ -41,6 +41,7 @@ PlantListProps) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
+  const dispatch = useDispatch();
 
   const { zone } = useSelector((state: RootState) => state.zone);
   const { plantList } = useSelector((state: RootState) => state.plant);
@@ -50,6 +51,17 @@ PlantListProps) {
   const isFull = !useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  const updateLocalStoragePlant = (
+    plantId: number,
+    func: (arg: boolean) => void = () => null
+  ) => {
+    agent.Plants.details(plantId)
+      .then((plant) => {
+        dispatch(updateCurrentPlant(plant));
+      })
+      .then(() => func(true));
+  };
 
   const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -77,11 +89,9 @@ PlantListProps) {
     updateLocalStoragePlant(
       Number(
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
-      )!
+      )!,
+      () => setIsShowEdit(true)
     );
-    setTimeout(() => {
-      setIsShowEdit(true);
-    }, 100);
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
   };
 
