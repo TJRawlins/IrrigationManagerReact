@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { IoChevronBack } from "react-icons/io5";
-import { Grass as GrassIcon } from "@mui/icons-material";
+import { FaLeaf } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { IoCalendar } from "react-icons/io5";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
@@ -160,7 +160,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
       <div className="main-container">
         <div className="content-container">
           <div className="title-container">
-            <GrassIcon className="bar-title-icon" />
+            <FaLeaf className="bar-title-icon" fontSize={"1.5em"} />
             <Typography className="bar-title" variant="h6" noWrap component="a">
               PLANTS
             </Typography>

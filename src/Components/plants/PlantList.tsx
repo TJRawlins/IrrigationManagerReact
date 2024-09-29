@@ -3,7 +3,7 @@
 import { Box, Button, ButtonGroup, Popover, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -44,7 +44,7 @@ PlantListProps) {
 
   const { zone } = useSelector((state: RootState) => state.zone);
   const { plantList } = useSelector((state: RootState) => state.plant);
-  const { plant } = useSelector((state: RootState) => state.plant);
+  // const { plant } = useSelector((state: RootState) => state.plant);
 
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isFull = !useMediaQuery(theme.breakpoints.down("md"));
@@ -110,9 +110,9 @@ PlantListProps) {
     console.log("%cPlantList: Plant View Clicked", "color:#1CA1E6");
   };
 
-  useEffect(() => {
-    fetchPlants(zone.id);
-  }, [isMobile, plant]);
+  // useEffect(() => {
+  //   fetchPlants(zone.id);
+  // }, [isMobile, plant]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
