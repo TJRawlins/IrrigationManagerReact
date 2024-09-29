@@ -96,9 +96,6 @@ PlantListProps) {
   };
 
   const handleViewPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setTimeout(() => {
-      setShowViewPlant(true);
-    }, 1000);
     setPlantId(
       Number(
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
@@ -107,7 +104,8 @@ PlantListProps) {
     updateLocalStoragePlant(
       Number(
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
-      )!
+      )!,
+      () => setShowViewPlant(true)
     );
     // agent.Plants.details(
     //   Number(
