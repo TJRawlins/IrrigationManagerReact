@@ -55,7 +55,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
 
   // Form submission
   const initialValues = {
-    type: undefined,
+    type: "",
     name: undefined,
     galsPerWk: undefined,
     quantity: undefined,
@@ -64,8 +64,8 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     imagePath: undefined,
     age: undefined,
     hardinessZone: undefined,
-    harvestMonth: undefined,
-    exposure: undefined,
+    harvestMonth: "",
+    exposure: "",
     notes: undefined,
     zoneId: zone.id,
   };
