@@ -12,12 +12,13 @@ import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa6";
 import { FaLeaf } from "react-icons/fa";
 import { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
+import FormHelperText from "@mui/material/FormHelperText";
 import "../../styles/plants/PlantBar.css";
 import "../../styles/baseStyles/BaseCard.css";
 
@@ -55,7 +56,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
 
   // Form submission
   const initialValues = {
-    type: undefined,
+    type: "",
     name: undefined,
     galsPerWk: undefined,
     quantity: undefined,
@@ -64,8 +65,8 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     imagePath: undefined,
     age: undefined,
     hardinessZone: undefined,
-    harvestMonth: undefined,
-    exposure: undefined,
+    harvestMonth: "",
+    exposure: "",
     notes: undefined,
     zoneId: zone.id,
   };
@@ -137,143 +138,152 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
             validationSchema={validationSchema}
             enableReinitialize={true}
           >
-            {() => (
+            {({ errors, touched }) => (
               <Form style={{ width: "100%" }}>
                 <div className="split-container">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="plant-name-input"
-                    name="name"
-                    label="Plant name"
-                    type="text"
-                    autoComplete=""
-                    variant="standard"
-                    helperText={
-                      <ErrorMessage
-                        name="name"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="plant-name-input"
+                      name="name"
+                      label="Plant name"
+                      type="text"
+                      autoComplete=""
+                      variant="standard"
+                      error={touched.name && Boolean(errors.name)}
+                    />
+                    <FormHelperText
+                      error={touched.name && Boolean(errors.name)}
+                    >
+                      {touched.name && errors.name ? errors.name : ""}
+                    </FormHelperText>
+                  </Box>
                 </div>
                 <div className="split-container">
-                  <Field
-                    as={TextField}
-                    className="input"
-                    id="age-input"
-                    label="Plant Age"
-                    name="age"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="age"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="quantity-input"
-                    name="quantity"
-                    label="Qty."
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="quantity"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="gals-wk-input"
-                    name="galsPerWk"
-                    label="Gals per week"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="galsPerWk"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      className="input"
+                      id="age-input"
+                      label="Plant Age"
+                      name="age"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 150 } }}
+                    />
+                  </Box>
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="quantity-input"
+                      name="quantity"
+                      label="Qty."
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 150 } }}
+                      error={touched.quantity && Boolean(errors.quantity)}
+                    />
+                    <FormHelperText
+                      error={touched.quantity && Boolean(errors.quantity)}
+                    >
+                      {touched.quantity && errors.quantity
+                        ? errors.quantity
+                        : ""}
+                    </FormHelperText>
+                  </Box>
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="gals-wk-input"
+                      name="galsPerWk"
+                      label="Gals per week"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 150 } }}
+                      error={touched.galsPerWk && Boolean(errors.galsPerWk)}
+                    />
+                    <FormHelperText
+                      error={touched.galsPerWk && Boolean(errors.galsPerWk)}
+                    >
+                      {touched.galsPerWk && errors.galsPerWk
+                        ? errors.galsPerWk
+                        : ""}
+                    </FormHelperText>
+                  </Box>
                 </div>
                 <div className="split-container">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="emitters-input"
-                    label="Emitters per plant"
-                    name="emittersPerPlant"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="emittersPerPlant"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="emitters-gph-input"
-                    label="Emitter GPH flow rate"
-                    name="emitterGPH"
-                    type="float"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150.0 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="emitterGPH"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
-                  <Field
-                    as={TextField}
-                    className="input"
-                    id="hardiness-zone-input"
-                    label="USDA Zone"
-                    name="hardinessZone"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 1, max: 11 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="hardinessZone"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="emitters-input"
+                      label="Emitters per plant"
+                      name="emittersPerPlant"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 150 } }}
+                      error={
+                        touched.emittersPerPlant &&
+                        Boolean(errors.emittersPerPlant)
+                      }
+                    />
+                    <FormHelperText
+                      error={
+                        touched.emittersPerPlant &&
+                        Boolean(errors.emittersPerPlant)
+                      }
+                    >
+                      {touched.emittersPerPlant && errors.emittersPerPlant
+                        ? errors.emittersPerPlant
+                        : ""}
+                    </FormHelperText>
+                  </Box>
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="emitters-gph-input"
+                      label="Emitter GPH flow rate"
+                      name="emitterGPH"
+                      type="float"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 150.0 } }}
+                      error={touched.emitterGPH && Boolean(errors.emitterGPH)}
+                    />
+                    <FormHelperText
+                      error={touched.emitterGPH && Boolean(errors.emitterGPH)}
+                    >
+                      {touched.emitterGPH && errors.emitterGPH
+                        ? errors.emitterGPH
+                        : ""}
+                    </FormHelperText>
+                  </Box>
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      className="input"
+                      id="hardiness-zone-input"
+                      label="USDA Zone"
+                      name="hardinessZone"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 1, max: 11 } }}
+                    />
+                  </Box>
                 </div>
                 <div className="split-container">
                   <Field
@@ -285,13 +295,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     type="text"
                     autoComplete=""
                     variant="standard"
-                    helperText={
-                      <ErrorMessage
-                        name="imagePath"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
                   />
                 </div>
                 <Box sx={{ minWidth: 120, mt: 1.5 }}>
@@ -307,15 +310,10 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                         style={{ padding: "5px !important" }}
                         as={Select}
                         required
+                        aria-hidden="false"
                         name="type"
                         type="select"
-                        helperText={
-                          <ErrorMessage
-                            name="type"
-                            component="div"
-                            className="error-text"
-                          />
-                        }
+                        error={touched.type && Boolean(errors.type)}
                       >
                         <MenuItem value={"Tree"}>Tree</MenuItem>
                         <MenuItem value={"Shrub"}>Shrub</MenuItem>
@@ -325,6 +323,11 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                         <MenuItem value={"Vine"}>Vine</MenuItem>
                         <MenuItem value={"Cacti"}>Cacti</MenuItem>
                       </Field>
+                      <FormHelperText
+                        error={touched.type && Boolean(errors.type)}
+                      >
+                        {touched.type && errors.type ? errors.type : ""}
+                      </FormHelperText>
                     </FormControl>
                     <FormControl fullWidth>
                       <InputLabel
@@ -338,13 +341,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                         as={Select}
                         name="exposure"
                         type="select"
-                        helperText={
-                          <ErrorMessage
-                            name="exposure"
-                            component="div"
-                            className="error-text"
-                          />
-                        }
                       >
                         <MenuItem value={"Full Sun"}>Full Sun</MenuItem>
                         <MenuItem value={"Partial Sun"}>Partial Sun</MenuItem>
@@ -362,13 +358,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                         as={Select}
                         name="harvestMonth"
                         type="select"
-                        helperText={
-                          <ErrorMessage
-                            name="harvestMonth"
-                            component="div"
-                            className="error-text"
-                          />
-                        }
                       >
                         <MenuItem value={"January"}>January</MenuItem>
                         <MenuItem value={"February"}>February</MenuItem>
