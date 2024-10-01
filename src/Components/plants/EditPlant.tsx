@@ -159,13 +159,6 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                     autoComplete=""
                     variant="standard"
                     InputProps={{ inputProps: { min: 0, max: 150 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="age"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
                   />
                   <Field
                     as={TextField}
@@ -255,13 +248,6 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                     autoComplete=""
                     variant="standard"
                     InputProps={{ inputProps: { min: 1, max: 11 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="hardinessZone"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
                   />
                 </div>
                 <div className="split-container">
@@ -274,13 +260,6 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                     type="text"
                     autoComplete=""
                     variant="standard"
-                    helperText={
-                      <ErrorMessage
-                        name="imagePath"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
                   />
                 </div>
                 <Box sx={{ minWidth: 120, mt: 1.5 }}>
@@ -327,13 +306,6 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                         as={Select}
                         name="exposure"
                         type="select"
-                        helperText={
-                          <ErrorMessage
-                            name="exposure"
-                            component="div"
-                            className="error-text"
-                          />
-                        }
                       >
                         <MenuItem value={"Full Sun"}>Full Sun</MenuItem>
                         <MenuItem value={"Partial Sun"}>Partial Sun</MenuItem>
@@ -351,13 +323,6 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                         as={Select}
                         name="harvestMonth"
                         type="select"
-                        helperText={
-                          <ErrorMessage
-                            name="harvestMonth"
-                            component="div"
-                            className="error-text"
-                          />
-                        }
                       >
                         <MenuItem value={"January"}>January</MenuItem>
                         <MenuItem value={"February"}>February</MenuItem>
