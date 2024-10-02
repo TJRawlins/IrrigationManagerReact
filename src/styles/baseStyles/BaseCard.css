@@ -18,7 +18,7 @@
 }
 
 .card-content-wrapper {
-  padding: 16px 0 0 0 !important;
+  padding: 6px 0 0 0 !important;
   border-radius: 0 0 15px 15px !important;
 }
 
@@ -84,7 +84,7 @@
 
 .card-data-container {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .card-data {
