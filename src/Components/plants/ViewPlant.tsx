@@ -255,7 +255,16 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                     >
                       <FaPencil className="card-item-icon" />
                       <span className="bold">Notes:</span>
-                      <span>Hover over to read...</span>
+                      <span
+                        style={{
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          width: "150px",
+                        }}
+                      >
+                        {plant.notes}
+                      </span>
                     </Typography>
                   </Tooltip>
                 </Box>
@@ -318,13 +327,15 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                 <Stack
                   direction="row"
                   spacing={1}
-                  mt={2}
                   mb={0}
                   sx={{
                     display: { xs: "flex", sm: "flex", md: "flex" },
                     justifyContent: "space-between",
                     maxWidth: "100%",
                     flexWrap: "nowrap",
+                    background: "linear-gradient(45deg, #82a628, #02c0a0)",
+                    borderRadius: "0 0 10px 10px",
+                    opacity: "0.8",
                   }}
                 >
                   <Tooltip title="Total Weekly Gallons" arrow>
