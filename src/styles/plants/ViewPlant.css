@@ -140,3 +140,13 @@
 .gallons-chip-avatar.plant-card {
   background-color: #0000002b !important;
 }
+
+.view-plant-edit-icon {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1;
+}
