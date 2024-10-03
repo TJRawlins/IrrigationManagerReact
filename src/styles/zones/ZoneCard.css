@@ -8,7 +8,6 @@
   min-width: 50px !important;
   background-color: #ffffffa8 !important;
   color: #002b49 !important;
-  border-radius: 20px !important;
   padding: 0 !important;
 }
 
@@ -21,7 +20,7 @@
 }
 
 #zone-card-details .action-icon {
-  font-size: 1.75rem !important;
+  font-size: 1.5rem !important;
 }
 
 #zone-card-delete .action-icon {
