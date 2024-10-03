@@ -23,6 +23,7 @@ import {
   FaHandHoldingWater,
   FaCalendarCheck,
   FaSun,
+  FaEdit,
 } from "react-icons/fa";
 import { GiStrawberry } from "react-icons/gi";
 import { LuThermometerSnowflake } from "react-icons/lu";
@@ -31,6 +32,9 @@ import { FaClockRotateLeft, FaPencil } from "react-icons/fa6";
 import { TbNumbers } from "react-icons/tb";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/ViewPlant.css";
+import { useState } from "react";
+import EditPlant from "./EditPlant";
+
 type PlantBarProps = {
   fetchPlants: (id: number) => void;
   setShowViewPlant: (show: boolean) => void;
@@ -49,11 +53,31 @@ const style = {
   padding: 0,
 };
 
-function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
+function ViewPlant({
+  setShowViewPlant,
+  showViewPlant,
+  fetchPlants,
+}: PlantBarProps) {
   // const { treflePlant } = useSelector((state: RootState) => state.treflePlant);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
   const handleClose = () => setShowViewPlant(false);
+  const [isShowEdit, setIsShowEdit] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+
+  function handelMouseEnter() {
+    setIsHovering(true);
+  }
+  function handelMouseLeave() {
+    setIsHovering(false);
+  }
+
+  const handleEditPlantClick = () => {
+    setIsShowEdit(true);
+    setIsHovering(false);
+    handleClose();
+    console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
+  };
 
   // TODO : New Card ===================================================
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -114,7 +138,19 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
               width: "450px",
             }}
           >
+            <FaEdit
+              className={
+                isHovering
+                  ? "view-plant-edit-icon"
+                  : "hidden view-plant-edit-icon"
+              }
+              onClick={handleEditPlantClick}
+              onMouseEnter={handelMouseEnter}
+              onMouseLeave={handelMouseLeave}
+            ></FaEdit>
             <CardMedia
+              onMouseEnter={handelMouseEnter}
+              onMouseLeave={handelMouseLeave}
               className="card-img"
               sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
               image={plant?.imagePath}
@@ -385,6 +421,11 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
           </Card>
         </Box>
       </Modal>
+      <EditPlant
+        fetchPlants={fetchPlants}
+        setIsShowEdit={setIsShowEdit}
+        isShowEdit={isShowEdit}
+      />
     </div>
   );
 }
