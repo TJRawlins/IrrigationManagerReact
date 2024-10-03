@@ -1,3 +1,13 @@
+.plant-name-wrapper {
+  position: absolute;
+  top: 120px;
+}
+
+.plant-name-text {
+  color: white;
+  text-shadow: 1px 2px 5px #000000;
+}
+
 .card-data-container.zone-container {
   border: 1px #dad9d9 solid;
   background: none !important;
@@ -11,6 +21,7 @@
   display: flex;
   text-transform: capitalize;
   justify-content: space-evenly;
+  border: 1px #dad9d9 solid;
 }
 
 .data-set {

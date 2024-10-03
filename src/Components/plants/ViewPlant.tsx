@@ -129,9 +129,9 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                 sx={{ position: "absolute", top: "5px", left: "20px" }}
                 {...getChipProps(zone.season)}
               />
-              <Box sx={{ marginBottom: 1 }}>
+              <Box className="plant-name-wrapper" sx={{ marginBottom: 1 }}>
                 <Typography
-                  className="card-name"
+                  className="card-name plant-name-text"
                   gutterBottom
                   component="div"
                   variant="h6"
@@ -280,19 +280,21 @@ function ViewPlant({ setShowViewPlant, showViewPlant }: PlantBarProps) {
                 }}
               >
                 <Box className="data-set">
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <MdDashboard className="card-item-icon" />
-                    <span className="bold">Zone:</span>
-                    <span>
-                      {zone.name.length > 12
-                        ? zone.name.substring(0, 13) + "..."
-                        : zone.name}
-                    </span>
-                  </Typography>
+                  <Tooltip title={zone.name} arrow>
+                    <Typography
+                      className="card-data flex size"
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      <MdDashboard className="card-item-icon" />
+                      <span className="bold">Zone:</span>
+                      <span>
+                        {zone.name.length > 12
+                          ? zone.name.substring(0, 15) + "..."
+                          : zone.name}
+                      </span>
+                    </Typography>
+                  </Tooltip>
                 </Box>
                 <Box className="data-set">
                   <Typography
