@@ -31,6 +31,12 @@ PlantListProps) {
     type: false,
     id: false,
     timeStamp: false,
+    imagePath: false,
+    age: false,
+    hardinessZone: false,
+    exposure: false,
+    notes: false,
+    harvestMonth: false,
   };
 
   const theme = useTheme();
@@ -135,7 +141,13 @@ PlantListProps) {
     { field: "galsPerWk", headerName: "Gals. / Wk.", flex: 1 },
     { field: "emittersPerPlant", headerName: "Emitters", flex: 1 },
     { field: "emitterGph", headerName: "GPH / Emitter", flex: 1 },
-    { field: "timeStamp", headerName: "Date Added", flex: 1 },
+    { field: "timeStamp", headerName: "Modified", flex: 1 },
+    { field: "imagePath", headerName: "Image", flex: 1 },
+    { field: "age", headerName: "Age", flex: 1 },
+    { field: "hardinessZone", headerName: "USDA Zone", flex: 1 },
+    { field: "harvestMonth", headerName: "Harvest", flex: 1 },
+    { field: "exposure", headerName: "Exposure", flex: 1 },
+    { field: "notes", headerName: "Notes", flex: 1 },
     {
       field: "action",
       headerName: "Action",
@@ -182,12 +194,18 @@ PlantListProps) {
   const rows = plantList.map((plant) => ({
     id: plant.id,
     name: plant.name,
-    galsPerWk: plant.galsPerWk,
+    type: plant.type,
     quantity: plant.quantity,
+    galsPerWk: plant.galsPerWk,
     emittersPerPlant: plant.emittersPerPlant,
     emitterGph: plant.emitterGPH,
     timeStamp: plant.timeStamp,
-    type: plant.type,
+    imagePath: plant.imagePath,
+    age: plant.age,
+    hardinessZone: plant.hardinessZone,
+    harvestMonth: plant.harvestMonth,
+    exposure: plant.exposure,
+    notes: plant.notes,
   }));
 
   return (
@@ -226,6 +244,16 @@ PlantListProps) {
             }}
             sx={{ border: "none", width: "100%" }}
             initialState={{
+              columns: {
+                columnVisibilityModel: {
+                  id: false,
+                  imagePath: false,
+                  age: false,
+                  hardinessZone: false,
+                  exposure: false,
+                  harvestMonth: false,
+                },
+              },
               pagination: {
                 paginationModel: {
                   pageSize: 10,
