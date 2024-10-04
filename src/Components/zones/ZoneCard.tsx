@@ -105,7 +105,9 @@ export default function ZoneCard({
       imagePath,
       season,
       seasonId,
-    }).then(() => fetchZones(seasonID));
+    })
+      .then((x) => agent.Plants.copyPlantsToNewZone(zone.id, x.id))
+      .finally(() => fetchZones(seasonID));
   };
 
   const deleteZone = () => {
