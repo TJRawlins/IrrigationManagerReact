@@ -8,9 +8,13 @@ import { RootState } from "../../redux/store";
 
 type ZoneListProps = {
   fetchZones(args: number): void;
+  updateLocalStorageSeason(args: number): void;
 };
 
-export default function ZoneList({ fetchZones }: ZoneListProps) {
+export default function ZoneList({
+  fetchZones,
+  updateLocalStorageSeason,
+}: ZoneListProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
 
@@ -40,6 +44,7 @@ export default function ZoneList({ fetchZones }: ZoneListProps) {
                   zone={zone}
                   fetchZones={fetchZones}
                   setIsShowEdit={setIsShowEdit}
+                  updateLocalStorageSeason={updateLocalStorageSeason}
                 />
               </Grid>
             ))}
