@@ -106,7 +106,9 @@ export default function ZoneCard({
       season,
       seasonId,
     })
-      .then((x) => agent.Plants.copyPlantsToNewZone(zone.id, x.id))
+      .then((x) =>
+        agent.Plants.copyPlantsToNewZone(zone.id, x.id, zone.seasonId)
+      )
       .finally(() => fetchZones(seasonID));
   };
 
