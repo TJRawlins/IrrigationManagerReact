@@ -17,6 +17,7 @@ import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import "../../styles/zones/AddZone.css";
+import { useRef } from "react";
 
 type ZoneBarProps = {
   fetchZones(args: number): void;
@@ -39,25 +40,12 @@ const style = {
 function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
+  const seasonIdValue = useRef<number>(zone.seasonId);
 
   const handleClose = () => setIsShowEdit(false);
 
   const editZone = (id: number, values: object) => {
     agent.Zones.editZone(id, values).then(() => fetchZones(season.id));
-  };
-
-  // Form submission
-  const onSubmit = (
-    values: object,
-    props: {
-      resetForm: () => void;
-    }
-  ) => {
-    console.log("onSubmit values", values);
-    editZone(zone.id, values);
-    console.log("zone edited");
-    props.resetForm();
-    handleClose();
   };
 
   const initialValues = {
@@ -71,7 +59,44 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     totalGalPerMonth: zone.totalGalPerMonth,
     totalGalPerWeek: zone.totalGalPerWeek,
     totalGalPerYear: zone.totalGalPerYear,
-    seasonId: zone.seasonId,
+    season: zone.season,
+    seasonId: seasonIdValue.current,
+  };
+
+  // Form submission
+  const onSubmit = (
+    values: object,
+    props: {
+      resetForm: () => void;
+    }
+  ) => {
+    console.log("onSubmit values", values);
+    for (const [key, value] of Object.entries(values)) {
+      if (key === "season") {
+        seasonNameToSeasonId(value);
+      }
+    }
+    editZone(zone.id, values);
+    console.log("zone edited");
+    props.resetForm();
+    handleClose();
+  };
+
+  const seasonNameToSeasonId = (seasonName: string) => {
+    switch (seasonName) {
+      case "Summer":
+        seasonIdValue.current = 1;
+        break;
+      case "Fall":
+        seasonIdValue.current = 2;
+        break;
+      case "Winter":
+        seasonIdValue.current = 3;
+        break;
+      case "Spring":
+        seasonIdValue.current = 4;
+        break;
+    }
   };
 
   const validationSchema = Yup.object().shape({
@@ -225,11 +250,11 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
                     >
                       Season
                     </InputLabel>
-                    <Field as={Select} name="seasonId">
-                      <MenuItem value={1}>Summer</MenuItem>
-                      <MenuItem value={2}>Fall</MenuItem>
-                      <MenuItem value={3}>Winter</MenuItem>
-                      <MenuItem value={4}>Spring</MenuItem>
+                    <Field as={Select} name="season">
+                      <MenuItem value="Summer">Summer</MenuItem>
+                      <MenuItem value="Fall">Fall</MenuItem>
+                      <MenuItem value="Winter">Winter</MenuItem>
+                      <MenuItem value="Spring">Spring</MenuItem>
                     </Field>
                   </FormControl>
                 </Box>
