@@ -36,6 +36,7 @@ import "../../styles/zones/ZoneCard.css";
 type ZoneCardProps = {
   fetchZones(args: number): void;
   setIsShowEdit(args: boolean): void;
+  updateLocalStorageSeason(args: number): void;
   zone: Zone;
 };
 
@@ -43,6 +44,7 @@ export default function ZoneCard({
   zone,
   fetchZones,
   setIsShowEdit,
+  updateLocalStorageSeason,
 }: ZoneCardProps) {
   const dispatch = useDispatch();
   const { season } = useSelector((state: RootState) => state.season);
@@ -109,6 +111,7 @@ export default function ZoneCard({
       .then((x) =>
         agent.Plants.copyPlantsToNewZone(zone.id, x.id, zone.seasonId)
       )
+      .then(() => updateLocalStorageSeason(seasonID))
       .finally(() => fetchZones(seasonID));
   };
 
