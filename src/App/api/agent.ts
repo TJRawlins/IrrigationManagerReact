@@ -71,6 +71,15 @@ const Plants = {
   list: () => requests.get("api/plants"),
   details: (id: number) => requests.get(`api/plants/${id}`),
   createPlant: (plant: object) => requests.post("api/plants", plant),
+  copyPlantsToNewZone: (
+    oldZoneId: number,
+    newZoneId: number,
+    seasonId: number
+  ) =>
+    requests.post(
+      `api/plants/copyplantstonewzone/${oldZoneId}/${newZoneId}/${seasonId}`,
+      {}
+    ),
   editPlant: (id: number, plant: object) =>
     requests.put(`api/plants/${id}`, plant),
   removePlant: (id: number) => requests.delete(`api/plants/${id}`),
