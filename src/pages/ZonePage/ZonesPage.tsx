@@ -107,7 +107,10 @@ const ZonesPage = () => {
           marginTop: "30px",
         }}
       >
-        <ZoneList fetchZones={fetchZones} />
+        <ZoneList 
+        fetchZones={fetchZones}
+        updateLocalStorageSeason={updateLocalStorageSeason}
+        />
       </Grid>
     </>
   );
