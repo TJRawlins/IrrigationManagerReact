@@ -83,6 +83,8 @@ const Plants = {
   editPlant: (id: number, plant: object) =>
     requests.put(`api/plants/${id}`, plant),
   removePlant: (id: number) => requests.delete(`api/plants/${id}`),
+  removePlantsFromZone: (zoneId: number, seasonId: number) =>
+    requests.delete(`api/plants/deleteplantsfromzone/${zoneId}/${seasonId}`),
 };
 const Zones = {
   list: () => requests.get("api/zones"),
