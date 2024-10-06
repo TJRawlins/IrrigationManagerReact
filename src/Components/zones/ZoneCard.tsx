@@ -128,7 +128,11 @@ export default function ZoneCard({
   };
 
   const deleteZone = () => {
-    agent.Zones.removeZone(zone.id).then(() => fetchZones(season.id));
+    agent.Plants.removePlantsFromZone(zone.id, zone.seasonId).then(() => {
+      agent.Zones.removeZone(zone.id)
+        .then(() => fetchZones(season.id))
+        .finally(() => updateLocalStorageSeason(season.id));
+    });
     console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
   };
 
