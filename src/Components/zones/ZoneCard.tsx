@@ -9,6 +9,7 @@ import {
   CardMedia,
   Chip,
   ChipProps,
+  Popover,
   Stack,
   Tooltip,
   Typography,
@@ -49,6 +50,9 @@ export default function ZoneCard({
   const dispatch = useDispatch();
   const { season } = useSelector((state: RootState) => state.season);
   const [isHovering, setIsHovering] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   function handelMouseEnter() {
     setIsHovering(true);
@@ -115,8 +119,20 @@ export default function ZoneCard({
       .finally(() => fetchZones(seasonID));
   };
 
+  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleDeleteClose = () => {
+    setAnchorEl(null);
+  };
+
   const deleteZone = () => {
-    agent.Zones.removeZone(zone.id).then(() => fetchZones(season.id));
+    agent.Plants.removePlantsFromZone(zone.id, zone.seasonId).then(() => {
+      agent.Zones.removeZone(zone.id)
+        .then(() => fetchZones(season.id))
+        .finally(() => updateLocalStorageSeason(season.id));
+    });
     console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
   };
 
@@ -351,13 +367,39 @@ export default function ZoneCard({
             >
               <EditIcon className="action-icon" />
             </Button>
+
             <Button
               className="zone-card-action-button"
               id="zone-card-delete"
-              onClick={deleteZone}
+              onClick={handleDeleteClick}
             >
               <FaTrashAlt className="action-icon" />
             </Button>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleDeleteClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              sx={{
+                display: "flex !important",
+                flexDirection: "column",
+                padding: "1rem",
+              }}
+            >
+              <span>This will delete all associated plants.</span>
+              <div style={{ display: "flex", gap: ".5rem" }}>
+                <Button sx={{ p: 2 }} onClick={deleteZone}>
+                  Confirm
+                </Button>
+                <Button sx={{ p: 2 }} onClick={handleDeleteClose}>
+                  Cancel
+                </Button>
+              </div>
+            </Popover>
           </Box>
         </CardActions>
       </Card>
