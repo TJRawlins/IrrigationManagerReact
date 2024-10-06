@@ -40,7 +40,7 @@ const style = {
 function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
-  const seasonIdValue = useRef<number>(zone.seasonId);
+  const seasonIdValue = useRef<number>();
 
   const handleClose = () => setIsShowEdit(false);
 
@@ -60,7 +60,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     totalGalPerWeek: zone.totalGalPerWeek,
     totalGalPerYear: zone.totalGalPerYear,
     season: zone.season,
-    seasonId: seasonIdValue.current,
+    seasonId: zone.seasonId,
   };
 
   // Form submission
@@ -74,6 +74,7 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     for (const [key, value] of Object.entries(values)) {
       if (key === "season") {
         seasonNameToSeasonId(value);
+        values = { ...values, seasonId: seasonIdValue.current };
       }
     }
     editZone(zone.id, values);
