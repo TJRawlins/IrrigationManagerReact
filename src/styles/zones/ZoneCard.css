@@ -26,3 +26,26 @@
 #zone-card-delete .action-icon {
   font-size: 1.25rem !important;
 }
+
+#simple-popover > div.MuiPaper-root.MuiPaper-elevation {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+  padding: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+}
+
+#simple-popover span {
+  margin-bottom: 1rem;
+}
+
+#simple-popover button {
+  width: 100px;
+  padding: 0.5rem;
+  border: 1px solid;
+}
+
+#simple-popover button:hover {
+  background-color: #02c0a0;
+  color: aliceblue;
+}
