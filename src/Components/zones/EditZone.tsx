@@ -19,8 +19,9 @@ import { RootState } from "../../redux/store";
 import "../../styles/zones/AddZone.css";
 import { useRef } from "react";
 
-type ZoneBarProps = {
+type ZoneEditProps = {
   fetchZones(args: number): void;
+  updateLocalStorageSeason(args: number): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
 };
@@ -37,17 +38,16 @@ const style = {
   p: 4,
 };
 
-function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
+function EditZone({
+  fetchZones,
+  updateLocalStorageSeason,
+  setIsShowEdit,
+  isShowEdit,
+}: ZoneEditProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
   const seasonIdValue = useRef<number>();
-
   const handleClose = () => setIsShowEdit(false);
-
-  const editZone = (id: number, values: object) => {
-    agent.Zones.editZone(id, values).then(() => fetchZones(season.id));
-  };
-
   const initialValues = {
     id: zone.id,
     name: zone.name,
@@ -81,6 +81,12 @@ function EditZone({ fetchZones, setIsShowEdit, isShowEdit }: ZoneBarProps) {
     console.log("zone edited");
     props.resetForm();
     handleClose();
+  };
+
+  const editZone = (id: number, values: object) => {
+    agent.Zones.editZone(id, values)
+      .then(() => fetchZones(season.id))
+      .finally(() => updateLocalStorageSeason(season.id));
   };
 
   const seasonNameToSeasonId = (seasonName: string) => {
