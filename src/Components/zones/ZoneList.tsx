@@ -52,6 +52,7 @@ export default function ZoneList({
               <AddZone fetchZones={fetchZones} />
               <EditZone
                 fetchZones={fetchZones}
+                updateLocalStorageSeason={updateLocalStorageSeason}
                 setIsShowEdit={setIsShowEdit}
                 isShowEdit={isShowEdit}
               />

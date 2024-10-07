@@ -90,7 +90,8 @@ const Zones = {
   list: () => requests.get("api/zones"),
   details: (id: number) => requests.get(`api/zones/${id}`),
   createZone: (zone: object) => requests.post("api/zones", zone),
-  editZone: (id: number, zone: object) => requests.put(`api/zones/${id}`, zone),
+  editZone: (id: number, currentSeasonId: number | undefined, zone: object) =>
+    requests.put(`api/zones/${id}/seasonId/${currentSeasonId}`, zone),
   removeZone: (id: number) => requests.delete(`api/zones/${id}`),
 };
 const Seasons = {
