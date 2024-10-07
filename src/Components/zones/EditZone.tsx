@@ -84,7 +84,7 @@ function EditZone({
   };
 
   const editZone = (id: number, values: object) => {
-    agent.Zones.editZone(id, values)
+    agent.Zones.editZone(id, season.id, values)
       .then(() => fetchZones(season.id))
       .finally(() => updateLocalStorageSeason(season.id));
   };
