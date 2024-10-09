@@ -22,6 +22,7 @@ import {
   updateCurrentSeasonList,
 } from "../../redux/seasonSlice";
 import { Season } from "../../App/models/Season";
+import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
 
 const ZonesPage = () => {
   const { season } = useSelector((state: RootState) => state.season);
@@ -107,10 +108,13 @@ const ZonesPage = () => {
           marginTop: "30px",
         }}
       >
-        <ZoneList 
-        fetchZones={fetchZones}
-        updateLocalStorageSeason={updateLocalStorageSeason}
-        />
+        <ErrorBoundary fallback="Error ZoneList">
+          <ZoneList
+            hasError
+            fetchZones={fetchZones}
+            updateLocalStorageSeason={updateLocalStorageSeason}
+          />
+        </ErrorBoundary>
       </Grid>
     </>
   );
