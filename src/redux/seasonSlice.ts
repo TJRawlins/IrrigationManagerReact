@@ -10,14 +10,22 @@ export interface SeasonState {
   isInitialLoad: boolean;
 }
 
-const season =
-  localStorage.getItem("season") !== null
-    ? JSON.parse(localStorage.getItem("season")!)
-    : {};
-const seasons =
-  localStorage.getItem("seasons") !== null
-    ? JSON.parse(localStorage.getItem("seasons")!)
-    : [];
+let season;
+let seasons;
+
+// if (season !== null && season !== "undefined" && season !== undefined) {
+if (season && season !== "undefined") {
+  season = JSON.parse(localStorage.getItem("season")!);
+} else {
+  season = {};
+}
+
+if (seasons && seasons !== "undefined") {
+  seasons = JSON.parse(localStorage.getItem("seasons")!);
+} else {
+  seasons = [];
+}
+
 const seasonName =
   localStorage.getItem("seasonName") !== null
     ? JSON.parse(localStorage.getItem("seasonName")!)
