@@ -5,10 +5,12 @@ import EditZone from "./EditZone";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
 type ZoneListProps = {
   fetchZones(args: number): void;
   updateLocalStorageSeason(args: number): void;
+  hasError: boolean;
 };
 
 export default function ZoneList({
@@ -40,22 +42,28 @@ export default function ZoneList({
           >
             {zoneList.map((zone) => (
               <Grid item key={zone.id}>
-                <ZoneCard
-                  zone={zone}
-                  fetchZones={fetchZones}
-                  setIsShowEdit={setIsShowEdit}
-                  updateLocalStorageSeason={updateLocalStorageSeason}
-                />
+                <ErrorBoundary fallback="ZoneCard Error">
+                  <ZoneCard
+                    zone={zone}
+                    fetchZones={fetchZones}
+                    setIsShowEdit={setIsShowEdit}
+                    updateLocalStorageSeason={updateLocalStorageSeason}
+                  />
+                </ErrorBoundary>
               </Grid>
             ))}
             <Grid>
-              <AddZone fetchZones={fetchZones} />
-              <EditZone
-                fetchZones={fetchZones}
-                updateLocalStorageSeason={updateLocalStorageSeason}
-                setIsShowEdit={setIsShowEdit}
-                isShowEdit={isShowEdit}
-              />
+              <ErrorBoundary fallback="ZoneCard Error">
+                <AddZone fetchZones={fetchZones} />
+              </ErrorBoundary>
+              <ErrorBoundary fallback="EditZone Error">
+                <EditZone
+                  fetchZones={fetchZones}
+                  updateLocalStorageSeason={updateLocalStorageSeason}
+                  setIsShowEdit={setIsShowEdit}
+                  isShowEdit={isShowEdit}
+                />
+              </ErrorBoundary>
             </Grid>
           </Grid>
         </Box>
