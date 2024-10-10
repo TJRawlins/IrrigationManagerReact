@@ -28,7 +28,6 @@ import {
   updateCurrentSeasonName,
   updateIsInitialLoad,
 } from "../../redux/seasonSlice";
-import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
 type ZoneBarProps = {
   fetchZones(args: number): void;
@@ -72,80 +71,78 @@ export default function ZoneBar({
           mt={0.5}
           sx={{ display: { md: "block", sm: "none", xs: "none" } }}
         >
-          <ErrorBoundary fallback="Season Gallons Error">
-            <Tooltip title="Weekly Gallons" arrow>
-              <Chip
-                sx={{
-                  width: "fit-content",
-                  borderBottom: "1px solid silver",
-                  bgcolor: "#ffffff",
-                  color: "#919191",
-                  justifyContent: "left",
-                }}
-                avatar={
-                  <Avatar
-                    sx={{
-                      minWidth: "fit-content",
-                      background: "rgba(0, 0, 0, 0.08)",
-                      fontWeight: "700",
-                      color: "#919191 !important",
-                    }}
-                  >
-                    {"Weekly Gallons"[0].toLocaleUpperCase()}
-                  </Avatar>
-                }
-                label={season.totalGalPerWeek}
-              />
-            </Tooltip>
-            <Tooltip title="Monthly Gallons" arrow>
-              <Chip
-                sx={{
-                  width: "fit-content",
-                  borderBottom: "1px solid silver",
-                  bgcolor: "#ffffff",
-                  color: "#919191",
-                  justifyContent: "left",
-                }}
-                avatar={
-                  <Avatar
-                    sx={{
-                      minWidth: "fit-content",
-                      background: "rgba(0, 0, 0, 0.08)",
-                      fontWeight: "700",
-                      color: "#919191 !important",
-                    }}
-                  >
-                    {"Monthly Gallons"[0].toLocaleUpperCase()}
-                  </Avatar>
-                }
-                label={season.totalGalPerMonth}
-              />
-            </Tooltip>
-            <Tooltip title="Yearly Gallons" arrow>
-              <Chip
-                sx={{
-                  width: "fit-content",
-                  borderBottom: "1px solid silver",
-                  bgcolor: "#ffffff",
-                  color: "#919191",
-                  justifyContent: "left",
-                }}
-                avatar={
-                  <Avatar
-                    sx={{
-                      minWidth: "fit-content",
-                      background: "rgba(0, 0, 0, 0.08)",
-                      fontWeight: "700",
-                      color: "#919191 !important",
-                    }}
-                  >
-                    {"Yearly Gallons"[0].toLocaleUpperCase()}
-                  </Avatar>
-                }
-                label={season.totalGalPerYear}
-              />
-            </Tooltip>
-          </ErrorBoundary>
+          <Tooltip title="Weekly Gallons" arrow>
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {"Weekly Gallons"[0].toLocaleUpperCase()}
+                </Avatar>
+              }
+              label={season.totalGalPerWeek}
+            />
+          </Tooltip>
+          <Tooltip title="Monthly Gallons" arrow>
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {"Monthly Gallons"[0].toLocaleUpperCase()}
+                </Avatar>
+              }
+              label={season.totalGalPerMonth}
+            />
+          </Tooltip>
+          <Tooltip title="Yearly Gallons" arrow>
+            <Chip
+              sx={{
+                width: "fit-content",
+                borderBottom: "1px solid silver",
+                bgcolor: "#ffffff",
+                color: "#919191",
+                justifyContent: "left",
+              }}
+              avatar={
+                <Avatar
+                  sx={{
+                    minWidth: "fit-content",
+                    background: "rgba(0, 0, 0, 0.08)",
+                    fontWeight: "700",
+                    color: "#919191 !important",
+                  }}
+                >
+                  {"Yearly Gallons"[0].toLocaleUpperCase()}
+                </Avatar>
+              }
+              label={season.totalGalPerYear}
+            />
+          </Tooltip>
         </Stack>
       </>
     );
@@ -271,9 +268,7 @@ export default function ZoneBar({
             <SeasonMenu />
           </div>
         </div>
-        <ErrorBoundary fallback="Error: Unable to retrieve gallons">
-          <TotalGallonsChips />
-        </ErrorBoundary>
+        <TotalGallonsChips />
       </div>
     </>
   );
