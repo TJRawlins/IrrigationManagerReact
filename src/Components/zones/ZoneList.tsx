@@ -9,6 +9,7 @@ import { RootState } from "../../redux/store";
 type ZoneListProps = {
   fetchZones(args: number): void;
   updateLocalStorageSeason(args: number): void;
+  hasError: boolean;
 };
 
 export default function ZoneList({

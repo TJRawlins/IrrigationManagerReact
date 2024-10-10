@@ -22,6 +22,7 @@ import {
   updateCurrentSeasonList,
 } from "../../redux/seasonSlice";
 import { Season } from "../../App/models/Season";
+import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
 
 const ZonesPage = () => {
   const { season } = useSelector((state: RootState) => state.season);
@@ -39,7 +40,9 @@ const ZonesPage = () => {
     agent.Zones.list().then((zones) => {
       dispatch(
         updateCurrentZoneList(
-          zones.filter((zone: Zone) => zone.seasonId === seasonString)
+          zones
+            ? zones.filter((zone: Zone) => zone.seasonId === seasonString)
+            : []
         )
       );
       console.log("%cZones: Zone Fetched", "color:#1CA1E6");
@@ -54,10 +57,12 @@ const ZonesPage = () => {
   };
 
   const updateLocalStorageSeasons = () => {
-    agent.Seasons.list().then((seasons) => {
-      dispatch(updateCurrentSeasonList(seasons));
-      console.log("%cZonePage: Seasons Updated", "color:#1CA1E6", season);
-    });
+    agent.Seasons.list()
+      .then((seasons) => {
+        dispatch(updateCurrentSeasonList(seasons));
+        console.log("%cZonePage: Seasons Updated", "color:#1CA1E6", season);
+      })
+      .catch((error) => console.log("Fetch Error:", error));
   };
 
   const updateLocalStorageZone = () => {
@@ -81,7 +86,6 @@ const ZonesPage = () => {
   // };
 
   useEffect(() => {
-    // fetchSeasons();
     fetchZones(season.id);
     if (season.id === 0 || season.id === undefined) {
       dispatch(updateCurrentSeason(new Season()));
@@ -95,23 +99,26 @@ const ZonesPage = () => {
 
   return (
     <>
-      <ZoneBar
-        fetchZones={fetchZones}
-        updateLocalStorageSeason={updateLocalStorageSeason}
-      />
-      <Grid
-        sx={{
-          bgcolor: "#eef2f6",
-          borderRadius: "20px",
-          width: "100vw",
-          marginTop: "30px",
-        }}
-      >
-        <ZoneList 
-        fetchZones={fetchZones}
-        updateLocalStorageSeason={updateLocalStorageSeason}
+      <ErrorBoundary fallback="Unable to retrieve data for zones. The server may be down.">
+        <ZoneBar
+          fetchZones={fetchZones}
+          updateLocalStorageSeason={updateLocalStorageSeason}
         />
-      </Grid>
+        <Grid
+          sx={{
+            bgcolor: "#eef2f6",
+            borderRadius: "20px",
+            width: "100vw",
+            marginTop: "30px",
+          }}
+        >
+          <ZoneList
+            hasError
+            fetchZones={fetchZones}
+            updateLocalStorageSeason={updateLocalStorageSeason}
+          />
+        </Grid>
+      </ErrorBoundary>
     </>
   );
 };
