@@ -22,16 +22,17 @@ const errorHandler = (error: AxiosError) => {
     console.log(error.response.status);
     console.log(error.response.headers);
   } else if (error.request) {
-    // The request was made but no response was received
     console.error(
-      `Error: Unable to ${error.config?.method} ${error.config?.url}`
+      `Error: Unable to ${error.config?.method} ${error.config?.url} - The request was made but no response was received`
     );
     console.log("Request Error: ", error.request);
   } else {
-    // Something happened in setting up the request that triggered an Error
-    console.log("Error Message: ", error.message);
+    console.log(
+      "Error: Something happened in setting up the request that triggered an Error",
+      error.message
+    );
   }
-  console.log(error.config);
+  console.log("Error Config: ", error.config);
 };
 
 axios.defaults.baseURL = `${import.meta.env.VITE_DEV_SECURE_URL}:${
