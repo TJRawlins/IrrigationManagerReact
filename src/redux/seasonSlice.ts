@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Season } from "../App/models/Season";
@@ -10,32 +11,26 @@ export interface SeasonState {
   isInitialLoad: boolean;
 }
 
-let season;
-let seasons;
+let season, seasons, seasonName, seasonId, isInitialLoad;
 
-// if (season !== null && season !== "undefined" && season !== undefined) {
-if (season && season !== "undefined") {
-  season = JSON.parse(localStorage.getItem("season")!);
-} else {
-  season = {};
-}
-
-if (seasons && seasons !== "undefined") {
-  seasons = JSON.parse(localStorage.getItem("seasons")!);
-} else {
-  seasons = [];
-}
-
-const seasonName =
-  localStorage.getItem("seasonName") !== null
+season =
+  season && season !== "undefined"
+    ? JSON.parse(localStorage.getItem("season")!)
+    : 1;
+seasons =
+  seasons && seasons !== "undefined"
+    ? JSON.parse(localStorage.getItem("seasons")!)
+    : 1;
+seasonName =
+  seasonName && seasonName !== "undefined"
     ? JSON.parse(localStorage.getItem("seasonName")!)
-    : "Summer";
-const seasonId =
-  localStorage.getItem("seasonId") !== null
+    : 1;
+seasonId =
+  seasonId && seasonId !== "undefined"
     ? JSON.parse(localStorage.getItem("seasonId")!)
     : 1;
-const isInitialLoad =
-  localStorage.getItem("isInitialLoad") !== null
+isInitialLoad =
+  isInitialLoad && isInitialLoad !== "undefined"
     ? JSON.parse(localStorage.getItem("isInitialLoad")!)
     : false;
 
