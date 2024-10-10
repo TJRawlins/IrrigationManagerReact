@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Plant } from "../App/models/Plant";
@@ -9,16 +10,19 @@ export interface PlantState {
   plantList: Plant[];
 }
 
+let plant,
+  plants = undefined;
+
 // const treflePlant =
 //   localStorage.getItem("treflePlant") !== null
 //     ? JSON.parse(localStorage.getItem("treflePlant")!)
 //     : {};
-const plant =
-  localStorage.getItem("plant") !== null
+plant =
+  plant && plant !== "undefined"
     ? JSON.parse(localStorage.getItem("plant")!)
     : {};
-const plants =
-  localStorage.getItem("plants") !== null
+plants =
+  plants && plants !== "undefined"
     ? JSON.parse(localStorage.getItem("plants")!)
     : [];
 
