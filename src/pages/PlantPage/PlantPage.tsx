@@ -13,6 +13,7 @@ import {
 } from "../../redux/plantSlice";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { Plant } from "../../App/models/Plant";
+import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
 // import { TreflePlant } from "../../App/models/TreflePlant";
 
 const PlantPage = () => {
@@ -57,22 +58,24 @@ const PlantPage = () => {
 
   return (
     <>
-      <PlantBar fetchPlants={fetchPlants} />
-      <Grid
-        sx={{
-          bgcolor: "#eef2f6",
-          borderRadius: "20px",
-          width: "100%",
-          marginTop: "30px",
-          padding: "0.75rem",
-        }}
-      >
-        <PlantList
-          fetchPlants={fetchPlants}
-          updateLocalStorageZone={updateLocalStorageZone}
-          // updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
-        />
-      </Grid>
+      <ErrorBoundary fallback="Unable to retrieve data for plants. The server may be down.">
+        <PlantBar fetchPlants={fetchPlants} />
+        <Grid
+          sx={{
+            bgcolor: "#eef2f6",
+            borderRadius: "20px",
+            width: "100%",
+            marginTop: "30px",
+            padding: "0.75rem",
+          }}
+        >
+          <PlantList
+            fetchPlants={fetchPlants}
+            updateLocalStorageZone={updateLocalStorageZone}
+            // updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
+          />
+        </Grid>
+      </ErrorBoundary>
     </>
   );
 };

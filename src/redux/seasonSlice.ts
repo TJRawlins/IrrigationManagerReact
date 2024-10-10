@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Season } from "../App/models/Season";
@@ -10,24 +11,26 @@ export interface SeasonState {
   isInitialLoad: boolean;
 }
 
-const season =
-  localStorage.getItem("season") !== null
+let season, seasons, seasonName, seasonId, isInitialLoad;
+
+season =
+  season && season !== "undefined"
     ? JSON.parse(localStorage.getItem("season")!)
-    : {};
-const seasons =
-  localStorage.getItem("seasons") !== null
+    : 1;
+seasons =
+  seasons && seasons !== "undefined"
     ? JSON.parse(localStorage.getItem("seasons")!)
-    : [];
-const seasonName =
-  localStorage.getItem("seasonName") !== null
+    : 1;
+seasonName =
+  seasonName && seasonName !== "undefined"
     ? JSON.parse(localStorage.getItem("seasonName")!)
-    : "Summer";
-const seasonId =
-  localStorage.getItem("seasonId") !== null
+    : 1;
+seasonId =
+  seasonId && seasonId !== "undefined"
     ? JSON.parse(localStorage.getItem("seasonId")!)
     : 1;
-const isInitialLoad =
-  localStorage.getItem("isInitialLoad") !== null
+isInitialLoad =
+  isInitialLoad && isInitialLoad !== "undefined"
     ? JSON.parse(localStorage.getItem("isInitialLoad")!)
     : false;
 
