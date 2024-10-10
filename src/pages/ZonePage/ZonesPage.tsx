@@ -55,7 +55,6 @@ const ZonesPage = () => {
   };
 
   const updateLocalStorageSeasons = () => {
-    debugger;
     agent.Seasons.list()
       .then((seasons) => {
         dispatch(updateCurrentSeasonList(seasons));
