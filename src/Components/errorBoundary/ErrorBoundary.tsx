@@ -8,15 +8,14 @@ interface Props {
 
 interface State {
   hasError: boolean;
-  openModal: boolean;
 }
 
 class ErrorBoundary extends React.Component<Props, State> {
-  state = { hasError: false, openModal: false };
+  state = { hasError: false };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static getDerivedStateFromError(_error: Error): State {
-    return { hasError: true, openModal: true };
+    return { hasError: true };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
@@ -30,26 +29,16 @@ class ErrorBoundary extends React.Component<Props, State> {
     transform: "translate(-50%, -50%)",
     width: 400,
     bgcolor: "background.paper",
-    border: "2px solid #000",
+    border: "2px solid #7c0000",
     boxShadow: 24,
     p: 4,
     display: "flex",
     flexDirection: "column",
   };
 
-  handleClose = () => this.setState({ openModal: false });
-
   render() {
     if (this.state.hasError) {
-      // return this.props.fallback;
       return (
-        // <Modal
-        //   id="error-modal"
-        //   open={this.state.openModal}
-        //   onClose={this.handleClose}
-        //   aria-labelledby="modal-modal-title"
-        //   aria-describedby="modal-modal-description"
-        // >
         <Box sx={this.style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Server Error
@@ -57,9 +46,7 @@ class ErrorBoundary extends React.Component<Props, State> {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {this.props.fallback}
           </Typography>
-          {/* <Button onClick={this.handleClose}>Dismiss</Button> */}
         </Box>
-        // </Modal>
       );
     }
 
