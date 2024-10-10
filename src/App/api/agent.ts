@@ -1,17 +1,37 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { axiosErrorHandler } from "./axiosErrorHandler";
+// import { axiosErrorHandler } from "./axiosErrorHandler";
 
-const errorHandler = () => {
-  axiosErrorHandler<AxiosError | Error>((res) => {
-    if (res.type === "axios-error") {
-      //type is available here
-      const axiosError = res.error;
-      console.debug("Axios Error: ", axiosError);
-    } else {
-      const stockError = res.error;
-      console.debug("Stock Error: ", stockError);
-    }
-  });
+// const errorHandler = () => {
+//   axiosErrorHandler<AxiosError | Error>((res) => {
+//     if (res.type === "axios-error") {
+//       //type is available here
+//       const axiosError = res.error;
+//       console.debug("Axios Error: ", axiosError);
+//     } else {
+//       const stockError = res.error;
+//       console.debug("Stock Error: ", stockError);
+//     }
+//   });
+// };
+
+const errorHandler = (error: AxiosError) => {
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
+  } else if (error.request) {
+    // The request was made but no response was received
+    console.error(
+      `Error: Unable to ${error.config?.method} ${error.config?.url}`
+    );
+    console.log("Request Error: ", error.request);
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    console.log("Error Message: ", error.message);
+  }
+  console.log(error.config);
 };
 
 axios.defaults.baseURL = `${import.meta.env.VITE_DEV_SECURE_URL}:${
@@ -34,22 +54,22 @@ const requests = {
     axios
       .get(url)
       .then(responseBody)
-      .catch(() => errorHandler()),
+      .catch((error) => errorHandler(error)),
   post: (url: string, body: object) =>
     axios
       .post(url, body)
       .then(responseBody)
-      .catch(() => errorHandler()),
+      .catch((error) => errorHandler(error)),
   put: (url: string, body: object) =>
     axios
       .put(url, body)
       .then(responseBody)
-      .catch(() => errorHandler()),
+      .catch((error) => errorHandler(error)),
   delete: (url: string) =>
     axios
       .delete(url)
       .then(responseBody)
-      .catch(() => errorHandler()),
+      .catch((error) => errorHandler(error)),
 };
 
 // ! Trefle Code
