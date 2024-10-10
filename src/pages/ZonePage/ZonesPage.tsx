@@ -40,7 +40,9 @@ const ZonesPage = () => {
     agent.Zones.list().then((zones) => {
       dispatch(
         updateCurrentZoneList(
-          zones.filter((zone: Zone) => zone.seasonId === seasonString)
+          zones
+            ? zones.filter((zone: Zone) => zone.seasonId === seasonString)
+            : []
         )
       );
       console.log("%cZones: Zone Fetched", "color:#1CA1E6");
