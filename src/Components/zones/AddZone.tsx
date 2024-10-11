@@ -62,13 +62,18 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
   };
 
-  const checkLocalStorageProperty = () => {
-    return localStorage.getItem("isInitialLoad") !== null;
+  const isZonesStoredLocally = () => {
+    const zonesLocalStorageValue = localStorage.getItem("zones");
+    const isZonesStored =
+      zonesLocalStorageValue &&
+      zonesLocalStorageValue !== "undefined" &&
+      zonesLocalStorageValue !== "[]";
+    return isZonesStored;
   };
 
   return (
     <div>
-      {checkLocalStorageProperty() && (
+      {isZonesStoredLocally() && (
         <Button
           className="add-btn"
           onClick={handleOpen}
