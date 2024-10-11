@@ -62,18 +62,29 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
   };
 
+  const isZonesStoredLocally = () => {
+    const zonesLocalStorageValue = localStorage.getItem("zones");
+    const isZonesStored =
+      zonesLocalStorageValue &&
+      zonesLocalStorageValue !== "undefined" &&
+      zonesLocalStorageValue !== "[]";
+    return isZonesStored;
+  };
+
   return (
     <div>
-      <Button
-        className="add-btn"
-        onClick={handleOpen}
-        sx={{
-          position: "relative",
-          boxShadow: "none !important",
-        }}
-      >
-        <FaPlus className="add-plus-icon" />
-      </Button>
+      {isZonesStoredLocally() && (
+        <Button
+          className="add-btn"
+          onClick={handleOpen}
+          sx={{
+            position: "relative",
+            boxShadow: "none !important",
+          }}
+        >
+          <FaPlus className="add-plus-icon" />
+        </Button>
+      )}
       <Modal
         open={open}
         onClose={handleClose}

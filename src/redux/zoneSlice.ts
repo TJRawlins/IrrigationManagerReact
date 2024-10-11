@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Zone } from "../App/models/Zone";
@@ -8,11 +9,11 @@ export interface ZoneState {
 }
 
 const zone =
-  localStorage.getItem("zone") !== null
+  localStorage.getItem("zone") && localStorage.getItem("zone") !== "undefined"
     ? JSON.parse(localStorage.getItem("zone")!)
     : {};
 const zones =
-  localStorage.getItem("zones") !== null
+  localStorage.getItem("zones") && localStorage.getItem("zones") !== "undefined"
     ? JSON.parse(localStorage.getItem("zones")!)
     : [];
 
