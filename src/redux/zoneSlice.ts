@@ -8,13 +8,12 @@ export interface ZoneState {
   zoneList: Zone[];
 }
 
-let zone,
-  zones = undefined;
-
-zone =
-  zone && zone !== "undefined" ? JSON.parse(localStorage.getItem("zone")!) : {};
-zones =
-  zones && zones !== "undefined"
+const zone =
+  localStorage.getItem("zone") && localStorage.getItem("zone") !== "undefined"
+    ? JSON.parse(localStorage.getItem("zone")!)
+    : {};
+const zones =
+  localStorage.getItem("zones") && localStorage.getItem("zones") !== "undefined"
     ? JSON.parse(localStorage.getItem("zones")!)
     : [];
 
