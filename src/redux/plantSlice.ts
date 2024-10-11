@@ -14,11 +14,12 @@ export interface PlantState {
 //     ? JSON.parse(localStorage.getItem("treflePlant")!)
 //     : {};
 const plant =
-  localStorage.getItem("plant") !== null
+  localStorage.getItem("plant") && localStorage.getItem("plant") !== "undefined"
     ? JSON.parse(localStorage.getItem("plant")!)
     : {};
 const plants =
-  localStorage.getItem("plants") !== null
+  localStorage.getItem("plants") &&
+  localStorage.getItem("plants") !== "undefined"
     ? JSON.parse(localStorage.getItem("plants")!)
     : [];
 
