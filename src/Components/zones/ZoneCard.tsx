@@ -140,34 +140,29 @@ export default function ZoneCard({
   function getChipProps(params: string): ChipProps {
     if (params === "Spring") {
       return {
-        icon: (
-          <MdLocalFlorist className="iconStyle" style={{ fill: "#ff00aa" }} />
-        ),
+        icon: <MdLocalFlorist className="iconStyle zoneCardIcon" />,
         label: params,
-        style: { background: "#d4028e" },
+        style: { background: "#02c0a0" },
       };
     } else if (params === "Summer") {
       return {
-        icon: <MdSunny className="iconStyle" style={{ fill: "#f1b100" }} />,
+        icon: <MdSunny className="iconStyle zoneCardIcon" />,
         label: params,
-        style: { background: "#e2a600" },
+        style: { background: "#02c0a0" },
       };
     } else if (params === "Fall") {
       return {
         icon: (
-          <FaCanadianMapleLeaf
-            className="iconStyle rotateIcon"
-            style={{ fill: "#ff4800" }}
-          />
+          <FaCanadianMapleLeaf className="iconStyle rotateIcon zoneCardIcon" />
         ),
         label: params,
-        style: { background: "#dd3f01" },
+        style: { background: "#02c0a0" },
       };
     } else if (params === "Winter") {
       return {
-        icon: <MdAcUnit className="iconStyle" style={{ fill: "#00aeff" }} />,
+        icon: <MdAcUnit className="iconStyle zoneCardIcon" />,
         label: params,
-        style: { background: "#0092d6" },
+        style: { background: "#02c0a0" },
       };
     } else {
       return {
@@ -190,23 +185,22 @@ export default function ZoneCard({
         }}
       >
         <CardMedia
-          className="card-img"
+          className="card-img zone"
           sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
           image={zone.imagePath}
           title={zone.name}
         />
         {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
-        <CardContent className="card-content-wrapper">
+        <CardContent className="card-content-wrapper zone-content">
           <Chip
             className="chip"
             variant="filled"
             size="small"
             sx={{ position: "absolute", top: "5px", left: "20px" }}
-            // {...getChipProps(zone.season)}
             {...getChipProps(season.name)}
           />
           <Typography
-            className="card-name"
+            className="card-name zone"
             gutterBottom
             variant="h6"
             component="div"
@@ -215,9 +209,9 @@ export default function ZoneCard({
               ? zone.name.toLocaleUpperCase().substring(0, 18) + "..."
               : zone.name.toLocaleUpperCase()}
           </Typography>
-          <Box className="card-data-container">
+          <Box className="card-data-container zone">
             <Typography
-              className="card-data"
+              className="card-data zone"
               variant="body2"
               color="text.secondary"
             >
@@ -230,7 +224,7 @@ export default function ZoneCard({
               </span>
             </Typography>
             <Typography
-              className="card-data"
+              className="card-data zone"
               variant="body2"
               color="text.secondary"
             >
@@ -238,17 +232,18 @@ export default function ZoneCard({
               <span>{zone.runtimePerWeek}</span>
             </Typography>
             <Typography
-              className="card-data"
+              className="card-data zone"
               variant="body2"
               color="text.secondary"
             >
-              <span>Total Plants:</span>
+              <span>Plants:</span>
               <span>{zone.totalPlants}</span>
             </Typography>
           </Box>
           {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  T O T A L   G A L L O N S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
           <Box>
             <Stack
+              id="total-gallons-stack"
               direction="row"
               spacing={1}
               mt={2}
@@ -332,7 +327,7 @@ export default function ZoneCard({
             height: "48px",
             width: "93%",
             position: "absolute",
-            top: "100px",
+            top: "98px",
           }}
         >
           <Box
