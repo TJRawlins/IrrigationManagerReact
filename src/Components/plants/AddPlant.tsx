@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa6";
-import { FaLeaf } from "react-icons/fa";
 import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -122,7 +121,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
-            <FaLeaf className="modal-title-icon" />
             <Typography
               className="modal-title"
               id="modal-modal-title"
@@ -385,13 +383,23 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                   multiline
                   maxRows={3}
                 />
-                <Button
-                  className="submit-btn"
-                  type="submit"
-                  onClick={() => setIsClicked(true)}
-                >
-                  Add
-                </Button>
+                <Box className="btn-wrapper">
+                  <Button
+                    className="submit-btn"
+                    type="submit"
+                    onClick={() => setIsClicked(true)}
+                  >
+                    Add
+                  </Button>
+                  <Button
+                    sx={{ p: 2 }}
+                    className="cancel-btn"
+                    type="button"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
               </Form>
             )}
           </Formik>

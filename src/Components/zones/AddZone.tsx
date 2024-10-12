@@ -2,7 +2,6 @@
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
-import { DashboardOutlined as DashboardOutlinedIcon } from "@mui/icons-material";
 import { useState } from "react";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -37,9 +36,9 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   // Form submission
   const initialValues = {
     name: "",
-    runtimeHours: 0,
-    runtimeMinutes: 0,
-    runtimePerWeek: 0,
+    runtimeHours: undefined,
+    runtimeMinutes: undefined,
+    runtimePerWeek: undefined,
     imagePath: undefined,
     season: season.name,
     seasonId: season.id,
@@ -98,14 +97,13 @@ function AddZone({ fetchZones }: ZoneBarProps) {
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
-            <DashboardOutlinedIcon className="bar-title-icon" />
             <Typography
               className="modal-title"
               id="modal-modal-title"
               variant="h6"
               component="h2"
             >
-              ADD NEW ZONE
+              ADD ZONE
             </Typography>
           </div>
           <Formik
@@ -224,9 +222,19 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                   defaultValue={season.name}
                   variant="standard"
                 />
-                <Button className="submit-btn" type="submit">
-                  Add
-                </Button>
+                <Box className="btn-wrapper">
+                  <Button className="submit-btn" type="submit">
+                    Add
+                  </Button>
+                  <Button
+                    sx={{ p: 2 }}
+                    className="cancel-btn"
+                    type="button"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
               </Form>
             )}
           </Formik>
