@@ -151,8 +151,8 @@ function ViewPlant({
             <CardMedia
               onMouseEnter={handelMouseEnter}
               onMouseLeave={handelMouseLeave}
-              className="card-img"
-              component="img"
+              className="card-img plant"
+              component="div"
               sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
               image={plant?.imagePath}
               title={plant === undefined ? "No Name" : plant.name}
