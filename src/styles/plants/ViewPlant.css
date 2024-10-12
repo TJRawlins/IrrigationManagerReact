@@ -106,18 +106,7 @@
 
 .modal-box {
   border: none !important;
-  border-radius: 15px;
-}
-
-.submit-btn {
-  width: 100%;
-  background-color: #002b49 !important;
-  color: #ffff !important;
-  margin-top: 2rem !important;
-}
-
-.submit-btn:hover {
-  background-color: #01497c !important;
+  border-radius: 10px;
 }
 
 .error-text {

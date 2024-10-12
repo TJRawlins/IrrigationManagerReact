@@ -4,8 +4,8 @@
 }
 
 .add-btn {
-  margin: 1.5rem 0 0 1.5rem !important;
-  height: 325px !important;
+  margin: 1rem 0 0 1rem !important;
+  height: 183px !important;
   width: 300px !important;
   border-radius: 15px !important;
   background-color: #ffff !important;
@@ -26,22 +26,11 @@
 
 .modal-box {
   border: none !important;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .input {
   width: 100%;
-}
-
-.submit-btn {
-  width: 100%;
-  background-color: #002b49 !important;
-  color: #ffff !important;
-  margin-top: 2rem !important;
-}
-
-.submit-btn:hover {
-  background-color: #01497c !important;
 }
 
 .error-text {
