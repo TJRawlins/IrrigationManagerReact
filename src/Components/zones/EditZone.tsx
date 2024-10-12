@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { DashboardOutlined as DashboardOutlinedIcon } from "@mui/icons-material";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -129,7 +128,6 @@ function EditZone({
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
-            <DashboardOutlinedIcon className="modal-title-icon" />
             <Typography
               className="modal-title"
               id="modal-modal-title"
@@ -265,9 +263,19 @@ function EditZone({
                     </Field>
                   </FormControl>
                 </Box>
-                <Button className="submit-btn" type="submit">
-                  Submit
-                </Button>
+                <Box className="btn-wrapper">
+                  <Button sx={{ p: 2 }} className="submit-btn" type="submit">
+                    Submit
+                  </Button>
+                  <Button
+                    sx={{ p: 2 }}
+                    className="cancel-btn"
+                    type="button"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
               </Form>
             )}
           </Formik>

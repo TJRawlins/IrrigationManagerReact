@@ -9,7 +9,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FaLeaf } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -114,7 +113,6 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
-            <FaLeaf className="modal-title-icon" />
             <Typography
               className="modal-title"
               id="modal-modal-title"
@@ -372,9 +370,19 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                   multiline
                   maxRows={3}
                 />
-                <Button className="submit-btn" type="submit">
-                  Submit Changes
-                </Button>
+                <Box className="btn-wrapper">
+                  <Button className="submit-btn" type="submit">
+                    Submit
+                  </Button>
+                  <Button
+                    sx={{ p: 2 }}
+                    className="cancel-btn"
+                    type="button"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
               </Form>
             )}
           </Formik>
