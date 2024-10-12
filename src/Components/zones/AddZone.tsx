@@ -73,14 +73,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   return (
     <div>
       {isZonesStoredLocally() && (
-        <Button
-          className="add-btn"
-          onClick={handleOpen}
-          sx={{
-            position: "relative",
-            boxShadow: "none !important",
-          }}
-        >
+        <Button className="add-btn" onClick={handleOpen}>
           <FaPlus className="add-plus-icon" />
         </Button>
       )}
