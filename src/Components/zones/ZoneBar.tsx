@@ -15,10 +15,7 @@ import {
 } from "@mui/material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
-import {
-  DashboardOutlined as DashboardOutlinedIcon,
-  FlipCameraAndroid as FlipCameraAndroidIcon,
-} from "@mui/icons-material";
+import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
@@ -246,7 +243,6 @@ export default function ZoneBar({
       <div className="main-container">
         <div className="content-container">
           <div className="title-container">
-            <DashboardOutlinedIcon className="bar-title-icon" />
             <Typography className="bar-title" variant="h6" noWrap component="a">
               ZONES
             </Typography>
