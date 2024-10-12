@@ -3,6 +3,11 @@
   align-items: center;
   color: #666666;
   gap: 0.5rem;
+  border-image-source: linear-gradient(to right, #02c0a0, #82a628);
+  border-bottom: 10px solid;
+  border-image-slice: 1;
+  border-width: 3px;
+  margin-bottom: 5px;
 }
 
 .modal-title-icon {
@@ -129,29 +134,8 @@
 .gallons-chip.year {
   border-radius: 0 0 10px 0 !important;
 }
-.gallons-chip.summer {
-  background-color: #ebad00 !important;
-}
-.gallons-chip-avatar.summer {
-  background-color: #c69c03b0 !important;
-}
-.gallons-chip.fall {
-  background-color: #da3e00 !important;
-}
-.gallons-chip-avatar.fall {
-  background-color: #b93501 !important;
-}
-.gallons-chip.winter {
-  background-color: #00aeff !important;
-}
-.gallons-chip-avatar.winter {
-  background-color: #0092d6 !important;
-}
-.gallons-chip.spring {
-  background-color: #ff00aa !important;
-}
-.gallons-chip-avatar.spring {
-  background-color: #d4028e !important;
+.gallons-chip-avatar {
+  background-color: #0000001c !important;
 }
 
 .hidden {
@@ -160,4 +144,28 @@
 
 .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   padding: 10px 10px !important;
+}
+
+.btn-wrapper {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem !important;
+}
+
+.cancel-btn,
+.submit-btn {
+  width: 100%;
+  border: 2px solid #02c0a0 !important;
+  padding: 0.75rem 1.5rem !important;
+}
+
+.cancel-btn:hover,
+.submit-btn {
+  background-color: #02c0a0 !important;
+  color: #ffff !important;
+}
+
+.submit-btn:hover {
+  background-color: #ffff !important;
+  color: #02c0a0 !important;
 }
