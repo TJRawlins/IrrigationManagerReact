@@ -4,23 +4,23 @@
 }
 
 .add-btn {
+  position: relative;
   margin: 1rem 0 0 1rem !important;
-  height: 183px !important;
+  height: 194px !important;
   width: 300px !important;
   border-radius: 15px !important;
   background-color: #ffff !important;
-  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
-    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px !important;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
 }
 
 .add-btn:hover {
   opacity: 0.75;
+  transition: all 0.5s;
 }
 
 .add-plus-icon {
-  color: #002b49;
   opacity: 0.2;
+  color: #002b49;
   font-size: 3rem !important;
 }
 
