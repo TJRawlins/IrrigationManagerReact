@@ -9,11 +9,16 @@
 }
 
 .card-img.zone {
-  height: 130px !important;
+  height: 140px !important;
 }
 
 .card-img.zone::before {
-  height: 130px !important;
+  opacity: 0.45;
+}
+
+#zone-card-container:hover .card-img.zone::before {
+  opacity: 0.3;
+  transition: all .5s;
 }
 
 .card-data-container.zone {
@@ -61,10 +66,11 @@
 
 .zone-card-action-button:hover {
   background-color: #ffffffe8 !important;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
-    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 8px,
+  rgba(0, 0, 0, 0.22) 0px 15px 12px;
   transform: scale(1.15);
   z-index: 10;
+  transition: all 0.3s;
 }
 
 .card-content-wrapper.zone-content {
