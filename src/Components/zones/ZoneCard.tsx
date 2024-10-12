@@ -176,6 +176,7 @@ export default function ZoneCard({
       <Card
         onMouseEnter={handelMouseEnter}
         onMouseLeave={handelMouseLeave}
+        id="zone-card-container"
         sx={{
           position: "relative",
           boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important",
@@ -327,7 +328,7 @@ export default function ZoneCard({
             height: "48px",
             width: "93%",
             position: "absolute",
-            top: "98px",
+            top: "105px",
           }}
         >
           <Box
