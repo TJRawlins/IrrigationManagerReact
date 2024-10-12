@@ -1,3 +1,51 @@
+.card-name.zone {
+  position: absolute;
+  top: 35%;
+  color: white;
+  text-align: center;
+  text-shadow: 1px 2px 5px #000000a8;
+  width: 280px;
+  margin-left: 0 !important;
+}
+
+.card-img.zone {
+  height: 130px !important;
+}
+
+.card-img.zone::before {
+  height: 130px !important;
+}
+
+.card-data-container.zone {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 49%;
+  width: 279px;
+  background-color: #0000005c;
+}
+
+.card-data.zone {
+  font-size: 0.75rem !important;
+  color: #ffff !important;
+  margin: 0 0.25rem !important;
+}
+
+.card-data span:nth-child(1) {
+  font-size: inherit !important;
+}
+
+.iconStyle.zoneCardIcon {
+  fill: #02c0a0;
+}
+
+#total-gallons-stack {
+  background: linear-gradient(45deg, #82a628, #02c0a0);
+  border-radius: 0 0 10px 10px;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
 .action-icon {
   transform: scale(0.8);
 }
@@ -6,13 +54,22 @@
   font-size: 1.5rem !important;
   width: 100% !important;
   min-width: 50px !important;
-  background-color: #ffffffa8 !important;
-  color: #002b49 !important;
+  background-color: #ffffffc7 !important;
+  color: #04705e !important;
   padding: 0 !important;
 }
 
 .zone-card-action-button:hover {
   background-color: #ffffffe8 !important;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  transform: scale(1.15);
+  z-index: 10;
+}
+
+.card-content-wrapper.zone-content {
+  background-color: #02c0a021;
+  padding: 0 !important;
 }
 
 #zone-card-details {
