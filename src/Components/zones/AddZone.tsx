@@ -64,7 +64,6 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   const { season } = useSelector((state: RootState) => state.season);
 
   // Firebase Storage Variables
-  const [imageUrlPath, setImageUrlPath] = useState<string>();
   const [imageUpload, setImageUpload] = useState<File>();
   const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
   const storage: FirebaseStorage = getStorage(app);
@@ -76,7 +75,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimeHours: undefined,
     runtimeMinutes: undefined,
     runtimePerWeek: undefined,
-    imagePath: imageUrlPath,
+    imagePath: undefined,
     season: season.name,
     seasonId: season.id,
   };
@@ -89,13 +88,29 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   });
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    if (imageRef) {
-      uploadImage();
+    if (imageUpload) {
+       // Image gets uploaded on submit
+      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            for (const [key] of Object.entries(values)) {
+              if (key === "imagePath") {
+                values = { ...values, imagePath: url };
+              }
+            }
+          })
+          .then(() =>
+            agent.Zones.createZone(values)
+              .catch((error) => alert(error))
+              .then(() => fetchZones(season.id))
+          );
+        setImageUpload(undefined);
+      });
+    } else {
+      agent.Zones.createZone(values)
+        .catch((error) => alert(error))
+        .then(() => fetchZones(season.id));
     }
-    uploadImage();
-    agent.Zones.createZone(values)
-      .catch((error) => alert(error))
-      .then(() => fetchZones(season.id));
     props.resetForm();
     handleClose();
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
@@ -110,30 +125,12 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     return isZonesStored;
   };
 
+  // Onchange event for "Select Image" button
   const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
     setImageUpload(event.target.files?.[0]);
     setImagePathAndFileName(
       `images/zones/${event.target.files?.[0].name.toString()}${v4()}`
     );
-  };
-
-  const uploadImage = () => {
-    if (!imageUpload) return;
-    uploadBytes(imageRef, imageUpload)
-      .then(() => {
-        alert("Image uploaded.");
-      })
-      .finally(() =>
-        getDownloadURL(imageRef)
-          .then((imageUrl) => {
-            setImageUrlPath(imageUrl);
-            console.log(imageUrlPath);
-          })
-          .catch((error) => {
-            // Handle any errors
-            console.error(error);
-          })
-      );
   };
 
   return (
