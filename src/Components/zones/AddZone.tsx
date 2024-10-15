@@ -89,7 +89,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     if (imageUpload) {
-       // Image gets uploaded on submit
+      // Image gets uploaded on submit
       uploadBytes(imageRef, imageUpload).then((snapshot) => {
         getDownloadURL(snapshot.ref)
           .then((url) => {
@@ -169,21 +169,27 @@ function AddZone({ fetchZones }: ZoneBarProps) {
           >
             {({ errors, touched }) => (
               <Form style={{ width: "100%" }}>
-                <Field
-                  as={TextField}
-                  required
-                  className="input"
-                  id="zone-name-input"
-                  name="name"
-                  label="Zone name"
-                  type="text"
-                  autoComplete=""
-                  variant="standard"
-                  error={touched.name && Boolean(errors.name)}
-                />
-                <FormHelperText error={touched.name && Boolean(errors.name)}>
-                  {touched.name && errors.name ? errors.name : ""}
-                </FormHelperText>
+                <div className="split-container">
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="zone-name-input"
+                      name="name"
+                      label="Zone name"
+                      type="text"
+                      autoComplete=""
+                      variant="standard"
+                      error={touched.name && Boolean(errors.name)}
+                    />
+                    <FormHelperText
+                      error={touched.name && Boolean(errors.name)}
+                    >
+                      {touched.name && errors.name ? errors.name : ""}
+                    </FormHelperText>
+                  </Box>
+                </div>
                 <div className="split-container">
                   <Box className="input">
                     <Field
