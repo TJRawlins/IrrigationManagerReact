@@ -71,7 +71,10 @@ function EditZone({
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
   const seasonIdValue = useRef<number>();
-  const handleClose = () => setIsShowEdit(false);
+  const handleClose = () => {
+    setIsShowEdit(false);
+    setImageUpload(undefined);
+  };
 
   // Firebase Storage Variables
   const [imageUpload, setImageUpload] = useState<File>();
@@ -296,11 +299,8 @@ function EditZone({
                   }
                 />
                 <div className="split-container">
-                  {(imageUpload || zone.imagePath) && (
-                    <Tooltip
-                      title={imageUpload?.name.toString() ?? zone.imagePath}
-                      arrow
-                    >
+                  {imageUpload ? (
+                    <Tooltip title={imageUpload?.name.toString()} arrow>
                       <Typography
                         component={"div"}
                         style={{
@@ -314,9 +314,18 @@ function EditZone({
                           padding: "6px",
                         }}
                       >
-                        {imageUpload?.name.toString() ?? zone.imagePath}
+                        {imageUpload?.name.toString()}
                       </Typography>
                     </Tooltip>
+                  ) : (
+                    <img
+                      src={zone.imagePath}
+                      style={{
+                        maxWidth: "150px",
+                        height: "75px",
+                        objectFit: "contain",
+                      }}
+                    ></img>
                   )}
                   <Button
                     component="label"
