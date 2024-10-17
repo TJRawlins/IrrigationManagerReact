@@ -284,6 +284,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                           textOverflow: "ellipsis",
                           overflow: "hidden",
                           whiteSpace: "nowrap",
+                          height: "45px",
                           width: "100%",
                           margin: "1rem 0",
                           alignSelf: "center",
@@ -301,7 +302,12 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
-                    sx={{ width: "100%", color: "#ffff", margin: "1rem 0" }}
+                    sx={{
+                      width: "100%",
+                      height: "45px",
+                      color: "#ffff",
+                      margin: "1rem 0",
+                    }}
                   >
                     Select Image
                     <VisuallyHiddenInput
