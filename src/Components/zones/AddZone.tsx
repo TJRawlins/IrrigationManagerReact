@@ -1,18 +1,49 @@
 /* eslint-disable no-debugger */
-import { Box, Modal, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  FormHelperText,
+  Modal,
+  styled,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import agent from "../../App/api/agent";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import "../../styles/zones/AddZone.css";
+import { app } from "../../App/firebase/firebase";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  StorageReference,
+  FirebaseStorage,
+} from "firebase/storage";
+import { v4 } from "uuid";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type ZoneBarProps = {
   fetchZones(args: number): void;
 };
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 const style = {
   position: "absolute" as const,
@@ -30,8 +61,13 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const { season } = useSelector((state: RootState) => state.season);
+
+  // Firebase Storage Variables
+  const [imageUpload, setImageUpload] = useState<File>();
+  const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
+  const storage: FirebaseStorage = getStorage(app);
+  const imageRef: StorageReference = ref(storage, imagePathAndFileName);
 
   // Form submission
   const initialValues = {
@@ -49,13 +85,32 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     runtimeHours: Yup.number().required("Required field"),
     runtimeMinutes: Yup.number().required("Required field"),
     runtimePerWeek: Yup.number().required("Required field"),
-    imagePath: Yup.string().url("Please enter valid URL"),
   });
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
-    agent.Zones.createZone(values)
-      .catch((error) => alert(error))
-      .then(() => fetchZones(season.id));
+    if (imageUpload) {
+      // Image gets uploaded on submit
+      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            for (const [key] of Object.entries(values)) {
+              if (key === "imagePath") {
+                values = { ...values, imagePath: url };
+              }
+            }
+          })
+          .then(() =>
+            agent.Zones.createZone(values)
+              .catch((error) => alert(error))
+              .then(() => fetchZones(season.id))
+          );
+        setImageUpload(undefined);
+      });
+    } else {
+      agent.Zones.createZone(values)
+        .catch((error) => alert(error))
+        .then(() => fetchZones(season.id));
+    }
     props.resetForm();
     handleClose();
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
@@ -68,6 +123,14 @@ function AddZone({ fetchZones }: ZoneBarProps) {
       zonesLocalStorageValue !== "undefined" &&
       zonesLocalStorageValue !== "[]";
     return isZonesStored;
+  };
+
+  // Onchange event for "Select Image" button
+  const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
+    setImageUpload(event.target.files?.[0]);
+    setImagePathAndFileName(
+      `images/zones/${event.target.files?.[0].name.toString()}${v4()}`
+    );
   };
 
   return (
@@ -104,107 +167,158 @@ function AddZone({ fetchZones }: ZoneBarProps) {
             onSubmit={onSubmit}
             validationSchema={validationSchema}
           >
-            {() => (
+            {({ errors, touched }) => (
               <Form style={{ width: "100%" }}>
-                <Field
-                  as={TextField}
-                  required
-                  className="input"
-                  id="zone-name-input"
-                  name="name"
-                  label="Zone name"
-                  type="text"
-                  autoComplete=""
-                  variant="standard"
-                  helperText={
-                    <ErrorMessage
-                      name="name"
-                      component="div"
-                      className="error-text"
-                    />
-                  }
-                />
                 <div className="split-container">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="runtime-hours-input"
-                    name="runtimeHours"
-                    label="Runtime hours"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 24 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="runtimeHours"
-                        component="div"
-                        className="error-text"
-                      />
-                    }
-                  />
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="zone-name-input"
+                      name="name"
+                      label="Zone name"
+                      type="text"
+                      autoComplete=""
+                      variant="standard"
+                      error={touched.name && Boolean(errors.name)}
+                    />
+                    <FormHelperText
+                      error={touched.name && Boolean(errors.name)}
+                    >
+                      {touched.name && errors.name ? errors.name : ""}
+                    </FormHelperText>
+                  </Box>
+                </div>
+                <div className="split-container">
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="runtime-hours-input"
+                      name="runtimeHours"
+                      label="Runtime hours"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 24 } }}
+                      error={
+                        touched.runtimeHours && Boolean(errors.runtimeHours)
+                      }
+                    />
+                    <FormHelperText
+                      error={
+                        touched.runtimeHours && Boolean(errors.runtimeHours)
+                      }
+                    >
+                      {touched.runtimeHours && errors.runtimeHours
+                        ? errors.runtimeHours
+                        : ""}
+                    </FormHelperText>
+                  </Box>
                   <Typography
                     sx={{ textAlign: "center !important", paddingTop: "30px" }}
                   >
                     :
                   </Typography>
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="runtime-minutes-input"
+                      name="runtimeMinutes"
+                      label="Runtime minutes"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 59 } }}
+                      error={
+                        touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
+                      }
+                    />
+                    <FormHelperText
+                      error={
+                        touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
+                      }
+                    >
+                      {touched.runtimeMinutes && errors.runtimeMinutes
+                        ? errors.runtimeMinutes
+                        : ""}
+                    </FormHelperText>
+                  </Box>
+                </div>
+                <Box className="input">
                   <Field
                     as={TextField}
                     required
                     className="input"
-                    id="runtime-minutes-input"
-                    name="runtimeMinutes"
-                    label="Runtime minutes"
+                    id="per-week-input"
+                    label="Times per week"
+                    name="runtimePerWeek"
                     type="number"
                     autoComplete=""
                     variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 59 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="runtimeMinutes"
-                        component="div"
-                        className="error-text"
-                      />
+                    InputProps={{ inputProps: { min: 0, max: 25 } }}
+                    error={
+                      touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
                     }
                   />
+                  <FormHelperText
+                    error={
+                      touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
+                    }
+                  >
+                    {touched.runtimePerWeek && errors.runtimePerWeek
+                      ? errors.runtimePerWeek
+                      : ""}
+                  </FormHelperText>
+                </Box>
+                <div className="split-container">
+                  {imageUpload && (
+                    <Tooltip title={imageUpload.name.toString()} arrow>
+                      <Typography
+                        component={"div"}
+                        style={{
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          height: "45px",
+                          width: "100%",
+                          margin: "1rem 0",
+                          alignSelf: "center",
+                          borderBottom: "1px solid #9d9d9d",
+                          padding: "6px",
+                        }}
+                      >
+                        {imageUpload.name.toString()}
+                      </Typography>
+                    </Tooltip>
+                  )}
+                  <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<CloudUploadIcon />}
+                    sx={{
+                      width: "100%",
+                      height: "45px",
+                      color: "#ffff",
+                      margin: "1rem 0",
+                    }}
+                  >
+                    Select Image
+                    <VisuallyHiddenInput
+                      type="file"
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        generateImageFileName(event)
+                      }
+                      multiple
+                    />
+                  </Button>
                 </div>
-                <Field
-                  as={TextField}
-                  required
-                  className="input"
-                  id="per-week-input"
-                  label="Times per week"
-                  name="runtimePerWeek"
-                  type="number"
-                  autoComplete=""
-                  variant="standard"
-                  InputProps={{ inputProps: { min: 0, max: 25 } }}
-                  helperText={
-                    <ErrorMessage
-                      name="runtimePerWeek"
-                      component="div"
-                      className="error-text"
-                    />
-                  }
-                />
-                <Field
-                  as={TextField}
-                  className="input"
-                  id="image-path-input"
-                  label="Image path"
-                  name="imagePath"
-                  type="text"
-                  autoComplete=""
-                  variant="standard"
-                  helperText={
-                    <ErrorMessage
-                      name="imagePath"
-                      component="div"
-                      className="error-text"
-                    />
-                  }
-                />
                 <Field
                   as={TextField}
                   disabled
