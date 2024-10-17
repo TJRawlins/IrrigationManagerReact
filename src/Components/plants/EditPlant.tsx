@@ -352,11 +352,11 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                     <img
                       src={plant.imagePath}
                       style={{
-                        maxWidth: "150px",
-                        height: "75px",
-                        objectFit: "contain",
-                        border: "8px solid white",
-                        borderRadius: "15px",
+                        width: "215px",
+                        height: "45px",
+                        objectFit: "cover",
+                        borderRadius: "5px",
+                        margin: "1rem 0",
                       }}
                     ></img>
                   )}
