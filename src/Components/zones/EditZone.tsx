@@ -6,7 +6,9 @@ import {
   MenuItem,
   Modal,
   Select,
+  styled,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -16,7 +18,18 @@ import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import "../../styles/zones/AddZone.css";
-import { useRef } from "react";
+import { ChangeEvent, useRef, useState } from "react";
+import { app } from "../../App/firebase/firebase";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  StorageReference,
+  FirebaseStorage,
+} from "firebase/storage";
+import { v4 } from "uuid";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type ZoneEditProps = {
   fetchZones(args: number): void;
@@ -24,6 +37,18 @@ type ZoneEditProps = {
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
 };
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 const style = {
   position: "absolute" as const,
@@ -46,7 +71,18 @@ function EditZone({
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
   const seasonIdValue = useRef<number>();
-  const handleClose = () => setIsShowEdit(false);
+  const handleClose = () => {
+    setIsShowEdit(false);
+    setImageUpload(undefined);
+  };
+
+  // Firebase Storage Variables
+  const [imageUpload, setImageUpload] = useState<File>();
+  const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
+  const storage: FirebaseStorage = getStorage(app);
+  const imageRef: StorageReference = ref(storage, imagePathAndFileName);
+
+  // Form submission
   const initialValues = {
     id: zone.id,
     name: zone.name,
@@ -62,6 +98,7 @@ function EditZone({
     seasonId: zone.seasonId,
   };
 
+  // TODO: IF ZONE IMAGE GETS CHANGED, NEED TO DELETE PREVIOUS IMAGE FROM FIREBASE STORAGE BUCKET
   // Form submission
   const onSubmit = (
     values: object,
@@ -70,22 +107,54 @@ function EditZone({
     }
   ) => {
     console.log("onSubmit values", values);
-    for (const [key, value] of Object.entries(values)) {
-      if (key === "season") {
-        seasonNameToSeasonId(value);
-        values = { ...values, seasonId: seasonIdValue.current };
+    if (imageUpload) {
+      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            for (const [key, value] of Object.entries(values)) {
+              if (key === "imagePath") {
+                values = { ...values, imagePath: url };
+              }
+              if (key === "season") {
+                seasonNameToSeasonId(value);
+                values = { ...values, seasonId: seasonIdValue.current };
+              }
+            }
+          })
+          .then(() => {
+            editZone(zone.id, values);
+            console.log("zone edited");
+            props.resetForm();
+            handleClose();
+          });
+        setImageUpload(undefined);
+      });
+    } else {
+      for (const [key, value] of Object.entries(values)) {
+        if (key === "season") {
+          seasonNameToSeasonId(value);
+          values = { ...values, seasonId: seasonIdValue.current };
+        }
       }
+      editZone(zone.id, values);
+      console.log("zone edited");
+      props.resetForm();
+      handleClose();
     }
-    editZone(zone.id, values);
-    console.log("zone edited");
-    props.resetForm();
-    handleClose();
   };
 
   const editZone = (id: number, values: object) => {
     agent.Zones.editZone(id, season.id, values)
       .then(() => fetchZones(season.id))
       .finally(() => updateLocalStorageSeason(season.id));
+  };
+
+  // Onchange event for "Select Image" button
+  const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
+    setImageUpload(event.target.files?.[0]);
+    setImagePathAndFileName(
+      `images/zones/${event.target.files?.[0].name.toString()}${v4()}`
+    );
   };
 
   const seasonNameToSeasonId = (seasonName: string) => {
@@ -110,7 +179,6 @@ function EditZone({
     runtimeHours: Yup.number().required("Required field"),
     runtimeMinutes: Yup.number().required("Required field"),
     runtimePerWeek: Yup.number().required("Required field"),
-    imagePath: Yup.string().url("Please enter valid URL"),
   });
 
   return (
@@ -230,23 +298,55 @@ function EditZone({
                     />
                   }
                 />
-                <Field
-                  as={TextField}
-                  className="input"
-                  id="image-path-input"
-                  label="Image path"
-                  name="imagePath"
-                  type="text"
-                  autoComplete=""
-                  variant="standard"
-                  helperText={
-                    <ErrorMessage
-                      name="imagePath"
-                      component="span"
-                      className="error-text"
+                <div className="split-container">
+                  {imageUpload ? (
+                    <Tooltip title={imageUpload?.name.toString()} arrow>
+                      <Typography
+                        component={"div"}
+                        style={{
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          width: "100%",
+                          margin: "1rem 0",
+                          alignSelf: "center",
+                          borderBottom: "1px solid #9d9d9d",
+                          padding: "6px",
+                        }}
+                      >
+                        {imageUpload?.name.toString()}
+                      </Typography>
+                    </Tooltip>
+                  ) : (
+                    <img
+                      src={zone.imagePath}
+                      style={{
+                        width: "359px",
+                        height: "45px",
+                        objectFit: "cover",
+                        borderRadius: "5px",
+                        margin: "1rem 0",
+                      }}
+                    ></img>
+                  )}
+                  <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<CloudUploadIcon />}
+                    sx={{ width: "100%", color: "#ffff", margin: "1rem 0" }}
+                  >
+                    Select Image
+                    <VisuallyHiddenInput
+                      type="file"
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        generateImageFileName(event)
+                      }
+                      multiple
                     />
-                  }
-                />
+                  </Button>
+                </div>
                 <Box sx={{ minWidth: 120, mt: 3 }}>
                   <FormControl fullWidth>
                     <InputLabel
