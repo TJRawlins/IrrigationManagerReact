@@ -31,7 +31,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type ZoneBarProps = {
-  fetchZones(args: number): void;
+  fetchZones(args: number): Promise<void>;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -94,41 +94,10 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     if (imageUpload) {
       setIsLoading(true);
       // Image gets uploaded on submit
-      uploadBytes(imageRef, imageUpload).then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            for (const [key] of Object.entries(values)) {
-              if (key === "imagePath") {
-                values = { ...values, imagePath: url };
-              }
-            }
-          })
-          .then(() =>
-            agent.Zones.createZone(values)
-              .catch((error) => alert(error))
-              .then(() => {
-                fetchZones(season.id);
-                setIsLoading(false);
-              })
-              .finally(() => {
-                props.resetForm();
-                handleClose();
-              })
-          );
-        setImageUpload(undefined);
-      });
+      uploadImage(imageRef, imageUpload, values, props);
     } else {
       setIsLoading(true);
-      agent.Zones.createZone(values)
-        .catch((error) => alert(error))
-        .then(() => {
-          fetchZones(season.id);
-          setIsLoading(false);
-        })
-        .finally(() => {
-          props.resetForm();
-          handleClose();
-        });
+      addZone(values, props);
     }
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
   };
@@ -148,6 +117,43 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     setImagePathAndFileName(
       `users/tjrawlins/images/zones/${event.target.files?.[0].name.toString()}${v4()}`
     );
+  };
+
+  const uploadImage = async (
+    imageRef: StorageReference,
+    imageUpload: File,
+    values: object,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    props: any
+  ) => {
+    await uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          for (const [key] of Object.entries(values)) {
+            if (key === "imagePath") {
+              values = { ...values, imagePath: url };
+            }
+          }
+        })
+        .then(() => addZone(values, props));
+      setImageUpload(undefined);
+    });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const addZone = async (values: object, props: any) => {
+    agent.Zones.createZone(values)
+      .catch((error) => alert(error))
+      .then(() => {
+        fetchZones(season.id).then(() => {
+          setIsLoading(false);
+          props.resetForm();
+          handleClose();
+        });
+      })
+      .finally(() => {
+        console.log("zone added");
+      });
   };
 
   return (
