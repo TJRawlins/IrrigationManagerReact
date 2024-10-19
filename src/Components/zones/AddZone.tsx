@@ -357,6 +357,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                       height: "45px",
                       color: "#ffff",
                       margin: "1rem 0",
+                      background: "linear-gradient(to right, #02c0a0, #82a628)",
                     }}
                   >
                     Select Image

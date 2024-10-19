@@ -366,7 +366,12 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
-                    sx={{ width: "100%", color: "#ffff", margin: "1rem 0" }}
+                    sx={{
+                      width: "100%",
+                      color: "#ffff",
+                      margin: "1rem 0",
+                      background: "linear-gradient(to right, #02c0a0, #82a628)",
+                    }}
                   >
                     Select Image
                     <VisuallyHiddenInput
