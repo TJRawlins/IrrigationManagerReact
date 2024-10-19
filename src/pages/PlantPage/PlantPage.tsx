@@ -39,8 +39,8 @@ const PlantPage = () => {
   //   console.log("%cPlantPage: Trefle Plant Updated", "color:#1CA1E6");
   // };
 
-  const fetchPlants = (zoneId: number) => {
-    agent.Plants.list().then((plants) => {
+  const fetchPlants = async (zoneId: number) => {
+    await agent.Plants.list().then((plants) => {
       const filterPlants: Array<Plant> | [] = plants.filter(
         (plant: { zoneId: number }) => plant.zoneId === zoneId
       );
