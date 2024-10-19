@@ -152,7 +152,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
     setImageUpload(event.target.files?.[0]);
     setImagePathAndFileName(
-      `images/plants/${event.target.files?.[0].name.toString()}${v4()}`
+      `users/tjrawlins/images/plants/${event.target.files?.[0].name.toString()}${v4()}`
     );
   };
 
