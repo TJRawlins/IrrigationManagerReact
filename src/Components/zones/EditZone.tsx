@@ -33,7 +33,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type ZoneEditProps = {
-  fetchZones(args: number): void;
+  fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
@@ -76,6 +76,7 @@ function EditZone({
   const handleClose = () => {
     setIsShowEdit(false);
     setImageUpload(undefined);
+    console.log("CLOSED!");
   };
 
   useEffect(() => {
@@ -163,13 +164,15 @@ function EditZone({
       .catch((error) => alert(error))
       .then(() => {
         updateLocalStorageSeason(season.id);
-        fetchZones(season.id);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        props.resetForm();
-        handleClose();
-        console.log("zone edited");
+        fetchZones(season.id)
+          .then(() => {
+            setIsLoading(false);
+            props.resetForm();
+            handleClose();
+          })
+          .finally(() => {
+            console.log("zone edited");
+          });
       });
   };
 
