@@ -378,6 +378,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       height: "45px",
                       color: "#ffff",
                       marginTop: "1rem",
+                      background: "linear-gradient(to right, #02c0a0, #82a628)",
                     }}
                   >
                     Select Image

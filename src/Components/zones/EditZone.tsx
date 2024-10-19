@@ -362,7 +362,7 @@ function EditZone({
                           overflow: "hidden",
                           whiteSpace: "nowrap",
                           width: "100%",
-                          margin: "1rem 0",
+                          marginTop: "1rem",
                           alignSelf: "center",
                           borderBottom: "1px solid #9d9d9d",
                           padding: "6px",
@@ -389,7 +389,12 @@ function EditZone({
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
-                    sx={{ width: "100%", color: "#ffff", marginTop: "1rem" }}
+                    sx={{
+                      width: "100%",
+                      color: "#ffff",
+                      marginTop: "1rem",
+                      background: "linear-gradient(to right, #02c0a0, #82a628)",
+                    }}
                   >
                     Select Image
                     <VisuallyHiddenInput
