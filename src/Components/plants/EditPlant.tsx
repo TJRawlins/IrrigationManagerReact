@@ -457,7 +457,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                   </div>
                 </Box>
                 <Field
-                  style={{ width: "100%", marginTop: 20 }}
+                  style={{ width: "100%", marginTop: 12 }}
                   id="notes-input"
                   label="Notes"
                   name="notes"
