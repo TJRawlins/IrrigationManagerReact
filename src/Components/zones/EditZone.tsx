@@ -12,13 +12,14 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import "../../styles/zones/AddZone.css";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { app } from "../../App/firebase/firebase";
 import {
   getStorage,
@@ -70,11 +71,16 @@ function EditZone({
 }: ZoneEditProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const seasonIdValue = useRef<number>();
   const handleClose = () => {
     setIsShowEdit(false);
     setImageUpload(undefined);
   };
+
+  useEffect(() => {
+    console.log(isLoading);
+  }, [isLoading]);
 
   // Firebase Storage Variables
   const [imageUpload, setImageUpload] = useState<File>();
@@ -108,27 +114,9 @@ function EditZone({
   ) => {
     console.log("onSubmit values", values);
     if (imageUpload) {
-      uploadBytes(imageRef, imageUpload).then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            for (const [key, value] of Object.entries(values)) {
-              if (key === "imagePath") {
-                values = { ...values, imagePath: url };
-              }
-              if (key === "season") {
-                seasonNameToSeasonId(value);
-                values = { ...values, seasonId: seasonIdValue.current };
-              }
-            }
-          })
-          .then(() => {
-            editZone(zone.id, values);
-            console.log("zone edited");
-            props.resetForm();
-            handleClose();
-          });
-        setImageUpload(undefined);
-      });
+      setIsLoading(true);
+      // Includes editZone function
+      uploadImage(imageRef, imageUpload, values, props);
     } else {
       for (const [key, value] of Object.entries(values)) {
         if (key === "season") {
@@ -136,17 +124,53 @@ function EditZone({
           values = { ...values, seasonId: seasonIdValue.current };
         }
       }
-      editZone(zone.id, values);
-      console.log("zone edited");
-      props.resetForm();
-      handleClose();
+      setIsLoading(true);
+      editZone(zone.id, values, props);
     }
   };
 
-  const editZone = (id: number, values: object) => {
-    agent.Zones.editZone(id, season.id, values)
-      .then(() => fetchZones(season.id))
-      .finally(() => updateLocalStorageSeason(season.id));
+  const uploadImage = async (
+    imageRef: StorageReference,
+    imageUpload: File,
+    values: object,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    props: any
+  ) => {
+    await uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          for (const [key, value] of Object.entries(values)) {
+            if (key === "imagePath") {
+              values = { ...values, imagePath: url };
+            }
+            if (key === "season") {
+              seasonNameToSeasonId(value);
+              values = { ...values, seasonId: seasonIdValue.current };
+              return values;
+            }
+          }
+        })
+        .then(() => {
+          editZone(zone.id, values, props);
+        });
+      setImageUpload(undefined);
+    });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const editZone = async (id: number, values: object, props: any) => {
+    await agent.Zones.editZone(id, season.id, values)
+      .catch((error) => alert(error))
+      .then(() => {
+        updateLocalStorageSeason(season.id);
+        fetchZones(season.id);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        props.resetForm();
+        handleClose();
+        console.log("zone edited");
+      });
   };
 
   // Onchange event for "Select Image" button
@@ -196,6 +220,33 @@ function EditZone({
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
+            {isLoading && (
+              <Modal
+                open={true}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                slotProps={{
+                  backdrop: {
+                    style: { backgroundColor: "transparent" },
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              </Modal>
+            )}
             <Typography
               className="modal-title"
               id="modal-modal-title"
