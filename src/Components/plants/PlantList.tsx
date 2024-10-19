@@ -16,7 +16,7 @@ import EditPlant from "./EditPlant";
 import { updateCurrentPlant } from "../../redux/plantSlice";
 
 interface PlantListProps {
-  fetchPlants: (zoneId: number) => void;
+  fetchPlants: (zoneId: number) => Promise<void>;
   updateLocalStorageZone: (zoneId: number) => void;
   // updateLocalStorageTreflePlant: (plantName: string) => void;
 }

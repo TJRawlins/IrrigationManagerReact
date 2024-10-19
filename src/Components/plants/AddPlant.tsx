@@ -35,7 +35,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type PlantBarProps = {
-  fetchPlants: (id: number) => void;
+  fetchPlants: (id: number) => Promise<void>;
 };
 
 const VisuallyHiddenInput = styled("input")({
