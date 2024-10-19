@@ -93,7 +93,6 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     if (imageUpload) {
       setIsLoading(true);
-      // Image gets uploaded on submit
       uploadImage(imageRef, imageUpload, values, props);
     } else {
       setIsLoading(true);
@@ -142,7 +141,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const addZone = async (values: object, props: any) => {
-    agent.Zones.createZone(values)
+    await agent.Zones.createZone(values)
       .catch((error) => alert(error))
       .then(() => {
         fetchZones(season.id).then(() => {
@@ -151,9 +150,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
           handleClose();
         });
       })
-      .finally(() => {
-        console.log("zone added");
-      });
+      .finally(() => console.log("zone added"));
   };
 
   return (
