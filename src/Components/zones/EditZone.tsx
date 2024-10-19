@@ -153,7 +153,7 @@ function EditZone({
   const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
     setImageUpload(event.target.files?.[0]);
     setImagePathAndFileName(
-      `images/zones/${event.target.files?.[0].name.toString()}${v4()}`
+      `users/tjrawlins/images/zones/${event.target.files?.[0].name.toString()}${v4()}`
     );
   };
 
