@@ -153,7 +153,7 @@ function EditZone({
   const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
     setImageUpload(event.target.files?.[0]);
     setImagePathAndFileName(
-      `images/zones/${event.target.files?.[0].name.toString()}${v4()}`
+      `users/tjrawlins/images/zones/${event.target.files?.[0].name.toString()}${v4()}`
     );
   };
 
@@ -325,7 +325,7 @@ function EditZone({
                         height: "45px",
                         objectFit: "cover",
                         borderRadius: "5px",
-                        margin: "1rem 0",
+                        marginTop: "1rem",
                       }}
                     ></img>
                   )}
@@ -335,7 +335,7 @@ function EditZone({
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
-                    sx={{ width: "100%", color: "#ffff", margin: "1rem 0" }}
+                    sx={{ width: "100%", color: "#ffff", marginTop: "1rem" }}
                   >
                     Select Image
                     <VisuallyHiddenInput

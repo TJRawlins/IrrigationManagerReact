@@ -64,8 +64,6 @@ const style = {
 
 function AddPlant({ fetchPlants }: PlantBarProps) {
   const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const { zone } = useSelector((state: RootState) => state.zone);
@@ -75,6 +73,12 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
   const storage: FirebaseStorage = getStorage(app);
   const imageRef: StorageReference = ref(storage, imagePathAndFileName);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setImageUpload(undefined);
+  };
 
   // TODO - Update local storage for zone. Added to onSubmit
   const updateLocalStorageZone = () => {
@@ -148,7 +152,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
     setImageUpload(event.target.files?.[0]);
     setImagePathAndFileName(
-      `images/plants/${event.target.files?.[0].name.toString()}${v4()}`
+      `users/tjrawlins/images/plants/${event.target.files?.[0].name.toString()}${v4()}`
     );
   };
 
@@ -353,7 +357,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                           whiteSpace: "nowrap",
                           height: "45px",
                           width: "100%",
-                          margin: "1rem 0",
+                          marginTop: "1rem",
                           alignSelf: "center",
                           borderBottom: "1px solid #9d9d9d",
                           padding: "6px",
@@ -373,7 +377,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       width: "100%",
                       height: "45px",
                       color: "#ffff",
-                      margin: "1rem 0",
+                      marginTop: "1rem",
                     }}
                   >
                     Select Image
@@ -465,7 +469,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                   </div>
                 </Box>
                 <Field
-                  style={{ width: "100%", marginTop: 20 }}
+                  style={{ width: "100%", marginTop: 12 }}
                   id="notes-input"
                   label="Notes"
                   name="notes"
