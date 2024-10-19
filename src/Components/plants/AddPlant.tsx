@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -67,6 +68,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   const dispatch = useDispatch();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const { zone } = useSelector((state: RootState) => state.zone);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Firebase Storage Variables
   const [imageUpload, setImageUpload] = useState<File>();
@@ -117,32 +119,33 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     // updateLocalStorageZone was added to update and persist gallons on PlantBar
     if (isClicked) {
       if (imageUpload) {
-        // Image gets uploaded on submit
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-          getDownloadURL(snapshot.ref)
-            .then((url) => {
-              for (const [key] of Object.entries(values)) {
-                if (key === "imagePath") {
-                  values = { ...values, imagePath: url };
-                }
-              }
-            })
-            .then(() =>
-              agent.Plants.createPlant(values)
-                .catch((error) => alert(error))
-                .then(() => fetchPlants(zone.id))
-                .then(() => updateLocalStorageZone())
-            );
-          setImageUpload(undefined);
-        });
+        setIsLoading(true);
+        uploadImage(imageRef, imageUpload, values, props);
+        // uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        //   getDownloadURL(snapshot.ref)
+        //     .then((url) => {
+        //       for (const [key] of Object.entries(values)) {
+        //         if (key === "imagePath") {
+        //           values = { ...values, imagePath: url };
+        //         }
+        //       }
+        //     })
+        //     .then(() =>
+        //       agent.Plants.createPlant(values)
+        //         .catch((error) => alert(error))
+        //         .then(() => fetchPlants(zone.id))
+        //         .then(() => updateLocalStorageZone())
+        //     );
+        //   setImageUpload(undefined);
+        // });
       } else {
-        agent.Plants.createPlant(values)
-          .catch((error) => alert(error))
-          .then(() => fetchPlants(zone.id))
-          .then(() => updateLocalStorageZone());
+        setIsLoading(true);
+        addPlant(values, props);
+        // agent.Plants.createPlant(values)
+        //   .catch((error) => alert(error))
+        //   .then(() => fetchPlants(zone.id))
+        //   .then(() => updateLocalStorageZone());
       }
-      props.resetForm();
-      handleClose();
       setIsClicked(false);
       console.log("%cAddPlant: Plant Added", "color:#1CA1E6");
     }
@@ -154,6 +157,42 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     setImagePathAndFileName(
       `users/tjrawlins/images/plants/${event.target.files?.[0].name.toString()}${v4()}`
     );
+  };
+
+  const uploadImage = async (
+    imageRef: StorageReference,
+    imageUpload: File,
+    values: object,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    props: any
+  ) => {
+    await uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          for (const [key] of Object.entries(values)) {
+            if (key === "imagePath") {
+              values = { ...values, imagePath: url };
+            }
+          }
+        })
+        .then(() => addPlant(values, props));
+      setImageUpload(undefined);
+    });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const addPlant = async (values: object, props: any) => {
+    await agent.Plants.createPlant(values)
+      .catch((error) => alert(error))
+      .then(() =>
+        fetchPlants(zone.id).then(() => {
+          setIsLoading(false);
+          updateLocalStorageZone();
+          props.resetForm();
+          handleClose();
+        })
+      )
+      .finally(() => console.log("plant added"));
   };
 
   return (
@@ -184,6 +223,33 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
+            {isLoading && (
+              <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                slotProps={{
+                  backdrop: {
+                    style: { backgroundColor: "transparent" },
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              </Modal>
+            )}
             <Typography
               className="modal-title"
               id="modal-modal-title"
