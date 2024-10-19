@@ -36,8 +36,8 @@ const ZonesPage = () => {
   // };
 
   //* Initial zone list
-  const fetchZones = (seasonString: number) => {
-    agent.Zones.list().then((zones) => {
+  const fetchZones = async (seasonString: number) => {
+    await agent.Zones.list().then((zones) => {
       dispatch(
         updateCurrentZoneList(
           zones
