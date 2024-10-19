@@ -149,7 +149,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
   const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
     setImageUpload(event.target.files?.[0]);
     setImagePathAndFileName(
-      `images/zones/${event.target.files?.[0].name.toString()}${v4()}`
+      `users/tjrawlins/images/plants/${event.target.files?.[0].name.toString()}${v4()}`
     );
   };
 
@@ -457,7 +457,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                   </div>
                 </Box>
                 <Field
-                  style={{ width: "100%", marginTop: 20 }}
+                  style={{ width: "100%", marginTop: 12 }}
                   id="notes-input"
                   label="Notes"
                   name="notes"

@@ -132,7 +132,7 @@ PlantListProps) {
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "name",
-      headerName: "Plant",
+      headerName: "Name",
       flex: 1,
       cellClassName: "plant-name",
     },
