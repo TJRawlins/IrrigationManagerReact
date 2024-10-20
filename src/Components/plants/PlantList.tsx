@@ -1,9 +1,9 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, ButtonGroup, Popover, useTheme } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -26,37 +26,37 @@ export default function PlantList({
   updateLocalStorageZone,
 }: // updateLocalStorageTreflePlant,
 PlantListProps) {
-  const MOBILE_COLUMNS = {
-    quantity: false,
-    type: false,
-    id: false,
-    timeStamp: false,
-    imagePath: false,
-    age: false,
-    hardinessZone: false,
-    exposure: false,
-    notes: false,
-    harvestMonth: false,
-  };
-
   const theme = useTheme();
-
-  const [isShowEdit, setIsShowEdit] = useState(false);
+  const dispatch = useDispatch();
+  const { zone } = useSelector((state: RootState) => state.zone);
   const [plantId, setPlantId] = useState<number>();
   const [showViewPlant, setShowViewPlant] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
-  const dispatch = useDispatch();
-
-  const { zone } = useSelector((state: RootState) => state.zone);
-  const { plantList } = useSelector((state: RootState) => state.plant);
-  // const { plant } = useSelector((state: RootState) => state.plant);
-
+  const [isShowEdit, setIsShowEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [rows, setRows] = useState([]);
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const isFull = !useMediaQuery(theme.breakpoints.down("md"));
+  // const isFull = !useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (zone.id) {
+        setIsLoading(true);
+        await agent.Zones.details(zone.id)
+          .then((zone) => {
+            setRows(zone.plants);
+          })
+          .then(() => {
+            setIsLoading(false);
+          });
+      }
+    };
+    fetchData();
+  }, [zone]);
 
   const updateLocalStoragePlant = (
     plantId: number,
@@ -128,32 +128,34 @@ PlantListProps) {
   //   fetchPlants(zone.id);
   // }, [isMobile, plant]);
 
-  const columns = [
+  const columns: GridColDef<(typeof rows)[number]>[] = [
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
       cellClassName: "plant-name",
+      flex: 1,
+      minWidth: 150,
+      maxWidth: 200,
     },
-    { field: "type", headerName: "Type", flex: 1 },
-    { field: "quantity", headerName: "Qty.", flex: 1 },
-    { field: "galsPerWk", headerName: "Gals. / Wk.", flex: 1 },
-    { field: "emittersPerPlant", headerName: "Emitters", flex: 1 },
-    { field: "emitterGph", headerName: "GPH / Emitter", flex: 1 },
-    { field: "timeStamp", headerName: "Modified", flex: 1 },
-    { field: "imagePath", headerName: "Image", flex: 1 },
-    { field: "age", headerName: "Age", flex: 1 },
-    { field: "hardinessZone", headerName: "USDA Zone", flex: 1 },
-    { field: "harvestMonth", headerName: "Harvest", flex: 1 },
-    { field: "exposure", headerName: "Exposure", flex: 1 },
-    { field: "notes", headerName: "Notes", flex: 1 },
+    { field: "type", headerName: "Type" },
+    { field: "quantity", headerName: "Qty." },
+    { field: "galsPerWk", headerName: "Gals. / Wk." },
+    { field: "emittersPerPlant", headerName: "Emitters" },
+    { field: "emitterGPH", headerName: "GPH / Emitter" },
+    { field: "timeStamp", headerName: "Modified", minWidth: 175 },
+    { field: "imagePath", headerName: "Image" },
+    { field: "age", headerName: "Age" },
+    { field: "hardinessZone", headerName: "USDA Zone" },
+    { field: "harvestMonth", headerName: "Harvest" },
+    { field: "exposure", headerName: "Exposure" },
+    { field: "notes", headerName: "Notes", flex: 1, minWidth: 150 },
     {
       field: "action",
       headerName: "Action",
       sortable: false,
-      flex: 1,
       type: "number",
+      minWidth: 120,
       renderCell: () => {
         return (
           <ButtonGroup id="action-btn-group">
@@ -191,81 +193,49 @@ PlantListProps) {
     },
   ];
 
-  const rows = plantList.map((plant) => ({
-    id: plant.id,
-    name: plant.name,
-    type: plant.type,
-    quantity: plant.quantity,
-    galsPerWk: plant.galsPerWk,
-    emittersPerPlant: plant.emittersPerPlant,
-    emitterGph: plant.emitterGPH,
-    timeStamp: plant.timeStamp,
-    imagePath: plant.imagePath,
-    age: plant.age,
-    hardinessZone: plant.hardinessZone,
-    harvestMonth: plant.harvestMonth,
-    exposure: plant.exposure,
-    notes: plant.notes,
-  }));
-
   return (
     <>
       <Box component="div" sx={{ width: "100%" }}>
-        {isMobile && (
-          <DataGrid
-            className="data-grid"
-            columnVisibilityModel={MOBILE_COLUMNS}
-            columns={columns}
-            rows={rows}
-            slots={{
-              toolbar: GridToolbar,
-            }}
-            sx={{ border: "none", width: "100%" }}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                },
+        <DataGrid
+          className={
+            isMobile ? "data-grid data-grid-mobile" : "data-grid data-grid-full"
+          }
+          columnBufferPx={20}
+          columns={columns}
+          rows={rows}
+          loading={isLoading}
+          slots={{
+            toolbar: GridToolbar,
+          }}
+          slotProps={{
+            loadingOverlay: {
+              variant: "skeleton",
+              noRowsVariant: "skeleton",
+            },
+          }}
+          sx={{ border: "none", width: "100%" }}
+          initialState={{
+            columns: {
+              columnVisibilityModel: {
+                id: false,
+                imagePath: false,
+                age: false,
+                hardinessZone: false,
+                exposure: false,
+                harvestMonth: false,
               },
-            }}
-            pageSizeOptions={[5, 10, 15]}
-            paginationMode="client"
-            checkboxSelection
-            disableRowSelectionOnClick
-          />
-        )}
-        {isFull && (
-          <DataGrid
-            className="data-grid"
-            columns={columns}
-            rows={rows}
-            slots={{
-              toolbar: GridToolbar,
-            }}
-            sx={{ border: "none", width: "100%" }}
-            initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  id: false,
-                  imagePath: false,
-                  age: false,
-                  hardinessZone: false,
-                  exposure: false,
-                  harvestMonth: false,
-                },
+            },
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
               },
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                },
-              },
-            }}
-            pageSizeOptions={[5, 10, 15]}
-            paginationMode="client"
-            checkboxSelection
-            disableRowSelectionOnClick
-          />
-        )}
+            },
+          }}
+          pageSizeOptions={[5, 10, 15]}
+          paginationMode="client"
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
       </Box>
       <ViewPlant
         fetchPlants={fetchPlants}
