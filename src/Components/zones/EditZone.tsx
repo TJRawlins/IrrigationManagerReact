@@ -71,12 +71,11 @@ function EditZone({
 }: ZoneEditProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const seasonIdValue = useRef<number>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleClose = () => {
     setIsShowEdit(false);
     setImageUpload(undefined);
-    console.log("CLOSED!");
   };
 
   // Firebase Storage Variables
@@ -100,6 +99,13 @@ function EditZone({
     season: zone.season,
     seasonId: zone.seasonId,
   };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Required field"),
+    runtimeHours: Yup.number().required("Required field"),
+    runtimeMinutes: Yup.number().required("Required field"),
+    runtimePerWeek: Yup.number().required("Required field"),
+  });
 
   // TODO: IF ZONE IMAGE GETS CHANGED, NEED TO DELETE PREVIOUS IMAGE FROM FIREBASE STORAGE BUCKET
   // Form submission
@@ -166,9 +172,9 @@ function EditZone({
             props.resetForm();
             handleClose();
           })
-          .finally(() => {
-            console.log("zone edited");
-          });
+          .finally(() =>
+            console.log("%cEditZone: Zone Edited", "color:#1CA1E6")
+          );
       });
   };
 
@@ -196,13 +202,6 @@ function EditZone({
         break;
     }
   };
-
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Required field"),
-    runtimeHours: Yup.number().required("Required field"),
-    runtimeMinutes: Yup.number().required("Required field"),
-    runtimePerWeek: Yup.number().required("Required field"),
-  });
 
   return (
     <div>

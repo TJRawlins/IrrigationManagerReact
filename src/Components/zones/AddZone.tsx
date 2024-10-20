@@ -150,7 +150,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
           handleClose();
         });
       })
-      .finally(() => console.log("zone added"));
+      .finally(() => console.log("%cAddZone: Zone Added", "color:#1CA1E6"));
   };
 
   return (
@@ -196,7 +196,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                     left: "0",
                   }}
                 >
-                  <CircularProgress />
+                  <CircularProgress sx={{ color: "#0069b2" }} />
                 </Box>
               </Modal>
             )}
