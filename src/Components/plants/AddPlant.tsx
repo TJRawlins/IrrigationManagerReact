@@ -192,7 +192,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
           handleClose();
         })
       )
-      .finally(() => console.log("plant added"));
+      .finally(() => console.log("%cAddPlant: Plant Added", "color:#1CA1E6"));
   };
 
   return (
@@ -246,7 +246,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     left: "0",
                   }}
                 >
-                  <CircularProgress />
+                  <CircularProgress sx={{ color: "#0069b2" }} />
                 </Box>
               </Modal>
             )}
