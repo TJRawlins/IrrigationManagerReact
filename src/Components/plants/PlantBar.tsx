@@ -24,7 +24,7 @@ import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
 
 type PlantBarProps = {
-  fetchPlants: (id: number) => void;
+  fetchPlants: (id: number) => Promise<void>;
 };
 
 export default function PlantBar({ fetchPlants }: PlantBarProps) {
