@@ -32,6 +32,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
+  isLoadingZones: boolean
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -58,7 +59,7 @@ const style = {
   p: 4,
 };
 
-function AddZone({ fetchZones }: ZoneBarProps) {
+function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   const [open, setOpen] = useState(false);
   const { season } = useSelector((state: RootState) => state.season);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -156,7 +157,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
   return (
     <div>
       {isZonesStoredLocally() && (
-        <Button className="add-btn" onClick={handleOpen}>
+        <Button className="add-btn" onClick={handleOpen} disabled={isLoadingZones}>
           <FaPlus className="add-plus-icon" />
         </Button>
       )}
