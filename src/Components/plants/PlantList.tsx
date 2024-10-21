@@ -1,6 +1,13 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Button, ButtonGroup, Popover, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Popover,
+  Tooltip,
+  useTheme,
+} from "@mui/material";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -15,6 +22,7 @@ import "../../styles/plants/PlantList.css";
 import EditPlant from "./EditPlant";
 import { updateCurrentPlant } from "../../redux/plantSlice";
 import ViewPlantSkeleton from "./ViewPlantSkeleton";
+import { BiSolidCopyAlt } from "react-icons/bi";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -97,6 +105,25 @@ PlantListProps) {
     console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
   };
 
+  const handleCopyPlantClick = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    const plantId: number = Number(
+      event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
+    );
+    await agent.Plants.details(plantId)
+      .catch((error) => alert(error))
+      .then((plant) => {
+        const newPlant = { ...plant };
+        newPlant.id = 0;
+        newPlant.timeStamp = undefined;
+        agent.Plants.createPlant(newPlant);
+      })
+      .catch((error) => alert(error))
+      .then(() => fetchPlants(zone.id))
+      .then(() => updateLocalStorageZone(zone.id));
+  };
+
   const handleEditPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     updateLocalStoragePlant(
       Number(
@@ -161,24 +188,41 @@ PlantListProps) {
       headerName: "Action",
       sortable: false,
       type: "number",
-      minWidth: 120,
+      minWidth: 155,
       renderCell: () => {
         return (
           <ButtonGroup id="action-btn-group">
-            <Button className="action-btn" onClick={handleViewPlantClick}>
-              <FaRegEye className="action-btn-icon" style={{ fontSize: 20 }} />
-            </Button>
-            <Button className="action-btn" onClick={handleEditPlantClick}>
-              <FaEdit className="action-btn-icon" />
-            </Button>
-            <Button
-              className="action-btn"
-              aria-describedby={id}
-              // GET DATA-ID (PLANT ID) AND SET IT - DISPLAY CONFIRM BUTTON
-              onClick={handleDeleteClick}
-            >
-              <FaTrashAlt className="action-btn-icon" />
-            </Button>
+            <Tooltip title="View" arrow>
+              <Button className="action-btn" onClick={handleViewPlantClick}>
+                <FaRegEye
+                  className="action-btn-icon"
+                  style={{ fontSize: 20 }}
+                />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Edit" arrow>
+              <Button className="action-btn" onClick={handleEditPlantClick}>
+                <FaEdit className="action-btn-icon" />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Copy" arrow>
+              <Button className="action-btn" onClick={handleCopyPlantClick}>
+                <BiSolidCopyAlt
+                  className="action-icon"
+                  style={{ fontSize: 24 }}
+                />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Delete" arrow>
+              <Button
+                className="action-btn"
+                aria-describedby={id}
+                // GET DATA-ID (PLANT ID) AND SET IT - DISPLAY CONFIRM BUTTON
+                onClick={handleDeleteClick}
+              >
+                <FaTrashAlt className="action-btn-icon" />
+              </Button>
+            </Tooltip>
             <Popover
               id={id}
               open={open}

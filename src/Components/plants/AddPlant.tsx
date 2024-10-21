@@ -121,30 +121,9 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       if (imageUpload) {
         setIsLoading(true);
         uploadImage(imageRef, imageUpload, values, props);
-        // uploadBytes(imageRef, imageUpload).then((snapshot) => {
-        //   getDownloadURL(snapshot.ref)
-        //     .then((url) => {
-        //       for (const [key] of Object.entries(values)) {
-        //         if (key === "imagePath") {
-        //           values = { ...values, imagePath: url };
-        //         }
-        //       }
-        //     })
-        //     .then(() =>
-        //       agent.Plants.createPlant(values)
-        //         .catch((error) => alert(error))
-        //         .then(() => fetchPlants(zone.id))
-        //         .then(() => updateLocalStorageZone())
-        //     );
-        //   setImageUpload(undefined);
-        // });
       } else {
         setIsLoading(true);
         addPlant(values, props);
-        // agent.Plants.createPlant(values)
-        //   .catch((error) => alert(error))
-        //   .then(() => fetchPlants(zone.id))
-        //   .then(() => updateLocalStorageZone());
       }
       setIsClicked(false);
       console.log("%cAddPlant: Plant Added", "color:#1CA1E6");
@@ -335,7 +314,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       type="number"
                       autoComplete=""
                       variant="standard"
-                      InputProps={{ inputProps: { min: 0, max: 150 } }}
                       error={touched.galsPerWk && Boolean(errors.galsPerWk)}
                     />
                     <FormHelperText
