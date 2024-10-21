@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
+import CircularProgress from "@mui/material/CircularProgress";
 import { ChangeEvent, useState } from "react";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field } from "formik";
@@ -30,7 +31,8 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type ZoneBarProps = {
-  fetchZones(args: number): void;
+  fetchZones(args: number): Promise<void>;
+  isLoadingZones: boolean
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -57,17 +59,19 @@ const style = {
   p: 4,
 };
 
-function AddZone({ fetchZones }: ZoneBarProps) {
+function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const { season } = useSelector((state: RootState) => state.season);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Firebase Storage Variables
   const [imageUpload, setImageUpload] = useState<File>();
   const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
   const storage: FirebaseStorage = getStorage(app);
   const imageRef: StorageReference = ref(storage, imagePathAndFileName);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   // Form submission
   const initialValues = {
@@ -89,30 +93,12 @@ function AddZone({ fetchZones }: ZoneBarProps) {
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     if (imageUpload) {
-      // Image gets uploaded on submit
-      uploadBytes(imageRef, imageUpload).then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            for (const [key] of Object.entries(values)) {
-              if (key === "imagePath") {
-                values = { ...values, imagePath: url };
-              }
-            }
-          })
-          .then(() =>
-            agent.Zones.createZone(values)
-              .catch((error) => alert(error))
-              .then(() => fetchZones(season.id))
-          );
-        setImageUpload(undefined);
-      });
+      setIsLoading(true);
+      uploadImage(imageRef, imageUpload, values, props);
     } else {
-      agent.Zones.createZone(values)
-        .catch((error) => alert(error))
-        .then(() => fetchZones(season.id));
+      setIsLoading(true);
+      addZone(values, props);
     }
-    props.resetForm();
-    handleClose();
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
   };
 
@@ -133,10 +119,45 @@ function AddZone({ fetchZones }: ZoneBarProps) {
     );
   };
 
+  const uploadImage = async (
+    imageRef: StorageReference,
+    imageUpload: File,
+    values: object,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    props: any
+  ) => {
+    await uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          for (const [key] of Object.entries(values)) {
+            if (key === "imagePath") {
+              values = { ...values, imagePath: url };
+            }
+          }
+        })
+        .then(() => addZone(values, props));
+      setImageUpload(undefined);
+    });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const addZone = async (values: object, props: any) => {
+    await agent.Zones.createZone(values)
+      .catch((error) => alert(error))
+      .then(() => {
+        fetchZones(season.id).then(() => {
+          setIsLoading(false);
+          props.resetForm();
+          handleClose();
+        });
+      })
+      .finally(() => console.log("%cAddZone: Zone Added", "color:#1CA1E6"));
+  };
+
   return (
     <div>
       {isZonesStoredLocally() && (
-        <Button className="add-btn" onClick={handleOpen}>
+        <Button className="add-btn" onClick={handleOpen} disabled={isLoadingZones}>
           <FaPlus className="add-plus-icon" />
         </Button>
       )}
@@ -153,6 +174,33 @@ function AddZone({ fetchZones }: ZoneBarProps) {
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
+            {isLoading && (
+              <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                slotProps={{
+                  backdrop: {
+                    style: { backgroundColor: "transparent" },
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                  }}
+                >
+                  <CircularProgress sx={{ color: "#0069b2" }} />
+                </Box>
+              </Modal>
+            )}
             <Typography
               className="modal-title"
               id="modal-modal-title"
@@ -307,6 +355,7 @@ function AddZone({ fetchZones }: ZoneBarProps) {
                       height: "45px",
                       color: "#ffff",
                       margin: "1rem 0",
+                      background: "linear-gradient(to right, #02c0a0, #82a628)",
                     }}
                   >
                     Select Image
