@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, Skeleton, Stack } from "@mui/material";
 
-function ZoneCardSkeletion() {
+function ZoneCardSkeleton() {
   return (
     <>
       <Stack
@@ -162,4 +162,4 @@ function ZoneCardSkeletion() {
     </>
   );
 }
-export default ZoneCardSkeletion;
+export default ZoneCardSkeleton;
