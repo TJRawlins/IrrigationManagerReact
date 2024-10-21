@@ -5,16 +5,19 @@ import EditZone from "./EditZone";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import ZoneCardSkeletion from "./ZoneCardSkeletion";
 
 type ZoneListProps = {
   fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
   hasError: boolean;
+  isLoadingZones: boolean;
 };
 
 export default function ZoneList({
   fetchZones,
   updateLocalStorageSeason,
+  isLoadingZones,
 }: ZoneListProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
@@ -39,18 +42,25 @@ export default function ZoneList({
             justifyContent={{ xs: "center", sm: "center", md: "left" }}
             sx={{ height: "auto", minHeight: "80vh" }}
           >
-            {zoneList.map((zone) => (
-              <Grid item key={zone.id}>
-                <ZoneCard
-                  zone={zone}
-                  fetchZones={fetchZones}
-                  setIsShowEdit={setIsShowEdit}
-                  updateLocalStorageSeason={updateLocalStorageSeason}
-                />
-              </Grid>
-            ))}
+            {isLoadingZones ? (
+              <ZoneCardSkeletion />
+            ) : (
+              zoneList.map((zone) => (
+                <Grid item key={zone.id}>
+                  <ZoneCard
+                    zone={zone}
+                    fetchZones={fetchZones}
+                    setIsShowEdit={setIsShowEdit}
+                    updateLocalStorageSeason={updateLocalStorageSeason}
+                  />
+                </Grid>
+              ))
+            )}
             <Grid>
-              <AddZone fetchZones={fetchZones} />
+              <AddZone
+                fetchZones={fetchZones}
+                isLoadingZones={isLoadingZones}
+              />
               <EditZone
                 fetchZones={fetchZones}
                 updateLocalStorageSeason={updateLocalStorageSeason}
