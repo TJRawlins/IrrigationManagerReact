@@ -297,7 +297,6 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                       type="number"
                       autoComplete=""
                       variant="standard"
-                      InputProps={{ inputProps: { min: 0, max: 150 } }}
                       error={touched.galsPerWk && Boolean(errors.galsPerWk)}
                     />
                     <FormHelperText
