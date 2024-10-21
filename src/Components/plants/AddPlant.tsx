@@ -314,7 +314,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       type="number"
                       autoComplete=""
                       variant="standard"
-                      InputProps={{ inputProps: { min: 0, max: 150 } }}
                       error={touched.galsPerWk && Boolean(errors.galsPerWk)}
                     />
                     <FormHelperText
