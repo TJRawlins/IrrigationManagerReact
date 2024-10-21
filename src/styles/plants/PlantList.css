@@ -32,8 +32,11 @@
   width: 25px !important;
 }
 
-.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper {
+/* PlantList confirm delete button box */
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper,
+#simple-popover > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.css-3bmhjh-MuiPaper-root-MuiPopover-paper {
   box-shadow: none !important;
+  border: 1px solid #eaeaea;
 }
 
 @media screen and (max-width: 810px) {
