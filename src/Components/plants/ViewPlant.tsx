@@ -79,7 +79,7 @@ function ViewPlant({
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
   };
 
-  // TODO : New Card ===================================================
+
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
   function getChipProps(params: string): ChipProps {
     let seasonIcon: JSX.Element = <></>;
