@@ -79,7 +79,6 @@ function ViewPlant({
     console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
   };
 
-
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
   function getChipProps(params: string): ChipProps {
     let seasonIcon: JSX.Element = <></>;
@@ -167,17 +166,19 @@ function ViewPlant({
                 {...getChipProps(zone.season)}
               />
               <Box className="plant-name-wrapper" sx={{ marginBottom: 1 }}>
-                <Typography
-                  className="card-name plant-name-text"
-                  gutterBottom
-                  component="div"
-                  variant="h6"
-                  sx={{ marginBottom: 0, lineHeight: 1 }}
-                >
-                  {plant.name.length > 15
-                    ? plant.name.toLocaleUpperCase().substring(0, 20) + "..."
-                    : plant.name.toLocaleUpperCase()}
-                </Typography>
+                <Tooltip title={plant.name.toString()} arrow>
+                  <Typography
+                    className="card-name plant-name-text"
+                    gutterBottom
+                    component="div"
+                    variant="h6"
+                    sx={{ marginBottom: 0, lineHeight: 1 }}
+                  >
+                    {plant.name.length > 27
+                      ? plant.name.toLocaleUpperCase().substring(0, 27) + "..."
+                      : plant.name.toLocaleUpperCase()}
+                  </Typography>
+                </Tooltip>
               </Box>
               <Box
                 className="card-data-container"
