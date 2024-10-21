@@ -5,7 +5,7 @@ import EditZone from "./EditZone";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import ZoneCardSkeletion from "./ZoneCardSkeletion";
+import ZoneCardSkeleton from "./ZoneCardSkeleton";
 
 type ZoneListProps = {
   fetchZones(args: number): Promise<void>;
@@ -43,7 +43,7 @@ export default function ZoneList({
             sx={{ height: "auto", minHeight: "80vh" }}
           >
             {isLoadingZones ? (
-              <ZoneCardSkeletion />
+              <ZoneCardSkeleton />
             ) : (
               zoneList.map((zone) => (
                 <Grid item key={zone.id}>
