@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -34,7 +35,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type PlantBarProps = {
-  fetchPlants: (id: number) => void;
+  fetchPlants: (id: number) => Promise<void>;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
 };
@@ -67,20 +68,10 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
   const dispatch = useDispatch();
-
-  const handleClose = () => setIsShowEdit(false);
-
-  const updateLocalStorageZone = () => {
-    agent.Zones.details(zone.id).then((zone) => {
-      dispatch(updateCurrentZone(zone));
-    });
-  };
-
-  const editPlant = (id: number, values: object) => {
-    agent.Plants.editPlant(id, values)
-      .catch((error) => alert(error))
-      .then(() => fetchPlants(zone.id))
-      .then(() => updateLocalStorageZone());
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const handleClose = () => {
+    setIsShowEdit(false);
+    setImageUpload(undefined);
   };
 
   // Firebase Storage Variables
@@ -119,30 +110,57 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
 
   // Form submission
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
+    setIsLoading(true);
     if (imageUpload) {
-      uploadBytes(imageRef, imageUpload).then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            for (const [key] of Object.entries(values)) {
-              if (key === "imagePath") {
-                values = { ...values, imagePath: url };
-              }
-            }
-          })
-          .then(() => {
-            editPlant(plant.id, values);
-            console.log("Plant edited");
-            props.resetForm();
-            handleClose();
-          });
-        setImageUpload(undefined);
-      });
+      uploadImage(imageRef, imageUpload, values, props);
     } else {
-      editPlant(plant.id, values);
+      editPlant(plant.id, values, props);
       console.log("%cEditPlant: Plant Edited", "color:#1CA1E6");
-      props.resetForm();
-      handleClose();
     }
+  };
+
+  const uploadImage = async (
+    imageRef: StorageReference,
+    imageUpload: File,
+    values: object,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    props: any
+  ) => {
+    await uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          for (const [key] of Object.entries(values)) {
+            if (key === "imagePath") {
+              values = { ...values, imagePath: url };
+            }
+          }
+        })
+        .then(() => {
+          editPlant(plant.id, values, props);
+        });
+      setImageUpload(undefined);
+    });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const editPlant = async (id: number, values: object, props: any) => {
+    await agent.Plants.editPlant(id, values)
+      .catch((error) => alert(error))
+      .then(() => {
+        updateLocalStorageZone();
+        fetchPlants(zone.id).then(() => {
+          setIsLoading(false);
+          props.resetForm();
+          handleClose();
+        });
+      })
+      .finally(() => console.log("%cEditPlant: Plant Edited", "color:#1CA1E6"));
+  };
+
+  const updateLocalStorageZone = () => {
+    agent.Zones.details(zone.id).then((zone) => {
+      dispatch(updateCurrentZone(zone));
+    });
   };
 
   // Onchange event for "Select Image" button
@@ -172,6 +190,33 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
+            {isLoading && (
+              <Modal
+                open={true}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                slotProps={{
+                  backdrop: {
+                    style: { backgroundColor: "transparent" },
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                  }}
+                >
+                  <CircularProgress sx={{ color: "#0069b2" }} />
+                </Box>
+              </Modal>
+            )}
             <Typography
               className="modal-title"
               id="modal-modal-title"
@@ -366,7 +411,12 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
-                    sx={{ width: "100%", color: "#ffff", margin: "1rem 0" }}
+                    sx={{
+                      width: "100%",
+                      color: "#ffff",
+                      margin: "1rem 0",
+                      background: "linear-gradient(to right, #02c0a0, #82a628)",
+                    }}
                   >
                     Select Image
                     <VisuallyHiddenInput

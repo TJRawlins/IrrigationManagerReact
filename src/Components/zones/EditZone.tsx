@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -32,7 +33,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type ZoneEditProps = {
-  fetchZones(args: number): void;
+  fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
@@ -71,6 +72,7 @@ function EditZone({
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
   const seasonIdValue = useRef<number>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleClose = () => {
     setIsShowEdit(false);
     setImageUpload(undefined);
@@ -98,6 +100,13 @@ function EditZone({
     seasonId: zone.seasonId,
   };
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Required field"),
+    runtimeHours: Yup.number().required("Required field"),
+    runtimeMinutes: Yup.number().required("Required field"),
+    runtimePerWeek: Yup.number().required("Required field"),
+  });
+
   // TODO: IF ZONE IMAGE GETS CHANGED, NEED TO DELETE PREVIOUS IMAGE FROM FIREBASE STORAGE BUCKET
   // Form submission
   const onSubmit = (
@@ -108,27 +117,9 @@ function EditZone({
   ) => {
     console.log("onSubmit values", values);
     if (imageUpload) {
-      uploadBytes(imageRef, imageUpload).then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            for (const [key, value] of Object.entries(values)) {
-              if (key === "imagePath") {
-                values = { ...values, imagePath: url };
-              }
-              if (key === "season") {
-                seasonNameToSeasonId(value);
-                values = { ...values, seasonId: seasonIdValue.current };
-              }
-            }
-          })
-          .then(() => {
-            editZone(zone.id, values);
-            console.log("zone edited");
-            props.resetForm();
-            handleClose();
-          });
-        setImageUpload(undefined);
-      });
+      setIsLoading(true);
+      // Includes editZone function
+      uploadImage(imageRef, imageUpload, values, props);
     } else {
       for (const [key, value] of Object.entries(values)) {
         if (key === "season") {
@@ -136,17 +127,55 @@ function EditZone({
           values = { ...values, seasonId: seasonIdValue.current };
         }
       }
-      editZone(zone.id, values);
-      console.log("zone edited");
-      props.resetForm();
-      handleClose();
+      setIsLoading(true);
+      editZone(zone.id, values, props);
     }
   };
 
-  const editZone = (id: number, values: object) => {
-    agent.Zones.editZone(id, season.id, values)
-      .then(() => fetchZones(season.id))
-      .finally(() => updateLocalStorageSeason(season.id));
+  const uploadImage = async (
+    imageRef: StorageReference,
+    imageUpload: File,
+    values: object,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    props: any
+  ) => {
+    await uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          for (const [key, value] of Object.entries(values)) {
+            if (key === "imagePath") {
+              values = { ...values, imagePath: url };
+            }
+            if (key === "season") {
+              seasonNameToSeasonId(value);
+              values = { ...values, seasonId: seasonIdValue.current };
+              return values;
+            }
+          }
+        })
+        .then(() => {
+          editZone(zone.id, values, props);
+        });
+      setImageUpload(undefined);
+    });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const editZone = async (id: number, values: object, props: any) => {
+    await agent.Zones.editZone(id, season.id, values)
+      .catch((error) => alert(error))
+      .then(() => {
+        updateLocalStorageSeason(season.id);
+        fetchZones(season.id)
+          .then(() => {
+            setIsLoading(false);
+            props.resetForm();
+            handleClose();
+          })
+          .finally(() =>
+            console.log("%cEditZone: Zone Edited", "color:#1CA1E6")
+          );
+      });
   };
 
   // Onchange event for "Select Image" button
@@ -174,13 +203,6 @@ function EditZone({
     }
   };
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Required field"),
-    runtimeHours: Yup.number().required("Required field"),
-    runtimeMinutes: Yup.number().required("Required field"),
-    runtimePerWeek: Yup.number().required("Required field"),
-  });
-
   return (
     <div>
       <Modal
@@ -196,6 +218,33 @@ function EditZone({
       >
         <Box className="modal-box" sx={style}>
           <div className="modal-title-container">
+            {isLoading && (
+              <Modal
+                open={true}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                slotProps={{
+                  backdrop: {
+                    style: { backgroundColor: "transparent" },
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              </Modal>
+            )}
             <Typography
               className="modal-title"
               id="modal-modal-title"
@@ -308,7 +357,7 @@ function EditZone({
                           overflow: "hidden",
                           whiteSpace: "nowrap",
                           width: "100%",
-                          margin: "1rem 0",
+                          marginTop: "1rem",
                           alignSelf: "center",
                           borderBottom: "1px solid #9d9d9d",
                           padding: "6px",
@@ -335,7 +384,12 @@ function EditZone({
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
-                    sx={{ width: "100%", color: "#ffff", marginTop: "1rem" }}
+                    sx={{
+                      width: "100%",
+                      color: "#ffff",
+                      marginTop: "1rem",
+                      background: "linear-gradient(to right, #02c0a0, #82a628)",
+                    }}
                   >
                     Select Image
                     <VisuallyHiddenInput

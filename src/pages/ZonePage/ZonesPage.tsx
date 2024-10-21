@@ -1,6 +1,6 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ZoneList from "../../Components/zones/ZoneList";
 import agent from "../../App/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
@@ -27,6 +27,7 @@ import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
 const ZonesPage = () => {
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
+  const [isLoadingZones, setIsLoadingZones] = useState<boolean>(true);
 
   // const fetchSeasons = () => {
   //   agent.Seasons.list().then((seasons) => {
@@ -36,17 +37,20 @@ const ZonesPage = () => {
   // };
 
   //* Initial zone list
-  const fetchZones = (seasonString: number) => {
-    agent.Zones.list().then((zones) => {
-      dispatch(
-        updateCurrentZoneList(
-          zones
-            ? zones.filter((zone: Zone) => zone.seasonId === seasonString)
-            : []
-        )
-      );
-      console.log("%cZones: Zone Fetched", "color:#1CA1E6");
-    });
+  const fetchZones = async (seasonString: number) => {
+    setIsLoadingZones(true);
+    await agent.Zones.list()
+      .then((zones) => {
+        dispatch(
+          updateCurrentZoneList(
+            zones
+              ? zones.filter((zone: Zone) => zone.seasonId === seasonString)
+              : []
+          )
+        );
+        console.log("%cZones: Zone Fetched", "color:#1CA1E6");
+      })
+      .then(() => setIsLoadingZones(false));
   };
 
   const updateLocalStorageSeason = (seasonId: number) => {
@@ -116,6 +120,7 @@ const ZonesPage = () => {
             hasError
             fetchZones={fetchZones}
             updateLocalStorageSeason={updateLocalStorageSeason}
+            isLoadingZones={isLoadingZones}
           />
         </Grid>
       </ErrorBoundary>
