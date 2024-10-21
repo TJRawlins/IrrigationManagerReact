@@ -14,6 +14,7 @@ import ViewPlant from "./ViewPlant";
 import "../../styles/plants/PlantList.css";
 import EditPlant from "./EditPlant";
 import { updateCurrentPlant } from "../../redux/plantSlice";
+import ViewPlantSkeleton from "./ViewPlantSkeleton";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -35,7 +36,8 @@ PlantListProps) {
     null
   );
   const [isShowEdit, setIsShowEdit] = useState(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingGrid, setIsLoadingGrid] = useState<boolean>(false);
+  const [isLoadingPlant, setIsLoadingPlant] = useState<boolean>(false);
   const [rows, setRows] = useState([]);
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   // const isFull = !useMediaQuery(theme.breakpoints.down("md"));
@@ -45,28 +47,32 @@ PlantListProps) {
   useEffect(() => {
     const fetchData = async () => {
       if (zone.id) {
-        setIsLoading(true);
+        setIsLoadingGrid(true);
         await agent.Zones.details(zone.id)
           .then((zone) => {
             setRows(zone.plants);
           })
           .then(() => {
-            setIsLoading(false);
+            setIsLoadingGrid(false);
           });
       }
     };
     fetchData();
   }, [zone]);
 
-  const updateLocalStoragePlant = (
+  const updateLocalStoragePlant = async (
     plantId: number,
     func: (arg: boolean) => void = () => null
   ) => {
-    agent.Plants.details(plantId)
+    setIsLoadingPlant(true);
+    await agent.Plants.details(plantId)
       .then((plant) => {
         dispatch(updateCurrentPlant(plant));
       })
-      .then(() => func(true));
+      .then(() => {
+        func(true);
+        setIsLoadingPlant(false);
+      });
   };
 
   const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -203,7 +209,7 @@ PlantListProps) {
           columnBufferPx={20}
           columns={columns}
           rows={rows}
-          loading={isLoading}
+          loading={isLoadingGrid}
           slots={{
             toolbar: GridToolbar,
           }}
@@ -237,11 +243,15 @@ PlantListProps) {
           disableRowSelectionOnClick
         />
       </Box>
-      <ViewPlant
-        fetchPlants={fetchPlants}
-        setShowViewPlant={setShowViewPlant}
-        showViewPlant={showViewPlant}
-      />
+      {isLoadingPlant ? (
+        <ViewPlantSkeleton />
+      ) : (
+        <ViewPlant
+          fetchPlants={fetchPlants}
+          setShowViewPlant={setShowViewPlant}
+          showViewPlant={showViewPlant}
+        />
+      )}
       <EditPlant
         fetchPlants={fetchPlants}
         setIsShowEdit={setIsShowEdit}
