@@ -36,7 +36,7 @@ import { useState } from "react";
 import EditPlant from "./EditPlant";
 
 type PlantBarProps = {
-  fetchPlants: (id: number) => void;
+  fetchPlants: (id: number) => Promise<void>;
   setShowViewPlant: (show: boolean) => void;
   showViewPlant: boolean;
 };
