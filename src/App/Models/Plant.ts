@@ -3,6 +3,7 @@ export class Plant {
   type: string = "";
   name: string = "";
   galsPerWk: number = 0;
+  galsPerWkCalc: number = 0;
   quantity: number = 0;
   emittersPerPlant: number = 0;
   emitterGPH: number = 0;
