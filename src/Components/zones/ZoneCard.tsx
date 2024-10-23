@@ -142,13 +142,13 @@ export default function ZoneCard({
       return {
         icon: <MdLocalFlorist className="iconStyle zoneCardIcon" />,
         label: params,
-        style: { background: "#02c0a0" },
+        style: { background: "#59bab1" },
       };
     } else if (params === "Summer") {
       return {
         icon: <MdSunny className="iconStyle zoneCardIcon" />,
         label: params,
-        style: { background: "#02c0a0" },
+        style: { background: "#59bab1" },
       };
     } else if (params === "Fall") {
       return {
@@ -156,13 +156,13 @@ export default function ZoneCard({
           <FaCanadianMapleLeaf className="iconStyle rotateIcon zoneCardIcon" />
         ),
         label: params,
-        style: { background: "#02c0a0" },
+        style: { background: "#59bab1" },
       };
     } else if (params === "Winter") {
       return {
         icon: <MdAcUnit className="iconStyle zoneCardIcon" />,
         label: params,
-        style: { background: "#02c0a0" },
+        style: { background: "#59bab1" },
       };
     } else {
       return {

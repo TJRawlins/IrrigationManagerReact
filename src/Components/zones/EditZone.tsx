@@ -388,7 +388,7 @@ function EditZone({
                       width: "100%",
                       color: "#ffff",
                       marginTop: "1rem",
-                      background: "linear-gradient(to right, #02c0a0, #82a628)",
+                      background: "linear-gradient(to right, #59bab1, #82a628)",
                     }}
                   >
                     Select Image
@@ -417,13 +417,13 @@ function EditZone({
                     </Field>
                   </FormControl>
                 </Box>
-                <Box className="btn-wrapper">
+                <Box className="card-btn btn-wrapper">
                   <Button sx={{ p: 2 }} className="submit-btn" type="submit">
                     Submit
                   </Button>
                   <Button
                     sx={{ p: 2 }}
-                    className="cancel-btn"
+                    className="card-btn cancel-btn"
                     type="button"
                     onClick={handleClose}
                   >

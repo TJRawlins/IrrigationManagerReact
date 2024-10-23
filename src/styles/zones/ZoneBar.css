@@ -11,14 +11,14 @@
 }
 
 .season-btn:hover {
-  background-color: #02c0a014 !important;
-  color: #02c0a0 !important;
+  background-color: #59bab114 !important;
+  color: #59bab1 !important;
 }
 
 .season-btn:hover .menu-text,
 .season-btn:hover .MuiSvgIcon-root,
 .season-btn:hover .menuIcon {
-  color: #02c0a0;
+  color: #59bab1;
 }
 
 .menu-wrapper {

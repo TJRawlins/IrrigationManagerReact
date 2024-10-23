@@ -87,8 +87,8 @@
 }
 
 .btn-plantbar:hover {
-  color: #02c0a0 !important;
-  background-color: #02c0a014 !important;
+  color: #59bab1 !important;
+  background-color: #59bab114 !important;
 }
 
 .btn-icon {
@@ -118,7 +118,7 @@
 }
 
 .gallons-chip-plant-card {
-  background-color: #02c0a01f !important;
+  background-color: #59bab11f !important;
 }
 
 .gallons-chip-avatar.plant-card {

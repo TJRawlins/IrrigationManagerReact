@@ -88,22 +88,22 @@ function ViewPlant({
     let seasonIcon: JSX.Element = <></>;
     if (params === "Spring") {
       seasonIcon = (
-        <MdLocalFlorist className="iconStyle" style={{ fill: "#02c0a0" }} />
+        <MdLocalFlorist className="iconStyle" style={{ fill: "#59bab1" }} />
       );
     } else if (params === "Summer") {
       seasonIcon = (
-        <MdSunny className="iconStyle" style={{ fill: "#02c0a0" }} />
+        <MdSunny className="iconStyle" style={{ fill: "#59bab1" }} />
       );
     } else if (params === "Fall") {
       seasonIcon = (
         <FaCanadianMapleLeaf
           className="iconStyle rotateIcon"
-          style={{ fill: "#02c0a0" }}
+          style={{ fill: "#59bab1" }}
         />
       );
     } else if (params === "Winter") {
       seasonIcon = (
-        <MdAcUnit className="iconStyle" style={{ fill: "#02c0a0" }} />
+        <MdAcUnit className="iconStyle" style={{ fill: "#59bab1" }} />
       );
     } else {
       return {
@@ -113,7 +113,7 @@ function ViewPlant({
     return {
       icon: seasonIcon,
       label: params,
-      style: { background: "#02c0a0" },
+      style: { background: "#59bab1" },
     };
   }
 
@@ -411,7 +411,7 @@ function ViewPlant({
                     justifyContent: "space-between",
                     maxWidth: "100%",
                     flexWrap: "nowrap",
-                    background: "linear-gradient(45deg, #82a628, #02c0a0)",
+                    background: "linear-gradient(45deg, #82a628, #59bab1)",
                     borderRadius: "0 0 10px 10px",
                     opacity: "0.8",
                   }}
