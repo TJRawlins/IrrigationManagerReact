@@ -36,7 +36,7 @@ function ViewPlantSkeleton() {
         <Card
           sx={{
             width: "450px",
-            height: "425px",
+            height: "451px",
             m: 2,
             borderRadius: "10px",
           }}
