@@ -13,6 +13,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { FaDroplet } from "react-icons/fa6";
+import { PiHashStraightBold } from "react-icons/pi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { MdAcUnit, MdLocalFlorist, MdSunny, MdDashboard } from "react-icons/md";
@@ -25,11 +27,13 @@ import {
   FaSun,
   FaEdit,
 } from "react-icons/fa";
-import { GiStrawberry } from "react-icons/gi";
+// import { GiStrawberry } from "react-icons/gi";
+import { FaAppleAlt } from "react-icons/fa";
 import { LuThermometerSnowflake } from "react-icons/lu";
 import { PiFunnelFill, PiPlantFill } from "react-icons/pi";
 import { FaClockRotateLeft, FaPencil } from "react-icons/fa6";
-import { TbNumbers } from "react-icons/tb";
+// import { TbNumbers } from "react-icons/tb";
+import { GiTreeGrowth } from "react-icons/gi";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/ViewPlant.css";
 import { useState } from "react";
@@ -204,18 +208,9 @@ function ViewPlant({
                     component="div"
                     color="text.secondary"
                   >
-                    <TbNumbers className="card-item-icon " />{" "}
+                    <PiHashStraightBold className="card-item-icon " />{" "}
                     <span className="bold">Quantity:</span>
                     <span>{plant.quantity}</span>
-                  </Typography>
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <FaHandHoldingWater className="card-item-icon" />
-                    <span className="bold">Gals Per Week:</span>
-                    <span>{plant.galsPerWk}</span>
                   </Typography>
                   <Typography
                     className="card-data flex size"
@@ -238,6 +233,40 @@ function ViewPlant({
                     <span className="bold">Emitter GPH:</span>
                     <span>{plant.emitterGPH}</span>
                   </Typography>
+                  <Tooltip
+                    title="Required Gallons Per Week (GPW), per plant"
+                    arrow
+                    placement="right"
+                    sx={{ zIndex: 999 }}
+                  >
+                    <Typography
+                      className="card-data flex size"
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      <FaDroplet className="card-item-icon" />
+                      <span className="bold">Req. GPW:</span>
+                      <span>{plant.galsPerWk}</span>
+                    </Typography>
+                  </Tooltip>
+                  <Tooltip
+                    title="Calculated Gallons Per Week (GPW), per plant. Automatically calculated 
+                        based on emitter count, flow rate, and zone runtime. 
+                        Compare with 'Req. GPW' value and adjust as necessary"
+                    arrow
+                    placement="right"
+                    sx={{ zIndex: 999 }}
+                  >
+                    <Typography
+                      className="card-data flex size"
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      <FaHandHoldingWater className="card-item-icon" />
+                      <span className="bold">Calc. GPW:</span>
+                      <span>{plant.galsPerWkCalc}</span>
+                    </Typography>
+                  </Tooltip>
                 </Box>
                 <Box className="data-set-divider">
                   <Divider
@@ -247,6 +276,15 @@ function ViewPlant({
                   />
                 </Box>
                 <Box className="data-set">
+                  <Typography
+                    className="card-data flex size"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    <GiTreeGrowth className="card-item-icon" />
+                    <span className="bold">Plant Age:</span>
+                    <span>{plant?.age}</span>
+                  </Typography>
                   <Typography
                     className="card-data flex size"
                     variant="body2"
@@ -272,7 +310,7 @@ function ViewPlant({
                     variant="body2"
                     color="text.secondary"
                   >
-                    <GiStrawberry className="card-item-icon " />
+                    <FaAppleAlt className="card-item-icon " />
                     <span className="bold">Harvest:</span>
                     <span>{plant?.harvestMonth}</span>
                   </Typography>
@@ -392,7 +430,7 @@ function ViewPlant({
                           W
                         </Avatar>
                       }
-                      label={plant.galsPerWk * plant.quantity}
+                      label={plant.galsPerWkCalc * plant.quantity}
                     />
                   </Tooltip>
                   <Tooltip title="Total Monthly Gallons" arrow>
@@ -403,7 +441,7 @@ function ViewPlant({
                           M
                         </Avatar>
                       }
-                      label={plant.galsPerWk * 4 * plant.quantity}
+                      label={plant.galsPerWkCalc * 4 * plant.quantity}
                     />
                   </Tooltip>
                   <Tooltip title="Total Yearly Gallons" arrow>
@@ -414,7 +452,7 @@ function ViewPlant({
                           Y
                         </Avatar>
                       }
-                      label={plant.galsPerWk * 52 * plant.quantity}
+                      label={plant.galsPerWkCalc * 52 * plant.quantity}
                     />
                   </Tooltip>
                 </Stack>
