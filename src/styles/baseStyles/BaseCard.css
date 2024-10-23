@@ -173,3 +173,8 @@
   background-color: #ffff !important;
   color: #59bab1 !important;
 }
+
+.dropdown-unselect::after {
+  content: "[Deselect]";
+  color: #979797
+}
