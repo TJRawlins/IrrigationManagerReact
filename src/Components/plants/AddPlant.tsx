@@ -196,7 +196,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       const gpm = totalGPH / 60;
       const totalGPD = gpm * totalMins;
       const totalGPW = totalGPD * zone.runtimePerWeek;
-      return Math.round(totalGPW);
+      return Math.round((totalGPW + Number.EPSILON) * 100) / 100;
     } else {
       return 0;
     }
@@ -374,7 +374,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       >
                         <span style={{ alignSelf: "center", height: "17px" }}>
                           <HiOutlineInformationCircle
-                            style={{ color: "rgba(0, 0, 0, 0.6)" }}
+                            style={{ color: "#82a628" }}
                           />
                         </span>
                       </Tooltip>
@@ -472,7 +472,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       >
                         <span style={{ alignSelf: "center", height: "17px" }}>
                           <HiOutlineInformationCircle
-                            style={{ color: "rgba(0, 0, 0, 0.6)" }}
+                            style={{ color: "#82a628" }}
                           />
                         </span>
                       </Tooltip>
