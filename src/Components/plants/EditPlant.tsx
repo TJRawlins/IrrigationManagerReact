@@ -33,6 +33,7 @@ import {
 } from "firebase/storage";
 import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { HiOutlineInformationCircle } from "react-icons/hi2";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -86,6 +87,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
     type: plant?.type,
     name: plant?.name,
     galsPerWk: plant?.galsPerWk,
+    galsPerWkCalc: plant?.galsPerWkCalc,
     quantity: plant?.quantity,
     emittersPerPlant: plant?.emittersPerPlant,
     emitterGPH: plant?.emitterGPH,
@@ -171,6 +173,31 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
     );
   };
 
+  const getGalsPerWkCalcValue = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    values: any,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const emitterGPH =
+      event.target.name == "emitterGPH"
+        ? Number(event.target.value)
+        : values.emitterGPH;
+    const emittersPerPlant =
+      event.target.name == "emittersPerPlant"
+        ? Number(event.target.value)
+        : values.emittersPerPlant;
+    if (emitterGPH && emittersPerPlant && event.target.value) {
+      const totalMins = zone.runtimeHours * 60 + zone.runtimeMinutes;
+      const totalGPH = emitterGPH * emittersPerPlant;
+      const gpm = totalGPH / 60;
+      const totalGPD = gpm * totalMins;
+      const totalGPW = totalGPD * zone.runtimePerWeek;
+      return Math.round((totalGPW + Number.EPSILON) * 100) / 100;
+    } else {
+      return 0;
+    }
+  };
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plant]);
@@ -231,40 +258,29 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
             onSubmit={onSubmit}
             validationSchema={validationSchema}
           >
-            {({ errors, touched }) => (
+            {({ errors, touched, values, handleChange }) => (
               <Form style={{ width: "100%" }}>
-                <Box className="input">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="plant-name-input"
-                    name="name"
-                    label="Plant name"
-                    type="text"
-                    autoComplete=""
-                    variant="standard"
-                    error={touched.name && Boolean(errors.name)}
-                  />
-                  <FormHelperText error={touched.name && Boolean(errors.name)}>
-                    {touched.name && errors.name ? errors.name : ""}
-                  </FormHelperText>
-                </Box>
                 <div className="split-container">
                   <Box className="input">
                     <Field
                       as={TextField}
+                      required
                       className="input"
-                      id="age-input"
-                      label="Plant Age"
-                      name="age"
-                      type="number"
+                      id="plant-name-input"
+                      name="name"
+                      label="Plant name"
+                      type="text"
                       autoComplete=""
                       variant="standard"
-                      InputProps={{ inputProps: { min: 0, max: 150 } }}
+                      error={touched.name && Boolean(errors.name)}
                     />
+                    <FormHelperText
+                      error={touched.name && Boolean(errors.name)}
+                    >
+                      {touched.name && errors.name ? errors.name : ""}
+                    </FormHelperText>
                   </Box>
-                  <Box className="input">
+                  <Box className="input" sx={{ width: "210px" }}>
                     <Field
                       as={TextField}
                       required
@@ -286,78 +302,20 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                         : ""}
                     </FormHelperText>
                   </Box>
-                  <Box className="input">
-                    <Field
-                      as={TextField}
-                      required
-                      className="input"
-                      id="gals-wk-input"
-                      name="galsPerWk"
-                      label="Gallons per week"
-                      type="number"
-                      autoComplete=""
-                      variant="standard"
-                      error={touched.galsPerWk && Boolean(errors.galsPerWk)}
-                    />
-                    <FormHelperText
-                      error={touched.galsPerWk && Boolean(errors.galsPerWk)}
-                    >
-                      {touched.galsPerWk && errors.galsPerWk
-                        ? errors.galsPerWk
-                        : ""}
-                    </FormHelperText>
-                  </Box>
                 </div>
                 <div className="split-container">
                   <Box className="input">
                     <Field
                       as={TextField}
-                      required
                       className="input"
-                      id="emitters-input"
-                      label="Emitters per plant"
-                      name="emittersPerPlant"
+                      id="age-input"
+                      label="Plant Age"
+                      name="age"
                       type="number"
                       autoComplete=""
                       variant="standard"
                       InputProps={{ inputProps: { min: 0, max: 150 } }}
-                      error={
-                        touched.emittersPerPlant &&
-                        Boolean(errors.emittersPerPlant)
-                      }
                     />
-                    <FormHelperText
-                      error={
-                        touched.emittersPerPlant &&
-                        Boolean(errors.emittersPerPlant)
-                      }
-                    >
-                      {touched.emittersPerPlant && errors.emittersPerPlant
-                        ? errors.emittersPerPlant
-                        : ""}
-                    </FormHelperText>
-                  </Box>
-                  <Box className="input">
-                    <Field
-                      as={TextField}
-                      required
-                      className="input"
-                      id="emitters-gph-input"
-                      label="Emitter GPH flow rate"
-                      name="emitterGPH"
-                      type="float"
-                      autoComplete=""
-                      variant="standard"
-                      InputProps={{ inputProps: { min: 0, max: 150.0 } }}
-                      error={touched.emitterGPH && Boolean(errors.emitterGPH)}
-                    />
-                    <FormHelperText
-                      error={touched.emitterGPH && Boolean(errors.emitterGPH)}
-                    >
-                      {touched.emitterGPH && errors.emitterGPH
-                        ? errors.emitterGPH
-                        : ""}
-                    </FormHelperText>
                   </Box>
                   <Box className="input">
                     <Field
@@ -371,6 +329,140 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                       variant="standard"
                       InputProps={{ inputProps: { min: 1, max: 11 } }}
                     />
+                  </Box>
+                  <Box className="input">
+                    <Box sx={{ display: "flex" }}>
+                      <span>
+                        <Field
+                          as={TextField}
+                          required
+                          className="input"
+                          id="gals-wk-input"
+                          name="galsPerWk"
+                          label="Required GPW"
+                          type="number"
+                          autoComplete=""
+                          variant="standard"
+                          error={touched.galsPerWk && Boolean(errors.galsPerWk)}
+                        />
+                        <FormHelperText
+                          error={touched.galsPerWk && Boolean(errors.galsPerWk)}
+                        >
+                          {touched.galsPerWk && errors.galsPerWk
+                            ? errors.galsPerWk
+                            : ""}
+                        </FormHelperText>
+                      </span>
+                      <Tooltip
+                        title="Required Gallons Per Week (GPW), per plant"
+                        arrow
+                        // sx={{ zIndex: 999 }}
+                      >
+                        <span style={{ alignSelf: "center", height: "17px" }}>
+                          <HiOutlineInformationCircle
+                            style={{ color: "#82a628" }}
+                          />
+                        </span>
+                      </Tooltip>
+                    </Box>
+                  </Box>
+                </div>
+                <div className="split-container">
+                  <Tooltip title="Per plant" arrow>
+                    <Box className="input">
+                      <Field
+                        as={TextField}
+                        required
+                        className="input"
+                        id="emitters-input"
+                        label="Emitter count"
+                        name="emittersPerPlant"
+                        type="number"
+                        autoComplete=""
+                        variant="standard"
+                        // InputProps={{ inputProps: { min: 0, max: 150 } }}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          values.galsPerWkCalc = getGalsPerWkCalcValue(
+                            values,
+                            event
+                          );
+                          handleChange(event);
+                        }}
+                        error={
+                          touched.emittersPerPlant &&
+                          Boolean(errors.emittersPerPlant)
+                        }
+                      />
+                      <FormHelperText
+                        error={
+                          touched.emittersPerPlant &&
+                          Boolean(errors.emittersPerPlant)
+                        }
+                      >
+                        {touched.emittersPerPlant && errors.emittersPerPlant
+                          ? errors.emittersPerPlant
+                          : ""}
+                      </FormHelperText>
+                    </Box>
+                  </Tooltip>
+                  <Tooltip title="Per plant" arrow>
+                    <Box className="input">
+                      <Field
+                        as={TextField}
+                        required
+                        className="input"
+                        id="emitters-gph-input"
+                        label="Emitter GPH"
+                        name="emitterGPH"
+                        type="number"
+                        autoComplete=""
+                        variant="standard"
+                        // InputProps={{ inputProps: { min: 0, max: 150.0 } }}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          values.galsPerWkCalc = getGalsPerWkCalcValue(
+                            values,
+                            event
+                          );
+                          handleChange(event);
+                        }}
+                        error={touched.emitterGPH && Boolean(errors.emitterGPH)}
+                      />
+                      <FormHelperText
+                        error={touched.emitterGPH && Boolean(errors.emitterGPH)}
+                      >
+                        {touched.emitterGPH && errors.emitterGPH
+                          ? errors.emitterGPH
+                          : ""}
+                      </FormHelperText>
+                    </Box>
+                  </Tooltip>
+                  <Box className="input">
+                    <Box sx={{ display: "flex" }}>
+                      <Field
+                        as={TextField}
+                        className="input"
+                        id="gals-wk-calc-input"
+                        name="galsPerWkCalc"
+                        label="Calculated GPW"
+                        type="number"
+                        autoComplete=""
+                        variant="standard"
+                        disabled
+                      />
+                      <Tooltip
+                        title="Calculated Gallons Per Week (GPW), per plant. Automatically calculated 
+                        based on emitter count, flow rate, and zone runtime. 
+                        Compare with 'Req. GPW' value and adjust as necessary"
+                        arrow
+                        // sx={{ zIndex: 999 }}
+                      >
+                        <span style={{ alignSelf: "center", height: "17px" }}>
+                          <HiOutlineInformationCircle
+                            style={{ color: "#82a628" }}
+                          />
+                        </span>
+                      </Tooltip>
+                    </Box>
                   </Box>
                 </div>
                 <div className="split-container">
