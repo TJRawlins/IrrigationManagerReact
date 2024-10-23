@@ -164,6 +164,17 @@ PlantListProps) {
   const columns: GridColDef<(typeof rows)[number]>[] = [
     { field: "id", headerName: "ID", width: 90 },
     {
+      field: "imagePath",
+      headerName: "Image",
+      renderCell: (params) => {
+        return (
+          <div style={{ display: "flex", height: "100%" }}>
+            <img className="plant-image" src={params.value}></img>
+          </div>
+        );
+      },
+    },
+    {
       field: "name",
       headerName: "Name",
       cellClassName: "plant-name",
@@ -178,7 +189,6 @@ PlantListProps) {
     { field: "emittersPerPlant", headerName: "Emitters" },
     { field: "emitterGPH", headerName: "GPH / Emitter" },
     { field: "timeStamp", headerName: "Modified", minWidth: 175 },
-    { field: "imagePath", headerName: "Image" },
     { field: "age", headerName: "Age" },
     { field: "hardinessZone", headerName: "USDA Zone" },
     { field: "harvestMonth", headerName: "Harvest" },
@@ -269,7 +279,7 @@ PlantListProps) {
             columns: {
               columnVisibilityModel: {
                 id: false,
-                imagePath: false,
+                timeStamp: false,
                 age: false,
                 hardinessZone: false,
                 exposure: false,
