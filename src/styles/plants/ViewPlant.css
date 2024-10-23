@@ -61,6 +61,7 @@
 
 .card-data.flex span.bold {
   font-weight: 700 !important;
+  white-space: nowrap;
 }
 
 .icon-float-container {
