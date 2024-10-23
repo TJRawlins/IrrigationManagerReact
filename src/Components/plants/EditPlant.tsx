@@ -564,6 +564,10 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                         name="exposure"
                         type="select"
                       >
+                        <MenuItem
+                          value={""}
+                          className="dropdown-unselect"
+                        ></MenuItem>
                         <MenuItem value={"Full Sun"}>Full Sun</MenuItem>
                         <MenuItem value={"Partial Sun"}>Partial Sun</MenuItem>
                       </Field>
@@ -581,6 +585,10 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                         name="harvestMonth"
                         type="select"
                       >
+                        <MenuItem
+                          value={""}
+                          className="dropdown-unselect"
+                        ></MenuItem>
                         <MenuItem value={"January"}>January</MenuItem>
                         <MenuItem value={"February"}>February</MenuItem>
                         <MenuItem value={"March"}>March</MenuItem>
