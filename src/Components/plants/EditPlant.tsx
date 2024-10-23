@@ -506,7 +506,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                       width: "100%",
                       color: "#ffff",
                       margin: "1rem 0",
-                      background: "linear-gradient(to right, #02c0a0, #82a628)",
+                      background: "linear-gradient(to right, #59bab1, #82a628)",
                     }}
                   >
                     Select Image
@@ -608,12 +608,12 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                   maxRows={3}
                 />
                 <Box className="btn-wrapper">
-                  <Button className="submit-btn" type="submit">
+                  <Button className="card-btn submit-btn" type="submit">
                     Submit
                   </Button>
                   <Button
                     sx={{ p: 2 }}
-                    className="cancel-btn"
+                    className="card-btn cancel-btn"
                     type="button"
                     onClick={handleClose}
                   >

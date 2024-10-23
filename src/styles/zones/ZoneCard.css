@@ -18,7 +18,7 @@
 
 #zone-card-container:hover .card-img.zone::before {
   opacity: 0.3;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .card-data-container.zone {
@@ -41,11 +41,11 @@
 }
 
 .iconStyle.zoneCardIcon {
-  fill: #02c0a0;
+  fill: #59bab1;
 }
 
 #total-gallons-stack {
-  background: linear-gradient(45deg, #82a628, #02c0a0);
+  background: linear-gradient(45deg, #82a628, #59bab1);
   border-radius: 0 0 10px 10px;
   opacity: 0.9;
   margin-top: 2px;
@@ -66,15 +66,14 @@
 
 .zone-card-action-button:hover {
   background-color: #ffffffe8 !important;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 8px,
-  rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 8px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
   transform: scale(1.15);
   z-index: 10;
   transition: all 0.3s;
 }
 
 .card-content-wrapper.zone-content {
-  background-color: #02c0a021;
+  background-color: #59bab121;
   padding: 0 !important;
 }
 
@@ -109,6 +108,6 @@
 }
 
 #simple-popover button:hover {
-  background-color: #02c0a0;
+  background-color: #59bab1;
   color: aliceblue;
 }

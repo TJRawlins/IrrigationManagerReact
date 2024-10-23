@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#02c0a0",
+      main: "#59bab1",
     },
   },
   typography: {},

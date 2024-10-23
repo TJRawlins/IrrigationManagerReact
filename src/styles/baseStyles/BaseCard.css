@@ -3,7 +3,7 @@
   align-items: center;
   color: #666666;
   gap: 0.5rem;
-  border-image-source: linear-gradient(to right, #02c0a0, #82a628);
+  border-image-source: linear-gradient(to right, #59bab1, #82a628);
   border-bottom: 10px solid;
   border-image-slice: 1;
   border-width: 3px;
@@ -146,6 +146,10 @@
   padding: 10px 10px !important;
 }
 
+.card-btn {
+  height: 45px;
+}
+
 .btn-wrapper {
   display: flex;
   gap: 0.75rem;
@@ -155,17 +159,17 @@
 .cancel-btn,
 .submit-btn {
   width: 100%;
-  border: 2px solid #02c0a0 !important;
+  border: 2px solid #59bab1 !important;
   padding: 0.75rem 1.5rem !important;
 }
 
 .cancel-btn:hover,
 .submit-btn {
-  background-color: #02c0a0 !important;
+  background-color: #59bab1 !important;
   color: #ffff !important;
 }
 
 .submit-btn:hover {
   background-color: #ffff !important;
-  color: #02c0a0 !important;
+  color: #59bab1 !important;
 }

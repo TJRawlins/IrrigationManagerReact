@@ -32,7 +32,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
-  isLoadingZones: boolean
+  isLoadingZones: boolean;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -157,7 +157,11 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   return (
     <div>
       {isZonesStoredLocally() && (
-        <Button className="add-btn" onClick={handleOpen} disabled={isLoadingZones}>
+        <Button
+          className="add-btn"
+          onClick={handleOpen}
+          disabled={isLoadingZones}
+        >
           <FaPlus className="add-plus-icon" />
         </Button>
       )}
@@ -355,7 +359,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
                       height: "45px",
                       color: "#ffff",
                       margin: "1rem 0",
-                      background: "linear-gradient(to right, #02c0a0, #82a628)",
+                      background: "linear-gradient(to right, #59bab1, #82a628)",
                     }}
                   >
                     Select Image
@@ -379,12 +383,12 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
                   variant="standard"
                 />
                 <Box className="btn-wrapper">
-                  <Button className="submit-btn" type="submit">
+                  <Button className="card-btn submit-btn" type="submit">
                     Add
                   </Button>
                   <Button
                     sx={{ p: 2 }}
-                    className="cancel-btn"
+                    className="card-btn cancel-btn"
                     type="button"
                     onClick={handleClose}
                   >

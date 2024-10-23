@@ -511,7 +511,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       height: "45px",
                       color: "#ffff",
                       marginTop: "1rem",
-                      background: "linear-gradient(to right, #02c0a0, #82a628)",
+                      background: "linear-gradient(to right, #59bab1, #82a628)",
                     }}
                   >
                     Select Image
@@ -614,7 +614,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                 />
                 <Box className="btn-wrapper">
                   <Button
-                    className="submit-btn"
+                    className="card-btn submit-btn"
                     type="submit"
                     onClick={() => setIsClicked(true)}
                   >
@@ -622,7 +622,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                   </Button>
                   <Button
                     sx={{ p: 2 }}
-                    className="cancel-btn"
+                    className="card-btn cancel-btn"
                     type="button"
                     onClick={handleClose}
                   >
