@@ -94,18 +94,18 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   // Form submission
   const initialValues = {
     type: "",
-    name: undefined,
-    galsPerWk: undefined,
+    name: "",
+    galsPerWk: "",
     galsPerWkCalc: 0,
-    quantity: undefined,
-    emittersPerPlant: undefined,
-    emitterGPH: undefined,
-    imagePath: undefined,
-    age: undefined,
-    hardinessZone: undefined,
+    quantity: "",
+    emittersPerPlant: "",
+    emitterGPH: "",
+    imagePath: "",
+    age: "",
+    hardinessZone: "",
     harvestMonth: "",
     exposure: "",
-    notes: undefined,
+    notes: "",
     zoneId: zone.id,
   };
 
@@ -431,7 +431,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                         type="number"
                         autoComplete=""
                         variant="standard"
-                        InputProps={{ inputProps: { min: 0, max: 150.0 } }}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
                           values.galsPerWkCalc = getGalsPerWkCalcValue(
                             values,
