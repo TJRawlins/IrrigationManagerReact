@@ -76,10 +76,10 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   // Form submission
   const initialValues = {
     name: "",
-    runtimeHours: undefined,
-    runtimeMinutes: undefined,
-    runtimePerWeek: undefined,
-    imagePath: undefined,
+    runtimeHours: "",
+    runtimeMinutes: "",
+    runtimePerWeek: "",
+    imagePath: "",
     season: season.name,
     seasonId: season.id,
   };
