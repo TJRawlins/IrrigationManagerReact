@@ -100,7 +100,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     quantity: "",
     emittersPerPlant: "",
     emitterGPH: "",
-    imagePath: "",
+    imagePath: undefined,
     age: "",
     hardinessZone: "",
     harvestMonth: "",
