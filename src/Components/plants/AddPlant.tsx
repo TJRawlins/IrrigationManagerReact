@@ -73,6 +73,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Firebase Storage Variables
+  const [error, setError] = useState<string>("");
   const [imageUpload, setImageUpload] = useState<File>();
   const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
   const storage: FirebaseStorage = getStorage(app);
@@ -80,6 +81,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
+    setError("");
     setOpen(false);
     setImageUpload(undefined);
   };
@@ -134,6 +136,24 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   };
 
   // Onchange event for "Select Image" button
+  const handleImageValidation = (event: ChangeEvent<HTMLInputElement>) => {
+    setImageUpload(undefined);
+    if (!event.target.files?.[0]) {
+      return;
+    }
+    if (!event.target.files?.[0].type.startsWith("image/")) {
+      setError("Invalid image file.");
+      return;
+    }
+    // 1MB limit
+    if (event.target.files?.[0].size > 1 * 1024 * 1024) {
+      setError("File size exceeds 1MB.");
+      return;
+    }
+    generateImageFileName(event);
+    setError("");
+  };
+
   const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
     setImageUpload(event.target.files?.[0]);
     setImagePathAndFileName(
@@ -499,6 +519,25 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       </Typography>
                     </Tooltip>
                   )}
+                  {error && (
+                    <Typography
+                      component={"div"}
+                      style={{
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        height: "45px",
+                        width: "100%",
+                        marginTop: "1rem",
+                        alignSelf: "center",
+                        borderBottom: "1px solid #d32f2f",
+                        padding: "6px",
+                        color: "#d32f2f",
+                      }}
+                    >
+                      {error}
+                    </Typography>
+                  )}
                   <Button
                     component="label"
                     role={undefined}
@@ -516,8 +555,9 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     Select Image
                     <VisuallyHiddenInput
                       type="file"
+                      accept="image/*"
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        generateImageFileName(event)
+                        handleImageValidation(event)
                       }
                       multiple
                     />

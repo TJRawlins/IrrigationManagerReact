@@ -79,6 +79,7 @@ function EditZone({
   };
 
   // Firebase Storage Variables
+  const [error, setError] = useState<string>("");
   const [imageUpload, setImageUpload] = useState<File>();
   const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
   const storage: FirebaseStorage = getStorage(app);
@@ -179,6 +180,24 @@ function EditZone({
   };
 
   // Onchange event for "Select Image" button
+  const handleImageValidation = (event: ChangeEvent<HTMLInputElement>) => {
+    setImageUpload(undefined);
+    if (!event.target.files?.[0]) {
+      return;
+    }
+    if (!event.target.files?.[0].type.startsWith("image/")) {
+      setError("Invalid image file.");
+      return;
+    }
+    // 1MB limit
+    if (event.target.files?.[0].size > 1 * 1024 * 1024) {
+      setError("File size exceeds 1MB.");
+      return;
+    }
+    generateImageFileName(event);
+    setError("");
+  };
+
   const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
     setImageUpload(event.target.files?.[0]);
     setImagePathAndFileName(
@@ -348,7 +367,7 @@ function EditZone({
                   }
                 />
                 <div className="split-container">
-                  {imageUpload ? (
+                  {imageUpload && (
                     <Tooltip title={imageUpload?.name.toString()} arrow>
                       <Typography
                         component={"div"}
@@ -366,7 +385,8 @@ function EditZone({
                         {imageUpload?.name.toString()}
                       </Typography>
                     </Tooltip>
-                  ) : (
+                  )}
+                  {!error && !imageUpload && zone.imagePath && (
                     <img
                       src={zone.imagePath}
                       style={{
@@ -377,6 +397,24 @@ function EditZone({
                         marginTop: "1rem",
                       }}
                     ></img>
+                  )}
+                  {error && (
+                    <Typography
+                      component={"div"}
+                      style={{
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        width: "100%",
+                        margin: "1rem 0",
+                        alignSelf: "center",
+                        borderBottom: "1px solid #d32f2f",
+                        padding: "6px",
+                        color: "#d32f2f",
+                      }}
+                    >
+                      {error}
+                    </Typography>
                   )}
                   <Button
                     component="label"
@@ -395,7 +433,7 @@ function EditZone({
                     <VisuallyHiddenInput
                       type="file"
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        generateImageFileName(event)
+                        handleImageValidation(event)
                       }
                       multiple
                     />

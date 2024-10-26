@@ -71,11 +71,13 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleClose = () => {
+    setError("");
     setIsShowEdit(false);
     setImageUpload(undefined);
   };
 
   // Firebase Storage Variables
+  const [error, setError] = useState<string>("");
   const [imageUpload, setImageUpload] = useState<File>();
   const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
   const storage: FirebaseStorage = getStorage(app);
@@ -166,6 +168,24 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
   };
 
   // Onchange event for "Select Image" button
+  const handleImageValidation = (event: ChangeEvent<HTMLInputElement>) => {
+    setImageUpload(undefined);
+    if (!event.target.files?.[0]) {
+      return;
+    }
+    if (!event.target.files?.[0].type.startsWith("image/")) {
+      setError("Invalid image file.");
+      return;
+    }
+    // 1MB limit
+    if (event.target.files?.[0].size > 1 * 1024 * 1024) {
+      setError("File size exceeds 1MB.");
+      return;
+    }
+    generateImageFileName(event);
+    setError("");
+  };
+
   const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
     setImageUpload(event.target.files?.[0]);
     setImagePathAndFileName(
@@ -465,7 +485,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                   </Box>
                 </div>
                 <div className="split-container">
-                  {imageUpload ? (
+                  {imageUpload && (
                     <Tooltip title={imageUpload?.name.toString()} arrow>
                       <Typography
                         component={"div"}
@@ -483,7 +503,8 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                         {imageUpload?.name.toString()}
                       </Typography>
                     </Tooltip>
-                  ) : (
+                  )}
+                  {!error && !imageUpload && plant.imagePath && (
                     <img
                       src={plant.imagePath}
                       style={{
@@ -494,6 +515,24 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                         margin: "1rem 0",
                       }}
                     ></img>
+                  )}
+                  {error && (
+                    <Typography
+                      component={"div"}
+                      style={{
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        width: "100%",
+                        margin: "1rem 0",
+                        alignSelf: "center",
+                        borderBottom: "1px solid #d32f2f",
+                        padding: "6px",
+                        color: "#d32f2f",
+                      }}
+                    >
+                      {error}
+                    </Typography>
                   )}
                   <Button
                     component="label"
@@ -511,8 +550,9 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                     Select Image
                     <VisuallyHiddenInput
                       type="file"
+                      accept="image/*"
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        generateImageFileName(event)
+                        handleImageValidation(event)
                       }
                       multiple
                     />
