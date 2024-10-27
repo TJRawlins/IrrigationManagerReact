@@ -31,6 +31,7 @@ import {
 } from "firebase/storage";
 import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import Compressor from "compressorjs";
 
 type ZoneEditProps = {
   fetchZones(args: number): Promise<void>;
@@ -180,7 +181,9 @@ function EditZone({
   };
 
   // Onchange event for "Select Image" button
-  const handleImageValidation = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleImageValidation = async (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     setImageUpload(undefined);
     if (!event.target.files?.[0]) {
       return;
@@ -189,19 +192,46 @@ function EditZone({
       setError("Invalid image file.");
       return;
     }
-    // 1MB limit
-    if (event.target.files?.[0].size > 1 * 1024 * 1024) {
-      setError("File size exceeds 1MB.");
+    // 5MB limit
+    if (event.target.files?.[0].size > 5 * 1024 * 1024) {
+      setError("File size exceeds 5MB.");
       return;
     }
-    generateImageFileName(event);
-    setError("");
+    if (event.target.files?.[0]) {
+      try {
+        const compressedFile: File = await compressImage(
+          event.target.files?.[0]
+        );
+        if(compressedFile.size < event.target.files?.[0].size) {
+          generateImageFileName(compressedFile);
+          setError("");
+        }
+      } catch (error) {
+        setError("Compression Error");
+        console.error("Compression Error:", error);
+      }
+    }
   };
 
-  const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
-    setImageUpload(event.target.files?.[0]);
+  const compressImage = async (file: File): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      new Compressor(file, {
+        quality: 0.6,
+        success(result) {
+          resolve(result as File);
+        },
+        error(err) {
+          reject(err);
+        },
+      });
+    });
+  };
+
+  // TODO: Need to replace "tjrawlins" with the username
+  const generateImageFileName = (compressedFile: File) => {
+    setImageUpload(compressedFile);
     setImagePathAndFileName(
-      `users/tjrawlins/images/zones/${event.target.files?.[0].name.toString()}${v4()}`
+      `users/tjrawlins/images/zones/${compressedFile.name.toString()}${v4()}`
     );
   };
 
