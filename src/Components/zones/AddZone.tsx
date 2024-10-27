@@ -29,6 +29,7 @@ import {
 } from "firebase/storage";
 import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import Compressor from "compressorjs";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -77,9 +78,9 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   // Form submission
   const initialValues = {
     name: "",
-    runtimeHours: "",
-    runtimeMinutes: "",
-    runtimePerWeek: "",
+    runtimeHours: undefined,
+    runtimeMinutes: undefined,
+    runtimePerWeek: undefined,
     imagePath: "",
     season: season.name,
     seasonId: season.id,
@@ -103,41 +104,6 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
     console.log("%cAddZone: Zone Created", "color:#1CA1E6");
   };
 
-  const isZonesStoredLocally = () => {
-    const zonesLocalStorageValue = localStorage.getItem("zones");
-    const isZonesStored =
-      zonesLocalStorageValue &&
-      zonesLocalStorageValue !== "undefined" &&
-      zonesLocalStorageValue !== "[]";
-    return isZonesStored;
-  };
-
-  // Onchange event for "Select Image" button
-  const handleImageValidation = (event: ChangeEvent<HTMLInputElement>) => {
-    setImageUpload(undefined);
-    if (!event.target.files?.[0]) {
-      return;
-    }
-    if (!event.target.files?.[0].type.startsWith("image/")) {
-      setError("Invalid image file.");
-      return;
-    }
-    // 1MB limit
-    if (event.target.files?.[0].size > 1 * 1024 * 1024) {
-      setError("File size exceeds 1MB.");
-      return;
-    }
-    generateImageFileName(event);
-    setError("");
-  };
-
-  const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
-    setImageUpload(event.target.files?.[0]);
-    setImagePathAndFileName(
-      `users/tjrawlins/images/zones/${event.target.files?.[0].name.toString()}${v4()}`
-    );
-  };
-
   const uploadImage = async (
     imageRef: StorageReference,
     imageUpload: File,
@@ -157,6 +123,70 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
         .then(() => addZone(values, props));
       setImageUpload(undefined);
     });
+  };
+
+  const isZonesStoredLocally = () => {
+    const zonesLocalStorageValue = localStorage.getItem("zones");
+    const isZonesStored =
+      zonesLocalStorageValue &&
+      zonesLocalStorageValue !== "undefined" &&
+      zonesLocalStorageValue !== "[]";
+    return isZonesStored;
+  };
+
+  // Onchange event for "Select Image" button
+  const handleImageValidation = async (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    setImageUpload(undefined);
+    if (!event.target.files?.[0]) {
+      return;
+    }
+    if (!event.target.files?.[0].type.startsWith("image/")) {
+      setError("Invalid image file.");
+      return;
+    }
+    // 5MB limit
+    if (event.target.files?.[0].size > 5 * 1024 * 1024) {
+      setError("File size exceeds 5MB.");
+      return;
+    }
+    if (event.target.files?.[0]) {
+      try {
+        const compressedFile: File = await compressImage(
+          event.target.files?.[0]
+        );
+        if (compressedFile.size < event.target.files?.[0].size) {
+          generateImageFileName(compressedFile);
+          setError("");
+        }
+      } catch (error) {
+        setError("Compression Error");
+        console.error("Compression Error:", error);
+      }
+    }
+  };
+
+  const compressImage = async (file: File): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      new Compressor(file, {
+        quality: 0.6,
+        success(result) {
+          resolve(result as File);
+        },
+        error(err) {
+          reject(err);
+        },
+      });
+    });
+  };
+
+  // TODO: Need to replace "tjrawlins" with the username
+  const generateImageFileName = (compressedFile: File) => {
+    setImageUpload(compressedFile);
+    setImagePathAndFileName(
+      `users/tjrawlins/images/zones/${compressedFile.name.toString()}${v4()}`
+    );
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -28,6 +28,7 @@
     "@types/react-redux": "^7.1.33",
     "axios": "^1.6.2",
     "buffer": "^6.0.3",
+    "compressorjs": "^1.2.1",
     "cors": "^2.8.5",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.5",
