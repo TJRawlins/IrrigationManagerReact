@@ -188,7 +188,7 @@ export default function Navbar() {
             sx={{
               display: { xs: "none", sm: "block" },
               fontFamily: "'MuseoModerno', sans-serif",
-              fontSize: "3rem",
+              fontSize: "2.5rem",
             }}
           >
             droplet

@@ -114,6 +114,7 @@ const ZonesPage = () => {
             borderRadius: "20px",
             width: "100vw",
             marginTop: "30px",
+            minHeight: "80vh"
           }}
         >
           <ZoneList
