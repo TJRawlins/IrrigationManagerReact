@@ -104,8 +104,8 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     emittersPerPlant: "",
     emitterGPH: "",
     imagePath: undefined,
-    age: undefined,
-    hardinessZone: undefined,
+    age: "",
+    hardinessZone: "",
     harvestMonth: "",
     exposure: "",
     notes: "",
@@ -212,19 +212,44 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     );
   };
 
+  const checkInitialValues = async (values: object): Promise<object> => {
+    for (const [key, value] of Object.entries(values)) {
+      if ((key === "age" || key === "hardinessZone") && value === "") {
+        values =
+          key === "age"
+            ? { ...values, age: 0 }
+            : { ...values, hardinessZone: 0 };
+      }
+    }
+    return values;
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const addPlant = async (values: object, props: any) => {
-    await agent.Plants.createPlant(values)
-      .catch((error) => alert(error))
-      .then(() =>
-        fetchPlants(zone.id).then(() => {
-          setIsLoading(false);
-          updateLocalStorageZone();
-          props.resetForm();
-          handleClose();
-        })
-      )
-      .finally(() => console.log("%cAddPlant: Plant Added", "color:#1CA1E6"));
+    await checkInitialValues(values).then((newValues) => {
+      agent.Plants.createPlant(newValues)
+        .catch((error) => alert(error))
+        .then(() =>
+          fetchPlants(zone.id).then(() => {
+            setIsLoading(false);
+            updateLocalStorageZone();
+            props.resetForm();
+            handleClose();
+          })
+        )
+        .finally(() => console.log("%cAddPlant: Plant Added", "color:#1CA1E6"));
+    });
+    // await agent.Plants.createPlant(values)
+    //   .catch((error) => alert(error))
+    //   .then(() =>
+    //     fetchPlants(zone.id).then(() => {
+    //       setIsLoading(false);
+    //       updateLocalStorageZone();
+    //       props.resetForm();
+    //       handleClose();
+    //     })
+    //   )
+    //   .finally(() => console.log("%cAddPlant: Plant Added", "color:#1CA1E6"));
   };
 
   const getGalsPerWkCalcValue = (
