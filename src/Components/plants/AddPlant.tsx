@@ -145,6 +145,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       setError("Invalid image file.");
       return;
     }
+    // TODO: RESIZE AND COMPRESS FIRST (AVG PHONE PHOTO SIZE 2.5MB - 5MB)
     // 1MB limit
     if (event.target.files?.[0].size > 1 * 1024 * 1024) {
       setError("File size exceeds 1MB.");
@@ -235,7 +236,9 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         }}
       >
         <FaPlus className="btn-icon" />
-        Add Plant
+        <span className="btn-plantbar-text">
+          Add Plant
+        </span>
       </Button>
       <Modal
         open={open}
