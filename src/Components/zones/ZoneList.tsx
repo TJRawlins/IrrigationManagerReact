@@ -40,7 +40,7 @@ export default function ZoneList({
             columns={{ xs: 4, sm: 6, md: 9 }}
             padding={".75rem"}
             justifyContent={{ xs: "center", sm: "center", md: "left" }}
-            sx={{ height: "auto", minHeight: "80vh" }}
+            sx={{ height: "auto" }}
           >
             {isLoadingZones ? (
               <ZoneCardSkeleton />

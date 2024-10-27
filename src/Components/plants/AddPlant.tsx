@@ -33,6 +33,7 @@ import {
 } from "firebase/storage";
 import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import Compressor from "compressorjs";
 import "../../styles/plants/PlantBar.css";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/AddPlant.css";
@@ -103,8 +104,8 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     emittersPerPlant: "",
     emitterGPH: "",
     imagePath: undefined,
-    age: "",
-    hardinessZone: "",
+    age: undefined,
+    hardinessZone: undefined,
     harvestMonth: "",
     exposure: "",
     notes: "",
@@ -135,32 +136,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     }
   };
 
-  // Onchange event for "Select Image" button
-  const handleImageValidation = (event: ChangeEvent<HTMLInputElement>) => {
-    setImageUpload(undefined);
-    if (!event.target.files?.[0]) {
-      return;
-    }
-    if (!event.target.files?.[0].type.startsWith("image/")) {
-      setError("Invalid image file.");
-      return;
-    }
-    // 1MB limit
-    if (event.target.files?.[0].size > 1 * 1024 * 1024) {
-      setError("File size exceeds 1MB.");
-      return;
-    }
-    generateImageFileName(event);
-    setError("");
-  };
-
-  const generateImageFileName = (event: ChangeEvent<HTMLInputElement>) => {
-    setImageUpload(event.target.files?.[0]);
-    setImagePathAndFileName(
-      `users/tjrawlins/images/plants/${event.target.files?.[0].name.toString()}${v4()}`
-    );
-  };
-
   const uploadImage = async (
     imageRef: StorageReference,
     imageUpload: File,
@@ -180,6 +155,61 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         .then(() => addPlant(values, props));
       setImageUpload(undefined);
     });
+  };
+
+  // Onchange event for "Select Image" button
+  const handleImageValidation = async (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    setImageUpload(undefined);
+    if (!event.target.files?.[0]) {
+      return;
+    }
+    if (!event.target.files?.[0].type.startsWith("image/")) {
+      setError("Invalid image file.");
+      return;
+    }
+    // 5MB limit
+    if (event.target.files?.[0].size > 5 * 1024 * 1024) {
+      setError("File size exceeds 5MB.");
+      return;
+    }
+    if (event.target.files?.[0]) {
+      try {
+        const compressedFile: File = await compressImage(
+          event.target.files?.[0]
+        );
+        if (compressedFile.size < event.target.files?.[0].size) {
+          generateImageFileName(compressedFile);
+          setError("");
+        }
+      } catch (error) {
+        setError("Compression Error");
+        console.error("Compression Error:", error);
+      }
+    }
+  };
+
+  const compressImage = async (file: File): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      new Compressor(file, {
+        quality: 0.6,
+        success(result) {
+          resolve(result as File);
+        },
+        error(err) {
+          reject(err);
+        },
+      });
+    });
+  };
+
+  // TODO: Need to replace "tjrawlins" with the username
+  const generateImageFileName = (compressedFile: File) => {
+    setImageUpload(compressedFile);
+    setImagePathAndFileName(
+      `users/tjrawlins/images/plants/${compressedFile.name.toString()}${v4()}`
+    );
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -235,7 +265,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         }}
       >
         <FaPlus className="btn-icon" />
-        Add Plant
+        <span className="btn-plantbar-text">Add Plant</span>
       </Button>
       <Modal
         open={open}
