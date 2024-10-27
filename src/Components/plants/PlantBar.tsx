@@ -62,7 +62,10 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
           }}
         >
           <FlipCameraAndroidIcon sx={{ color: "silver" }} />
-          <Typography ml={1} sx={{ color: "silver", fontSize: 13 }}>
+          <Typography
+            ml={1}
+            sx={{ color: "silver", fontSize: 13, whiteSpace: "nowrap" }}
+          >
             Flip to see gallons
           </Typography>
         </Box>
@@ -71,7 +74,10 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
           spacing={1}
           ml={2}
           mt={0.5}
-          sx={{ display: { md: "block", sm: "none", xs: "none" } }}
+          sx={{
+            display: { md: "block", sm: "none", xs: "none" },
+            whiteSpace: "nowrap",
+          }}
         >
           <Tooltip title="Weekly Gallons" arrow>
             <Chip
@@ -206,7 +212,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
                 onClick={backToSeason}
               >
                 <IoChevronBack className="btn-icon" />
-                Go Back
+                <span className="btn-plantbar-text">Go Back</span>
               </Button>
             </Link>
           </div>
