@@ -95,9 +95,8 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
     emittersPerPlant: plant?.emittersPerPlant,
     emitterGPH: plant?.emitterGPH,
     imagePath: plant?.imagePath,
-    age: plant?.age === 0 ? undefined : plant?.age,
-    hardinessZone:
-      plant?.hardinessZone === 0 ? undefined : plant?.hardinessZone,
+    age: plant?.age === 0 ? "" : plant?.age,
+    hardinessZone: plant?.hardinessZone === 0 ? "" : plant?.hardinessZone,
     harvestMonth: plant?.harvestMonth === "0" ? undefined : plant?.harvestMonth,
     exposure: plant?.exposure === "" ? undefined : plant?.exposure,
     notes: plant?.notes,
@@ -147,19 +146,46 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
     });
   };
 
+  const checkInitialValues = async (values: object): Promise<object> => {
+    for (const [key, value] of Object.entries(values)) {
+      if ((key === "age" || key === "hardinessZone") && value === "") {
+        values =
+          key === "age"
+            ? { ...values, age: 0 }
+            : { ...values, hardinessZone: 0 };
+      }
+    }
+    return values;
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editPlant = async (id: number, values: object, props: any) => {
-    await agent.Plants.editPlant(id, values)
-      .catch((error) => alert(error))
-      .then(() => {
-        updateLocalStorageZone();
-        fetchPlants(zone.id).then(() => {
-          setIsLoading(false);
-          props.resetForm();
-          handleClose();
-        });
-      })
-      .finally(() => console.log("%cEditPlant: Plant Edited", "color:#1CA1E6"));
+    await checkInitialValues(values).then((newValues) => {
+      agent.Plants.editPlant(id, newValues)
+        .catch((error) => alert(error))
+        .then(() => {
+          updateLocalStorageZone();
+          fetchPlants(zone.id).then(() => {
+            setIsLoading(false);
+            props.resetForm();
+            handleClose();
+          });
+        })
+        .finally(() =>
+          console.log("%cEditPlant: Plant Edited", "color:#1CA1E6")
+        );
+    });
+    // await agent.Plants.editPlant(id, values)
+    //   .catch((error) => alert(error))
+    //   .then(() => {
+    //     updateLocalStorageZone();
+    //     fetchPlants(zone.id).then(() => {
+    //       setIsLoading(false);
+    //       props.resetForm();
+    //       handleClose();
+    //     });
+    //   })
+    //   .finally(() => console.log("%cEditPlant: Plant Edited", "color:#1CA1E6"));
   };
 
   const updateLocalStorageZone = () => {
