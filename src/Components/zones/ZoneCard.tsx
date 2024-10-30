@@ -20,7 +20,7 @@ import { FaCanadianMapleLeaf, FaTrashAlt } from "react-icons/fa";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { FaLeaf } from "react-icons/fa";
 import { Zone } from "../../App/models/Zone";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import agent from "../../App/api/agent";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +33,7 @@ import {
 import { Plant } from "../../App/models/Plant";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/zones/ZoneCard.css";
+import { deleteObject, getStorage, ref } from "firebase/storage";
 
 type ZoneCardProps = {
   fetchZones(args: number): void;
@@ -53,6 +54,8 @@ export default function ZoneCard({
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  const isImageBeingUsedRef = useRef<boolean>(false);
 
   function handelMouseEnter() {
     setIsHovering(true);
@@ -128,12 +131,66 @@ export default function ZoneCard({
   };
 
   const deleteZone = () => {
-    agent.Plants.removePlantsFromZone(zone.id, zone.seasonId).then(() => {
-      agent.Zones.removeZone(zone.id)
-        .then(() => fetchZones(season.id))
-        .finally(() => updateLocalStorageSeason(season.id));
+    deleteImage(zone.id).then(() => {
+      agent.Plants.removePlantsFromZone(zone.id, zone.seasonId).then(() => {
+        agent.Zones.removeZone(zone.id)
+          .then(() => fetchZones(season.id))
+          .finally(() => updateLocalStorageSeason(season.id));
+      });
+      console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
     });
-    console.log("%cZoneCard: Zone Deleted", "color:#1CA1E6");
+  };
+
+  const deleteImage = async (zoneId: number) => {
+    const zones: Array<Zone> = await agent.Zones.list();
+    const storage = getStorage();
+    isImageBeingUsedRef.current = false;
+    if (zoneId) {
+      await agent.Zones.details(zoneId!).then((zone) => {
+        if (
+          zone.imagePath !== "" &&
+          new URL(zone.imagePath).host === "firebasestorage.googleapis.com"
+        ) {
+          zones.forEach((zoneItem) => {
+            if (
+              zoneItem.imagePath === zone.imagePath &&
+              zoneItem.id !== zoneId
+            ) {
+              console.log("Image being used by another zone.");
+              isImageBeingUsedRef.current = true;
+            }
+          });
+          if (!isImageBeingUsedRef.current) {
+            const pattern: RegExp = /users%2F\w.*\?/g;
+            const urlSubstring: string | undefined = zone.imagePath
+              .match(pattern)
+              ?.toString();
+            const urlSubstringReplaced = urlSubstring
+              ?.replaceAll("%2F", "/")
+              .replaceAll("%20", " ")
+              .replaceAll("?", "");
+            deleteObject(ref(storage, urlSubstringReplaced))
+              .then(() => {
+                console.log(
+                  "%cSuccess: Image has been deleted from firebase storage - " +
+                    urlSubstringReplaced,
+                  "color:#02c40f"
+                );
+              })
+              .catch((error) => {
+                console.error(
+                  "Error: Something went wrong, unable to delete image:",
+                  error
+                );
+              });
+          }
+        } else {
+          console.log("No firebase image to delete");
+        }
+      });
+    } else {
+      console.error("Error: Invalid Zone ID");
+    }
   };
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */

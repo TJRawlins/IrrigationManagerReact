@@ -17,7 +17,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import agent from "../../App/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import "../../styles/zones/AddZone.css";
@@ -30,11 +30,13 @@ import {
   getDownloadURL,
   StorageReference,
   FirebaseStorage,
+  deleteObject,
 } from "firebase/storage";
 import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { HiOutlineInformationCircle } from "react-icons/hi2";
 import Compressor from "compressorjs";
+import { Plant } from "../../App/models/Plant";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -75,9 +77,12 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
     setError("");
     setIsShowEdit(false);
     setImageUpload(undefined);
+    setIsNewImage(false);
   };
 
   // Firebase Storage Variables
+  const isImageBeingUsedRef = useRef<boolean>(false);
+  const [isNewImage, setIsNewImage] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [imageUpload, setImageUpload] = useState<File>();
   const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
@@ -160,6 +165,25 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editPlant = async (id: number, values: object, props: any) => {
+    if (isNewImage) {
+      await deleteImage(id).then(() => {
+        checkInitialValues(values).then((newValues) => {
+          agent.Plants.editPlant(id, newValues)
+            .catch((error) => alert(error))
+            .then(() => {
+              updateLocalStorageZone();
+              fetchPlants(zone.id).then(() => {
+                setIsLoading(false);
+                props.resetForm();
+                handleClose();
+              });
+            })
+            .finally(() =>
+              console.log("%cEditPlant: Plant Edited", "color:#1CA1E6")
+            );
+        });
+      });
+    }
     await checkInitialValues(values).then((newValues) => {
       agent.Plants.editPlant(id, newValues)
         .catch((error) => alert(error))
@@ -188,6 +212,58 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
     //   .finally(() => console.log("%cEditPlant: Plant Edited", "color:#1CA1E6"));
   };
 
+  const deleteImage = async (plantId: number) => {
+    const plants: Array<Plant> = await agent.Plants.list();
+    const storage = getStorage();
+    isImageBeingUsedRef.current = false;
+    if (plantId) {
+      await agent.Plants.details(plantId!).then((plant) => {
+        if (
+          plant.imagePath !== "" &&
+          new URL(plant.imagePath).host === "firebasestorage.googleapis.com"
+        ) {
+          plants.forEach((plantItem) => {
+            if (
+              plantItem.imagePath === plant.imagePath &&
+              plantItem.id !== plantId
+            ) {
+              console.log("Image being used by another plant.");
+              isImageBeingUsedRef.current = true;
+            }
+          });
+          if (!isImageBeingUsedRef.current) {
+            const pattern: RegExp = /users%2F\w.*\?/g;
+            const urlSubstring: string | undefined = plant.imagePath
+              .match(pattern)
+              ?.toString();
+            const urlSubstringReplaced = urlSubstring
+              ?.replaceAll("%2F", "/")
+              .replaceAll("%20", " ")
+              .replaceAll("?", "");
+            deleteObject(ref(storage, urlSubstringReplaced))
+              .then(() => {
+                console.log(
+                  "%cSuccess: Image has been deleted from firebase storage - " +
+                    urlSubstringReplaced,
+                  "color:#02c40f"
+                );
+              })
+              .catch((error) => {
+                console.error(
+                  "Error: Something went wrong, unable to delete image:",
+                  error
+                );
+              });
+          }
+        } else {
+          console.log("No firebase image to delete");
+        }
+      });
+    } else {
+      console.error("Error: Invalid Plant ID");
+    }
+  };
+
   const updateLocalStorageZone = () => {
     agent.Zones.details(zone.id).then((zone) => {
       dispatch(updateCurrentZone(zone));
@@ -199,6 +275,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
     event: ChangeEvent<HTMLInputElement>
   ) => {
     setImageUpload(undefined);
+    setIsNewImage(false);
     if (!event.target.files?.[0]) {
       return;
     }
@@ -219,6 +296,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
         if (compressedFile.size < event.target.files?.[0].size) {
           generateImageFileName(compressedFile);
           setError("");
+          setIsNewImage(true);
         }
       } catch (error) {
         setError("Compression Error");
