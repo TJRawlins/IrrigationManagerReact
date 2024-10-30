@@ -28,10 +28,12 @@ import {
   getDownloadURL,
   StorageReference,
   FirebaseStorage,
+  deleteObject,
 } from "firebase/storage";
 import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
+import { Zone } from "../../App/models/Zone";
 
 type ZoneEditProps = {
   fetchZones(args: number): Promise<void>;
@@ -77,9 +79,12 @@ function EditZone({
   const handleClose = () => {
     setIsShowEdit(false);
     setImageUpload(undefined);
+    setIsNewImage(false);
   };
 
   // Firebase Storage Variables
+  const isImageBeingUsedRef = useRef<boolean>(false);
+  const [isNewImage, setIsNewImage] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [imageUpload, setImageUpload] = useState<File>();
   const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
@@ -164,6 +169,24 @@ function EditZone({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editZone = async (id: number, values: object, props: any) => {
+    if (isNewImage) {
+      await deleteImage(id).then(() => {
+        agent.Zones.editZone(id, season.id, values)
+          .catch((error) => alert(error))
+          .then(() => {
+            updateLocalStorageSeason(season.id);
+            fetchZones(season.id)
+              .then(() => {
+                setIsLoading(false);
+                props.resetForm();
+                handleClose();
+              })
+              .finally(() =>
+                console.log("%cEditZone: Zone Edited", "color:#1CA1E6")
+              );
+          });
+      });
+    }
     await agent.Zones.editZone(id, season.id, values)
       .catch((error) => alert(error))
       .then(() => {
@@ -180,11 +203,64 @@ function EditZone({
       });
   };
 
+  const deleteImage = async (zoneId: number) => {
+    const zones: Array<Zone> = await agent.Zones.list();
+    const storage = getStorage();
+    isImageBeingUsedRef.current = false;
+    if (zoneId) {
+      await agent.Zones.details(zoneId!).then((zone) => {
+        if (
+          zone.imagePath !== "" &&
+          new URL(zone.imagePath).host === "firebasestorage.googleapis.com"
+        ) {
+          zones.forEach((zoneItem) => {
+            if (
+              zoneItem.imagePath === zone.imagePath &&
+              zoneItem.id !== zoneId
+            ) {
+              console.log("Image being used by another zone.");
+              isImageBeingUsedRef.current = true;
+            }
+          });
+          if (!isImageBeingUsedRef.current) {
+            const pattern: RegExp = /users%2F\w.*\?/g;
+            const urlSubstring: string | undefined = zone.imagePath
+              .match(pattern)
+              ?.toString();
+            const urlSubstringReplaced = urlSubstring
+              ?.replaceAll("%2F", "/")
+              .replaceAll("%20", " ")
+              .replaceAll("?", "");
+            deleteObject(ref(storage, urlSubstringReplaced))
+              .then(() => {
+                console.log(
+                  "%cSuccess: Image has been deleted from firebase storage - " +
+                    urlSubstringReplaced,
+                  "color:#02c40f"
+                );
+              })
+              .catch((error) => {
+                console.error(
+                  "Error: Something went wrong, unable to delete image:",
+                  error
+                );
+              });
+          }
+        } else {
+          console.log("No firebase image to delete");
+        }
+      });
+    } else {
+      console.error("Error: Invalid Zone ID");
+    }
+  };
+
   // Onchange event for "Select Image" button
   const handleImageValidation = async (
     event: ChangeEvent<HTMLInputElement>
   ) => {
     setImageUpload(undefined);
+    setIsNewImage(false);
     if (!event.target.files?.[0]) {
       return;
     }
@@ -202,9 +278,10 @@ function EditZone({
         const compressedFile: File = await compressImage(
           event.target.files?.[0]
         );
-        if(compressedFile.size < event.target.files?.[0].size) {
+        if (compressedFile.size < event.target.files?.[0].size) {
           generateImageFileName(compressedFile);
           setError("");
+          setIsNewImage(true);
         }
       } catch (error) {
         setError("Compression Error");
