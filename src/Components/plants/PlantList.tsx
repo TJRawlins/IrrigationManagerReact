@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -23,6 +23,8 @@ import EditPlant from "./EditPlant";
 import { updateCurrentPlant } from "../../redux/plantSlice";
 import ViewPlantSkeleton from "./ViewPlantSkeleton";
 import { BiSolidCopyAlt } from "react-icons/bi";
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import { Plant } from "../../App/models/Plant";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -51,6 +53,8 @@ PlantListProps) {
   // const isFull = !useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  const isImageBeingUsedRef = useRef<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,12 +101,66 @@ PlantListProps) {
   };
 
   const deletePlant = () => {
-    agent.Plants.removePlant(plantId!)
-      .catch((error) => alert(error))
-      .then(() => fetchPlants(zone.id))
-      .then(() => updateLocalStorageZone(zone.id));
-    handleDeleteClose();
-    console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
+    deleteImage(plantId!).then(() => {
+      agent.Plants.removePlant(plantId!)
+        .catch((error) => alert(error))
+        .then(() => fetchPlants(zone.id))
+        .then(() => updateLocalStorageZone(zone.id));
+      handleDeleteClose();
+      console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
+    });
+  };
+
+  const deleteImage = async (plantId: number) => {
+    const plants: Array<Plant> = await agent.Plants.list();
+    const storage = getStorage();
+    isImageBeingUsedRef.current = false;
+    if (plantId) {
+      await agent.Plants.details(plantId!).then((plant) => {
+        if (
+          plant.imagePath !== "" &&
+          new URL(plant.imagePath).host === "firebasestorage.googleapis.com"
+        ) {
+          plants.forEach((plantItem) => {
+            if (
+              plantItem.imagePath === plant.imagePath &&
+              plantItem.id !== plantId
+            ) {
+              console.log("Image being used by another plant.");
+              isImageBeingUsedRef.current = true;
+            }
+          });
+          if (!isImageBeingUsedRef.current) {
+            const pattern: RegExp = /users%2F\w.*\?/g;
+            const urlSubstring: string | undefined = plant.imagePath
+              .match(pattern)
+              ?.toString();
+            const urlSubstringReplaced = urlSubstring
+              ?.replaceAll("%2F", "/")
+              .replaceAll("%20", " ")
+              .replaceAll("?", "");
+            deleteObject(ref(storage, urlSubstringReplaced))
+              .then(() => {
+                console.log(
+                  "%cSuccess: Image has been deleted from firebase storage - " +
+                    urlSubstringReplaced,
+                  "color:#02c40f"
+                );
+              })
+              .catch((error) => {
+                console.error(
+                  "Error: Something went wrong, unable to delete image:",
+                  error
+                );
+              });
+          }
+        } else {
+          console.log("No firebase image to delete");
+        }
+      });
+    } else {
+      console.error("Error: Invalid Plant ID");
+    }
   };
 
   const handleCopyPlantClick = async (
@@ -156,10 +214,6 @@ PlantListProps) {
 
     console.log("%cPlantList: Plant View Clicked", "color:#1CA1E6");
   };
-
-  // useEffect(() => {
-  //   fetchPlants(zone.id);
-  // }, [isMobile, plant]);
 
   const columns: GridColDef<(typeof rows)[number]>[] = [
     { field: "id", headerName: "ID", width: 90 },
