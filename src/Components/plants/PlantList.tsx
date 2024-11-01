@@ -25,6 +25,7 @@ import ViewPlantSkeleton from "./ViewPlantSkeleton";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -223,7 +224,12 @@ PlantListProps) {
       renderCell: (params) => {
         return (
           <div style={{ display: "flex", height: "100%" }}>
-            <img className="plant-image" src={params.value}></img>
+            <LazyLoadImage
+              className="plant-image"
+              effect="blur"
+              src={params.value}
+              placeholderSrc={params.value}
+            ></LazyLoadImage>
           </div>
         );
       },
