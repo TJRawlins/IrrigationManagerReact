@@ -228,7 +228,7 @@ PlantListProps) {
               className="plant-image"
               effect="blur"
               src={params.value}
-              placeholderSrc={params.value}
+              placeholderSrc="https://firebasestorage.googleapis.com/v0/b/***REMOVED***.appspot.com/o/images%2Fplants%2Firrigation%20logo%20small.png?alt=media&token=f52ed726-a059-471f-bb94-593577739226"
             ></LazyLoadImage>
           </div>
         );
