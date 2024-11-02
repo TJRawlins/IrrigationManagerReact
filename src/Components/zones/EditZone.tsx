@@ -497,6 +497,7 @@ function EditZone({
                     <img
                       src={zone.imagePath}
                       style={{
+                        maxWidth: "155px",
                         width: "359px",
                         height: "45px",
                         objectFit: "cover",
