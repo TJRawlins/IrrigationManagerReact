@@ -18,7 +18,7 @@ import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
 import React from "react";
 import ViewPlant from "./ViewPlant";
-import "../../styles/plants/PlantList.css";
+import "./PlantList.css";
 import EditPlant from "./EditPlant";
 import { updateCurrentPlant } from "../../redux/plantSlice";
 import ViewPlantSkeleton from "./ViewPlantSkeleton";
@@ -226,6 +226,7 @@ PlantListProps) {
           <div style={{ display: "flex", height: "100%" }}>
             <LazyLoadImage
               className="plant-image"
+              style={{ display: "flex", alignItems: "center", height: "100%" }}
               effect="blur"
               src={params.value}
               placeholderSrc="https://firebasestorage.googleapis.com/v0/b/***REMOVED***.appspot.com/o/images%2Fplants%2Firrigation%20logo%20small.png?alt=media&token=f52ed726-a059-471f-bb94-593577739226"
