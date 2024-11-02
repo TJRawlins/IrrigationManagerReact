@@ -48,6 +48,12 @@
   border: 1px solid #eaeaea;
 }
 
+.lazy-load-image-background {
+  height: 35px;
+  display: flex;
+  align-self: center;
+}
+
 @media screen and (max-width: 810px) {
   .action-btn {
     margin-left: 0.05rem !important;

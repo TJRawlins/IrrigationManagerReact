@@ -18,13 +18,14 @@ import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
 import React from "react";
 import ViewPlant from "./ViewPlant";
-import "../../styles/plants/PlantList.css";
+import "./PlantList.css";
 import EditPlant from "./EditPlant";
 import { updateCurrentPlant } from "../../redux/plantSlice";
 import ViewPlantSkeleton from "./ViewPlantSkeleton";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -223,7 +224,13 @@ PlantListProps) {
       renderCell: (params) => {
         return (
           <div style={{ display: "flex", height: "100%" }}>
-            <img className="plant-image" src={params.value}></img>
+            <LazyLoadImage
+              className="plant-image"
+              style={{ display: "flex", alignItems: "center", height: "100%" }}
+              effect="blur"
+              src={params.value}
+              placeholderSrc="https://firebasestorage.googleapis.com/v0/b/dropletimageupload.appspot.com/o/images%2Fplants%2Firrigation%20logo%20small.png?alt=media&token=f52ed726-a059-471f-bb94-593577739226"
+            ></LazyLoadImage>
           </div>
         );
       },
