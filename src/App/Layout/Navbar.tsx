@@ -175,7 +175,12 @@ export default function Navbar() {
   return (
     <Box sx={{ flexGrow: 1, position: "relative !important" }}>
       <AppBar sx={appBarStyles(theme).mainBar}>
-        <Toolbar sx={{ paddingLeft: "0.5rem !important" }}>
+        <Toolbar
+          sx={{
+            paddingLeft: "25px !important",
+            paddingRight: "40px !important",
+          }}
+        >
           <Sidebar />
           <img
             src={logo}
