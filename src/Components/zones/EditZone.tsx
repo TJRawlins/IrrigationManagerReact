@@ -294,6 +294,7 @@ function EditZone({
     return new Promise((resolve, reject) => {
       new Compressor(file, {
         quality: 0.6,
+        width: 500,
         success(result) {
           resolve(result as File);
         },
