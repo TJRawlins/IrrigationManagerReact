@@ -25,7 +25,6 @@ import ViewPlantSkeleton from "./ViewPlantSkeleton";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -224,13 +223,11 @@ PlantListProps) {
       renderCell: (params) => {
         return (
           <div style={{ display: "flex", height: "100%" }}>
-            <LazyLoadImage
+            <img
               className="plant-image"
-              style={{ display: "flex", alignItems: "center", height: "100%" }}
-              effect="blur"
+              style={{ display: "flex", alignItems: "center" }}
               src={params.value}
-              placeholderSrc="https://firebasestorage.googleapis.com/v0/b/dropletimageupload.appspot.com/o/images%2Fplants%2Firrigation%20logo%20small.png?alt=media&token=f52ed726-a059-471f-bb94-593577739226"
-            ></LazyLoadImage>
+            ></img>
           </div>
         );
       },
@@ -353,7 +350,8 @@ PlantListProps) {
               },
             },
           }}
-          pageSizeOptions={[5, 10, 15]}
+          pageSizeOptions={[5, 10, 25, { value: rows.length, label: "All" }]}
+          // pageSizeOptions={[10, 15, 20, 50, 100]}
           paginationMode="client"
           checkboxSelection
           disableRowSelectionOnClick
