@@ -182,6 +182,8 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         if (compressedFile.size < event.target.files?.[0].size) {
           generateImageFileName(compressedFile);
           setError("");
+        } else {
+          setError("Select a different image");
         }
       } catch (error) {
         setError("Compression Error");
@@ -194,6 +196,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
     return new Promise((resolve, reject) => {
       new Compressor(file, {
         quality: 0.6,
+        width: 500,
         success(result) {
           resolve(result as File);
         },
