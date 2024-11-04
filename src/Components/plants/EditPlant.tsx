@@ -297,6 +297,8 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
           generateImageFileName(compressedFile);
           setError("");
           setIsNewImage(true);
+        } else {
+          setError("File was not compressed");
         }
       } catch (error) {
         setError("Compression Error");
@@ -309,6 +311,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
     return new Promise((resolve, reject) => {
       new Compressor(file, {
         quality: 0.6,
+        width: 500,
         success(result) {
           resolve(result as File);
         },
