@@ -9,7 +9,14 @@
   background-color: #ffff;
 }
 
+.plant-image-wrapper {
+  display: flex;
+  height: 100%;
+}
+
 .plant-image {
+  display: flex;
+  align-items: center;
   width: 60px;
   height: 35px;
   object-fit: cover;
@@ -52,6 +59,15 @@
   height: 35px;
   display: flex;
   align-self: center;
+}
+
+svg[data-testid="SearchIcon"],
+input[placeholder="Search…"] {
+  color: #59bab1;
+}
+
+.MuiInput-underline:hover:not(.Mui-disabled, .Mui-error):before {
+  border-bottom: 2px solid #59bab1 !important;
 }
 
 @media screen and (max-width: 810px) {

@@ -8,7 +8,16 @@ import {
   Tooltip,
   useTheme,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridToolbarColumnsButton,
+  GridToolbarContainer,
+  GridToolbarDensitySelector,
+  GridToolbarExport,
+  GridToolbarFilterButton,
+  GridToolbarQuickFilter,
+} from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -220,14 +229,13 @@ PlantListProps) {
     {
       field: "imagePath",
       headerName: "Image",
+      align: "center",
+      sortable: false,
+      disableExport: true,
       renderCell: (params) => {
         return (
-          <div style={{ display: "flex", height: "100%" }}>
-            <img
-              className="plant-image"
-              style={{ display: "flex", alignItems: "center" }}
-              src={params.value}
-            ></img>
+          <div className="plant-image-wrapper">
+            <img className="plant-image" src={params.value}></img>
           </div>
         );
       },
@@ -312,6 +320,24 @@ PlantListProps) {
     },
   ];
 
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarExport
+          excelOptions={{ disableToolbarButton: false }}
+          printOptions={{
+            hideToolbar: true,
+            includeCheckboxes: false,
+          }}
+        />
+        <GridToolbarQuickFilter />
+      </GridToolbarContainer>
+    );
+  }
+
   return (
     <>
       <Box component="div" sx={{ width: "100%" }}>
@@ -324,7 +350,7 @@ PlantListProps) {
           rows={rows}
           loading={isLoadingGrid}
           slots={{
-            toolbar: GridToolbar,
+            toolbar: CustomToolbar,
           }}
           slotProps={{
             loadingOverlay: {
@@ -337,6 +363,7 @@ PlantListProps) {
             columns: {
               columnVisibilityModel: {
                 id: false,
+                imagePath: false,
                 timeStamp: false,
                 age: false,
                 hardinessZone: false,
