@@ -363,7 +363,7 @@ PlantListProps) {
             columns: {
               columnVisibilityModel: {
                 id: false,
-                imagePath: false,
+                imagePath: true,
                 timeStamp: false,
                 age: false,
                 hardinessZone: false,
