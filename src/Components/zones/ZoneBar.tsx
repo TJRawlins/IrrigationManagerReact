@@ -12,6 +12,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
@@ -25,6 +26,7 @@ import {
   updateCurrentSeasonName,
   updateIsInitialLoad,
 } from "../../redux/seasonSlice";
+import { tokens } from "../../theme/theme";
 
 type ZoneBarProps = {
   fetchZones(args: number): void;
@@ -41,6 +43,49 @@ export default function ZoneBar({
     (state: RootState) => state.isInitialLoad
   );
   const dispatch = useDispatch();
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const navBarColorTheme = () => {
+    return {
+      mainBar: {
+        backgroundColor: colors.white[100],
+        color: colors.gray[100],
+      },
+      dropdown: {
+        backgroundColor: colors.whiteBlue[100],
+        ".menu-text, .menuIcon, .MuiSvgIcon-root, .menu-text": {
+          color: colors.gray[100] + " !important",
+        },
+        "&.season-btn:hover": {
+          backgroundColor: colors.primary[600] + " !important",
+        },
+        "&:hover": {
+          backgroundColor: colors.primary[600] + " !important",
+        },
+        "&.season-btn:hover .menu-text,&.season-btn:hover .MuiSvgIcon-root,&.season-btn:hover .menuIcon":
+          { color: colors.primary[500] + " !important" },
+        "&:hover .menu-text,&:hover .MuiSvgIcon-root,&:hover .menuIcon": {
+          color: colors.primary[500] + " !important",
+        },
+      },
+      gallonsChips: {
+        width: "fit-content",
+        borderBottom: "1px solid silver",
+        backgroundColor: colors.white[100],
+        color: "#919191",
+        justifyContent: "left",
+      },
+      gallonsChipsAvatar: {
+        minWidth: "fit-content",
+        background: colors.whiteBlue[100],
+        fontWeight: "700",
+        color: "#919191 !important",
+      }
+    };
+  };
+
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */
@@ -70,13 +115,7 @@ export default function ZoneBar({
         >
           <Tooltip title="Weekly Gallons" arrow>
             <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
+              sx={navBarColorTheme().gallonsChips}
               avatar={
                 <Avatar
                   sx={{
@@ -94,13 +133,7 @@ export default function ZoneBar({
           </Tooltip>
           <Tooltip title="Monthly Gallons" arrow>
             <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
+              sx={navBarColorTheme().gallonsChips}
               avatar={
                 <Avatar
                   sx={{
@@ -118,13 +151,7 @@ export default function ZoneBar({
           </Tooltip>
           <Tooltip title="Yearly Gallons" arrow>
             <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
+              sx={navBarColorTheme().gallonsChips}
               avatar={
                 <Avatar
                   sx={{
@@ -186,43 +213,32 @@ export default function ZoneBar({
             value={isInitialLoad ? seasonName : "Select Season"}
             onChange={handleChange}
             inputProps={{ "aria-label": "Without label" }}
-            sx={{
-              boxShadow: "none",
-              ".MuiOutlinedInput-notchedOutline": { border: 0 },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                border: "none",
-                borderRadius: "5px 5px 0 0",
-              },
-              height: "33px",
-              width: "150px",
-              ml: 2,
-              mt: 0.5,
-            }}
+            sx={navBarColorTheme().dropdown}
           >
             {!isInitialLoad && (
               <MenuItem value={"Select Season"}>
                 <em>Select Season</em>
               </MenuItem>
             )}
-            <MenuItem value={"Summer"}>
+            <MenuItem value={"Summer"} sx={navBarColorTheme().dropdown}>
               <div className="menu-wrapper">
                 <MdSunny className="menuIcon" />
                 <Typography className="menu-text">Summer</Typography>
               </div>
             </MenuItem>
-            <MenuItem value={"Fall"}>
+            <MenuItem value={"Fall"} sx={navBarColorTheme().dropdown}>
               <div className="menu-wrapper">
                 <FaCanadianMapleLeaf className="menuIcon iconRotate" />
                 <Typography className="menu-text">Fall</Typography>
               </div>
             </MenuItem>
-            <MenuItem value={"Winter"}>
+            <MenuItem value={"Winter"} sx={navBarColorTheme().dropdown}>
               <div className="menu-wrapper">
                 <MdAcUnit className="menuIcon" />
                 <Typography className="menu-text">Winter</Typography>
               </div>
             </MenuItem>
-            <MenuItem value={"Spring"}>
+            <MenuItem value={"Spring"} sx={navBarColorTheme().dropdown}>
               <div className="menu-wrapper">
                 <MdLocalFlorist className="menuIcon" />
                 <Typography className="menu-text">Spring</Typography>
@@ -240,7 +256,7 @@ export default function ZoneBar({
   return (
     <>
       <CssBaseline />
-      <div className="main-container">
+      <div className="main-container" style={navBarColorTheme().mainBar}>
         <div className="content-container">
           <div className="title-container">
             <Typography className="bar-title" variant="h6" noWrap component="a">
