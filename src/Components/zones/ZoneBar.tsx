@@ -50,7 +50,7 @@ export default function ZoneBar({
   const navBarColorTheme = () => {
     return {
       mainBar: {
-        backgroundColor: colors.white[100],
+        backgroundColor: colors.white.solid,
         color: colors.gray[100],
       },
       dropdown: {
@@ -59,21 +59,21 @@ export default function ZoneBar({
           color: colors.gray[100] + " !important",
         },
         "&.season-btn:hover": {
-          backgroundColor: colors.primary[600] + " !important",
+          backgroundColor: colors.primary.opacity + " !important",
         },
         "&:hover": {
-          backgroundColor: colors.primary[600] + " !important",
+          backgroundColor: colors.primary.opacity + " !important",
         },
         "&.season-btn:hover .menu-text,&.season-btn:hover .MuiSvgIcon-root,&.season-btn:hover .menuIcon":
-          { color: colors.primary[500] + " !important" },
+          { color: colors.primary.solid + " !important" },
         "&:hover .menu-text,&:hover .MuiSvgIcon-root,&:hover .menuIcon": {
-          color: colors.primary[500] + " !important",
+          color: colors.primary.solid + " !important",
         },
       },
       gallonsChips: {
         width: "fit-content",
         borderBottom: "1px solid silver",
-        backgroundColor: colors.white[100],
+        backgroundColor: colors.white.solid,
         color: "#919191",
         justifyContent: "left",
       },
@@ -82,7 +82,7 @@ export default function ZoneBar({
         background: colors.whiteBlue[100],
         fontWeight: "700",
         color: "#919191 !important",
-      }
+      },
     };
   };
 
