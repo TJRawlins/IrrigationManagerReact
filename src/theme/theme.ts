@@ -12,33 +12,18 @@ export const tokens = (mode: string) => ({
   ...(mode === "dark"
     ? {
         primary: {
-          100: "#122523",
-          200: "#244a47",
-          300: "#35706a",
-          400: "#47958e",
-          500: "#59bab1",
-          600: "#59bab114",
+          solid: "#59bab1",
+          opacity: "#59bab114",
         },
         secondary: {
-          100: "#1a2108",
-          200: "#344210",
-          300: "#4e6418",
-          400: "#688520",
-          500: "#82a628",
+          solid: "#82a628",
         },
         tertiary: {
-          100: "#00090f",
-          200: "#00111d",
-          300: "#001a2c",
-          400: "#00223a",
-          500: "#002b49",
+          solid: "#080808",
         },
         white: {
-          100: "#323233",
-          200: "#656565",
-          300: "#979798",
-          400: "#cacaca",
-          500: "#fcfcfd",
+          solid: "#323233",
+          alt: "#8b8b8b",
         },
         whiteBlue: {
           100: "#3f3f3f",
@@ -57,33 +42,18 @@ export const tokens = (mode: string) => ({
       }
     : {
         primary: {
-          100: "#122523",
-          200: "#244a47",
-          300: "#35706a",
-          400: "#47958e",
-          500: "#59bab1",
-          600: "#59bab114",
+          solid: "#59bab1",
+          opacity: "#59bab114",
         },
         secondary: {
-          100: "#1a2108",
-          200: "#344210",
-          300: "#4e6418",
-          400: "#688520",
-          500: "#82a628",
+          solid: "#82a628",
         },
         tertiary: {
-          100: "#00090f",
-          200: "#00111d",
-          300: "#001a2c",
-          400: "#00223a",
-          500: "#002b49",
+          solid: "#002b49",
         },
         white: {
-          100: "#fcfcfd",
-          200: "#cacaca",
-          300: "#979798",
-          400: "#656565",
-          500: "#323233",
+          solid: "#fcfcfd",
+          alt: "#fcfcfd",
         },
         whiteBlue: {
           100: "#eef2f6",
@@ -113,13 +83,13 @@ export const themeSettings = (mode: any): ThemeOptions => {
       ...(mode === "dark"
         ? {
             primary: {
-              main: colors.primary[500],
+              main: colors.primary.solid,
             },
             secondary: {
-              main: colors.secondary[500],
+              main: colors.secondary.solid,
             },
             tertiary: {
-              main: colors.tertiary[500],
+              main: colors.tertiary.solid,
             },
             neutral: {
               dark: colors.gray[500],
@@ -127,18 +97,18 @@ export const themeSettings = (mode: any): ThemeOptions => {
               light: colors.gray[100],
             },
             background: {
-              default: colors.white[100],
+              default: colors.white.solid,
             },
           }
         : {
             primary: {
-              main: colors.primary[500],
+              main: colors.primary.solid,
             },
             secondary: {
-              main: colors.secondary[500],
+              main: colors.secondary.solid,
             },
             tertiary: {
-              nav: colors.tertiary[500],
+              nav: colors.tertiary.solid,
             },
             neutral: {
               dark: colors.gray[500],
@@ -146,7 +116,7 @@ export const themeSettings = (mode: any): ThemeOptions => {
               light: colors.gray[100],
             },
             background: {
-              default: colors.white[100],
+              default: colors.white.solid,
             },
           }),
     },
