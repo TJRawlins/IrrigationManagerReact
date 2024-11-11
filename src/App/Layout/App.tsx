@@ -7,15 +7,6 @@ import RouterComponent from "../../routes/RouterComponent";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ColorModeContext, useMode } from "../../theme/theme";
 
-// const theme = createTheme({
-//   palette: {
-//     primary: {
-//       main: "#59bab1",
-//     },
-//   },
-//   typography: {},
-// });
-
 function App() {
   const [theme, colorMode] = useMode();
   return (
@@ -40,7 +31,7 @@ function App() {
               className="content-grid"
               container
               flexGrow={0}
-              sx={{ bgcolor: "#fff", padding: "30px" }}
+              sx={{ padding: "30px" }}
             >
               <RouterComponent />
             </Grid>
