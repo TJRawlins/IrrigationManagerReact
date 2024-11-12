@@ -18,10 +18,11 @@ import {
   WaterDropOutlined as WaterDropIcon,
 } from "@mui/icons-material";
 import Box from "@mui/material/Box";
-import { Grid } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "/src/App/Layout/Sidebar.css";
+import { tokens } from "../../theme/theme";
 
 type Anchor = "left";
 
@@ -29,6 +30,21 @@ export default function Sidebar() {
   const [state, setState] = useState({
     left: false,
   });
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const sideBarColorTheme = () => {
+    return {
+      sideBar: {
+        backgroundColor: colors.white.solid,
+        color: colors.gray.solid,
+      },
+      hamburgerMenu: {
+        backgroundColor: colors.white.altSecondary,
+      },
+    };
+  };
 
   // Toggle the sidebar menu
   const toggleDrawer =
@@ -134,7 +150,19 @@ export default function Sidebar() {
   );
 
   const HamburgerIcon = () => {
-    return <div className="icon"></div>;
+    return (
+      <>
+        <div
+          className="icon top"
+          style={sideBarColorTheme().hamburgerMenu}
+        ></div>
+        <div className="icon middle" style={sideBarColorTheme().hamburgerMenu}></div>
+        <div
+          className="icon bottom"
+          style={sideBarColorTheme().hamburgerMenu}
+        ></div>
+      </>
+    );
   };
 
   const [isActive, setActive] = React.useState(true);
@@ -148,9 +176,7 @@ export default function Sidebar() {
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           <Button
-            className={
-              isActive ? "nav-toggle icon" : "nav-open nav-toggle icon"
-            }
+            className={isActive ? "navToggle icon" : "nav-open navToggle icon"}
             sx={{ padding: 1, minWidth: 0 }}
             onClick={toggleDrawer(anchor, isActive ? true : false)}
           >
