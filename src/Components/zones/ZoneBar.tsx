@@ -51,12 +51,12 @@ export default function ZoneBar({
     return {
       mainBar: {
         backgroundColor: colors.white.solid,
-        color: colors.gray[100],
+        color: colors.gray.solid,
       },
       dropdown: {
-        backgroundColor: colors.whiteBlue[100],
+        backgroundColor: colors.whiteBlue.solid,
         ".menu-text, .menuIcon, .MuiSvgIcon-root, .menu-text": {
-          color: colors.gray[100] + " !important",
+          color: colors.gray.solid + " !important",
         },
         "&.season-btn:hover": {
           backgroundColor: colors.primary.opacity + " !important",
@@ -72,16 +72,16 @@ export default function ZoneBar({
       },
       gallonsChips: {
         width: "fit-content",
-        borderBottom: "1px solid silver",
-        backgroundColor: colors.white.solid,
-        color: "#919191",
+        borderBottom: "1px solid " + colors.shadow.solid,
+        backgroundColor: colors.whiteBlue.solid,
+        color: colors.gray.solid,
         justifyContent: "left",
       },
       gallonsChipsAvatar: {
         minWidth: "fit-content",
-        background: colors.whiteBlue[100],
+        background: colors.whiteBlue.alt,
         fontWeight: "700",
-        color: "#919191 !important",
+        color: colors.gray.solid + " !important",
       },
     };
   };
@@ -117,14 +117,7 @@ export default function ZoneBar({
             <Chip
               sx={navBarColorTheme().gallonsChips}
               avatar={
-                <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
-                >
+                <Avatar sx={navBarColorTheme().gallonsChipsAvatar}>
                   {"Weekly Gallons"[0].toLocaleUpperCase()}
                 </Avatar>
               }
@@ -135,14 +128,7 @@ export default function ZoneBar({
             <Chip
               sx={navBarColorTheme().gallonsChips}
               avatar={
-                <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
-                >
+                <Avatar sx={navBarColorTheme().gallonsChipsAvatar}>
                   {"Monthly Gallons"[0].toLocaleUpperCase()}
                 </Avatar>
               }
@@ -153,14 +139,7 @@ export default function ZoneBar({
             <Chip
               sx={navBarColorTheme().gallonsChips}
               avatar={
-                <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
-                >
+                <Avatar sx={navBarColorTheme().gallonsChipsAvatar}>
                   {"Yearly Gallons"[0].toLocaleUpperCase()}
                 </Avatar>
               }
