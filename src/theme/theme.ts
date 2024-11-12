@@ -24,13 +24,19 @@ export const tokens = (mode: string) => ({
         white: {
           solid: "#323233",
           alt: "#8b8b8b",
+          altPrimary: "#59bab1",
+          altSecondary: "#82a628",
         },
         whiteBlue: {
-          100: "#3f3f3f",
+          solid: "#3f3f3f",
+          alt: "#535353",
           200: "#5f6162",
           300: "#8f9194",
           400: "#bec2c5",
           500: "#eef2f6",
+        },
+        shadow: {
+          solid: "#0808087d",
         },
         gray: {
           100: "#8b8b8b",
@@ -54,13 +60,19 @@ export const tokens = (mode: string) => ({
         white: {
           solid: "#fcfcfd",
           alt: "#fcfcfd",
+          altPrimary: "#fcfcfd",
+          altSecondary: "#fcfcfd",
         },
         whiteBlue: {
-          100: "#eef2f6",
+          solid: "#eef2f6",
+          alt: "#0e2a4714",
           200: "#bec2c5",
           300: "#8f9194",
           400: "#5f6162",
           500: "#303031",
+        },
+        shadow: {
+          solid: "#bec2c5",
         },
         gray: {
           100: "#8b8b8b",
