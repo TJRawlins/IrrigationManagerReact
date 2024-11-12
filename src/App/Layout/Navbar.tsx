@@ -34,7 +34,7 @@ export default function Navbar() {
     return {
       mainBar: {
         backgroundColor: colors.tertiary.solid,
-        color: colors.white.alt,
+        color: colors.white.altPrimary,
         zIndex: theme.zIndex.drawer + 1,
         position: "relative !important",
       },
