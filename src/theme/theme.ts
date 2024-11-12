@@ -39,7 +39,7 @@ export const tokens = (mode: string) => ({
           solid: "#0808087d",
         },
         gray: {
-          100: "#8b8b8b",
+          solid: "#8b8b8b",
           200: "#383838",
           300: "#535353",
           400: "#6f6f6f",
@@ -75,7 +75,7 @@ export const tokens = (mode: string) => ({
           solid: "#bec2c5",
         },
         gray: {
-          100: "#8b8b8b",
+          solid: "#8b8b8b",
           200: "#6f6f6f",
           300: "#535353",
           400: "#383838",
@@ -106,7 +106,7 @@ export const themeSettings = (mode: any): ThemeOptions => {
             neutral: {
               dark: colors.gray[500],
               main: colors.gray[500],
-              light: colors.gray[100],
+              light: colors.gray.solid,
             },
             background: {
               default: colors.white.solid,
@@ -125,7 +125,7 @@ export const themeSettings = (mode: any): ThemeOptions => {
             neutral: {
               dark: colors.gray[500],
               main: colors.gray[500],
-              light: colors.gray[100],
+              light: colors.gray.solid,
             },
             background: {
               default: colors.white.solid,
