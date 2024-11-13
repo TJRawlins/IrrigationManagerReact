@@ -1,10 +1,11 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
+import "./ZonePage.css";
 import { useEffect, useState } from "react";
 import ZoneList from "../../Components/zones/ZoneList";
 import agent from "../../App/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
-import { Grid } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
@@ -23,11 +24,21 @@ import {
 } from "../../redux/seasonSlice";
 import { Season } from "../../App/models/Season";
 import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
+import { tokens } from "../../theme/theme";
 
 const ZonesPage = () => {
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
   const [isLoadingZones, setIsLoadingZones] = useState<boolean>(true);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const zonePageColorTheme = () => {
+    return {
+      zoneGrid: {
+        backgroundColor: colors.whiteBlue.vary,
+      },
+    };
+  };
 
   // const fetchSeasons = () => {
   //   agent.Seasons.list().then((seasons) => {
@@ -108,15 +119,7 @@ const ZonesPage = () => {
           fetchZones={fetchZones}
           updateLocalStorageSeason={updateLocalStorageSeason}
         />
-        <Grid
-          sx={{
-            bgcolor: "#eef2f6",
-            borderRadius: "20px",
-            width: "100vw",
-            marginTop: "30px",
-            minHeight: "80vh"
-          }}
-        >
+        <Grid id="zone-grid-background" sx={zonePageColorTheme().zoneGrid}>
           <ZoneList
             hasError
             fetchZones={fetchZones}
