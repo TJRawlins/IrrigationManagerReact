@@ -12,23 +12,26 @@ export const tokens = (mode: string) => ({
   ...(mode === "dark"
     ? {
         primary: {
-          solid: "#59bab1",
+          const: "#59bab1",
           opacity: "#59bab114",
         },
         secondary: {
-          solid: "#82a628",
+          const: "#82a628",
         },
         tertiary: {
-          solid: "#080808",
+          const: "#002b49",
+          vary: "#080808",
         },
         white: {
-          solid: "#323233",
+          const: "#fcfcfd",
+          vary: "#323233",
           alt: "#8b8b8b",
           altPrimary: "#59bab1",
           altSecondary: "#82a628",
         },
         whiteBlue: {
-          solid: "#3f3f3f",
+          const: "#eef2f6",
+          vary: "#3f3f3f",
           alt: "#535353",
           200: "#5f6162",
           300: "#8f9194",
@@ -36,10 +39,11 @@ export const tokens = (mode: string) => ({
           500: "#eef2f6",
         },
         shadow: {
-          solid: "#0808087d",
+          const: "#bec2c5",
+          vary: "#0808087d",
         },
         gray: {
-          solid: "#8b8b8b",
+          const: "#8b8b8b",
           200: "#383838",
           300: "#535353",
           400: "#6f6f6f",
@@ -48,23 +52,26 @@ export const tokens = (mode: string) => ({
       }
     : {
         primary: {
-          solid: "#59bab1",
+          const: "#59bab1",
           opacity: "#59bab114",
         },
         secondary: {
-          solid: "#82a628",
+          const: "#82a628",
         },
         tertiary: {
-          solid: "#002b49",
+          const: "#002b49",
+          vary: "#002b49",
         },
         white: {
-          solid: "#fcfcfd",
+          const: "#fcfcfd",
+          vary: "#fcfcfd",
           alt: "#fcfcfd",
           altPrimary: "#fcfcfd",
           altSecondary: "#fcfcfd",
         },
         whiteBlue: {
-          solid: "#eef2f6",
+          const: "#eef2f6",
+          vary: "#eef2f6",
           alt: "#0e2a4714",
           200: "#bec2c5",
           300: "#8f9194",
@@ -72,10 +79,11 @@ export const tokens = (mode: string) => ({
           500: "#303031",
         },
         shadow: {
-          solid: "#bec2c5",
+          const: "#bec2c5",
+          vary: "#bec2c5",
         },
         gray: {
-          solid: "#8b8b8b",
+          const: "#8b8b8b",
           200: "#6f6f6f",
           300: "#535353",
           400: "#383838",
@@ -95,40 +103,40 @@ export const themeSettings = (mode: any): ThemeOptions => {
       ...(mode === "dark"
         ? {
             primary: {
-              main: colors.primary.solid,
+              main: colors.primary.const,
             },
             secondary: {
-              main: colors.secondary.solid,
+              main: colors.secondary.const,
             },
             tertiary: {
-              main: colors.tertiary.solid,
+              main: colors.tertiary.vary,
             },
             neutral: {
               dark: colors.gray[500],
               main: colors.gray[500],
-              light: colors.gray.solid,
+              light: colors.gray.const,
             },
             background: {
-              default: colors.white.solid,
+              default: colors.white.vary,
             },
           }
         : {
             primary: {
-              main: colors.primary.solid,
+              main: colors.primary.const,
             },
             secondary: {
-              main: colors.secondary.solid,
+              main: colors.secondary.const,
             },
             tertiary: {
-              nav: colors.tertiary.solid,
+              nav: colors.tertiary.vary,
             },
             neutral: {
               dark: colors.gray[500],
               main: colors.gray[500],
-              light: colors.gray.solid,
+              light: colors.gray.const,
             },
             background: {
-              default: colors.white.solid,
+              default: colors.white.vary,
             },
           }),
     },
