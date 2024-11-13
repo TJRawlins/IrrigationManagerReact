@@ -11,12 +11,23 @@ import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
 export const tokens = (mode: string) => ({
   ...(mode === "dark"
     ? {
+        opacity: {
+          zero: "1",
+          zero45: "0.55",
+          zero9: "0.5",
+          one: "0",
+        },
         primary: {
           const: "#59bab1",
+          vary: "#2d2d2d",
+          varyDark: "#59bab1",
+          alt: "#3f3f3f",
           opacity: "#59bab114",
         },
         secondary: {
           const: "#82a628",
+          vary: "#2d2d2d",
+          alt: "#3f3f3f",
         },
         tertiary: {
           const: "#002b49",
@@ -26,12 +37,15 @@ export const tokens = (mode: string) => ({
           const: "#fcfcfd",
           vary: "#323233",
           alt: "#8b8b8b",
+          alt2: "#222222",
+          altShade: "#bebebe",
           altPrimary: "#59bab1",
           altSecondary: "#82a628",
         },
         whiteBlue: {
           const: "#eef2f6",
           vary: "#3f3f3f",
+          varyLight: "#4f4f4f",
           alt: "#535353",
           200: "#5f6162",
           300: "#8f9194",
@@ -55,12 +69,23 @@ export const tokens = (mode: string) => ({
         },
       }
     : {
+        opacity: {
+          zero: "0",
+          zero45: "0.45",
+          zero9: "0.9",
+          one: "1",
+        },
         primary: {
           const: "#59bab1",
+          vary: "#59bab1",
+          varyDark: "#1a726a",
+          alt: "#59bab1",
           opacity: "#59bab114",
         },
         secondary: {
           const: "#82a628",
+          vary: "#82a628",
+          alt: "#82a628",
         },
         tertiary: {
           const: "#002b49",
@@ -70,12 +95,15 @@ export const tokens = (mode: string) => ({
           const: "#fcfcfd",
           vary: "#fcfcfd",
           alt: "#fcfcfd",
+          alt2: "#fcfcfd",
+          altShade: "#fcfcfd",
           altPrimary: "#fcfcfd",
           altSecondary: "#fcfcfd",
         },
         whiteBlue: {
           const: "#eef2f6",
           vary: "#eef2f6",
+          varyLight: "#eef2f6",
           alt: "#0e2a4714",
           200: "#bec2c5",
           300: "#8f9194",
