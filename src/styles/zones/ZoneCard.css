@@ -1,22 +1,40 @@
+#zone-card-container {
+  position: relative;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+  border-radius: 15px;
+  padding: 10px;
+  width: 300px;
+}
+
 .card-name.zone {
   position: absolute;
   top: 35%;
-  color: white;
+  /* color: white; */
   text-align: center;
   text-shadow: 1px 2px 5px #000000a8;
   width: 280px;
   margin-left: 0 !important;
 }
 
-.card-img.zone {
+.card-img-zone {
+  position: relative;
+}
+
+.card-img-zone,
+#card-img-overlay {
   height: 140px !important;
+  border-radius: 10px 10px 0 0;
 }
 
-.card-img.zone::before {
-  opacity: 0.45;
+.card-img-zone #card-img-overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  /* background-color: rgb(0, 0, 0); */
+  /* opacity: 0.45; */
 }
 
-#zone-card-container:hover .card-img.zone::before {
+#zone-card-container:hover .card-img-zone #card-img-overlay {
   opacity: 0.3;
   transition: all 0.5s;
 }
@@ -40,14 +58,12 @@
   font-size: inherit !important;
 }
 
-.iconStyle.zoneCardIcon {
-  fill: #59bab1;
-}
-
 #total-gallons-stack {
-  background: linear-gradient(45deg, #82a628, #59bab1);
+  justify-content: space-between;
+  max-width: 100%;
+  flex-wrap: nowrap;
   border-radius: 0 0 10px 10px;
-  opacity: 0.9;
+  /* opacity: 0.9; */
   margin-top: 2px;
 }
 
@@ -59,13 +75,11 @@
   font-size: 1.5rem !important;
   width: 100% !important;
   min-width: 50px !important;
-  background-color: #ffffffc7 !important;
-  color: #04705e !important;
   padding: 0 !important;
 }
 
 .zone-card-action-button:hover {
-  background-color: #ffffffe8 !important;
+  /* background-color: #ffffffe8 !important; */
   box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 8px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
   transform: scale(1.15);
   z-index: 10;
@@ -73,7 +87,7 @@
 }
 
 .card-content-wrapper.zone-content {
-  background-color: #59bab121;
+  /* background-color: #59bab121; */
   padding: 0 !important;
 }
 
@@ -110,4 +124,17 @@
 #simple-popover button:hover {
   background-color: #59bab1;
   color: aliceblue;
+}
+
+.chip {
+  position: absolute;
+  top: 5px;
+  left: 20px;
+}
+
+#card-action-container {
+  height: 48px;
+  width: 93%;
+  position: absolute;
+  top: 105px;
 }
