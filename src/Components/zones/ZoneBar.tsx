@@ -50,13 +50,13 @@ export default function ZoneBar({
   const navBarColorTheme = () => {
     return {
       mainBar: {
-        backgroundColor: colors.white.solid,
-        color: colors.gray.solid,
+        backgroundColor: colors.white.vary,
+        color: colors.gray.const,
       },
       dropdown: {
-        backgroundColor: colors.whiteBlue.solid,
+        backgroundColor: colors.whiteBlue.vary,
         ".menu-text, .menuIcon, .MuiSvgIcon-root, .menu-text": {
-          color: colors.gray.solid + " !important",
+          color: colors.gray.const + " !important",
         },
         "&.season-btn:hover": {
           backgroundColor: colors.primary.opacity + " !important",
@@ -65,23 +65,23 @@ export default function ZoneBar({
           backgroundColor: colors.primary.opacity + " !important",
         },
         "&.season-btn:hover .menu-text,&.season-btn:hover .MuiSvgIcon-root,&.season-btn:hover .menuIcon":
-          { color: colors.primary.solid + " !important" },
+          { color: colors.primary.const + " !important" },
         "&:hover .menu-text,&:hover .MuiSvgIcon-root,&:hover .menuIcon": {
-          color: colors.primary.solid + " !important",
+          color: colors.primary.const + " !important",
         },
       },
       gallonsChips: {
         width: "fit-content",
-        borderBottom: "1px solid " + colors.shadow.solid,
-        backgroundColor: colors.whiteBlue.solid,
-        color: colors.gray.solid,
+        borderBottom: "1px solid " + colors.shadow.vary,
+        backgroundColor: colors.whiteBlue.vary,
+        color: colors.gray.const,
         justifyContent: "left",
       },
       gallonsChipsAvatar: {
         minWidth: "fit-content",
         background: colors.whiteBlue.alt,
         fontWeight: "700",
-        color: colors.gray.solid + " !important",
+        color: colors.gray.const + " !important",
       },
     };
   };

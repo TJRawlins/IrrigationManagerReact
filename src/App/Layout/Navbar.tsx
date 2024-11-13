@@ -33,7 +33,7 @@ export default function Navbar() {
   const appBarStyles = (theme: Theme) => {
     return {
       mainBar: {
-        backgroundColor: colors.tertiary.solid,
+        backgroundColor: colors.tertiary.vary,
         color: colors.white.altPrimary,
         zIndex: theme.zIndex.drawer + 1,
         position: "relative !important",
