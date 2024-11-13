@@ -49,6 +49,10 @@ export const tokens = (mode: string) => ({
           400: "#6f6f6f",
           500: "#8b8b8b",
         },
+        darkGray: {
+          const: "#303031",
+          vary: "#fcfcfd",
+        },
       }
     : {
         primary: {
@@ -88,6 +92,10 @@ export const tokens = (mode: string) => ({
           300: "#535353",
           400: "#383838",
           500: "#1c1c1c",
+        },
+        darkGray: {
+          const: "#303031",
+          vary: "#303031",
         },
       }),
 });
