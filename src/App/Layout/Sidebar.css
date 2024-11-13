@@ -66,9 +66,9 @@
 }
 
 .route-link-btn {
-  padding: 0 !important;
-  margin: 0 !important;
-  /* background-color: purple; */
+  /* padding: 0 !important;
+  margin: 0 !important; */
+  background-color: purple;
 }
 
 .route-link {
@@ -84,4 +84,5 @@
 .route-link-icon {
   /* background-color: gray; */
   height: 100%;
+  min-width: 40px !important;
 }
