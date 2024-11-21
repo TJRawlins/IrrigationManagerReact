@@ -1,6 +1,7 @@
 #zone-card-container {
   position: relative;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+  /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important; */
+  background-image: none !important;
   border-radius: 15px;
   padding: 10px;
   width: 300px;
@@ -35,7 +36,8 @@
 }
 
 #zone-card-container:hover .card-img-zone #card-img-overlay {
-  opacity: 0.3;
+  opacity: 0.5;
+  background-color: #425316;
   transition: all 0.5s;
 }
 
@@ -44,7 +46,7 @@
   justify-content: center;
   position: absolute;
   top: 49%;
-  width: 279px;
+  width: 280px;
   background-color: #0000005c;
 }
 
@@ -67,6 +69,18 @@
   margin-top: 2px;
 }
 
+#total-gallons-stack > div {
+  background-color: transparent !important;
+}
+
+.gallons-chip {
+  font-size: 1rem !important;
+}
+
+.gallons-chip-avatar {
+  font-style: italic;
+}
+
 .action-icon {
   transform: scale(0.8);
 }
@@ -79,7 +93,6 @@
 }
 
 .zone-card-action-button:hover {
-  /* background-color: #ffffffe8 !important; */
   box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 8px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
   transform: scale(1.15);
   z-index: 10;
@@ -87,7 +100,6 @@
 }
 
 .card-content-wrapper.zone-content {
-  /* background-color: #59bab121; */
   padding: 0 !important;
 }
 

@@ -64,20 +64,20 @@ export default function ZoneCard({
   const zoneCardColorTheme = () => {
     return {
       zoneCardContainer: {
-        backgroundColor: colors.white.alt2 + " !important",
+        backgroundColor: colors.whiteBlue.alt2 + " !important",
       },
       zoneCardChip: {
-        backgroundColor: colors.primary.vary + " !important",
-        color: colors.white.alt,
+        backgroundColor: colors.primary.varyDark + " !important",
+        color: colors.white.const,
         ".iconStyle.zoneCardIcon": {
-          fill: colors.primary.vary + " !important",
-          background: colors.white.alt,
+          fill: colors.primary.const + " !important",
+          background: colors.white.vary2,
         },
       },
       zoneCardMedia: {
         "& #card-img-overlay": {
-          backgroundColor: colors.tertiary.vary,
-          opacity: colors.opacity.zero45,
+          backgroundColor: colors.tertiary.vary2,
+          opacity: colors.opacity.zero75,
         },
       },
       zoneCardText: {
@@ -85,16 +85,24 @@ export default function ZoneCard({
         "& span": { color: colors.white.altShade },
       },
       zoneCardActionMenu: {
-        "& .zone-card-action-button": {backgroundColor: colors.whiteBlue.vary, color: colors.primary.varyDark},
-        "& .zone-card-action-button:hover": {backgroundColor: colors.whiteBlue.varyLight, color: colors.primary.varyDark},
+        "& .zone-card-action-button": {
+          backgroundColor: colors.whiteBlue.vary,
+        },
+        "& .zone-card-action-button:hover": {
+          backgroundColor: colors.whiteBlue.vary,
+          border: "1px solid " + colors.primary.const
+        },
       },
       zoneCardGallons: {
         display: { xs: "flex", sm: "flex", md: "flex" },
         background: `linear-gradient(45deg, ${colors.secondary.alt}, ${colors.primary.alt})`,
-        opacity: colors.opacity.zero9,
         ".gallons-chip:nth-of-type(2)": {
-          borderRight: `1px solid ${colors.white.vary} !important`,
-          borderLeft: `1px solid ${colors.white.vary} !important`,
+          borderRight: `1px solid ${colors.white.alt2} !important`,
+          borderLeft: `1px solid ${colors.white.alt2} !important`,
+        },
+        ".gallons-chip-avatar": {
+          color: colors.white.altPrimary + " !important",
+          backgroundColor: colors.white.opacity + " !important",
         },
       },
     };
