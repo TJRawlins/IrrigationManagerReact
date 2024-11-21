@@ -13,40 +13,51 @@ export const tokens = (mode: string) => ({
     ? {
         opacity: {
           zero: "1",
+          zero75: "0.75",
+          zero5const: "0.75",
           zero45: "0.55",
           zero9: "0.5",
           one: "0",
         },
+        overlay: {
+          modal: "#2b2b3473",
+        },
         primary: {
           const: "#59bab1",
           vary: "#2d2d2d",
-          varyDark: "#59bab1",
-          alt: "#3f3f3f",
+          varyDark: "#202028",
+          varyDark2: "#59bab1",
+          alt: "#202028",
           opacity: "#59bab114",
         },
         secondary: {
           const: "#82a628",
           vary: "#2d2d2d",
-          alt: "#3f3f3f",
+          alt: "#202028",
         },
         tertiary: {
           const: "#002b49",
           vary: "#080808",
+          vary2: "#0f5e56",
         },
         white: {
           const: "#fcfcfd",
-          vary: "#323233",
+          vary: "#19191f",
+          vary2: "#484850",
           alt: "#8b8b8b",
-          alt2: "#222222",
+          alt2: "#29292e",
           altShade: "#bebebe",
           altPrimary: "#59bab1",
           altSecondary: "#82a628",
+          opacity: "#ffffff0a",
         },
         whiteBlue: {
           const: "#eef2f6",
-          vary: "#3f3f3f",
+          vary: "#29292f",
           varyLight: "#4f4f4f",
+          varyDark: "#131318",
           alt: "#535353",
+          alt2: "#29292e",
           200: "#5f6162",
           300: "#8f9194",
           400: "#bec2c5",
@@ -58,6 +69,8 @@ export const tokens = (mode: string) => ({
         },
         gray: {
           const: "#8b8b8b",
+          altPrimary: "#59bab1",
+          toWhite: "#eef2f6",
           200: "#383838",
           300: "#535353",
           400: "#6f6f6f",
@@ -72,13 +85,19 @@ export const tokens = (mode: string) => ({
         opacity: {
           zero: "0",
           zero45: "0.45",
+          zero5const: "0.5",
+          zero75: "0.45",
           zero9: "0.9",
           one: "1",
+        },
+        overlay: {
+          modal: "#002b49a7",
         },
         primary: {
           const: "#59bab1",
           vary: "#59bab1",
-          varyDark: "#1a726a",
+          varyDark: "#59bab1",
+          varyDark2: "#45958d",
           alt: "#59bab1",
           opacity: "#59bab114",
         },
@@ -90,21 +109,26 @@ export const tokens = (mode: string) => ({
         tertiary: {
           const: "#002b49",
           vary: "#002b49",
+          vary2: "#002b49",
         },
         white: {
           const: "#fcfcfd",
-          vary: "#fcfcfd",
+          vary: "#dae4e4",
+          vary2: "#fcfcfd",
           alt: "#fcfcfd",
           alt2: "#fcfcfd",
           altShade: "#fcfcfd",
           altPrimary: "#fcfcfd",
           altSecondary: "#fcfcfd",
+          opacity: "#00000017",
         },
         whiteBlue: {
           const: "#eef2f6",
           vary: "#eef2f6",
           varyLight: "#eef2f6",
+          varyDark: "#cbd7d9",
           alt: "#0e2a4714",
+          alt2: "#eef2f6",
           200: "#bec2c5",
           300: "#8f9194",
           400: "#5f6162",
@@ -116,6 +140,8 @@ export const tokens = (mode: string) => ({
         },
         gray: {
           const: "#8b8b8b",
+          altPrimary: "#8b8b8b",
+          toWhite: "#8b8b8b",
           200: "#6f6f6f",
           300: "#535353",
           400: "#383838",
@@ -215,7 +241,7 @@ export const ColorModeContext = createContext({
 });
 
 export const useMode = () => {
-  const [mode, setMode] = useState<string>("light");
+  const [mode, setMode] = useState<string>("dark");
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () =>
