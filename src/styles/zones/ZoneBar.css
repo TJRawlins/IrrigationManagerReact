@@ -2,9 +2,10 @@
   height: 50px;
   border: none !important;
   box-shadow: "none";
-  height: 33px;
+  height: 40px;
   width: 150px;
   margin-left: 1.25rem;
+  border-radius: 12px !important;
 }
 
 .season-btn .menu-text,
@@ -41,4 +42,5 @@ svg.menuIcon {
 
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper {
   border: none !important;
+  border-radius: 12px;
 }

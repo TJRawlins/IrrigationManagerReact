@@ -14,6 +14,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { TbDroplet } from "react-icons/tb";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
@@ -51,18 +52,22 @@ export default function ZoneBar({
     return {
       mainBar: {
         backgroundColor: colors.white.vary,
-        color: colors.gray.const,
+        color: colors.gray.toWhite,
       },
       dropdown: {
         backgroundColor: colors.whiteBlue.vary,
-        ".menu-text, .menuIcon, .MuiSvgIcon-root, .menu-text": {
+        ".menu-text": {
+          color: colors.gray.toWhite + " !important",
+        },
+        ".menuIcon, .MuiSvgIcon-root": {
+          color: colors.primary.const + " !important",
+        },
+        ".MuiSvgIcon-root": {
           color: colors.gray.const + " !important",
         },
         "&.season-btn:hover": {
           backgroundColor: colors.primary.opacity + " !important",
-        },
-        "&:hover": {
-          backgroundColor: colors.primary.opacity + " !important",
+          border: "1px solid #59bab1 !important"
         },
         "&.season-btn:hover .menu-text,&.season-btn:hover .MuiSvgIcon-root,&.season-btn:hover .menuIcon":
           { color: colors.primary.const + " !important" },
@@ -71,17 +76,16 @@ export default function ZoneBar({
         },
       },
       gallonsChips: {
-        width: "fit-content",
-        borderBottom: "1px solid " + colors.shadow.vary,
+        // borderBottom: "1px solid " + colors.shadow.vary,
         backgroundColor: colors.whiteBlue.vary,
-        color: colors.gray.const,
-        justifyContent: "left",
+        color: colors.gray.toWhite,
       },
       gallonsChipsAvatar: {
-        minWidth: "fit-content",
         background: colors.whiteBlue.alt,
-        fontWeight: "700",
-        color: colors.gray.const + " !important",
+        color: colors.primary.const + " !important",
+        "& .bar-gallons-chip-avatar-text": {
+          backgroundColor: colors.whiteBlue.vary,
+        },
       },
     };
   };
@@ -115,10 +119,15 @@ export default function ZoneBar({
         >
           <Tooltip title="Weekly Gallons" arrow>
             <Chip
+              className="bar-gallons-chip"
               sx={navBarColorTheme().gallonsChips}
               avatar={
-                <Avatar sx={navBarColorTheme().gallonsChipsAvatar}>
-                  {"Weekly Gallons"[0].toLocaleUpperCase()}
+                <Avatar
+                  className="bar-gallons-chip-avatar"
+                  sx={navBarColorTheme().gallonsChipsAvatar}
+                >
+                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                  <span className="bar-gallons-chip-avatar-text">W</span>
                 </Avatar>
               }
               label={season.totalGalPerWeek}
@@ -126,10 +135,15 @@ export default function ZoneBar({
           </Tooltip>
           <Tooltip title="Monthly Gallons" arrow>
             <Chip
+              className="bar-gallons-chip"
               sx={navBarColorTheme().gallonsChips}
               avatar={
-                <Avatar sx={navBarColorTheme().gallonsChipsAvatar}>
-                  {"Monthly Gallons"[0].toLocaleUpperCase()}
+                <Avatar
+                  className="bar-gallons-chip-avatar"
+                  sx={navBarColorTheme().gallonsChipsAvatar}
+                >
+                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                  <span className="bar-gallons-chip-avatar-text">M</span>
                 </Avatar>
               }
               label={season.totalGalPerMonth}
@@ -137,10 +151,15 @@ export default function ZoneBar({
           </Tooltip>
           <Tooltip title="Yearly Gallons" arrow>
             <Chip
+              className="bar-gallons-chip"
               sx={navBarColorTheme().gallonsChips}
               avatar={
-                <Avatar sx={navBarColorTheme().gallonsChipsAvatar}>
-                  {"Yearly Gallons"[0].toLocaleUpperCase()}
+                <Avatar
+                  className="bar-gallons-chip-avatar"
+                  sx={navBarColorTheme().gallonsChipsAvatar}
+                >
+                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                  <span className="bar-gallons-chip-avatar-text">Y</span>
                 </Avatar>
               }
               label={season.totalGalPerYear}
