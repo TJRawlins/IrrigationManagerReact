@@ -68,13 +68,13 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
       },
       zoneAddCardModal: {
         backgroundColor: colors.overlay.modal,
-        opacity: 0.5
+        opacity: 0.5,
       },
       zoneAddCard: {
-        backgroundColor: colors.whiteBlue.alt2
+        backgroundColor: colors.whiteBlue.alt2,
       },
       zoneAddCardTitle: {
-        color: colors.primary.varyDark2
+        color: colors.primary.const,
       },
     };
   };
@@ -227,7 +227,10 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
           disabled={isLoadingZones}
           sx={zoneAddBtnColorTheme().zoneAddBtn}
         >
-          <FaPlus className="add-plus-icon" style={zoneAddBtnColorTheme().zoneAddBtnPlus} />
+          <FaPlus
+            className="add-plus-icon"
+            style={zoneAddBtnColorTheme().zoneAddBtnPlus}
+          />
         </Button>
       )}
       <Modal
@@ -238,7 +241,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: zoneAddBtnColorTheme().zoneAddCardModal
+            style: zoneAddBtnColorTheme().zoneAddCardModal,
           },
         }}
       >
