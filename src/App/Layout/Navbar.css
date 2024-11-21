@@ -2,6 +2,6 @@
   background-color: #59bab1 !important;
 } */
 
-header > .MuiToolbar-regular, .css-1cudqow-MuiPaper-root-MuiAppBar-root {
+header > .MuiToolbar-regular, .css-1cudqow-MuiPaper-root-MuiAppBar-root, header {
   background-image: none !important;
 }
