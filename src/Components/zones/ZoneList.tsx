@@ -46,7 +46,7 @@ export default function ZoneList({
               <ZoneCardSkeleton />
             ) : (
               zoneList.map((zone) => (
-                <Grid item key={zone.id}>
+                <Grid item key={zone.id} sx={{paddingTop: "1.5rem !important", paddingLeft: "1.5rem !important"}}>
                   <ZoneCard
                     zone={zone}
                     fetchZones={fetchZones}
