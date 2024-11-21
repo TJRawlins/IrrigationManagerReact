@@ -6,7 +6,7 @@ div.main-container {
   top: 60px;
   width: 100%;
   height: 60px;
-  padding: 0 10px;
+  padding: 0;
   box-shadow: none;
   border-bottom: none;
   box-shadow: none;
@@ -26,11 +26,11 @@ div.main-container {
 }
 
 .bar-title {
-  font-size: 1.6rem !important;
+  font-size: 1.8rem !important;
   margin-right: 1rem !important;
   font-family: monospace !important;
   font-weight: 700 !important;
-  letter-spacing: 0.1rem !important;
+  letter-spacing: -0.04em !important;
   color: inherit !important;
   margin-top: 0.3rem !important;
 }
@@ -44,4 +44,47 @@ div.main-container {
 
 .season-btn:hover {
   background: rgb(235, 235, 235) !important;
+}
+
+.bar-gallons-chip {
+  justify-content: left;
+  border-radius: 12px !important;
+  padding: 0.45rem 0.75rem !important;
+  height: fit-content !important;
+  width: fit-content !important;
+  font-family: "Source Sans Pro", Helvetica, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.05em !important;
+  gap: .75rem;
+}
+
+.bar-gallons-chip-avatar {
+  width: fit-content !important;
+  padding-right: 8px;
+  padding-left: 6px;
+  margin-left: 0 !important;
+  font-size: 1.05rem !important;
+  font-style: italic;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.005em;
+  background-color: transparent !important;
+}
+
+.bar-gallons-chip-avatar-icon {
+  font-size: 1.5rem;
+}
+
+.bar-gallons-chip-avatar-text {
+  position: absolute;
+  top: 12px;
+  right: 5%;
+  font-size: .65rem;
+  width: 11.2px;
+  padding: 0.1rem !important;
+}
+
+.bar-gallons-chip .MuiChip-label, .bar-gallons-chip .MuiChip-avatar {
+  padding: 0 !important;
 }
