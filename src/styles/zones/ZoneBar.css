@@ -25,6 +25,7 @@
 
 .menu-wrapper {
   display: flex;
+  margin-left: 0.25rem;
 }
 
 .menuIcon {
