@@ -74,7 +74,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
         backgroundColor: colors.whiteBlue.alt2,
       },
       zoneAddCardTitle: {
-        color: colors.primary.const,
+        color: colors.primary.toDarkGray,
       },
     };
   };
@@ -277,11 +277,10 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
             <Typography
               className="modal-title"
               id="modal-modal-title"
-              variant="h6"
               component="h2"
               sx={zoneAddBtnColorTheme().zoneAddCardTitle}
             >
-              ADD ZONE
+              Add Zone
             </Typography>
           </div>
           <Formik

@@ -16,9 +16,7 @@
 }
 
 .modal-title {
-  color: #666666;
-  font-size: 1.6rem !important;
-  font-weight: 700 !important;
+  font-size: 1.5rem !important;
   font-family: "Outfit", sans-serif !important;
 }
 
@@ -184,7 +182,7 @@
 }
 
 .submit-btn:hover {
-  background-color: #ffff !important;
+  background-color: transparent !important;
   color: #59bab1 !important;
 }
 
