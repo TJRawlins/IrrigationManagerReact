@@ -10,6 +10,7 @@ import {
   TextField,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -34,6 +35,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { Zone } from "../../App/models/Zone";
+import { tokens } from "../../theme/theme";
 
 type ZoneEditProps = {
   fetchZones(args: number): Promise<void>;
@@ -54,17 +56,17 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const style = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+// const style = {
+//   position: "absolute" as const,
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: 400,
+//   bgcolor: "background.paper",
+//   border: "2px solid #000",
+//   boxShadow: 24,
+//   p: 4,
+// };
 
 function EditZone({
   fetchZones,
@@ -80,6 +82,31 @@ function EditZone({
     setIsShowEdit(false);
     setImageUpload(undefined);
     setIsNewImage(false);
+  };
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const zoneEditBtnColorTheme = () => {
+    return {
+      zoneEditCardModal: {
+        backgroundColor: colors.overlay.modal,
+        opacity: 0.5,
+      },
+      zoneEditCard: {
+        backgroundColor: colors.white.vary,
+        border: "1px solid " + colors.primary.const + " !important",
+      },
+      zoneEditCardTitle: {
+        color: colors.primary.toDarkGray,
+      },
+      zoneSeasonSelection: {
+        "& #mui-component-select-season": {
+          backgroundColor: colors.whiteBlue.vary,
+          color: colors.gray.toWhite
+        },
+      },
+    };
   };
 
   // Firebase Storage Variables
@@ -333,17 +360,18 @@ function EditZone({
   return (
     <div>
       <Modal
+        id="modal-overlay"
         open={isShowEdit}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: { backgroundColor: "#002b49a7", opacity: 0.5 },
+            style: zoneEditBtnColorTheme().zoneEditCardModal,
           },
         }}
       >
-        <Box className="modal-box" sx={style}>
+        <Box className="modal-box" sx={zoneEditBtnColorTheme().zoneEditCard}>
           <div className="modal-title-container">
             {isLoading && (
               <Modal
@@ -375,10 +403,10 @@ function EditZone({
             <Typography
               className="modal-title"
               id="modal-modal-title"
-              variant="h6"
               component="h2"
+              sx={zoneEditBtnColorTheme().zoneEditCardTitle}
             >
-              EDIT ZONE
+              Edit Zone
             </Typography>
           </div>
           <Formik
@@ -548,15 +576,15 @@ function EditZone({
                     />
                   </Button>
                 </div>
-                <Box sx={{ minWidth: 120, mt: 3 }}>
+                <Box id="season-input-wrapper" sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <InputLabel
                       id="season-input"
-                      sx={{ background: "#ffff", padding: "0 5px" }}
+                      // sx={{ background: "#ffff", padding: "0 5px" }}
                     >
                       Season
                     </InputLabel>
-                    <Field as={Select} name="season">
+                    <Field as={Select} name="season" sx={zoneEditBtnColorTheme().zoneSeasonSelection} >
                       <MenuItem value="Summer">Summer</MenuItem>
                       <MenuItem value="Fall">Fall</MenuItem>
                       <MenuItem value="Winter">Winter</MenuItem>
