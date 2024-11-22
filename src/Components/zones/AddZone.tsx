@@ -71,7 +71,8 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
         opacity: 0.5,
       },
       zoneAddCard: {
-        backgroundColor: colors.whiteBlue.alt2,
+        backgroundColor: colors.white.vary,
+        border: "1px solid " + colors.primary.const + " !important",
       },
       zoneAddCardTitle: {
         color: colors.primary.toDarkGray,

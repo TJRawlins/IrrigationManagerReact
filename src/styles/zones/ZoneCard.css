@@ -150,3 +150,22 @@
   position: absolute;
   top: 105px;
 }
+
+#season-input-wrapper {
+  margin-top: 1rem;
+}
+
+#season-input {
+  display: none;
+}
+
+#mui-component-select-season {
+  border-radius: 4px;
+  /* color: #72b8b1; */
+  padding: 12px 14px;
+}
+
+#modal-overlay {
+  backdrop-filter: blur(4px);
+}
+
