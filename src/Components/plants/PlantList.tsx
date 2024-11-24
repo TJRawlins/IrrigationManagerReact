@@ -34,6 +34,7 @@ import ViewPlantSkeleton from "./ViewPlantSkeleton";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
+import { tokens } from "../../theme/theme";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -46,7 +47,6 @@ export default function PlantList({
   updateLocalStorageZone,
 }: // updateLocalStorageTreflePlant,
 PlantListProps) {
-  const theme = useTheme();
   const dispatch = useDispatch();
   const { zone } = useSelector((state: RootState) => state.zone);
   const [plantId, setPlantId] = useState<number>();
@@ -58,10 +58,24 @@ PlantListProps) {
   const [isLoadingGrid, setIsLoadingGrid] = useState<boolean>(false);
   const [isLoadingPlant, setIsLoadingPlant] = useState<boolean>(false);
   const [rows, setRows] = useState([]);
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   // const isFull = !useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+  
+  // color theme
+  const theme = useTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const colors = tokens(theme.palette.mode);
+  const plantListColorTheme = () => {
+    return {
+      grid: {
+        backgroundColor: colors.whiteBlue.vary,
+        // color: colors.gray.toWhite,\
+        // "& .MuiDataGrid-row": {border: "1px solid red !important"}
+        "& .MuiDataGrid-container--top [role=row]": {backgroundColor: colors.whiteBlue.vary,}
+      },
+    };
+  };
 
   const isImageBeingUsedRef = useRef<boolean>(false);
 
@@ -358,7 +372,7 @@ PlantListProps) {
               noRowsVariant: "skeleton",
             },
           }}
-          sx={{ border: "none", width: "100%" }}
+          sx={plantListColorTheme().grid}
           initialState={{
             columns: {
               columnVisibilityModel: {
