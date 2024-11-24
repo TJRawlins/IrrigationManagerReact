@@ -10,9 +10,10 @@ import {
   TextField,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { FaPlus } from "react-icons/fa6";
+import { MdOutlineAddCircle } from "react-icons/md";
 import { HiOutlineInformationCircle } from "react-icons/hi2";
 import { ChangeEvent, useState } from "react";
 import { Formik, Form, Field } from "formik";
@@ -37,6 +38,7 @@ import Compressor from "compressorjs";
 import "../../styles/plants/PlantBar.css";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/AddPlant.css";
+import { tokens } from "../../theme/theme";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -72,6 +74,21 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const { zone } = useSelector((state: RootState) => state.zone);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const addPlantColorTheme = () => {
+    return {
+      barButtons: {
+        backgroundColor: colors.whiteBlue.vary,
+        color: colors.gray.toWhite,
+        border: "1px solid " + colors.whiteBlue.vary,
+        "& .btn-icon": { color: colors.primary.const + " !important" },
+        "&.action:hover": {border: "1px solid " + colors.primary.const}
+      },
+    };
+  };
 
   // Firebase Storage Variables
   const [error, setError] = useState<string>("");
@@ -285,15 +302,14 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       <style>{`.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;}`}</style>
       <Button
-        className="btn-plantbar"
+        className="bar-btn action"
         onClick={handleOpen}
-        sx={{
-          position: "relative",
-          boxShadow: "none !important",
-        }}
+        sx={addPlantColorTheme().barButtons}
       >
-        <FaPlus className="btn-icon" />
-        <span className="btn-plantbar-text">Add Plant</span>
+        <div className="btn-content-container">
+          <MdOutlineAddCircle className="btn-icon" />
+          <span className="btn-text">Add Plant</span>
+        </div>
       </Button>
       <Modal
         open={open}
@@ -341,7 +357,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
               variant="h6"
               component="h2"
             >
-              ADD PLANT
+              Add Plant
             </Typography>
           </div>
           <Formik
