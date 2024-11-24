@@ -77,25 +77,6 @@
   color: white;
 }
 
-.btn-plantbar {
-  font-size: 0.85rem !important;
-  margin: 0.25rem 0.25rem 0 0.25rem !important;
-  padding: 0.45rem 0.25rem !important;
-  height: fit-content !important;
-  border-radius: 10px !important;
-  background-color: #eef2f6 !important;
-  color: #8b8b8b !important;
-}
-
-.btn-plantbar:hover {
-  color: #59bab1 !important;
-  background-color: #59bab114 !important;
-}
-
-.btn-icon {
-  margin-right: 0.25rem;
-}
-
 .icon-container {
   display: flex;
   justify-content: center;
