@@ -30,6 +30,8 @@ const ZonesPage = () => {
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
   const [isLoadingZones, setIsLoadingZones] = useState<boolean>(true);
+
+  // color theme
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const zonePageColorTheme = () => {
