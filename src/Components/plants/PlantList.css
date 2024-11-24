@@ -6,7 +6,8 @@
   border-radius: 10px !important;
   padding: 5px !important;
   margin: 0 !important;
-  background-color: #ffff;
+  border: none;
+  width: 100%;
 }
 
 .plant-image-wrapper {
