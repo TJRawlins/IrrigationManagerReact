@@ -88,3 +88,41 @@ div.main-container {
 .bar-gallons-chip .MuiChip-label, .bar-gallons-chip .MuiChip-avatar {
   padding: 0 !important;
 }
+
+.action-container .MuiDivider-vertical {
+  margin-right: 0;
+}
+
+.bar-btn-container {
+  display: flex;
+  margin: 0 15px;
+  gap: 0.5rem;
+}
+
+.bar-btn {
+  font-size: 0.85rem !important;
+  margin: 0.25rem 0.25rem 0 0.25rem !important;
+  padding: 0.45rem 0.75rem !important;
+  height: fit-content !important;
+  white-space: nowrap;
+  border-radius: 10px !important;
+  text-transform: capitalize !important;
+}
+
+.btn-content-container {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-icon {
+  font-size: 1.25rem;
+  height: auto;
+}
+
+.btn-text {
+  font-size: 0.85rem !important;
+  transform: translateY(1px);
+  font-weight: 500;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+}
