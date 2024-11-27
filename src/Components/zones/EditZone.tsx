@@ -96,6 +96,7 @@ function EditZone({
       zoneEditCard: {
         backgroundColor: colors.white.vary,
         border: "1px solid " + colors.primary.const + " !important",
+        boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
       },
       zoneEditCardTitle: {
         color: colors.primary.toDarkGray,
