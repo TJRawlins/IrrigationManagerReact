@@ -73,6 +73,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
       zoneAddCard: {
         backgroundColor: colors.white.vary,
         border: "1px solid " + colors.primary.const + " !important",
+        boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
       },
       zoneAddCardTitle: {
         color: colors.primary.toDarkGray,
@@ -235,7 +236,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
         </Button>
       )}
       <Modal
-        id="modal-overlay"
+        className="modal-overlay"
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
