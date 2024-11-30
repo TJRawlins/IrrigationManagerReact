@@ -28,6 +28,7 @@ export const tokens = (mode: string) => ({
           varyDark: "#202028",
           toDarkGray: "#59bab1",
           alt: "#202028",
+          shadowGlow: "#59bab17c",
           opacity: "#59bab114",
         },
         secondary: {
@@ -99,6 +100,7 @@ export const tokens = (mode: string) => ({
           varyDark: "#59bab1",
           toDarkGray: "#606162",
           alt: "#59bab1",
+          shadowGlow: "#5252527c",
           opacity: "#59bab114",
         },
         secondary: {
