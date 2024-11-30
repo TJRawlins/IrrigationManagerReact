@@ -56,17 +56,17 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const style = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 500,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+// const style = {
+//   position: "absolute" as const,
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: 500,
+//   bgcolor: "background.paper",
+//   border: "2px solid #000",
+//   boxShadow: 24,
+//   p: 4,
+// };
 
 function AddPlant({ fetchPlants }: PlantBarProps) {
   const [open, setOpen] = useState<boolean>(false);
@@ -85,7 +85,29 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         color: colors.gray.toWhite,
         border: "1px solid " + colors.whiteBlue.vary,
         "& .btn-icon": { color: colors.primary.const + " !important" },
-        "&.action:hover": {border: "1px solid " + colors.primary.const}
+        "&.action:hover": { border: "1px solid " + colors.primary.const },
+      },
+      plantAddCardModal: {
+        backgroundColor: colors.overlay.modal,
+        opacity: 0.5,
+      },
+      plantAddCard: {
+        backgroundColor: colors.white.vary,
+        border: "1px solid " + colors.primary.const + " !important",
+        boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
+        "& .MuiInputBase-multiline": {
+          backgroundColor: colors.whiteBlue.vary + " !important",
+        },
+        "& .MuiInputBase-formControl.MuiInputBase-multiline": {
+          backgroundColor: colors.whiteBlue.vary + " !important",
+        },
+        "& .MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-formControl":
+          {
+            backgroundColor: colors.whiteBlue.vary + " !important",
+          },
+      },
+      plantAddCardTitle: {
+        color: colors.primary.toDarkGray,
       },
     };
   };
@@ -312,17 +334,18 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         </div>
       </Button>
       <Modal
+        className="modal-overlay"
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: { backgroundColor: "#002b49a7", opacity: 0.5 },
+            style: addPlantColorTheme().plantAddCardModal,
           },
         }}
       >
-        <Box className="modal-box" sx={style}>
+        <Box className="modal-box plant" sx={addPlantColorTheme().plantAddCard}>
           <div className="modal-title-container">
             {isLoading && (
               <Modal
@@ -356,6 +379,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
               id="modal-modal-title"
               variant="h6"
               component="h2"
+              sx={addPlantColorTheme().plantAddCardTitle}
             >
               Add Plant
             </Typography>
@@ -639,15 +663,14 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                 </div>
                 <Box sx={{ minWidth: 120, mt: 1.5 }}>
                   <div className="split-container">
-                    <FormControl fullWidth>
+                    <FormControl fullWidth sx={{}}>
                       <InputLabel
                         id="plant-type-input"
-                        sx={{ background: "#ffff", padding: "0 5px" }}
+                        sx={{ padding: "0 5px" }}
                       >
                         Plant type
                       </InputLabel>
                       <Field
-                        style={{ padding: "5px !important" }}
                         as={Select}
                         required
                         aria-hidden="false"
@@ -670,10 +693,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       </FormHelperText>
                     </FormControl>
                     <FormControl fullWidth>
-                      <InputLabel
-                        id="exposure-input"
-                        sx={{ background: "#ffff", padding: "0 5px" }}
-                      >
+                      <InputLabel id="exposure-input" sx={{ padding: "0 5px" }}>
                         Exposure
                       </InputLabel>
                       <Field
@@ -693,7 +713,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     <FormControl fullWidth>
                       <InputLabel
                         id="harvest-month-input"
-                        sx={{ background: "#ffff", padding: "0 5px" }}
+                        sx={{ padding: "0 5px" }}
                       >
                         Harvest
                       </InputLabel>
@@ -724,8 +744,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                   </div>
                 </Box>
                 <Field
-                  style={{ width: "100%", marginTop: 12 }}
-                  id="notes-input"
+                  sx={{ width: "100%", mt: "1rem" }}
                   label="Notes"
                   name="notes"
                   as={TextField}
