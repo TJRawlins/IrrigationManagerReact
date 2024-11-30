@@ -1,12 +1,6 @@
-
-.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
-  display: flex;
-  color: #777;
-}
-
 @media screen and (max-width: 975px) {
   .btn-plantbar {
-    padding: .5rem !important;
+    padding: 0.5rem !important;
   }
   .btn-plantbar-text {
     display: none;

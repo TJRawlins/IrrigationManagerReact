@@ -1,12 +1,3 @@
-#modal-overlay {
-  backdrop-filter: blur(4px);
-}
-
-.split-container {
-  display: flex;
-  gap: 1rem;
-}
-
 .add-btn {
   position: relative;
   margin: 1.5rem 0 0 1.5rem !important;

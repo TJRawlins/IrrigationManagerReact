@@ -32,11 +32,6 @@
   padding: 0 8px;
 }
 
-.split-container {
-  display: flex;
-  gap: 1rem;
-}
-
 .split-label {
   display: flex;
   gap: 0.25rem;
