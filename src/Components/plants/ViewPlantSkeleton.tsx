@@ -6,21 +6,31 @@ import {
   Modal,
   Skeleton,
   Stack,
+  useTheme,
 } from "@mui/material";
+import "../../styles/baseStyles/BaseCard.css";
+import { tokens } from "../../theme/theme";
 
 function ViewPlantSkeleton() {
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const skeletonPlantColorTheme = () => {
+    return {
+      plantCardModal: {
+        backgroundColor: colors.overlay.modal,
+        opacity: 0.5,
+      },
+    };
+  };
+
   return (
     <Modal
+      className="modal-overlay"
       open={true}
       slotProps={{
         backdrop: {
-          style: {
-            backgroundColor: "#002b49a7",
-            opacity: 0.5,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          },
+          style: skeletonPlantColorTheme().plantCardModal,
         },
       }}
     >
@@ -69,9 +79,7 @@ function ViewPlantSkeleton() {
             style={{
               display: "flex",
               flexDirection: "column",
-              // gap: 25,
               height: 158,
-              // background: "#ebebeb",
             }}
           >
             <Box sx={{ display: "flex", gap: 5 }}>
