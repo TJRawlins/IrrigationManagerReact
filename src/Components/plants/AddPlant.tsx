@@ -56,18 +56,6 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-// const style = {
-//   position: "absolute" as const,
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 500,
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   p: 4,
-// };
-
 function AddPlant({ fetchPlants }: PlantBarProps) {
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -87,11 +75,11 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         "& .btn-icon": { color: colors.primary.const + " !important" },
         "&.action:hover": { border: "1px solid " + colors.primary.const },
       },
-      plantAddCardModal: {
+      plantCardModal: {
         backgroundColor: colors.overlay.modal,
         opacity: 0.5,
       },
-      plantAddCard: {
+      plantCard: {
         backgroundColor: colors.white.vary,
         border: "1px solid " + colors.primary.const + " !important",
         boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
@@ -106,7 +94,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
             backgroundColor: colors.whiteBlue.vary + " !important",
           },
       },
-      plantAddCardTitle: {
+      plantCardTitle: {
         color: colors.primary.toDarkGray,
       },
     };
@@ -341,11 +329,11 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: addPlantColorTheme().plantAddCardModal,
+            style: addPlantColorTheme().plantCardModal,
           },
         }}
       >
-        <Box className="modal-box plant" sx={addPlantColorTheme().plantAddCard}>
+        <Box className="modal-box plant" sx={addPlantColorTheme().plantCard}>
           <div className="modal-title-container">
             {isLoading && (
               <Modal
@@ -379,7 +367,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
               id="modal-modal-title"
               variant="h6"
               component="h2"
-              sx={addPlantColorTheme().plantAddCardTitle}
+              sx={addPlantColorTheme().plantCardTitle}
             >
               Add Plant
             </Typography>
