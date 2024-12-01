@@ -41,8 +41,8 @@ import EditPlant from "./EditPlant";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
-  setShowViewPlant: (show: boolean) => void;
-  showViewPlant: boolean;
+  setIsShowView: (show: boolean) => void;
+  isShowView: boolean;
 };
 
 const style = {
@@ -57,15 +57,11 @@ const style = {
   padding: 0,
 };
 
-function ViewPlant({
-  setShowViewPlant,
-  showViewPlant,
-  fetchPlants,
-}: PlantBarProps) {
+function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
   // const { treflePlant } = useSelector((state: RootState) => state.treflePlant);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
-  const handleClose = () => setShowViewPlant(false);
+  const handleClose = () => setIsShowView(false);
   const [isShowEdit, setIsShowEdit] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -120,7 +116,7 @@ function ViewPlant({
   return (
     <div>
       <Modal
-        open={showViewPlant}
+        open={isShowView}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
