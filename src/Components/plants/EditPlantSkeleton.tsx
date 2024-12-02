@@ -11,7 +11,7 @@ import {
 import "../../styles/baseStyles/BaseCard.css";
 import { tokens } from "../../theme/theme";
 
-function ViewPlantSkeleton() {
+function EditPlantSkeleton() {
   // color theme
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -45,8 +45,8 @@ function ViewPlantSkeleton() {
       >
         <Card
           sx={{
-            width: "450px",
-            height: "451px",
+            width: "500px",
+            height: "581px",
             m: 2,
             borderRadius: "10px",
           }}
@@ -146,4 +146,4 @@ function ViewPlantSkeleton() {
     </Modal>
   );
 }
-export default ViewPlantSkeleton;
+export default EditPlantSkeleton;

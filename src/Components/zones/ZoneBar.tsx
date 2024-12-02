@@ -12,7 +12,9 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
+import { TbDroplet } from "react-icons/tb";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
@@ -25,6 +27,7 @@ import {
   updateCurrentSeasonName,
   updateIsInitialLoad,
 } from "../../redux/seasonSlice";
+import { tokens } from "../../theme/theme";
 
 type ZoneBarProps = {
   fetchZones(args: number): void;
@@ -41,6 +44,52 @@ export default function ZoneBar({
     (state: RootState) => state.isInitialLoad
   );
   const dispatch = useDispatch();
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const navBarColorTheme = () => {
+    return {
+      mainBar: {
+        backgroundColor: colors.white.vary,
+        color: colors.gray.toWhite,
+      },
+      dropdown: {
+        backgroundColor: colors.whiteBlue.vary,
+        ".menu-text": {
+          color: colors.gray.toWhite + " !important",
+        },
+        ".menuIcon, .MuiSvgIcon-root": {
+          color: colors.primary.const + " !important",
+        },
+        ".MuiSvgIcon-root": {
+          color: colors.gray.const + " !important",
+        },
+        "&.season-btn:hover": {
+          backgroundColor: colors.primary.opacity + " !important",
+          border: "1px solid #59bab1 !important"
+        },
+        "&.season-btn:hover .menu-text,&.season-btn:hover .MuiSvgIcon-root,&.season-btn:hover .menuIcon":
+          { color: colors.primary.const + " !important" },
+        "&:hover .menu-text,&:hover .MuiSvgIcon-root,&:hover .menuIcon": {
+          color: colors.primary.const + " !important",
+        },
+      },
+      gallonsChips: {
+        // borderBottom: "1px solid " + colors.shadow.vary,
+        backgroundColor: colors.whiteBlue.vary,
+        color: colors.gray.toWhite,
+      },
+      gallonsChipsAvatar: {
+        background: colors.whiteBlue.alt,
+        color: colors.primary.const + " !important",
+        "& .bar-gallons-chip-avatar-text": {
+          backgroundColor: colors.whiteBlue.vary,
+        },
+      },
+    };
+  };
+
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
    */
@@ -70,23 +119,15 @@ export default function ZoneBar({
         >
           <Tooltip title="Weekly Gallons" arrow>
             <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
+              className="bar-gallons-chip"
+              sx={navBarColorTheme().gallonsChips}
               avatar={
                 <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
+                  className="bar-gallons-chip-avatar"
+                  sx={navBarColorTheme().gallonsChipsAvatar}
                 >
-                  {"Weekly Gallons"[0].toLocaleUpperCase()}
+                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                  <span className="bar-gallons-chip-avatar-text">W</span>
                 </Avatar>
               }
               label={season.totalGalPerWeek}
@@ -94,23 +135,15 @@ export default function ZoneBar({
           </Tooltip>
           <Tooltip title="Monthly Gallons" arrow>
             <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
+              className="bar-gallons-chip"
+              sx={navBarColorTheme().gallonsChips}
               avatar={
                 <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
+                  className="bar-gallons-chip-avatar"
+                  sx={navBarColorTheme().gallonsChipsAvatar}
                 >
-                  {"Monthly Gallons"[0].toLocaleUpperCase()}
+                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                  <span className="bar-gallons-chip-avatar-text">M</span>
                 </Avatar>
               }
               label={season.totalGalPerMonth}
@@ -118,23 +151,15 @@ export default function ZoneBar({
           </Tooltip>
           <Tooltip title="Yearly Gallons" arrow>
             <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
+              className="bar-gallons-chip"
+              sx={navBarColorTheme().gallonsChips}
               avatar={
                 <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
+                  className="bar-gallons-chip-avatar"
+                  sx={navBarColorTheme().gallonsChipsAvatar}
                 >
-                  {"Yearly Gallons"[0].toLocaleUpperCase()}
+                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                  <span className="bar-gallons-chip-avatar-text">Y</span>
                 </Avatar>
               }
               label={season.totalGalPerYear}
@@ -186,43 +211,32 @@ export default function ZoneBar({
             value={isInitialLoad ? seasonName : "Select Season"}
             onChange={handleChange}
             inputProps={{ "aria-label": "Without label" }}
-            sx={{
-              boxShadow: "none",
-              ".MuiOutlinedInput-notchedOutline": { border: 0 },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                border: "none",
-                borderRadius: "5px 5px 0 0",
-              },
-              height: "33px",
-              width: "150px",
-              ml: 2,
-              mt: 0.5,
-            }}
+            sx={navBarColorTheme().dropdown}
           >
             {!isInitialLoad && (
               <MenuItem value={"Select Season"}>
                 <em>Select Season</em>
               </MenuItem>
             )}
-            <MenuItem value={"Summer"}>
+            <MenuItem value={"Summer"} sx={navBarColorTheme().dropdown}>
               <div className="menu-wrapper">
                 <MdSunny className="menuIcon" />
                 <Typography className="menu-text">Summer</Typography>
               </div>
             </MenuItem>
-            <MenuItem value={"Fall"}>
+            <MenuItem value={"Fall"} sx={navBarColorTheme().dropdown}>
               <div className="menu-wrapper">
                 <FaCanadianMapleLeaf className="menuIcon iconRotate" />
                 <Typography className="menu-text">Fall</Typography>
               </div>
             </MenuItem>
-            <MenuItem value={"Winter"}>
+            <MenuItem value={"Winter"} sx={navBarColorTheme().dropdown}>
               <div className="menu-wrapper">
                 <MdAcUnit className="menuIcon" />
                 <Typography className="menu-text">Winter</Typography>
               </div>
             </MenuItem>
-            <MenuItem value={"Spring"}>
+            <MenuItem value={"Spring"} sx={navBarColorTheme().dropdown}>
               <div className="menu-wrapper">
                 <MdLocalFlorist className="menuIcon" />
                 <Typography className="menu-text">Spring</Typography>
@@ -240,7 +254,7 @@ export default function ZoneBar({
   return (
     <>
       <CssBaseline />
-      <div className="main-container">
+      <div className="main-container" style={navBarColorTheme().mainBar}>
         <div className="content-container">
           <div className="title-container">
             <Typography className="bar-title" variant="h6" noWrap component="a">

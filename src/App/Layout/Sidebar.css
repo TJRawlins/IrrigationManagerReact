@@ -7,23 +7,25 @@
   z-index: 1500;
 }
 
-.nav-open.nav-toggle .icon {
+.nav-open.navToggle .icon.middle {
   width: 0;
 }
 
-.nav-open.nav-toggle .icon:before {
+.nav-open.navToggle .icon.top {
   -webkit-transform: translateY(9px) rotate(45deg);
   -ms-transform: translateY(9px) rotate(45deg);
   transform: translateY(9px) rotate(45deg);
+  transition: 0.5s all ease-in !important;
 }
 
-.nav-open.nav-toggle .icon:after {
+.nav-open.navToggle .icon.bottom {
   -webkit-transform: translateY(-9px) rotate(-45deg);
   -ms-transform: translateY(-9px) rotate(-45deg);
   transform: translateY(-9px) rotate(-45deg);
+  transition: 0.5s all ease-in !important;
 }
 
-.nav-toggle {
+.navToggle {
   width: 60px;
   height: 60px;
   z-index: 2;
@@ -32,44 +34,22 @@
   position: absolute;
   cursor: pointer;
   transition: 0.66s all ease-in;
-  /* -webkit-transition-duration: 0.66s; */
-  /* -webkit-transition-timing-function: swing;
-  transition-timing-function: swing; */
 }
 
-.nav-toggle .icon {
+.navToggle .icon {
   width: 30px;
   height: 4px;
-  background-color: white;
   position: absolute;
   top: 28px;
   left: 15px;
-  transition: 0.5s all ease-in;
-  /* -webkit-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-  transition-timing-function: swing; */
+  transition: 0.5s all ease-in !important;
 }
 
-.nav-toggle .icon:before,
-.nav-toggle .icon:after {
-  width: 30px;
-  height: 4px;
-  background-color: white;
-  content: "";
-  position: absolute;
-  left: 0;
-  transition: 0.5s all ease-in;
-  /* -webkit-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-  transition-timing-function: swing; */
+.navToggle .icon.top {
+  top: 19px;
 }
-
-.nav-toggle .icon:before {
-  top: -9px;
-}
-
-.nav-toggle .icon:after {
-  top: 9px;
+.navToggle .icon.bottom {
+  top: 37px;
 }
 
 .route-link-list {
@@ -86,9 +66,9 @@
 }
 
 .route-link-btn {
-  padding: 0 !important;
-  margin: 0 !important;
-  /* background-color: purple; */
+  /* padding: 0 !important;
+  margin: 0 !important; */
+  background-color: purple;
 }
 
 .route-link {
@@ -102,6 +82,7 @@
 }
 
 .route-link-icon {
- /* background-color: gray; */
- height: 100%;
+  /* background-color: gray; */
+  height: 100%;
+  min-width: 40px !important;
 }

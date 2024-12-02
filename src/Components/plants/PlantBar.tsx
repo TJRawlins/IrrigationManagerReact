@@ -8,10 +8,11 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
-import { IoChevronBack } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import { IoCalendar } from "react-icons/io5";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import AddPlant from "./AddPlant";
@@ -22,6 +23,8 @@ import "../../styles/plants/PlantBar.css";
 import { useEffect } from "react";
 import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
+import { tokens } from "../../theme/theme";
+import { TbDroplet } from "react-icons/tb";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -32,6 +35,37 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const { plant } = useSelector((state: RootState) => state.plant);
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const navBarColorTheme = () => {
+    return {
+      mainBar: {
+        backgroundColor: colors.white.vary,
+        color: colors.gray.toWhite,
+      },
+      gallonsChips: {
+        // borderBottom: "1px solid " + colors.shadow.vary,
+        backgroundColor: colors.whiteBlue.vary,
+        color: colors.gray.toWhite,
+      },
+      gallonsChipsAvatar: {
+        background: colors.whiteBlue.alt,
+        color: colors.primary.const + " !important",
+        "& .bar-gallons-chip-avatar-text": {
+          backgroundColor: colors.whiteBlue.vary,
+        },
+      },
+      barButtons: {
+        backgroundColor: colors.whiteBlue.vary,
+        color: colors.gray.toWhite,
+        border: "1px solid " + colors.whiteBlue.vary,
+        "& .btn-icon": { color: colors.primary.const + " !important" },
+        "&.action:hover": {border: "1px solid " + colors.primary.const}
+      },
+    };
+  };
 
   const updateLocalStorageSeason = (seasonId: number) => {
     agent.Seasons.details(seasonId).then((season) => {
@@ -81,23 +115,15 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
         >
           <Tooltip title="Weekly Gallons" arrow>
             <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
+              className="bar-gallons-chip"
+              sx={navBarColorTheme().gallonsChips}
               avatar={
                 <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
+                  className="bar-gallons-chip-avatar"
+                  sx={navBarColorTheme().gallonsChipsAvatar}
                 >
-                  {"Weekly Gallons"[0].toLocaleUpperCase()}
+                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                  <span className="bar-gallons-chip-avatar-text">W</span>
                 </Avatar>
               }
               label={zone.totalGalPerWeek}
@@ -105,23 +131,15 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
           </Tooltip>
           <Tooltip title="Monthly Gallons" arrow>
             <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
+              className="bar-gallons-chip"
+              sx={navBarColorTheme().gallonsChips}
               avatar={
                 <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
+                  className="bar-gallons-chip-avatar"
+                  sx={navBarColorTheme().gallonsChipsAvatar}
                 >
-                  {"Monthly Gallons"[0].toLocaleUpperCase()}
+                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                  <span className="bar-gallons-chip-avatar-text">M</span>
                 </Avatar>
               }
               label={zone.totalGalPerMonth}
@@ -129,23 +147,15 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
           </Tooltip>
           <Tooltip title="Yearly Gallons" arrow>
             <Chip
-              sx={{
-                width: "fit-content",
-                borderBottom: "1px solid silver",
-                bgcolor: "#ffffff",
-                color: "#919191",
-                justifyContent: "left",
-              }}
+              className="bar-gallons-chip"
+              sx={navBarColorTheme().gallonsChips}
               avatar={
                 <Avatar
-                  sx={{
-                    minWidth: "fit-content",
-                    background: "rgba(0, 0, 0, 0.08)",
-                    fontWeight: "700",
-                    color: "#919191 !important",
-                  }}
+                  className="bar-gallons-chip-avatar"
+                  sx={navBarColorTheme().gallonsChipsAvatar}
                 >
-                  {"Yearly Gallons"[0].toLocaleUpperCase()}
+                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                  <span className="bar-gallons-chip-avatar-text">Y</span>
                 </Avatar>
               }
               label={zone.totalGalPerYear}
@@ -162,7 +172,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   return (
     <>
       <CssBaseline />
-      <div className="main-container">
+      <div className="main-container" style={navBarColorTheme().mainBar}>
         <div className="content-container">
           <div className="title-container">
             <Typography className="bar-title" variant="h6" noWrap component="a">
@@ -185,36 +195,47 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
             />
             {/* // *-*-*-*-*-*-*-*-*-*-*-*-* ZONE & SEASON TITLE *-*-*-*-*-*-*-*-*-*-*-*-* */}
             <Box sx={{ display: { md: "block", sm: "none", xs: "none" } }}>
-              <div className="season-title-wrapper">
-                <Typography component="div" className="zone-season-name zone">
-                  <MdDashboard className="zone-season-icon" />
-                  {zone.name}
-                </Typography>
-                <Typography component="div" className="zone-season-name season">
-                  <IoCalendar className="zone-season-icon" />
-                  {zone.season}
-                </Typography>
-              </div>
+              <Box className="bar-btn-container">
+                <Box
+                  className="bar-btn"
+                  sx={navBarColorTheme().barButtons}
+                >
+                  <div className="btn-content-container">
+                    <MdDashboard className="btn-icon" />
+                    <span className="btn-text">{zone.name}</span>
+                  </div>
+                </Box>
+                <Box
+                  className="bar-btn"
+                  sx={navBarColorTheme().barButtons}
+                >
+                  <div className="btn-content-container">
+                    <IoCalendar className="btn-icon" />
+                    <span className="btn-text">{zone.season}</span>
+                  </div>
+                </Box>
+              </Box>
             </Box>
             <Divider
               sx={{ height: "60%", marginTop: "12px", marginRight: ".75rem" }}
               orientation="vertical"
               flexItem
             />
-            <AddPlant fetchPlants={fetchPlants} />
-            <Link to="/zones" className="back-to-zones-link">
-              <Button
-                className="btn-plantbar"
-                sx={{
-                  position: "relative",
-                  boxShadow: "none !important",
-                }}
-                onClick={backToSeason}
-              >
-                <IoChevronBack className="btn-icon" />
-                <span className="btn-plantbar-text">Go Back</span>
-              </Button>
-            </Link>
+            <Box className="bar-btn-container">
+              <AddPlant fetchPlants={fetchPlants} />
+              <Link to="/zones">
+                <Button
+                  className="bar-btn action"
+                  sx={navBarColorTheme().barButtons}
+                  onClick={backToSeason}
+                >
+                  <div className="btn-content-container">
+                    <IoIosArrowDropleftCircle className="btn-icon" />
+                    <span className="btn-text">Go Back</span>
+                  </div>
+                </Button>
+              </Link>
+            </Box>
           </div>
         </div>
         <TotalGallonsChips />

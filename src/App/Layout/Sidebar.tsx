@@ -6,7 +6,6 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import {
   Speed as SpeedIcon,
   DashboardOutlined as DashboardOutlinedIcon,
@@ -18,10 +17,11 @@ import {
   WaterDropOutlined as WaterDropIcon,
 } from "@mui/icons-material";
 import Box from "@mui/material/Box";
-import { Grid } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "/src/App/Layout/Sidebar.css";
+import { tokens } from "../../theme/theme";
 
 type Anchor = "left";
 
@@ -29,6 +29,27 @@ export default function Sidebar() {
   const [state, setState] = useState({
     left: false,
   });
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const sideBarColorTheme = () => {
+    return {
+      sideBar: {
+        backgroundColor: colors.white.vary,
+        color: colors.gray.const,
+      },
+      hamburgerMenu: {
+        backgroundColor: colors.white.altSecondary,
+      },
+      menuButton: {
+        color: colors.darkGray.vary,
+      },
+      menuIcon: {
+        color: colors.gray.const,
+      },
+    };
+  };
 
   // Toggle the sidebar menu
   const toggleDrawer =
@@ -58,9 +79,12 @@ export default function Sidebar() {
       <List className="route-link-list">
         <ListItem className="route-link-item">
           <Link className="route-link" to="/dashboard">
-            <ListItemButton className=".route-link-btn">
+            <ListItemButton
+              className="route-link-btn"
+              sx={sideBarColorTheme().menuButton}
+            >
               <ListItemIcon className="route-link-icon">
-                <SpeedIcon />
+                <SpeedIcon sx={sideBarColorTheme().menuIcon} />
               </ListItemIcon>
               Dashboard
             </ListItemButton>
@@ -68,9 +92,12 @@ export default function Sidebar() {
         </ListItem>
         <ListItem className="route-link-item">
           <Link className="route-link" to="/zones">
-            <ListItemButton className=".route-link-btn">
+            <ListItemButton
+              className="route-link-btn"
+              sx={sideBarColorTheme().menuButton}
+            >
               <ListItemIcon className="route-link-icon">
-                <DashboardOutlinedIcon />
+                <DashboardOutlinedIcon sx={sideBarColorTheme().menuIcon} />
               </ListItemIcon>
               Zones
             </ListItemButton>
@@ -78,7 +105,7 @@ export default function Sidebar() {
         </ListItem>
         {/* <ListItem className="route-link-item">
           <Link className="route-link" to="/plants">
-            <ListItemButton className=".route-link-btn">
+            <ListItemButton className="route-link-btn">
               <ListItemIcon className="route-link-icon">
                 <GrassIcon />
               </ListItemIcon>
@@ -88,9 +115,12 @@ export default function Sidebar() {
         </ListItem> */}
         <ListItem className="route-link-item">
           <Link className="route-link" to="/emitter-calculator">
-            <ListItemButton className=".route-link-btn">
+            <ListItemButton
+              className="route-link-btn"
+              sx={sideBarColorTheme().menuButton}
+            >
               <ListItemIcon className="route-link-icon">
-                <WaterDropIcon />
+                <WaterDropIcon sx={sideBarColorTheme().menuIcon} />
               </ListItemIcon>
               Emitter Calculator
             </ListItemButton>
@@ -98,9 +128,12 @@ export default function Sidebar() {
         </ListItem>
         <ListItem className="route-link-item">
           <Link className="route-link" to="/about">
-            <ListItemButton className=".route-link-btn">
+            <ListItemButton
+              className="route-link-btn"
+              sx={sideBarColorTheme().menuButton}
+            >
               <ListItemIcon className="route-link-icon">
-                <QuestionMarkOutlinedIcon />
+                <QuestionMarkOutlinedIcon sx={sideBarColorTheme().menuIcon} />
               </ListItemIcon>
               About
             </ListItemButton>
@@ -109,32 +142,68 @@ export default function Sidebar() {
       </List>
       <Divider />
       <List>
-        {["Account", "Settings", "Sign-out"].map((text) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {(() => {
-                  if (text === "Account") {
-                    return <AccountCircleIcon />;
-                  }
-                  if (text === "Settings") {
-                    return <SettingsSuggestOutlinedIcon />;
-                  }
-                  if (text === "Sign-out") {
-                    return <LogoutIcon />;
-                  }
-                })()}
+        <ListItem className="route-link-item">
+          <Link className="route-link" to="/about">
+            <ListItemButton
+              className="route-link-btn"
+              sx={sideBarColorTheme().menuButton}
+            >
+              <ListItemIcon className="route-link-icon">
+                <AccountCircleIcon sx={sideBarColorTheme().menuIcon} />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              Account
             </ListItemButton>
-          </ListItem>
-        ))}
+          </Link>
+        </ListItem>
+        <ListItem className="route-link-item">
+          <Link className="route-link" to="/about">
+            <ListItemButton
+              className="route-link-btn"
+              sx={sideBarColorTheme().menuButton}
+            >
+              <ListItemIcon className="route-link-icon">
+                <SettingsSuggestOutlinedIcon
+                  sx={sideBarColorTheme().menuIcon}
+                />
+              </ListItemIcon>
+              Settings
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem className="route-link-item">
+          <Link className="route-link" to="/about">
+            <ListItemButton
+              className="route-link-btn"
+              sx={sideBarColorTheme().menuButton}
+            >
+              <ListItemIcon className="route-link-icon">
+                <LogoutIcon sx={sideBarColorTheme().menuIcon} />
+              </ListItemIcon>
+              Sign-out
+            </ListItemButton>
+          </Link>
+        </ListItem>
       </List>
     </Box>
   );
 
   const HamburgerIcon = () => {
-    return <div className="icon"></div>;
+    return (
+      <>
+        <div
+          className="icon top"
+          style={sideBarColorTheme().hamburgerMenu}
+        ></div>
+        <div
+          className="icon middle"
+          style={sideBarColorTheme().hamburgerMenu}
+        ></div>
+        <div
+          className="icon bottom"
+          style={sideBarColorTheme().hamburgerMenu}
+        ></div>
+      </>
+    );
   };
 
   const [isActive, setActive] = React.useState(true);
@@ -148,9 +217,7 @@ export default function Sidebar() {
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           <Button
-            className={
-              isActive ? "nav-toggle icon" : "nav-open nav-toggle icon"
-            }
+            className={isActive ? "navToggle icon" : "nav-open navToggle icon"}
             sx={{ padding: 1, minWidth: 0 }}
             onClick={toggleDrawer(anchor, isActive ? true : false)}
           >
