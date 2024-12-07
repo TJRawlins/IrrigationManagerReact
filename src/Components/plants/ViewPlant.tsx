@@ -2,59 +2,44 @@
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Chip,
   ChipProps,
   Divider,
   Modal,
-  Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { PiPlantFill } from "react-icons/pi";
 import { FaDroplet } from "react-icons/fa6";
-import { PiHashStraightBold } from "react-icons/pi";
+import { BiSolidNotepad } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { MdAcUnit, MdLocalFlorist, MdSunny, MdDashboard } from "react-icons/md";
 import {
   FaCanadianMapleLeaf,
-  FaCalendarAlt,
-  FaTachometerAlt,
-  FaHandHoldingWater,
   FaCalendarCheck,
   FaSun,
   FaEdit,
 } from "react-icons/fa";
-// import { GiStrawberry } from "react-icons/gi";
-import { FaAppleAlt } from "react-icons/fa";
-import { LuThermometerSnowflake } from "react-icons/lu";
-import { PiFunnelFill, PiPlantFill } from "react-icons/pi";
-import { FaClockRotateLeft, FaPencil } from "react-icons/fa6";
-// import { TbNumbers } from "react-icons/tb";
-import { GiTreeGrowth } from "react-icons/gi";
+import { FaClockRotateLeft } from "react-icons/fa6";
+import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/ViewPlant.css";
 import { useState } from "react";
 import EditPlant from "./EditPlant";
+import { tokens } from "../../theme/theme";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
   setIsShowView: (show: boolean) => void;
   isShowView: boolean;
-};
-
-const style = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  borderRadius: 20,
-  boxShadow: 24,
-  padding: 0,
 };
 
 function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
@@ -64,6 +49,66 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
   const handleClose = () => setIsShowView(false);
   const [isShowEdit, setIsShowEdit] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const viewPlantColorTheme = () => {
+    return {
+      barButtons: {
+        backgroundColor: colors.whiteBlue.vary,
+        color: colors.gray.toWhite,
+        border: "1px solid " + colors.whiteBlue.vary,
+        "& .btn-icon": { color: colors.primary.const + " !important" },
+        "&.action:hover": { border: "1px solid " + colors.primary.const },
+      },
+      plantCardModal: {
+        backgroundColor: colors.overlay.modal,
+        opacity: 0.5,
+      },
+      plantCard: {
+        backgroundColor: colors.white.vary,
+        border: "1px solid " + colors.primary.const + " !important",
+        boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
+      },
+      plantCardTitle: {
+        color: colors.primary.toDarkGray,
+      },
+      plantContents: {
+        backgroundColor: colors.whiteBlue.alt2 + " !important",
+        "& .MuiTypography-root": { color: colors.gray.toWhite },
+        "& .card-item-icon": { color: colors.primary.const },
+        "& .icon-wrapper": { background: colors.white.vary },
+      },
+      plantCardChip: {
+        backgroundColor: colors.primary.varyDark + " !important",
+        color: colors.white.const,
+        ".iconStyle.seasonChipIcon": {
+          fill: colors.primary.const + " !important",
+          background: colors.white.vary2 + "!important",
+        },
+      },
+      plantCardMedia: {
+        "& #card-img-overlay": {
+          backgroundColor: colors.tertiary.vary2,
+          opacity: colors.opacity.zeroto45,
+        },
+      },
+      plantCardGallons: {
+        display: { xs: "flex", sm: "flex", md: "flex" },
+        background: `linear-gradient(45deg, ${colors.secondary.alt}, ${colors.primary.alt})`,
+        ".gallons-chip:nth-of-type(2)": {
+          borderRight: `1px solid ${colors.white.alt2} !important`,
+          borderLeft: `1px solid ${colors.white.alt2} !important`,
+        },
+        ".gallons-chip-avatar": {
+          color: colors.white.altPrimary + " !important",
+          backgroundColor: colors.white.opacity + " !important",
+        },
+        "& .gallons-chip-plant-card": { background: "none" },
+      },
+    };
+  };
 
   function handelMouseEnter() {
     setIsHovering(true);
@@ -81,52 +126,53 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
 
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   C H I P S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
   function getChipProps(params: string): ChipProps {
-    let seasonIcon: JSX.Element = <></>;
     if (params === "Spring") {
-      seasonIcon = (
-        <MdLocalFlorist className="iconStyle" style={{ fill: "#59bab1" }} />
-      );
+      return {
+        icon: <MdLocalFlorist className="iconStyle seasonChipIcon" />,
+        label: params,
+      };
     } else if (params === "Summer") {
-      seasonIcon = (
-        <MdSunny className="iconStyle" style={{ fill: "#59bab1" }} />
-      );
+      return {
+        icon: <MdSunny className="iconStyle seasonChipIcon" />,
+        label: params,
+      };
     } else if (params === "Fall") {
-      seasonIcon = (
-        <FaCanadianMapleLeaf
-          className="iconStyle rotateIcon"
-          style={{ fill: "#59bab1" }}
-        />
-      );
+      return {
+        icon: (
+          <FaCanadianMapleLeaf className="iconStyle rotateIcon seasonChipIcon" />
+        ),
+        label: params,
+      };
     } else if (params === "Winter") {
-      seasonIcon = (
-        <MdAcUnit className="iconStyle" style={{ fill: "#59bab1" }} />
-      );
+      return {
+        icon: <MdAcUnit className="iconStyle seasonChipIcon" />,
+        label: params,
+      };
     } else {
       return {
         label: params,
       };
     }
-    return {
-      icon: seasonIcon,
-      label: params,
-      style: { background: "#59bab1" },
-    };
   }
 
   return (
     <div>
       <Modal
+        className="modal-overlay"
         open={isShowView}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: { backgroundColor: "#002b49a7", opacity: 0.5 },
+            style: viewPlantColorTheme().plantCardModal,
           },
         }}
       >
-        <Box className="modal-box" sx={style}>
+        <Box
+          className="modal-box view-plant"
+          sx={viewPlantColorTheme().plantCard}
+        >
           {/* CARD COMPONENT */}
           <Card
             sx={{
@@ -152,19 +198,24 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
               onMouseLeave={handelMouseLeave}
               className="card-img plant"
               component="div"
-              sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
+              sx={viewPlantColorTheme().plantCardMedia}
               image={plant?.imagePath}
               title={plant === undefined ? "No Name" : plant.name}
-            />
+            >
+              <span id="card-img-overlay"></span>
+            </CardMedia>
             {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
             <CardContent className="card-content-wrapper">
               <Chip
                 className="chip"
                 variant="filled"
                 size="small"
-                sx={{ position: "absolute", top: "5px", left: "20px" }}
+                sx={viewPlantColorTheme().plantCardChip}
                 {...getChipProps(zone.season)}
               />
+              <div id="plant-card-main-icon-wrapper">
+                <PiPlantFill id="plant-card-main-icon" />
+              </div>
               <Box className="plant-name-wrapper" sx={{ marginBottom: 1 }}>
                 <Tooltip title={plant.name.toString()} arrow>
                   <Typography
@@ -179,91 +230,160 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                       : plant.name.toLocaleUpperCase()}
                   </Typography>
                 </Tooltip>
+                <div id="plant-details-text">
+                  {plant.age ? plant.age + " Year Old " : ""}
+                  {plant.type ? plant.type : ""}
+                </div>
               </Box>
-              <Box
-                className="card-data-container"
-                sx={{
-                  bgcolor: "#f5f5f5",
-                  borderRadius: "10px",
-                  padding: ".5rem 0.25rem",
-                }}
+              {/* ---- ACCORDION: Water Management ---- */}
+              <Accordion
+                className="card-data-container view-plant"
+                sx={viewPlantColorTheme().plantContents}
               >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                  sx={{ fontSize: "Larger" }}
+                >
+                  <Box className="data-set-title-container">
+                    <div className="accordion-icon-wrapper">
+                      <FaDroplet className="data-set-icon" />
+                    </div>
+                  </Box>
+                  Water Management
+                </AccordionSummary>
+                <Divider className="horizontal-divider top-divider">Emitters</Divider>
                 <Box className="data-set">
                   <Typography
                     className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <PiPlantFill className="card-item-icon" />
-                    <span className="bold">Plant Type:</span>
-                    <span>{plant.type}</span>
-                  </Typography>
-                  <Typography
-                    className="card-data flex size"
-                    // variant="body2"
                     component="div"
-                    color="text.secondary"
+                    sx={{ flexDirection: "column", alignItems: "center" }}
                   >
-                    <PiHashStraightBold className="card-item-icon " />{" "}
-                    <span className="bold">Quantity:</span>
-                    <span>{plant.quantity}</span>
+                    <span className="data">{plant.quantity}</span>
+                    <span className="data-title">Plants</span>
                   </Typography>
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <PiFunnelFill
-                      className="card-item-icon"
-                      style={{ transform: "rotate(45deg)" }}
-                    />
-                    <span className="bold">Emitter Count:</span>
-                    <span>{plant.emittersPerPlant}</span>
+                  <Typography className="card-data flex size" variant="body2">
+                    <span className="data">{plant.emittersPerPlant}</span>
+                    <span className="data-title">Emitters Per Plant</span>
                   </Typography>
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <FaTachometerAlt className="card-item-icon" />
-                    <span className="bold">Emitter GPH:</span>
-                    <span>{plant.emitterGPH}</span>
+                  <Typography className="card-data flex size" variant="body2">
+                    <span className="data">{plant.emitterGPH}</span>
+                    <span className="data-title">Emitter GPH</span>
                   </Typography>
-                  <Tooltip
-                    title="Required Gallons Per Week (GPW), per plant"
-                    arrow
-                    placement="right"
-                    sx={{ zIndex: 999 }}
-                  >
-                    <Typography
-                      className="card-data flex size"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      <FaDroplet className="card-item-icon" />
-                      <span className="bold">Req. GPW:</span>
-                      <span>{plant.galsPerWk}</span>
-                    </Typography>
-                  </Tooltip>
-                  <Tooltip
-                    title="Calculated Gallons Per Week (GPW), per plant. Automatically calculated 
-                        based on emitter count, flow rate, and zone runtime. 
-                        Compare with 'Req. GPW' value and adjust as necessary"
-                    arrow
-                    placement="right"
-                    sx={{ zIndex: 999 }}
-                  >
-                    <Typography
-                      className="card-data flex size"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      <FaHandHoldingWater className="card-item-icon" />
-                      <span className="bold">Calc. GPW:</span>
-                      <span>{plant.galsPerWkCalc}</span>
-                    </Typography>
-                  </Tooltip>
                 </Box>
+                {/* ---- REQUIRED GALLONS VS. CALCULATED GALLONS ---- */}
+                <Divider className="horizontal-divider">Comparison</Divider>
+                <Tooltip
+                  title={`Required vs calculated gallons per week, per plant. Calculated values are based on emitter count, [flow rate], and zone runtime. 
+                        Compare the required value (user entered) to the calculated value and adjust accordingly.`}
+                  arrow
+                  sx={{ zIndex: 999 }}
+                >
+                  <Box className="data-set amounts">
+                    <div className="gauge-wrapper">
+                      <Gauge
+                        className="gauge"
+                        width={100}
+                        height={100}
+                        value={plant.galsPerWk}
+                        valueMax={plant.galsPerWk}
+                        startAngle={-90}
+                        endAngle={90}
+                        sx={{
+                          [`& .${gaugeClasses.valueText}`]: {
+                            transform: "translate(0px, -10px)",
+                          },
+                        }}
+                      />
+                      <div className="card-data flex compare-text size">
+                        <span className="gpw-compare-text">
+                          Required Gallons Per Week
+                        </span>
+                      </div>
+                    </div>
+                    <Divider
+                      orientation="vertical"
+                      variant="middle"
+                      flexItem
+                      style={{ margin: "15px 0" }}
+                    >
+                      VS
+                    </Divider>
+                    <div className="gauge-wrapper">
+                      <Gauge
+                        className="gauge"
+                        width={100}
+                        height={100}
+                        value={plant.galsPerWkCalc}
+                        valueMax={plant.galsPerWkCalc > plant.galsPerWk ? plant.galsPerWkCalc : plant.galsPerWk}
+                        startAngle={-90}
+                        endAngle={90}
+                        sx={{
+                          [`& .${gaugeClasses.valueText}`]: {
+                            transform: "translate(0px, -10px)",
+                          },
+                        }}
+                      />
+                      <div className="card-data flex compare-text size">
+                        <span className="gpw-compare-text">
+                          Current Gallons Per Week
+                        </span>
+                      </div>
+                    </div>
+                  </Box>
+                </Tooltip>
+                {/* ---- TOTAL GALLONS ---- */}
+                <Divider className="horizontal-divider">Total Gallons</Divider>
+                <Box>
+                  <Box className="data-set" sx={{ marginBottom: "1rem" }}>
+                    <Typography
+                      className="card-data flex size"
+                      component="div"
+                      sx={{ flexDirection: "column", alignItems: "center" }}
+                    >
+                      <span className="data">
+                        {plant.galsPerWkCalc * plant.quantity}
+                      </span>
+                      <span className="data-title">Weekly</span>
+                    </Typography>
+                    <Typography className="card-data flex size" variant="body2">
+                      <span className="data">
+                        {plant.galsPerWkCalc * 4 * plant.quantity}
+                      </span>
+                      <span className="data-title">Monthly</span>
+                    </Typography>
+                    <Typography className="card-data flex size" variant="body2">
+                      <span className="data">
+                        {plant.galsPerWkCalc * 52 * plant.quantity}
+                      </span>
+                      <span className="data-title">Yearly</span>
+                    </Typography>
+                  </Box>
+                </Box>
+              </Accordion>
+
+              {/* ---- ACCORDION: Requirements & Details ---- */}
+              <Accordion
+                className="card-data-container view-plant"
+                sx={viewPlantColorTheme().plantContents}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                  sx={{ fontSize: "Larger" }}
+                >
+                  <Box className="data-set-title-container">
+                    <div className="accordion-icon-wrapper">
+                      <FaSun className="data-set-icon" />
+                    </div>
+                  </Box>
+                  Requirements & Details
+                </AccordionSummary>
+                <Divider className="horizontal-divider top-divider">
+                  Requirements
+                </Divider>
                 <Box className="data-set-divider">
                   <Divider
                     sx={{ height: "100%" }}
@@ -271,93 +391,91 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                     flexItem
                   />
                 </Box>
-                <Box className="data-set">
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <GiTreeGrowth className="card-item-icon" />
-                    <span className="bold">Plant Age:</span>
-                    <span>{plant?.age}</span>
-                  </Typography>
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <FaSun className="card-item-icon" />
-                    <span className="bold">Sun Exposure:</span>
-                    <span>{plant?.exposure}</span>
-                  </Typography>
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <LuThermometerSnowflake className="card-item-icon" />
-                    <span className="bold">USDA Zone:</span>
-                    <span style={{ fontSize: ".85rem" }}>
-                      {plant?.hardinessZone}
-                    </span>
-                  </Typography>
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <FaAppleAlt className="card-item-icon " />
-                    <span className="bold">Harvest:</span>
-                    <span>{plant?.harvestMonth}</span>
-                  </Typography>
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <FaCalendarAlt className="card-item-icon" />
-                    <span className="bold">Added:</span>
-                    <span>{plant.timeStamp?.toString()}</span>
-                  </Typography>
-                  <Tooltip title={plant.notes} arrow>
+                <Box id="req-specs-box" className="data-set">
+                  <div className="card-data-group">
                     <Typography
-                      className="card-data flex size"
+                      className="card-data flex-row size yellow-border-left"
                       variant="body2"
-                      color="text.secondary"
                     >
-                      <FaPencil className="card-item-icon" />
-                      <span className="bold">Notes:</span>
-                      <span
-                        style={{
-                          textOverflow: "ellipsis",
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          width: "150px",
-                        }}
-                      >
-                        {plant.notes}
+                      <span className="req-specs-title">Sun Exposure:</span>
+                      <span className="req-specs-value">{plant?.exposure}</span>
+                    </Typography>
+                    <Typography
+                      className="card-data flex-row size blue-border-left"
+                      variant="body2"
+                    >
+                      <span className="req-specs-title">Water:</span>
+                      <span className="req-specs-value">
+                        {plant?.galsPerWk + " gallons per week"}
                       </span>
                     </Typography>
-                  </Tooltip>
+                    <Typography
+                      className="card-data flex-row size orange-border-left"
+                      variant="body2"
+                    >
+                      <span className="req-specs-title">Fertilize:</span>
+                      <span className="req-specs-value">
+                        February & September
+                      </span>
+                    </Typography>
+                    <Typography
+                      className="card-data flex-row size red-border-left"
+                      variant="body2"
+                    >
+                      <span className="req-specs-title">Harvest:</span>
+                      <span className="req-specs-value">
+                        {plant?.harvestMonth}
+                      </span>
+                    </Typography>
+                  </div>
+                  <Divider className="horizontal-divider">Details</Divider>
+                  <div className="card-data-group">
+                    <Typography
+                      className="card-data flex-row size purple-border-left"
+                      variant="body2"
+                    >
+                      <span className="req-specs-title">USDA Zone:</span>
+                      <span className="req-specs-value">
+                        {plant?.hardinessZone}
+                      </span>
+                    </Typography>
+                    <Typography
+                      className="card-data flex-row size green-border-left"
+                      variant="body2"
+                    >
+                      <span className="req-specs-title">Last Updated:</span>
+                      <span className="req-specs-value">
+                        {plant.timeStamp?.toString()}
+                      </span>
+                    </Typography>
+                  </div>
                 </Box>
-              </Box>
-              <Box
-                className="card-data-container zone-container"
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  bgcolor: "#f5f5f5",
-                  borderRadius: "10px",
-                  padding: ".5rem 0",
-                }}
+              </Accordion>
+
+              {/* ---- ACCORDION: Zone Details ---- */}
+              <Accordion
+                className="card-data-container view-plant"
+                sx={viewPlantColorTheme().plantContents}
               >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                  sx={{ fontSize: "Larger" }}
+                >
+                  <Box className="data-set-title-container">
+                    <div className="accordion-icon-wrapper">
+                      <MdDashboard className="data-set-icon" />
+                    </div>
+                  </Box>
+                  Zone Details
+                </AccordionSummary>
+                <AccordionDetails>
+                  Save water by adjusting your zone's runtime or plant emitters.
+                </AccordionDetails>
                 <Box className="data-set">
                   <Tooltip title={zone.name} arrow>
-                    <Typography
-                      className="card-data flex size"
-                      variant="body2"
-                      color="text.secondary"
-                    >
+                    <Typography className="card-data flex size" variant="body2">
                       <MdDashboard className="card-item-icon" />
                       <span className="bold">Zone:</span>
                       <span>
@@ -369,11 +487,7 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                   </Tooltip>
                 </Box>
                 <Box className="data-set">
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
+                  <Typography className="card-data flex size" variant="body2">
                     <FaClockRotateLeft className="card-item-icon" />
                     <span className="bold">Runtime:</span>
                     <span>
@@ -385,74 +499,36 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                   </Typography>
                 </Box>
                 <Box className="data-set">
-                  <Typography
-                    className="card-data flex size"
-                    variant="body2"
-                    color="text.secondary"
-                  >
+                  <Typography className="card-data flex size" variant="body2">
                     <FaCalendarCheck className="card-item-icon" />
                     <span className="bold">Per Week:</span>
                     <span>{zone.runtimePerWeek}</span>
                   </Typography>
                 </Box>
-              </Box>
-              {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  T O T A L   G A L L O N S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
-              <Box>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  mb={0}
-                  sx={{
-                    display: { xs: "flex", sm: "flex", md: "flex" },
-                    justifyContent: "space-between",
-                    maxWidth: "100%",
-                    flexWrap: "nowrap",
-                    background: "linear-gradient(45deg, #82a628, #59bab1)",
-                    borderRadius: "0 0 10px 10px",
-                    opacity: "0.8",
-                  }}
+              </Accordion>
+
+              {/* ---- ACCORDION: Notes ---- */}
+              <Accordion
+                className="card-data-container view-plant"
+                sx={viewPlantColorTheme().plantContents}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                  sx={{ fontSize: "Larger" }}
                 >
-                  <Tooltip title="Total Weekly Gallons" arrow>
-                    <Chip
-                      className={"gallons-chip-plant-card gallons-chip week"}
-                      sx={{
-                        justifyContent: "left",
-                        borderRadius: "10px",
-                        margin: "0 !important",
-                        padding: "0 !important",
-                      }}
-                      avatar={
-                        <Avatar className={"gallons-chip-avatar plant-card"}>
-                          W
-                        </Avatar>
-                      }
-                      label={plant.galsPerWkCalc * plant.quantity}
-                    />
-                  </Tooltip>
-                  <Tooltip title="Total Monthly Gallons" arrow>
-                    <Chip
-                      className={"gallons-chip-plant-card gallons-chip"}
-                      avatar={
-                        <Avatar className={"gallons-chip-avatar plant-card"}>
-                          M
-                        </Avatar>
-                      }
-                      label={plant.galsPerWkCalc * 4 * plant.quantity}
-                    />
-                  </Tooltip>
-                  <Tooltip title="Total Yearly Gallons" arrow>
-                    <Chip
-                      className={"gallons-chip-plant-card gallons-chip year"}
-                      avatar={
-                        <Avatar className={"gallons-chip-avatar plant-card"}>
-                          Y
-                        </Avatar>
-                      }
-                      label={plant.galsPerWkCalc * 52 * plant.quantity}
-                    />
-                  </Tooltip>
-                </Stack>
-              </Box>
+                  <Box className="data-set-title-container">
+                    <div className="accordion-icon-wrapper">
+                      <BiSolidNotepad className="data-set-icon" />
+                    </div>
+                  </Box>
+                  Notes
+                </AccordionSummary>
+                <AccordionDetails>
+                  {plant.notes ? plant.notes : "No notes found..."}
+                </AccordionDetails>
+              </Accordion>
             </CardContent>
           </Card>
         </Box>
