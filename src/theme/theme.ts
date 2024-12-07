@@ -13,6 +13,7 @@ export const tokens = (mode: string) => ({
     ? {
         opacity: {
           zero: "1",
+          zeroto45: "0.5",
           zero75: "0.75",
           zero5const: "0.75",
           zero45: "0.55",
@@ -86,6 +87,7 @@ export const tokens = (mode: string) => ({
         opacity: {
           zero: "0",
           zero45: "0.45",
+          zeroto45: "0",
           zero5const: "0.5",
           zero75: "0.45",
           zero9: "0.9",
