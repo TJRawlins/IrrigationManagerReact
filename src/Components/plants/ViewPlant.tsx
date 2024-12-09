@@ -24,11 +24,9 @@ import { RootState } from "../../redux/store";
 import { MdAcUnit, MdLocalFlorist, MdSunny, MdDashboard } from "react-icons/md";
 import {
   FaCanadianMapleLeaf,
-  FaCalendarCheck,
   FaSun,
   FaEdit,
 } from "react-icons/fa";
-import { FaClockRotateLeft } from "react-icons/fa6";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/ViewPlant.css";
@@ -236,299 +234,337 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                 </div>
               </Box>
               {/* ---- ACCORDION: Water Management ---- */}
-              <Accordion
-                className="card-data-container view-plant"
-                sx={viewPlantColorTheme().plantContents}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1-content"
-                  id="panel1-header"
-                  sx={{ fontSize: "Larger" }}
+              <Box className="accordion-group-wrapper">
+                <Accordion
+                  className="card-data-container view-plant"
+                  sx={viewPlantColorTheme().plantContents}
                 >
-                  <Box className="data-set-title-container">
-                    <div className="accordion-icon-wrapper">
-                      <FaDroplet className="data-set-icon" />
-                    </div>
-                  </Box>
-                  Water Management
-                </AccordionSummary>
-                <Divider className="horizontal-divider top-divider">Emitters</Divider>
-                <Box className="data-set">
-                  <Typography
-                    className="card-data flex size"
-                    component="div"
-                    sx={{ flexDirection: "column", alignItems: "center" }}
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                    sx={{ fontSize: "Larger" }}
                   >
-                    <span className="data">{plant.quantity}</span>
-                    <span className="data-title">Plants</span>
-                  </Typography>
-                  <Typography className="card-data flex size" variant="body2">
-                    <span className="data">{plant.emittersPerPlant}</span>
-                    <span className="data-title">Emitters Per Plant</span>
-                  </Typography>
-                  <Typography className="card-data flex size" variant="body2">
-                    <span className="data">{plant.emitterGPH}</span>
-                    <span className="data-title">Emitter GPH</span>
-                  </Typography>
-                </Box>
-                {/* ---- REQUIRED GALLONS VS. CALCULATED GALLONS ---- */}
-                <Divider className="horizontal-divider">Comparison</Divider>
-                <Tooltip
-                  title={`Required vs calculated gallons per week, per plant. Calculated values are based on emitter count, [flow rate], and zone runtime. 
-                        Compare the required value (user entered) to the calculated value and adjust accordingly.`}
-                  arrow
-                  sx={{ zIndex: 999 }}
-                >
-                  <Box className="data-set amounts">
-                    <div className="gauge-wrapper">
-                      <Gauge
-                        className="gauge"
-                        width={100}
-                        height={100}
-                        value={plant.galsPerWk}
-                        valueMax={plant.galsPerWk}
-                        startAngle={-90}
-                        endAngle={90}
-                        sx={{
-                          [`& .${gaugeClasses.valueText}`]: {
-                            transform: "translate(0px, -10px)",
-                          },
-                        }}
-                      />
-                      <div className="card-data flex compare-text size">
-                        <span className="gpw-compare-text">
-                          Required Gallons Per Week
-                        </span>
+                    <Box className="data-set-title-container">
+                      <div className="accordion-icon-wrapper">
+                        <FaDroplet className="data-set-icon" />
                       </div>
-                    </div>
-                    <Divider
-                      orientation="vertical"
-                      variant="middle"
-                      flexItem
-                      style={{ margin: "15px 0" }}
-                    >
-                      VS
-                    </Divider>
-                    <div className="gauge-wrapper">
-                      <Gauge
-                        className="gauge"
-                        width={100}
-                        height={100}
-                        value={plant.galsPerWkCalc}
-                        valueMax={plant.galsPerWkCalc > plant.galsPerWk ? plant.galsPerWkCalc : plant.galsPerWk}
-                        startAngle={-90}
-                        endAngle={90}
-                        sx={{
-                          [`& .${gaugeClasses.valueText}`]: {
-                            transform: "translate(0px, -10px)",
-                          },
-                        }}
-                      />
-                      <div className="card-data flex compare-text size">
-                        <span className="gpw-compare-text">
-                          Current Gallons Per Week
-                        </span>
-                      </div>
-                    </div>
-                  </Box>
-                </Tooltip>
-                {/* ---- TOTAL GALLONS ---- */}
-                <Divider className="horizontal-divider">Total Gallons</Divider>
-                <Box>
-                  <Box className="data-set" sx={{ marginBottom: "1rem" }}>
+                    </Box>
+                    Water Management
+                  </AccordionSummary>
+                  <Divider className="horizontal-divider top-divider">
+                    Emitters
+                  </Divider>
+                  <Box className="data-set">
                     <Typography
                       className="card-data flex size"
                       component="div"
                       sx={{ flexDirection: "column", alignItems: "center" }}
                     >
-                      <span className="data">
-                        {plant.galsPerWkCalc * plant.quantity}
-                      </span>
-                      <span className="data-title">Weekly</span>
+                      <span className="data">{plant.quantity}</span>
+                      <span className="data-title">Plants</span>
                     </Typography>
                     <Typography className="card-data flex size" variant="body2">
-                      <span className="data">
-                        {plant.galsPerWkCalc * 4 * plant.quantity}
-                      </span>
-                      <span className="data-title">Monthly</span>
+                      <span className="data">{plant.emittersPerPlant}</span>
+                      <span className="data-title">Emitters Per Plant</span>
                     </Typography>
                     <Typography className="card-data flex size" variant="body2">
-                      <span className="data">
-                        {plant.galsPerWkCalc * 52 * plant.quantity}
-                      </span>
-                      <span className="data-title">Yearly</span>
+                      <span className="data">{plant.emitterGPH}</span>
+                      <span className="data-title">Emitter GPH</span>
                     </Typography>
                   </Box>
-                </Box>
-              </Accordion>
-
-              {/* ---- ACCORDION: Requirements & Details ---- */}
-              <Accordion
-                className="card-data-container view-plant"
-                sx={viewPlantColorTheme().plantContents}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1-content"
-                  id="panel1-header"
-                  sx={{ fontSize: "Larger" }}
-                >
-                  <Box className="data-set-title-container">
-                    <div className="accordion-icon-wrapper">
-                      <FaSun className="data-set-icon" />
-                    </div>
-                  </Box>
-                  Requirements & Details
-                </AccordionSummary>
-                <Divider className="horizontal-divider top-divider">
-                  Requirements
-                </Divider>
-                <Box className="data-set-divider">
-                  <Divider
-                    sx={{ height: "100%" }}
-                    orientation="vertical"
-                    flexItem
-                  />
-                </Box>
-                <Box id="req-specs-box" className="data-set">
-                  <div className="card-data-group">
-                    <Typography
-                      className="card-data flex-row size yellow-border-left"
-                      variant="body2"
-                    >
-                      <span className="req-specs-title">Sun Exposure:</span>
-                      <span className="req-specs-value">{plant?.exposure}</span>
-                    </Typography>
-                    <Typography
-                      className="card-data flex-row size blue-border-left"
-                      variant="body2"
-                    >
-                      <span className="req-specs-title">Water:</span>
-                      <span className="req-specs-value">
-                        {plant?.galsPerWk + " gallons per week"}
-                      </span>
-                    </Typography>
-                    <Typography
-                      className="card-data flex-row size orange-border-left"
-                      variant="body2"
-                    >
-                      <span className="req-specs-title">Fertilize:</span>
-                      <span className="req-specs-value">
-                        February & September
-                      </span>
-                    </Typography>
-                    <Typography
-                      className="card-data flex-row size red-border-left"
-                      variant="body2"
-                    >
-                      <span className="req-specs-title">Harvest:</span>
-                      <span className="req-specs-value">
-                        {plant?.harvestMonth}
-                      </span>
-                    </Typography>
-                  </div>
-                  <Divider className="horizontal-divider">Details</Divider>
-                  <div className="card-data-group">
-                    <Typography
-                      className="card-data flex-row size purple-border-left"
-                      variant="body2"
-                    >
-                      <span className="req-specs-title">USDA Zone:</span>
-                      <span className="req-specs-value">
-                        {plant?.hardinessZone}
-                      </span>
-                    </Typography>
-                    <Typography
-                      className="card-data flex-row size green-border-left"
-                      variant="body2"
-                    >
-                      <span className="req-specs-title">Last Updated:</span>
-                      <span className="req-specs-value">
-                        {plant.timeStamp?.toString()}
-                      </span>
-                    </Typography>
-                  </div>
-                </Box>
-              </Accordion>
-
-              {/* ---- ACCORDION: Zone Details ---- */}
-              <Accordion
-                className="card-data-container view-plant"
-                sx={viewPlantColorTheme().plantContents}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1-content"
-                  id="panel1-header"
-                  sx={{ fontSize: "Larger" }}
-                >
-                  <Box className="data-set-title-container">
-                    <div className="accordion-icon-wrapper">
-                      <MdDashboard className="data-set-icon" />
-                    </div>
-                  </Box>
-                  Zone Details
-                </AccordionSummary>
-                <AccordionDetails>
-                  Save water by adjusting your zone's runtime or plant emitters.
-                </AccordionDetails>
-                <Box className="data-set">
-                  <Tooltip title={zone.name} arrow>
-                    <Typography className="card-data flex size" variant="body2">
-                      <MdDashboard className="card-item-icon" />
-                      <span className="bold">Zone:</span>
-                      <span>
-                        {zone.name.length > 12
-                          ? zone.name.substring(0, 15) + "..."
-                          : zone.name}
-                      </span>
-                    </Typography>
+                  {/* ---- REQUIRED GALLONS VS. CALCULATED GALLONS ---- */}
+                  <Divider className="horizontal-divider">Comparison</Divider>
+                  <Tooltip
+                    title={`Required vs calculated gallons per week, per plant. Calculated values are based on emitter count, [flow rate], and zone runtime. 
+                        Compare the required value (user entered) to the calculated value and adjust accordingly.`}
+                    arrow
+                    sx={{ zIndex: 999 }}
+                  >
+                    <Box className="data-set amounts">
+                      <div className="gauge-wrapper">
+                        <Gauge
+                          className="gauge"
+                          width={100}
+                          height={100}
+                          value={plant.galsPerWk}
+                          valueMax={plant.galsPerWk}
+                          startAngle={-90}
+                          endAngle={90}
+                          sx={{
+                            [`& .${gaugeClasses.valueText}`]: {
+                              transform: "translate(0px, -10px)",
+                            },
+                          }}
+                        />
+                        <div className="card-data flex compare-text size">
+                          <span className="gpw-compare-text">
+                            Required Gallons Per Week
+                          </span>
+                        </div>
+                      </div>
+                      <Divider
+                        orientation="vertical"
+                        variant="middle"
+                        flexItem
+                        style={{ margin: "15px 0" }}
+                      >
+                        VS
+                      </Divider>
+                      <div className="gauge-wrapper">
+                        <Gauge
+                          className="gauge"
+                          width={100}
+                          height={100}
+                          value={plant.galsPerWkCalc}
+                          valueMax={
+                            plant.galsPerWkCalc > plant.galsPerWk
+                              ? plant.galsPerWkCalc
+                              : plant.galsPerWk
+                          }
+                          startAngle={-90}
+                          endAngle={90}
+                          sx={{
+                            [`& .${gaugeClasses.valueText}`]: {
+                              transform: "translate(0px, -10px)",
+                            },
+                          }}
+                        />
+                        <div className="card-data flex compare-text size">
+                          <span className="gpw-compare-text">
+                            Current Gallons Per Week
+                          </span>
+                        </div>
+                      </div>
+                    </Box>
                   </Tooltip>
-                </Box>
-                <Box className="data-set">
-                  <Typography className="card-data flex size" variant="body2">
-                    <FaClockRotateLeft className="card-item-icon" />
-                    <span className="bold">Runtime:</span>
-                    <span>
-                      {zone.runtimeHours}:
-                      {zone.runtimeMinutes.toString().length == 1
-                        ? "0" + zone.runtimeMinutes
-                        : zone.runtimeMinutes}
-                    </span>
-                  </Typography>
-                </Box>
-                <Box className="data-set">
-                  <Typography className="card-data flex size" variant="body2">
-                    <FaCalendarCheck className="card-item-icon" />
-                    <span className="bold">Per Week:</span>
-                    <span>{zone.runtimePerWeek}</span>
-                  </Typography>
-                </Box>
-              </Accordion>
+                  {/* ---- TOTAL GALLONS ---- */}
+                  <Divider className="horizontal-divider">
+                    Total Gallons
+                  </Divider>
+                  <Box>
+                    <Box className="data-set" sx={{ marginBottom: "1rem" }}>
+                      <Typography
+                        className="card-data flex size"
+                        component="div"
+                        sx={{ flexDirection: "column", alignItems: "center" }}
+                      >
+                        <span className="data">
+                          {plant.galsPerWkCalc * plant.quantity}
+                        </span>
+                        <span className="data-title">Weekly</span>
+                      </Typography>
+                      <Typography
+                        className="card-data flex size"
+                        variant="body2"
+                      >
+                        <span className="data">
+                          {plant.galsPerWkCalc * 4 * plant.quantity}
+                        </span>
+                        <span className="data-title">Monthly</span>
+                      </Typography>
+                      <Typography
+                        className="card-data flex size"
+                        variant="body2"
+                      >
+                        <span className="data">
+                          {plant.galsPerWkCalc * 52 * plant.quantity}
+                        </span>
+                        <span className="data-title">Yearly</span>
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Accordion>
 
-              {/* ---- ACCORDION: Notes ---- */}
-              <Accordion
-                className="card-data-container view-plant"
-                sx={viewPlantColorTheme().plantContents}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1-content"
-                  id="panel1-header"
-                  sx={{ fontSize: "Larger" }}
+                {/* ---- ACCORDION: Requirements & Details ---- */}
+                <Accordion
+                  className="card-data-container view-plant"
+                  sx={viewPlantColorTheme().plantContents}
                 >
-                  <Box className="data-set-title-container">
-                    <div className="accordion-icon-wrapper">
-                      <BiSolidNotepad className="data-set-icon" />
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                    sx={{ fontSize: "Larger" }}
+                  >
+                    <Box className="data-set-title-container">
+                      <div className="accordion-icon-wrapper">
+                        <FaSun className="data-set-icon" />
+                      </div>
+                    </Box>
+                    Requirements & Details
+                  </AccordionSummary>
+                  <Divider className="horizontal-divider top-divider">
+                    Requirements
+                  </Divider>
+                  <Box className="data-set-divider">
+                    <Divider
+                      sx={{ height: "100%" }}
+                      orientation="vertical"
+                      flexItem
+                    />
+                  </Box>
+                  <Box id="req-specs-box" className="data-set">
+                    <div className="card-data-group">
+                      <Typography
+                        className="card-data flex-row size yellow-border-left"
+                        variant="body2"
+                      >
+                        <span className="req-specs-title">Sun Exposure:</span>
+                        <span className="req-specs-value">
+                          {plant?.exposure}
+                        </span>
+                      </Typography>
+                      <Typography
+                        className="card-data flex-row size blue-border-left"
+                        variant="body2"
+                      >
+                        <span className="req-specs-title">Water:</span>
+                        <span className="req-specs-value">
+                          {plant?.galsPerWk + " gallons per week"}
+                        </span>
+                      </Typography>
+                      <Typography
+                        className="card-data flex-row size orange-border-left"
+                        variant="body2"
+                      >
+                        <span className="req-specs-title">Fertilize:</span>
+                        <span className="req-specs-value">
+                          February & September
+                        </span>
+                      </Typography>
+                      <Typography
+                        className="card-data flex-row size red-border-left"
+                        variant="body2"
+                      >
+                        <span className="req-specs-title">Harvest:</span>
+                        <span className="req-specs-value">
+                          {plant?.harvestMonth}
+                        </span>
+                      </Typography>
+                    </div>
+                    <Divider className="horizontal-divider">Details</Divider>
+                    <div className="card-data-group">
+                      <Typography
+                        className="card-data flex-row size purple-border-left"
+                        variant="body2"
+                      >
+                        <span className="req-specs-title">USDA Zone:</span>
+                        <span className="req-specs-value">
+                          {plant?.hardinessZone}
+                        </span>
+                      </Typography>
+                      <Typography
+                        className="card-data flex-row size green-border-left"
+                        variant="body2"
+                      >
+                        <span className="req-specs-title">Last Updated:</span>
+                        <span className="req-specs-value">
+                          {plant.timeStamp?.toString()}
+                        </span>
+                      </Typography>
                     </div>
                   </Box>
-                  Notes
-                </AccordionSummary>
-                <AccordionDetails>
-                  {plant.notes ? plant.notes : "No notes found..."}
-                </AccordionDetails>
-              </Accordion>
+                </Accordion>
+
+                {/* ---- ACCORDION: Zone Details ---- */}
+                <Accordion
+                  className="card-data-container view-plant"
+                  sx={viewPlantColorTheme().plantContents}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                    sx={{ fontSize: "Larger" }}
+                  >
+                    <Box className="data-set-title-container">
+                      <div className="accordion-icon-wrapper">
+                        <MdDashboard className="data-set-icon" />
+                      </div>
+                    </Box>
+                    Zone Details
+                  </AccordionSummary>
+                  <CardMedia
+                    onMouseEnter={handelMouseEnter}
+                    onMouseLeave={handelMouseLeave}
+                    className="card-img zone"
+                    component="div"
+                    sx={viewPlantColorTheme().plantCardMedia}
+                    image={zone?.imagePath}
+                  >
+                    <span id="card-img-overlay"></span>
+                    <Box className="data-set zone-name">
+                      <Typography
+                        className="card-data flex size zone-name"
+                        variant="body2"
+                      >
+                        <span>
+                          {zone.name.length > 20
+                            ? zone.name.substring(0, 20) + "..."
+                            : zone.name}
+                        </span>
+                      </Typography>
+                    </Box>
+                  </CardMedia>
+                  <Box className="zone-runtime-wrapper">
+                    <Box className="data-set zone-runtime-data">
+                      <Typography
+                        className="card-data flex size"
+                        variant="body2"
+                      >
+                        <span className="data">
+                          {zone.runtimeHours}:
+                          {zone.runtimeMinutes.toString().length == 1
+                            ? "0" + zone.runtimeMinutes
+                            : zone.runtimeMinutes}
+                        </span>
+                        <span className="data-title">Runtime</span>
+                      </Typography>
+                    </Box>
+                    <Divider
+                      orientation="vertical"
+                      variant="middle"
+                      flexItem
+                      style={{ margin: "10px 0" }}
+                    ></Divider>
+                    <Box className="data-set zone-runtime-data">
+                      <Typography
+                        className="card-data flex size"
+                        variant="body2"
+                      >
+                        <span className="data">{zone.runtimePerWeek}</span>
+                        <span className="data-title">Per Week</span>
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Accordion>
+
+                {/* ---- ACCORDION: Notes ---- */}
+                <Accordion
+                  className="card-data-container view-plant"
+                  sx={viewPlantColorTheme().plantContents}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                    sx={{ fontSize: "Larger" }}
+                  >
+                    <Box className="data-set-title-container">
+                      <div className="accordion-icon-wrapper">
+                        <BiSolidNotepad className="data-set-icon" />
+                      </div>
+                    </Box>
+                    Notes
+                  </AccordionSummary>
+                  <AccordionDetails>
+                  <div className="card-data-group notes">
+                    {plant.notes ? plant.notes : "No notes found..."}
+                  </div>
+                  </AccordionDetails>
+                </Accordion>
+              </Box>
             </CardContent>
           </Card>
         </Box>
