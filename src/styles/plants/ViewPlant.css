@@ -24,12 +24,13 @@
 }
 
 .card-img.plant {
-  height: 140px;
+  height: 170px;
   border-radius: 10px 10px 0 0;
 }
 .card-img.plant #card-img-overlay {
   position: absolute;
   top: 0;
+  height: 170px !important;
   width: 100%;
 }
 
@@ -80,8 +81,8 @@
 
 #plant-card-main-icon-wrapper {
   position: absolute;
-  top: 75px;
-  left: 155px;
+  top: 105px;
+  left: 137px;
   z-index: 999;
   background: #343439;
   width: 150px;
@@ -112,6 +113,8 @@
   /* text-shadow: 1px 2px 5px #000000; */
   text-align: center;
   width: fit-content;
+  margin-bottom: 0 !important; 
+  line-height: 1 !important;
 }
 
 #plant-details-text {
@@ -127,7 +130,6 @@
 }
 
 .card-data-container.zone-container {
-  /* border: 1px #dad9d9 solid; */
   background: none !important;
   border-radius: 10px;
   padding: 0.5rem 0.25rem;
@@ -164,7 +166,7 @@
 }
 
 .accordion-group-wrapper {
-  max-height: 55vh;
+  max-height: 40vh;
   overflow: auto;
 }
 
@@ -174,6 +176,7 @@
 
 .MuiAccordionSummary-root {
   padding: 0 !important;
+  font-size: 1rem !important;
 }
 
 .MuiPaper-rounded {
@@ -204,12 +207,8 @@
 }
 
 .data-set.amounts {
-  /* margin: 12px 0;
-  background: #1e1e1ea1;
-  border-radius: 12px;
-  padding: 1.5rem 0; */
   margin: 12px 0;
-  background: #1e1e1ea1;
+  /* background: #1e1e1ea1; */
   border-radius: 12px;
   padding: 0.5rem 0.75rem;
   height: 125px;
@@ -337,7 +336,7 @@
 }
 
 .card-data.flex-row.yellow-border-left {
-  border-left: 5px solid yellow;
+  border-left: 5px solid #ffd700;
 }
 .card-data.flex-row.orange-border-left {
   border-left: 5px solid orange;

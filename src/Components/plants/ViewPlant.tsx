@@ -22,11 +22,7 @@ import { BiSolidNotepad } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { MdAcUnit, MdLocalFlorist, MdSunny, MdDashboard } from "react-icons/md";
-import {
-  FaCanadianMapleLeaf,
-  FaSun,
-  FaEdit,
-} from "react-icons/fa";
+import { FaCanadianMapleLeaf, FaSun, FaEdit } from "react-icons/fa";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/ViewPlant.css";
@@ -53,13 +49,6 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
   const colors = tokens(theme.palette.mode);
   const viewPlantColorTheme = () => {
     return {
-      barButtons: {
-        backgroundColor: colors.whiteBlue.vary,
-        color: colors.gray.toWhite,
-        border: "1px solid " + colors.whiteBlue.vary,
-        "& .btn-icon": { color: colors.primary.const + " !important" },
-        "&.action:hover": { border: "1px solid " + colors.primary.const },
-      },
       plantCardModal: {
         backgroundColor: colors.overlay.modal,
         opacity: 0.5,
@@ -69,27 +58,35 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
         border: "1px solid " + colors.primary.const + " !important",
         boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
       },
+      plantCardIconWrapper: {
+        backgroundColor: colors.whiteBlue.vary,
+      },
       plantCardTitle: {
-        color: colors.primary.toDarkGray,
+        color: colors.gray.toWhite,
       },
       plantContents: {
         backgroundColor: colors.whiteBlue.alt2 + " !important",
+        color: colors.gray.toWhite,
         "& .MuiTypography-root": { color: colors.gray.toWhite },
         "& .card-item-icon": { color: colors.primary.const },
         "& .icon-wrapper": { background: colors.white.vary },
+        "& .data-set.amounts, & .card-data-group, & .zone-runtime-wrapper": {
+          background: colors.white.toDarkGray,
+        },
+        "& #accordion-zone-name": { color: colors.white.const },
+        "& .MuiGauge-valueText > text > tspan": { fill: colors.gray.toWhite + " !important"}
       },
       plantCardChip: {
-        backgroundColor: colors.primary.varyDark + " !important",
+        backgroundColor: colors.primary.toDarkGray + " !important",
         color: colors.white.const,
         ".iconStyle.seasonChipIcon": {
           fill: colors.primary.const + " !important",
-          background: colors.white.vary2 + "!important",
+          background: colors.white.toLightGray + "!important",
         },
       },
       plantCardMedia: {
         "& #card-img-overlay": {
-          backgroundColor: colors.tertiary.vary2,
-          opacity: colors.opacity.zeroto45,
+          backgroundColor: colors.overlay.image,
         },
       },
       plantCardGallons: {
@@ -178,7 +175,7 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
               boxShadow: "none !important",
               borderRadius: "15px",
               padding: "10px",
-              width: "450px",
+              width: "425px",
             }}
           >
             <FaEdit
@@ -211,7 +208,10 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                 sx={viewPlantColorTheme().plantCardChip}
                 {...getChipProps(zone.season)}
               />
-              <div id="plant-card-main-icon-wrapper">
+              <div
+                id="plant-card-main-icon-wrapper"
+                style={viewPlantColorTheme().plantCardIconWrapper}
+              >
                 <PiPlantFill id="plant-card-main-icon" />
               </div>
               <Box className="plant-name-wrapper" sx={{ marginBottom: 1 }}>
@@ -221,7 +221,7 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                     gutterBottom
                     component="div"
                     variant="h6"
-                    sx={{ marginBottom: 0, lineHeight: 1 }}
+                    sx={viewPlantColorTheme().plantCardTitle}
                   >
                     {plant.name.length > 27
                       ? plant.name.toLocaleUpperCase().substring(0, 27) + "..."
@@ -499,7 +499,7 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                         className="card-data flex size zone-name"
                         variant="body2"
                       >
-                        <span>
+                        <span id="accordion-zone-name">
                           {zone.name.length > 20
                             ? zone.name.substring(0, 20) + "..."
                             : zone.name}
@@ -559,9 +559,9 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                     Notes
                   </AccordionSummary>
                   <AccordionDetails>
-                  <div className="card-data-group notes">
-                    {plant.notes ? plant.notes : "No notes found..."}
-                  </div>
+                    <div className="card-data-group notes">
+                      {plant.notes ? plant.notes : "No notes found..."}
+                    </div>
                   </AccordionDetails>
                 </Accordion>
               </Box>
