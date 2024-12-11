@@ -76,7 +76,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
         boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
       },
       zoneAddCardTitle: {
-        color: colors.primary.toDarkGray,
+        color: colors.gray.toPrimary,
       },
     };
   };

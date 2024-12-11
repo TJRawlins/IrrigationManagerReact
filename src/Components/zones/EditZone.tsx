@@ -99,12 +99,12 @@ function EditZone({
         boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
       },
       zoneEditCardTitle: {
-        color: colors.primary.toDarkGray,
+        color: colors.gray.toPrimary,
       },
       zoneSeasonSelection: {
         "& #mui-component-select-season": {
           backgroundColor: colors.whiteBlue.vary,
-          color: colors.gray.toWhite
+          color: colors.gray.toWhite,
         },
       },
     };
@@ -585,7 +585,11 @@ function EditZone({
                     >
                       Season
                     </InputLabel>
-                    <Field as={Select} name="season" sx={zoneEditBtnColorTheme().zoneSeasonSelection} >
+                    <Field
+                      as={Select}
+                      name="season"
+                      sx={zoneEditBtnColorTheme().zoneSeasonSelection}
+                    >
                       <MenuItem value="Summer">Summer</MenuItem>
                       <MenuItem value="Fall">Fall</MenuItem>
                       <MenuItem value="Winter">Winter</MenuItem>
