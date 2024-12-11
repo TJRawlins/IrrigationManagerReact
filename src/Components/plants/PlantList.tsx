@@ -74,8 +74,6 @@ PlantListProps) {
     return {
       grid: {
         backgroundColor: colors.whiteBlue.vary,
-        // color: colors.gray.toWhite,\
-        // "& .MuiDataGrid-row": {border: "1px solid red !important"}
         "& .MuiDataGrid-container--top [role=row]": {
           backgroundColor: colors.whiteBlue.vary,
         },
