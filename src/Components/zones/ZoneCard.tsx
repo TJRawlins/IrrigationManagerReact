@@ -67,11 +67,11 @@ export default function ZoneCard({
         backgroundColor: colors.whiteBlue.alt2 + " !important",
       },
       zoneCardChip: {
-        backgroundColor: colors.primary.varyDark + " !important",
+        backgroundColor: colors.primary.toDarkGray + " !important",
         color: colors.white.const,
-        ".iconStyle.zoneCardIcon": {
+        ".iconStyle.seasonChipIcon": {
           fill: colors.primary.const + " !important",
-          background: colors.white.vary2,
+          background: colors.white.toLightGray,
         },
       },
       zoneCardMedia: {
@@ -90,7 +90,7 @@ export default function ZoneCard({
         },
         "& .zone-card-action-button:hover": {
           backgroundColor: colors.whiteBlue.vary,
-          border: "1px solid " + colors.primary.const
+          border: "1px solid " + colors.primary.const,
         },
       },
       zoneCardGallons: {
@@ -248,29 +248,24 @@ export default function ZoneCard({
   function getChipProps(params: string): ChipProps {
     if (params === "Spring") {
       return {
-        icon: (
-          <MdLocalFlorist
-            className="iconStyle zoneCardIcon"
-            style={zoneCardColorTheme().zoneCardChip}
-          />
-        ),
+        icon: <MdLocalFlorist className="iconStyle seasonChipIcon" />,
         label: params,
       };
     } else if (params === "Summer") {
       return {
-        icon: <MdSunny className="iconStyle zoneCardIcon" />,
+        icon: <MdSunny className="iconStyle seasonChipIcon" />,
         label: params,
       };
     } else if (params === "Fall") {
       return {
         icon: (
-          <FaCanadianMapleLeaf className="iconStyle rotateIcon zoneCardIcon" />
+          <FaCanadianMapleLeaf className="iconStyle rotateIcon seasonChipIcon" />
         ),
         label: params,
       };
     } else if (params === "Winter") {
       return {
-        icon: <MdAcUnit className="iconStyle zoneCardIcon" />,
+        icon: <MdAcUnit className="iconStyle seasonChipIcon" />,
         label: params,
       };
     } else {
@@ -362,64 +357,22 @@ export default function ZoneCard({
             >
               <Tooltip title="Total Weekly Gallons" arrow>
                 <Chip
-                  className={
-                    "gallons-chip week " +
-                    season.name.toString().toLocaleLowerCase()
-                  }
-                  sx={{
-                    width: "100%",
-                    justifyContent: "left",
-                    borderRadius: "10px",
-                    margin: "0 !important",
-                    padding: "0 !important",
-                  }}
-                  avatar={
-                    <Avatar
-                      className={
-                        "gallons-chip-avatar " +
-                        season.name.toString().toLocaleLowerCase()
-                      }
-                    >
-                      W
-                    </Avatar>
-                  }
+                  className="gallons-chip"
+                  avatar={<Avatar className="gallons-chip-avatar">W</Avatar>}
                   label={zone.totalGalPerWeek}
                 />
               </Tooltip>
               <Tooltip title="Total Monthly Gallons" arrow>
                 <Chip
-                  className={
-                    "gallons-chip " + season.name.toString().toLocaleLowerCase()
-                  }
-                  avatar={
-                    <Avatar
-                      className={
-                        "gallons-chip-avatar " +
-                        season.name.toString().toLocaleLowerCase()
-                      }
-                    >
-                      M
-                    </Avatar>
-                  }
+                  className="gallons-chip"
+                  avatar={<Avatar className="gallons-chip-avatar">M</Avatar>}
                   label={zone.totalGalPerMonth}
                 />
               </Tooltip>
               <Tooltip title="Total Yearly Gallons" arrow>
                 <Chip
-                  className={
-                    "gallons-chip year " +
-                    season.name.toString().toLocaleLowerCase()
-                  }
-                  avatar={
-                    <Avatar
-                      className={
-                        "gallons-chip-avatar " +
-                        season.name.toString().toLocaleLowerCase()
-                      }
-                    >
-                      Y
-                    </Avatar>
-                  }
+                  className="gallons-chip"
+                  avatar={<Avatar className="gallons-chip-avatar">Y</Avatar>}
                   label={zone.totalGalPerYear}
                 />
               </Tooltip>
