@@ -29,7 +29,7 @@ const PlantPage = () => {
   const plantPageColorTheme = () => {
     return {
       grid: {
-        backgroundColor: colors.whiteBlue.varyDark,
+        backgroundColor: colors.whiteBlue.toDarkGray,
       },
     };
   };
