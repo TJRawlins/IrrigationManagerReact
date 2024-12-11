@@ -95,7 +95,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
           },
       },
       plantCardTitle: {
-        color: colors.primary.toDarkGray,
+        color: colors.gray.toPrimary,
       },
     };
   };
