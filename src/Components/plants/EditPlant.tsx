@@ -102,7 +102,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
           },
       },
       plantCardTitle: {
-        color: colors.primary.toDarkGray,
+        color: colors.gray.toPrimary,
       },
     };
   };
@@ -388,309 +388,271 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
 
   return (
     <div>
-        <Modal
-          className="modal-overlay"
-          open={isShowEdit}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          slotProps={{
-            backdrop: {
-              style: editPlantColorTheme().plantCardModal,
-            },
-          }}
-        >
-          <Box className="modal-box plant" sx={editPlantColorTheme().plantCard}>
-            <div className="modal-title-container">
-              {isLoading && (
-                <Modal
-                  open={true}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                  slotProps={{
-                    backdrop: {
-                      style: { backgroundColor: "transparent" },
-                    },
+      <Modal
+        className="modal-overlay"
+        open={isShowEdit}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        slotProps={{
+          backdrop: {
+            style: editPlantColorTheme().plantCardModal,
+          },
+        }}
+      >
+        <Box className="modal-box plant" sx={editPlantColorTheme().plantCard}>
+          <div className="modal-title-container">
+            {isLoading && (
+              <Modal
+                open={true}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                slotProps={{
+                  backdrop: {
+                    style: { backgroundColor: "transparent" },
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: "100%",
-                      height: "100%",
-                      position: "absolute",
-                      top: "0",
-                      left: "0",
-                    }}
-                  >
-                    <CircularProgress sx={{ color: "#0069b2" }} />
-                  </Box>
-                </Modal>
-              )}
-              <Typography
-                className="modal-title"
-                id="modal-modal-title"
-                variant="h6"
-                component="h2"
-                sx={editPlantColorTheme().plantCardTitle}
-              >
-                Edit Plant
-              </Typography>
-            </div>
-            <Formik
-              initialValues={initialValues}
-              onSubmit={onSubmit}
-              validationSchema={validationSchema}
+                  <CircularProgress sx={{ color: "#0069b2" }} />
+                </Box>
+              </Modal>
+            )}
+            <Typography
+              className="modal-title"
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={editPlantColorTheme().plantCardTitle}
             >
-              {({ errors, touched, values, handleChange }) => (
-                <Form style={{ width: "100%" }}>
-                  <div className="split-container">
+              Edit Plant
+            </Typography>
+          </div>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}
+          >
+            {({ errors, touched, values, handleChange }) => (
+              <Form style={{ width: "100%" }}>
+                <div className="split-container">
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="plant-name-input"
+                      name="name"
+                      label="Plant name"
+                      type="text"
+                      autoComplete=""
+                      variant="standard"
+                      error={touched.name && Boolean(errors.name)}
+                    />
+                    <FormHelperText
+                      error={touched.name && Boolean(errors.name)}
+                    >
+                      {touched.name && errors.name ? errors.name : ""}
+                    </FormHelperText>
+                  </Box>
+                  <Box className="input" sx={{ width: "210px" }}>
+                    <Field
+                      as={TextField}
+                      required
+                      className="input"
+                      id="quantity-input"
+                      name="quantity"
+                      label="Quantity"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 150 } }}
+                      error={touched.quantity && Boolean(errors.quantity)}
+                    />
+                    <FormHelperText
+                      error={touched.quantity && Boolean(errors.quantity)}
+                    >
+                      {touched.quantity && errors.quantity
+                        ? errors.quantity
+                        : ""}
+                    </FormHelperText>
+                  </Box>
+                </div>
+                <div className="split-container">
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      className="input"
+                      id="age-input"
+                      label="Plant Age"
+                      name="age"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 150 } }}
+                    />
+                  </Box>
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      className="input"
+                      id="hardiness-zone-input"
+                      label="USDA Zone"
+                      name="hardinessZone"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 1, max: 11 } }}
+                    />
+                  </Box>
+                  <Box className="input">
+                    <Box sx={{ display: "flex" }}>
+                      <span>
+                        <Field
+                          as={TextField}
+                          required
+                          className="input"
+                          id="gals-wk-input"
+                          name="galsPerWk"
+                          label="Required GPW"
+                          type="number"
+                          autoComplete=""
+                          variant="standard"
+                          error={touched.galsPerWk && Boolean(errors.galsPerWk)}
+                        />
+                        <FormHelperText
+                          error={touched.galsPerWk && Boolean(errors.galsPerWk)}
+                        >
+                          {touched.galsPerWk && errors.galsPerWk
+                            ? errors.galsPerWk
+                            : ""}
+                        </FormHelperText>
+                      </span>
+                      <Tooltip
+                        title="Required Gallons Per Week (GPW), per plant"
+                        arrow
+                        // sx={{ zIndex: 999 }}
+                      >
+                        <span style={{ alignSelf: "center", height: "17px" }}>
+                          <HiOutlineInformationCircle
+                            style={{ color: "#82a628" }}
+                          />
+                        </span>
+                      </Tooltip>
+                    </Box>
+                  </Box>
+                </div>
+                <div className="split-container">
+                  <Tooltip title="Per plant" arrow>
                     <Box className="input">
                       <Field
                         as={TextField}
                         required
                         className="input"
-                        id="plant-name-input"
-                        name="name"
-                        label="Plant name"
-                        type="text"
-                        autoComplete=""
-                        variant="standard"
-                        error={touched.name && Boolean(errors.name)}
-                      />
-                      <FormHelperText
-                        error={touched.name && Boolean(errors.name)}
-                      >
-                        {touched.name && errors.name ? errors.name : ""}
-                      </FormHelperText>
-                    </Box>
-                    <Box className="input" sx={{ width: "210px" }}>
-                      <Field
-                        as={TextField}
-                        required
-                        className="input"
-                        id="quantity-input"
-                        name="quantity"
-                        label="Quantity"
+                        id="emitters-input"
+                        label="Emitter count"
+                        name="emittersPerPlant"
                         type="number"
                         autoComplete=""
                         variant="standard"
-                        InputProps={{ inputProps: { min: 0, max: 150 } }}
-                        error={touched.quantity && Boolean(errors.quantity)}
+                        // InputProps={{ inputProps: { min: 0, max: 150 } }}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          values.galsPerWkCalc = getGalsPerWkCalcValue(
+                            values,
+                            event
+                          );
+                          handleChange(event);
+                        }}
+                        error={
+                          touched.emittersPerPlant &&
+                          Boolean(errors.emittersPerPlant)
+                        }
                       />
                       <FormHelperText
-                        error={touched.quantity && Boolean(errors.quantity)}
+                        error={
+                          touched.emittersPerPlant &&
+                          Boolean(errors.emittersPerPlant)
+                        }
                       >
-                        {touched.quantity && errors.quantity
-                          ? errors.quantity
+                        {touched.emittersPerPlant && errors.emittersPerPlant
+                          ? errors.emittersPerPlant
                           : ""}
                       </FormHelperText>
                     </Box>
-                  </div>
-                  <div className="split-container">
+                  </Tooltip>
+                  <Tooltip title="Per plant" arrow>
                     <Box className="input">
                       <Field
                         as={TextField}
+                        required
                         className="input"
-                        id="age-input"
-                        label="Plant Age"
-                        name="age"
+                        id="emitters-gph-input"
+                        label="Emitter GPH"
+                        name="emitterGPH"
                         type="number"
                         autoComplete=""
                         variant="standard"
-                        InputProps={{ inputProps: { min: 0, max: 150 } }}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          values.galsPerWkCalc = getGalsPerWkCalcValue(
+                            values,
+                            event
+                          );
+                          handleChange(event);
+                        }}
+                        error={touched.emitterGPH && Boolean(errors.emitterGPH)}
                       />
+                      <FormHelperText
+                        error={touched.emitterGPH && Boolean(errors.emitterGPH)}
+                      >
+                        {touched.emitterGPH && errors.emitterGPH
+                          ? errors.emitterGPH
+                          : ""}
+                      </FormHelperText>
                     </Box>
-                    <Box className="input">
+                  </Tooltip>
+                  <Box className="input">
+                    <Box sx={{ display: "flex" }}>
                       <Field
                         as={TextField}
                         className="input"
-                        id="hardiness-zone-input"
-                        label="USDA Zone"
-                        name="hardinessZone"
+                        id="gals-wk-calc-input"
+                        name="galsPerWkCalc"
+                        label="Calculated GPW"
                         type="number"
                         autoComplete=""
                         variant="standard"
-                        InputProps={{ inputProps: { min: 1, max: 11 } }}
+                        disabled
                       />
-                    </Box>
-                    <Box className="input">
-                      <Box sx={{ display: "flex" }}>
-                        <span>
-                          <Field
-                            as={TextField}
-                            required
-                            className="input"
-                            id="gals-wk-input"
-                            name="galsPerWk"
-                            label="Required GPW"
-                            type="number"
-                            autoComplete=""
-                            variant="standard"
-                            error={
-                              touched.galsPerWk && Boolean(errors.galsPerWk)
-                            }
-                          />
-                          <FormHelperText
-                            error={
-                              touched.galsPerWk && Boolean(errors.galsPerWk)
-                            }
-                          >
-                            {touched.galsPerWk && errors.galsPerWk
-                              ? errors.galsPerWk
-                              : ""}
-                          </FormHelperText>
-                        </span>
-                        <Tooltip
-                          title="Required Gallons Per Week (GPW), per plant"
-                          arrow
-                          // sx={{ zIndex: 999 }}
-                        >
-                          <span style={{ alignSelf: "center", height: "17px" }}>
-                            <HiOutlineInformationCircle
-                              style={{ color: "#82a628" }}
-                            />
-                          </span>
-                        </Tooltip>
-                      </Box>
-                    </Box>
-                  </div>
-                  <div className="split-container">
-                    <Tooltip title="Per plant" arrow>
-                      <Box className="input">
-                        <Field
-                          as={TextField}
-                          required
-                          className="input"
-                          id="emitters-input"
-                          label="Emitter count"
-                          name="emittersPerPlant"
-                          type="number"
-                          autoComplete=""
-                          variant="standard"
-                          // InputProps={{ inputProps: { min: 0, max: 150 } }}
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            values.galsPerWkCalc = getGalsPerWkCalcValue(
-                              values,
-                              event
-                            );
-                            handleChange(event);
-                          }}
-                          error={
-                            touched.emittersPerPlant &&
-                            Boolean(errors.emittersPerPlant)
-                          }
-                        />
-                        <FormHelperText
-                          error={
-                            touched.emittersPerPlant &&
-                            Boolean(errors.emittersPerPlant)
-                          }
-                        >
-                          {touched.emittersPerPlant && errors.emittersPerPlant
-                            ? errors.emittersPerPlant
-                            : ""}
-                        </FormHelperText>
-                      </Box>
-                    </Tooltip>
-                    <Tooltip title="Per plant" arrow>
-                      <Box className="input">
-                        <Field
-                          as={TextField}
-                          required
-                          className="input"
-                          id="emitters-gph-input"
-                          label="Emitter GPH"
-                          name="emitterGPH"
-                          type="number"
-                          autoComplete=""
-                          variant="standard"
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            values.galsPerWkCalc = getGalsPerWkCalcValue(
-                              values,
-                              event
-                            );
-                            handleChange(event);
-                          }}
-                          error={
-                            touched.emitterGPH && Boolean(errors.emitterGPH)
-                          }
-                        />
-                        <FormHelperText
-                          error={
-                            touched.emitterGPH && Boolean(errors.emitterGPH)
-                          }
-                        >
-                          {touched.emitterGPH && errors.emitterGPH
-                            ? errors.emitterGPH
-                            : ""}
-                        </FormHelperText>
-                      </Box>
-                    </Tooltip>
-                    <Box className="input">
-                      <Box sx={{ display: "flex" }}>
-                        <Field
-                          as={TextField}
-                          className="input"
-                          id="gals-wk-calc-input"
-                          name="galsPerWkCalc"
-                          label="Calculated GPW"
-                          type="number"
-                          autoComplete=""
-                          variant="standard"
-                          disabled
-                        />
-                        <Tooltip
-                          title="Calculated Gallons Per Week (GPW), per plant. Automatically calculated 
+                      <Tooltip
+                        title="Calculated Gallons Per Week (GPW), per plant. Automatically calculated 
                         based on emitter count, flow rate, and zone runtime. 
                         Compare with 'Req. GPW' value and adjust as necessary"
-                          arrow
-                          // sx={{ zIndex: 999 }}
-                        >
-                          <span style={{ alignSelf: "center", height: "17px" }}>
-                            <HiOutlineInformationCircle
-                              style={{ color: "#82a628" }}
-                            />
-                          </span>
-                        </Tooltip>
-                      </Box>
-                    </Box>
-                  </div>
-                  <div className="split-container">
-                    {imageUpload && (
-                      <Tooltip title={imageUpload?.name.toString()} arrow>
-                        <Typography
-                          component={"div"}
-                          style={{
-                            textOverflow: "ellipsis",
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            width: "100%",
-                            margin: "1rem 0",
-                            alignSelf: "center",
-                            borderBottom: "1px solid #9d9d9d",
-                            padding: "6px",
-                          }}
-                        >
-                          {imageUpload?.name.toString()}
-                        </Typography>
+                        arrow
+                        // sx={{ zIndex: 999 }}
+                      >
+                        <span style={{ alignSelf: "center", height: "17px" }}>
+                          <HiOutlineInformationCircle
+                            style={{ color: "#82a628" }}
+                          />
+                        </span>
                       </Tooltip>
-                    )}
-                    {!error && !imageUpload && plant.imagePath && (
-                      <img
-                        src={plant.imagePath}
-                        style={{
-                          width: "215px",
-                          height: "45px",
-                          objectFit: "cover",
-                          borderRadius: "5px",
-                          margin: "1rem 0",
-                        }}
-                      ></img>
-                    )}
-                    {error && (
+                    </Box>
+                  </Box>
+                </div>
+                <div className="split-container">
+                  {imageUpload && (
+                    <Tooltip title={imageUpload?.name.toString()} arrow>
                       <Typography
                         component={"div"}
                         style={{
@@ -700,153 +662,179 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
                           width: "100%",
                           margin: "1rem 0",
                           alignSelf: "center",
-                          borderBottom: "1px solid #d32f2f",
+                          borderBottom: "1px solid #9d9d9d",
                           padding: "6px",
-                          color: "#d32f2f",
                         }}
                       >
-                        {error}
+                        {imageUpload?.name.toString()}
                       </Typography>
-                    )}
-                    <Button
-                      component="label"
-                      role={undefined}
-                      variant="contained"
-                      tabIndex={-1}
-                      startIcon={<CloudUploadIcon />}
-                      sx={{
-                        width: "100%",
-                        color: "#ffff",
+                    </Tooltip>
+                  )}
+                  {!error && !imageUpload && plant.imagePath && (
+                    <img
+                      src={plant.imagePath}
+                      style={{
+                        width: "215px",
+                        height: "45px",
+                        objectFit: "cover",
+                        borderRadius: "5px",
                         margin: "1rem 0",
-                        background:
-                          "linear-gradient(to right, #59bab1, #82a628)",
+                      }}
+                    ></img>
+                  )}
+                  {error && (
+                    <Typography
+                      component={"div"}
+                      style={{
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        width: "100%",
+                        margin: "1rem 0",
+                        alignSelf: "center",
+                        borderBottom: "1px solid #d32f2f",
+                        padding: "6px",
+                        color: "#d32f2f",
                       }}
                     >
-                      Select Image
-                      <VisuallyHiddenInput
-                        type="file"
-                        accept="image/*"
-                        onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                          handleImageValidation(event)
-                        }
-                        multiple
-                      />
-                    </Button>
+                      {error}
+                    </Typography>
+                  )}
+                  <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<CloudUploadIcon />}
+                    sx={{
+                      width: "100%",
+                      color: "#ffff",
+                      margin: "1rem 0",
+                      background: "linear-gradient(to right, #59bab1, #82a628)",
+                    }}
+                  >
+                    Select Image
+                    <VisuallyHiddenInput
+                      type="file"
+                      accept="image/*"
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        handleImageValidation(event)
+                      }
+                      multiple
+                    />
+                  </Button>
+                </div>
+                <Box sx={{ minWidth: 120, mt: 1.5 }}>
+                  <div className="split-container">
+                    <FormControl fullWidth>
+                      <InputLabel
+                        id="plant-type-input"
+                        sx={{ padding: "0 5px" }}
+                      >
+                        Plant type
+                      </InputLabel>
+                      <Field
+                        style={{ padding: "5px !important" }}
+                        as={Select}
+                        required
+                        aria-hidden="false"
+                        name="type"
+                        type="select"
+                        error={touched.type && Boolean(errors.type)}
+                      >
+                        <MenuItem value={"Tree"}>Tree</MenuItem>
+                        <MenuItem value={"Shrub"}>Shrub</MenuItem>
+                        <MenuItem value={"Vegetable"}>Vegetable</MenuItem>
+                        <MenuItem value={"Herb"}>Herb</MenuItem>
+                        <MenuItem value={"Grass"}>Grass</MenuItem>
+                        <MenuItem value={"Vine"}>Vine</MenuItem>
+                        <MenuItem value={"Cacti"}>Cacti</MenuItem>
+                      </Field>
+                      <FormHelperText
+                        error={touched.type && Boolean(errors.type)}
+                      >
+                        {touched.type && errors.type ? errors.type : ""}
+                      </FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth>
+                      <InputLabel id="exposure-input" sx={{ padding: "0 5px" }}>
+                        Exposure
+                      </InputLabel>
+                      <Field
+                        style={{ padding: "5px !important" }}
+                        as={Select}
+                        name="exposure"
+                        type="select"
+                      >
+                        <MenuItem
+                          value={""}
+                          className="dropdown-unselect"
+                        ></MenuItem>
+                        <MenuItem value={"Full Sun"}>Full Sun</MenuItem>
+                        <MenuItem value={"Partial Sun"}>Partial Sun</MenuItem>
+                      </Field>
+                    </FormControl>
+                    <FormControl fullWidth>
+                      <InputLabel
+                        id="harvest-month-input"
+                        sx={{ padding: "0 5px" }}
+                      >
+                        Harvest
+                      </InputLabel>
+                      <Field
+                        style={{ padding: "5px !important" }}
+                        as={Select}
+                        name="harvestMonth"
+                        type="select"
+                      >
+                        <MenuItem
+                          value={""}
+                          className="dropdown-unselect"
+                        ></MenuItem>
+                        <MenuItem value={"January"}>January</MenuItem>
+                        <MenuItem value={"February"}>February</MenuItem>
+                        <MenuItem value={"March"}>March</MenuItem>
+                        <MenuItem value={"April"}>April</MenuItem>
+                        <MenuItem value={"May"}>May</MenuItem>
+                        <MenuItem value={"June"}>June</MenuItem>
+                        <MenuItem value={"July"}>July</MenuItem>
+                        <MenuItem value={"August"}>August</MenuItem>
+                        <MenuItem value={"September"}>September</MenuItem>
+                        <MenuItem value={"October"}>October</MenuItem>
+                        <MenuItem value={"November"}>November</MenuItem>
+                        <MenuItem value={"December"}>December</MenuItem>
+                      </Field>
+                    </FormControl>
                   </div>
-                  <Box sx={{ minWidth: 120, mt: 1.5 }}>
-                    <div className="split-container">
-                      <FormControl fullWidth>
-                        <InputLabel
-                          id="plant-type-input"
-                          sx={{ padding: "0 5px" }}
-                        >
-                          Plant type
-                        </InputLabel>
-                        <Field
-                          style={{ padding: "5px !important" }}
-                          as={Select}
-                          required
-                          aria-hidden="false"
-                          name="type"
-                          type="select"
-                          error={touched.type && Boolean(errors.type)}
-                        >
-                          <MenuItem value={"Tree"}>Tree</MenuItem>
-                          <MenuItem value={"Shrub"}>Shrub</MenuItem>
-                          <MenuItem value={"Vegetable"}>Vegetable</MenuItem>
-                          <MenuItem value={"Herb"}>Herb</MenuItem>
-                          <MenuItem value={"Grass"}>Grass</MenuItem>
-                          <MenuItem value={"Vine"}>Vine</MenuItem>
-                          <MenuItem value={"Cacti"}>Cacti</MenuItem>
-                        </Field>
-                        <FormHelperText
-                          error={touched.type && Boolean(errors.type)}
-                        >
-                          {touched.type && errors.type ? errors.type : ""}
-                        </FormHelperText>
-                      </FormControl>
-                      <FormControl fullWidth>
-                        <InputLabel
-                          id="exposure-input"
-                          sx={{ padding: "0 5px" }}
-                        >
-                          Exposure
-                        </InputLabel>
-                        <Field
-                          style={{ padding: "5px !important" }}
-                          as={Select}
-                          name="exposure"
-                          type="select"
-                        >
-                          <MenuItem
-                            value={""}
-                            className="dropdown-unselect"
-                          ></MenuItem>
-                          <MenuItem value={"Full Sun"}>Full Sun</MenuItem>
-                          <MenuItem value={"Partial Sun"}>Partial Sun</MenuItem>
-                        </Field>
-                      </FormControl>
-                      <FormControl fullWidth>
-                        <InputLabel
-                          id="harvest-month-input"
-                          sx={{ padding: "0 5px" }}
-                        >
-                          Harvest
-                        </InputLabel>
-                        <Field
-                          style={{ padding: "5px !important" }}
-                          as={Select}
-                          name="harvestMonth"
-                          type="select"
-                        >
-                          <MenuItem
-                            value={""}
-                            className="dropdown-unselect"
-                          ></MenuItem>
-                          <MenuItem value={"January"}>January</MenuItem>
-                          <MenuItem value={"February"}>February</MenuItem>
-                          <MenuItem value={"March"}>March</MenuItem>
-                          <MenuItem value={"April"}>April</MenuItem>
-                          <MenuItem value={"May"}>May</MenuItem>
-                          <MenuItem value={"June"}>June</MenuItem>
-                          <MenuItem value={"July"}>July</MenuItem>
-                          <MenuItem value={"August"}>August</MenuItem>
-                          <MenuItem value={"September"}>September</MenuItem>
-                          <MenuItem value={"October"}>October</MenuItem>
-                          <MenuItem value={"November"}>November</MenuItem>
-                          <MenuItem value={"December"}>December</MenuItem>
-                        </Field>
-                      </FormControl>
-                    </div>
-                  </Box>
-                  <Field
-                    style={{ width: "100%", marginTop: 12 }}
-                    id="notes-input"
-                    label="Notes"
-                    name="notes"
-                    as={TextField}
-                    type="text"
-                    multiline
-                    maxRows={3}
-                  />
-                  <Box className="btn-wrapper">
-                    <Button className="card-btn submit-btn" type="submit">
-                      Submit
-                    </Button>
-                    <Button
-                      sx={{ p: 2 }}
-                      className="card-btn cancel-btn"
-                      type="button"
-                      onClick={handleClose}
-                    >
-                      Cancel
-                    </Button>
-                  </Box>
-                </Form>
-              )}
-            </Formik>
-          </Box>
-        </Modal>
+                </Box>
+                <Field
+                  style={{ width: "100%", marginTop: 12 }}
+                  id="notes-input"
+                  label="Notes"
+                  name="notes"
+                  as={TextField}
+                  type="text"
+                  multiline
+                  maxRows={3}
+                />
+                <Box className="btn-wrapper">
+                  <Button className="card-btn submit-btn" type="submit">
+                    Submit
+                  </Button>
+                  <Button
+                    sx={{ p: 2 }}
+                    className="card-btn cancel-btn"
+                    type="button"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        </Box>
+      </Modal>
     </div>
   );
 }
