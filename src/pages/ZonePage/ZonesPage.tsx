@@ -37,7 +37,7 @@ const ZonesPage = () => {
   const zonePageColorTheme = () => {
     return {
       zoneGrid: {
-        backgroundColor: colors.whiteBlue.varyDark,
+        backgroundColor: colors.whiteBlue.toDarkGray,
       },
     };
   };
