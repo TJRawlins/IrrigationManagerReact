@@ -9,81 +9,8 @@ import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
 
 // color design tokens
 export const tokens = (mode: string) => ({
-  ...(mode === "dark"
+  ...(mode === "light"
     ? {
-        opacity: {
-          zero: "1",
-          zeroto45: "0.5",
-          zero75: "0.75",
-          zero5const: "0.75",
-          zero45: "0.55",
-          zero9: "0.5",
-          one: "0",
-        },
-        overlay: {
-          modal: "#2b2b3473",
-        },
-        primary: {
-          const: "#59bab1",
-          vary: "#2d2d2d",
-          varyDark: "#202028",
-          toDarkGray: "#59bab1",
-          alt: "#202028",
-          shadowGlow: "#59bab17c",
-          opacity: "#59bab114",
-        },
-        secondary: {
-          const: "#82a628",
-          vary: "#2d2d2d",
-          alt: "#202028",
-        },
-        tertiary: {
-          const: "#002b49",
-          vary: "#080808",
-          vary2: "#0f5e56",
-        },
-        white: {
-          const: "#fcfcfd",
-          vary: "#19191f",
-          vary2: "#484850",
-          alt: "#8b8b8b",
-          alt2: "#29292e",
-          altShade: "#bebebe",
-          altPrimary: "#59bab1",
-          altSecondary: "#82a628",
-          opacity: "#ffffff0a",
-        },
-        whiteBlue: {
-          const: "#eef2f6",
-          vary: "#29292f",
-          varyLight: "#4f4f4f",
-          varyDark: "#131318",
-          alt: "#535353",
-          alt2: "#29292e",
-          200: "#5f6162",
-          300: "#8f9194",
-          400: "#bec2c5",
-          500: "#eef2f6",
-        },
-        shadow: {
-          const: "#bec2c5",
-          vary: "#0808087d",
-        },
-        gray: {
-          const: "#8b8b8b",
-          altPrimary: "#59bab1",
-          toWhite: "#eef2f6",
-          200: "#383838",
-          300: "#535353",
-          400: "#6f6f6f",
-          500: "#8b8b8b",
-        },
-        darkGray: {
-          const: "#303031",
-          vary: "#fcfcfd",
-        },
-      }
-    : {
         opacity: {
           zero: "0",
           zero45: "0.45",
@@ -95,12 +22,11 @@ export const tokens = (mode: string) => ({
         },
         overlay: {
           modal: "#002b49a7",
+          image: "#19a0937a",
         },
         primary: {
           const: "#59bab1",
-          vary: "#59bab1",
-          varyDark: "#59bab1",
-          toDarkGray: "#606162",
+          toDarkGray: "#59bab1",
           alt: "#59bab1",
           shadowGlow: "#5252527c",
           opacity: "#59bab114",
@@ -118,7 +44,8 @@ export const tokens = (mode: string) => ({
         white: {
           const: "#fcfcfd",
           vary: "#dae4e4",
-          vary2: "#fcfcfd",
+          toLightGray: "#fcfcfd",
+          toDarkGray: "#fcfcfd",
           alt: "#fcfcfd",
           alt2: "#fcfcfd",
           altShade: "#fcfcfd",
@@ -130,7 +57,7 @@ export const tokens = (mode: string) => ({
           const: "#eef2f6",
           vary: "#eef2f6",
           varyLight: "#eef2f6",
-          varyDark: "#cbd7d9",
+          toDarkGray: "#cbd7d9",
           alt: "#0e2a4714",
           alt2: "#eef2f6",
           200: "#bec2c5",
@@ -146,6 +73,7 @@ export const tokens = (mode: string) => ({
           const: "#8b8b8b",
           altPrimary: "#8b8b8b",
           toWhite: "#8b8b8b",
+          toPrimary: "#606162",
           200: "#6f6f6f",
           300: "#535353",
           400: "#383838",
@@ -154,6 +82,82 @@ export const tokens = (mode: string) => ({
         darkGray: {
           const: "#303031",
           vary: "#303031",
+          toWhite: "#303031",
+        },
+      }
+    : {
+        opacity: {
+          zero: "1",
+          zeroto45: "0.5",
+          zero75: "0.75",
+          zero5const: "0.75",
+          zero45: "0.55",
+          zero9: "0.5",
+          one: "0",
+        },
+        overlay: {
+          modal: "#2b2b3473",
+          image: "#0f5e568a",
+        },
+        primary: {
+          const: "#59bab1",
+          toDarkGray: "#222228",
+          alt: "#202028",
+          shadowGlow: "#59bab17c",
+          opacity: "#59bab114",
+        },
+        secondary: {
+          const: "#82a628",
+          vary: "#2d2d2d",
+          alt: "#202028",
+        },
+        tertiary: {
+          const: "#002b49",
+          vary: "#080808",
+          vary2: "#0f5e56",
+        },
+        white: {
+          const: "#fcfcfd",
+          vary: "#19191f",
+          toLightGray: "#29292f",
+          toDarkGray: "#1e1e1e",
+          alt: "#8b8b8b",
+          alt2: "#29292e",
+          altShade: "#bebebe",
+          altPrimary: "#59bab1",
+          altSecondary: "#82a628",
+          opacity: "#ffffff0a",
+        },
+        whiteBlue: {
+          const: "#eef2f6",
+          vary: "#29292f",
+          varyLight: "#4f4f4f",
+          toDarkGray: "#131318",
+          alt: "#535353",
+          alt2: "#29292e",
+          200: "#5f6162",
+          300: "#8f9194",
+          400: "#bec2c5",
+          500: "#eef2f6",
+        },
+        shadow: {
+          const: "#bec2c5",
+          vary: "#0808087d",
+        },
+        gray: {
+          const: "#8b8b8b",
+          altPrimary: "#59bab1",
+          toWhite: "#eef2f6",
+          toPrimary: "#59bab1",
+          200: "#383838",
+          300: "#535353",
+          400: "#6f6f6f",
+          500: "#8b8b8b",
+        },
+        darkGray: {
+          const: "#303031",
+          vary: "#fcfcfd",
+          toWhite: "#eef2f6",
         },
       }),
 });
