@@ -10,9 +10,10 @@ import {
   TextField,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { FaPlus } from "react-icons/fa6";
+import { MdOutlineAddCircle } from "react-icons/md";
 import { HiOutlineInformationCircle } from "react-icons/hi2";
 import { ChangeEvent, useState } from "react";
 import { Formik, Form, Field } from "formik";
@@ -37,6 +38,7 @@ import Compressor from "compressorjs";
 import "../../styles/plants/PlantBar.css";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/AddPlant.css";
+import { tokens } from "../../theme/theme";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -54,24 +56,49 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const style = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 500,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 function AddPlant({ fetchPlants }: PlantBarProps) {
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const { zone } = useSelector((state: RootState) => state.zone);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const addPlantColorTheme = () => {
+    return {
+      barButtons: {
+        backgroundColor: colors.whiteBlue.vary,
+        color: colors.gray.toWhite,
+        border: "1px solid " + colors.whiteBlue.vary,
+        "& .btn-icon": { color: colors.primary.const + " !important" },
+        "&.action:hover": { border: "1px solid " + colors.primary.const },
+      },
+      plantCardModal: {
+        backgroundColor: colors.overlay.modal,
+        opacity: 0.5,
+      },
+      plantCard: {
+        backgroundColor: colors.white.vary,
+        border: "1px solid " + colors.primary.const + " !important",
+        boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
+        "& .MuiInputBase-multiline": {
+          backgroundColor: colors.whiteBlue.vary + " !important",
+        },
+        "& .MuiInputBase-formControl.MuiInputBase-multiline": {
+          backgroundColor: colors.whiteBlue.vary + " !important",
+        },
+        "& .MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-formControl":
+          {
+            backgroundColor: colors.whiteBlue.vary + " !important",
+          },
+      },
+      plantCardTitle: {
+        color: colors.gray.toPrimary,
+      },
+    };
+  };
 
   // Firebase Storage Variables
   const [error, setError] = useState<string>("");
@@ -285,28 +312,28 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       <style>{`.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;}`}</style>
       <Button
-        className="btn-plantbar"
+        className="bar-btn action"
         onClick={handleOpen}
-        sx={{
-          position: "relative",
-          boxShadow: "none !important",
-        }}
+        sx={addPlantColorTheme().barButtons}
       >
-        <FaPlus className="btn-icon" />
-        <span className="btn-plantbar-text">Add Plant</span>
+        <div className="btn-content-container">
+          <MdOutlineAddCircle className="btn-icon" />
+          <span className="btn-text">Add Plant</span>
+        </div>
       </Button>
       <Modal
+        className="modal-overlay"
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: { backgroundColor: "#002b49a7", opacity: 0.5 },
+            style: addPlantColorTheme().plantCardModal,
           },
         }}
       >
-        <Box className="modal-box" sx={style}>
+        <Box className="modal-box plant" sx={addPlantColorTheme().plantCard}>
           <div className="modal-title-container">
             {isLoading && (
               <Modal
@@ -340,8 +367,9 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
               id="modal-modal-title"
               variant="h6"
               component="h2"
+              sx={addPlantColorTheme().plantCardTitle}
             >
-              ADD PLANT
+              Add Plant
             </Typography>
           </div>
           <Formik
@@ -623,15 +651,14 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                 </div>
                 <Box sx={{ minWidth: 120, mt: 1.5 }}>
                   <div className="split-container">
-                    <FormControl fullWidth>
+                    <FormControl fullWidth sx={{}}>
                       <InputLabel
                         id="plant-type-input"
-                        sx={{ background: "#ffff", padding: "0 5px" }}
+                        sx={{ padding: "0 5px" }}
                       >
                         Plant type
                       </InputLabel>
                       <Field
-                        style={{ padding: "5px !important" }}
                         as={Select}
                         required
                         aria-hidden="false"
@@ -654,10 +681,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       </FormHelperText>
                     </FormControl>
                     <FormControl fullWidth>
-                      <InputLabel
-                        id="exposure-input"
-                        sx={{ background: "#ffff", padding: "0 5px" }}
-                      >
+                      <InputLabel id="exposure-input" sx={{ padding: "0 5px" }}>
                         Exposure
                       </InputLabel>
                       <Field
@@ -677,7 +701,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     <FormControl fullWidth>
                       <InputLabel
                         id="harvest-month-input"
-                        sx={{ background: "#ffff", padding: "0 5px" }}
+                        sx={{ padding: "0 5px" }}
                       >
                         Harvest
                       </InputLabel>
@@ -708,8 +732,7 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                   </div>
                 </Box>
                 <Field
-                  style={{ width: "100%", marginTop: 12 }}
-                  id="notes-input"
+                  sx={{ width: "100%", mt: "1rem" }}
                   label="Notes"
                   name="notes"
                   as={TextField}

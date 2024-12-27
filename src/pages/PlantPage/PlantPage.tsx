@@ -1,10 +1,11 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { useEffect } from "react";
+import "./PlantPage.css"
 import PlantList from "../../Components/plants/PlantList";
 import agent from "../../App/api/agent";
 import PlantBar from "../../Components/plants/PlantBar";
-import { Grid } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 // import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import {
@@ -14,12 +15,24 @@ import {
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { Plant } from "../../App/models/Plant";
 import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
+import { tokens } from "../../theme/theme";
 // import { TreflePlant } from "../../App/models/TreflePlant";
 
 const PlantPage = () => {
   // const { zoneId } = useParams();
   // const zoneIdNum: number = Number(zoneId);
   const dispatch = useDispatch();
+  
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const plantPageColorTheme = () => {
+    return {
+      grid: {
+        backgroundColor: colors.whiteBlue.toDarkGray,
+      },
+    };
+  };
 
   const updateLocalStorageZone = (zoneId: number) => {
     agent.Zones.details(zoneId).then((zone) => {
@@ -61,13 +74,8 @@ const PlantPage = () => {
       <ErrorBoundary fallback="Unable to retrieve data for plants. The server may be down.">
         <PlantBar fetchPlants={fetchPlants} />
         <Grid
-          sx={{
-            bgcolor: "#eef2f6",
-            borderRadius: "20px",
-            width: "100%",
-            marginTop: "30px",
-            padding: "0.75rem",
-          }}
+          className="plant-page-grid"
+          sx={plantPageColorTheme().grid}
         >
           <PlantList
             fetchPlants={fetchPlants}

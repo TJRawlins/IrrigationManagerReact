@@ -34,6 +34,8 @@ import ViewPlantSkeleton from "./ViewPlantSkeleton";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
+import { tokens } from "../../theme/theme";
+import EditPlantSkeleton from "./EditPlantSkeleton";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -46,22 +48,38 @@ export default function PlantList({
   updateLocalStorageZone,
 }: // updateLocalStorageTreflePlant,
 PlantListProps) {
-  const theme = useTheme();
   const dispatch = useDispatch();
   const { zone } = useSelector((state: RootState) => state.zone);
   const [plantId, setPlantId] = useState<number>();
-  const [showViewPlant, setShowViewPlant] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
-  const [isShowEdit, setIsShowEdit] = useState(false);
+  const [isShowEdit, setIsShowEdit] = useState<boolean>(false);
+  const [isShowView, setIsShowView] = useState<boolean>(false);
   const [isLoadingGrid, setIsLoadingGrid] = useState<boolean>(false);
-  const [isLoadingPlant, setIsLoadingPlant] = useState<boolean>(false);
+  const [isLoadingEditPlant, setIsLoadingEditPlant] = useState<boolean>(false);
+  const [isLoadingViewPlant, setIsLoadingViewPlant] = useState<boolean>(false);
+  const isEditClicked = useRef<boolean>(false);
+  const isViewClicked = useRef<boolean>(false);
   const [rows, setRows] = useState([]);
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   // const isFull = !useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  // color theme
+  const theme = useTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const colors = tokens(theme.palette.mode);
+  const plantListColorTheme = () => {
+    return {
+      grid: {
+        backgroundColor: colors.whiteBlue.vary,
+        "& .MuiDataGrid-container--top [role=row]": {
+          backgroundColor: colors.whiteBlue.vary,
+        },
+      },
+    };
+  };
 
   const isImageBeingUsedRef = useRef<boolean>(false);
 
@@ -85,14 +103,19 @@ PlantListProps) {
     plantId: number,
     func: (arg: boolean) => void = () => null
   ) => {
-    setIsLoadingPlant(true);
+    if (isEditClicked.current) setIsLoadingEditPlant(true);
+    if (isViewClicked.current) setIsLoadingViewPlant(true);
+
     await agent.Plants.details(plantId)
       .then((plant) => {
         dispatch(updateCurrentPlant(plant));
       })
       .then(() => {
         func(true);
-        setIsLoadingPlant(false);
+        setIsLoadingViewPlant(false);
+        setIsLoadingEditPlant(false);
+        isEditClicked.current = false;
+        isViewClicked.current = false;
       });
   };
 
@@ -192,6 +215,7 @@ PlantListProps) {
   };
 
   const handleEditPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    isEditClicked.current = true;
     updateLocalStoragePlant(
       Number(
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
@@ -202,17 +226,20 @@ PlantListProps) {
   };
 
   const handleViewPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    isViewClicked.current = true;
     setPlantId(
       Number(
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
       )
     );
+
     updateLocalStoragePlant(
       Number(
         event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
       )!,
-      () => setShowViewPlant(true)
+      () => setIsShowView(true)
     );
+
     // agent.Plants.details(
     //   Number(
     //     event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
@@ -358,12 +385,12 @@ PlantListProps) {
               noRowsVariant: "skeleton",
             },
           }}
-          sx={{ border: "none", width: "100%" }}
+          sx={plantListColorTheme().grid}
           initialState={{
             columns: {
               columnVisibilityModel: {
                 id: false,
-                imagePath: false,
+                imagePath: true,
                 timeStamp: false,
                 age: false,
                 hardinessZone: false,
@@ -384,20 +411,24 @@ PlantListProps) {
           disableRowSelectionOnClick
         />
       </Box>
-      {isLoadingPlant ? (
+      {isLoadingViewPlant ? (
         <ViewPlantSkeleton />
       ) : (
         <ViewPlant
           fetchPlants={fetchPlants}
-          setShowViewPlant={setShowViewPlant}
-          showViewPlant={showViewPlant}
+          setIsShowView={setIsShowView}
+          isShowView={isShowView}
         />
       )}
-      <EditPlant
-        fetchPlants={fetchPlants}
-        setIsShowEdit={setIsShowEdit}
-        isShowEdit={isShowEdit}
-      />
+      {isLoadingEditPlant ? (
+        <EditPlantSkeleton />
+      ) : (
+        <EditPlant
+          fetchPlants={fetchPlants}
+          setIsShowEdit={setIsShowEdit}
+          isShowEdit={isShowEdit}
+        />
+      )}
     </>
   );
 }

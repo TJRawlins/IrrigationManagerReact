@@ -1,31 +1,22 @@
-.split-container {
-  display: flex;
-  gap: 1rem;
-}
-
 .add-btn {
   position: relative;
-  margin: 1rem 0 0 1rem !important;
+  margin: 1.5rem 0 0 1.5rem !important;
   height: 194px !important;
   width: 300px !important;
   border-radius: 15px !important;
-  background-color: #ffff !important;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
-}
-
-.add-btn:hover {
-  opacity: 0.75;
-  transition: all 0.5s;
 }
 
 .add-plus-icon {
-  opacity: 0.2;
-  color: #002b49;
+  opacity: 0.5;
   font-size: 3rem !important;
 }
 
+.add-btn:hover {
+  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+  transition: all 0.5s;
+}
+
 .modal-box {
-  border: none !important;
   border-radius: 10px;
 }
 

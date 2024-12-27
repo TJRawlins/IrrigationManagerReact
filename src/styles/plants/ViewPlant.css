@@ -1,16 +1,139 @@
-.plant-name-wrapper {
+.modal-box.view-plant {
   position: absolute;
-  top: 120px;
+  top: 50%;
+  left: 50%;
+  border: 2px solid #000;
+  box-shadow: 24px;
+  padding: 0;
+  width: auto;
+  max-height: 95vh;
+}
+
+.horizontal-divider {
+  margin: 1rem 0 !important;
+}
+
+.horizontal-divider.top-divider {
+  margin-top: 0 !important;
+}
+
+.horizontal-divider .MuiDivider-wrapper {
+  border-radius: 5px;
+  font-weight: 500;
+  color: #868691;
+}
+
+.card-img.plant {
+  height: 170px;
+  border-radius: 10px 10px 0 0;
+}
+.card-img.plant #card-img-overlay {
+  position: absolute;
+  top: 0;
+  height: 170px !important;
+  width: 100%;
+}
+
+/*  ---- ACCORDION: ZONE DETAILS ---- */
+.card-img.zone {
+  height: 80px;
+  border-radius: 12px 12px 0 0;
+}
+.card-img.zone #card-img-overlay {
+  position: absolute;
+  top: 0;
+  border-radius: 12px 12px 0 0;
+  width: 100%;
+  max-height: 80px;
+}
+.card-data.zone-name {
+  flex-direction: row !important;
+  width: unset !important;
+}
+.data-set.zone-name {
+  height: 100%;
+  width: 100%;
+}
+.data-set.zone-name p span {
+  font-size: 2rem;
+  font-weight: 500 !important;
+  text-shadow: 1px 2px 2px rgb(0 0 0 / 14%);
+}
+.zone-runtime-wrapper {
+  display: flex;
+  justify-content: space-around;
+  background-color: #262628;
+  border-radius: 0 0 12px 12px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+.zone-runtime-wrapper .data-set.zone-runtime-data {
+  width: -webkit-fill-available;
+}
+
+.MuiAccordionDetails-root {
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.card-data-group.notes {
+  padding: 1rem;
+}
+
+#plant-card-main-icon-wrapper {
+  position: absolute;
+  top: 20px;
+  left: 137px;
+  z-index: 999;
+  background: #343439;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 5px solid #82b6b1;
+  box-shadow: rgb(48 62 69 / 5%) 1px 6px 14px 0px,
+    rgb(11 17 20 / 58%) 0px 8px 16px -8px;
+}
+
+#plant-card-main-icon {
+  font-size: 6rem;
+  color: #72b8b1;
+}
+
+.plant-name-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: .5rem;
 }
 
 .plant-name-text {
   color: white;
-  text-shadow: 1px 2px 5px #000000;
+  /* text-shadow: 1px 2px 5px #000000; */
+  text-align: center;
+  width: fit-content;
+  margin-bottom: 0 !important; 
+  line-height: 1 !important;
+}
+
+#plant-details-text {
+  width: fit-content;
+  font-size: large;
+  color: #59bab1;
+  margin-top: 0.25rem;
+}
+
+.card-data-container.view-plant {
+  border-radius: 10px;
+  padding: 0 0.75rem;
 }
 
 .card-data-container.zone-container {
-  border: 1px #dad9d9 solid;
   background: none !important;
+  border-radius: 10px;
+  padding: 0.5rem 0.25rem;
 }
 
 .card-data-container.zone-container .data-set span {
@@ -19,22 +142,77 @@
 
 .card-data-container:has(.data-set) {
   display: flex;
+  flex-direction: column;
   text-transform: capitalize;
   justify-content: space-evenly;
-  border: 1px #dad9d9 solid;
 }
 
 .data-set {
-  padding: 0 8px;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+}
+
+.data-set-title-container {
+  display: flex;
+  justify-content: center;
+}
+
+.accordion-group-wrapper::-webkit-scrollbar {
+  width: 0.25rem;
+  background-color: #3b6e69;
+}
+.accordion-group-wrapper::-webkit-scrollbar-thumb {
+  background-color: #59bab1;
+}
+
+.accordion-group-wrapper {
+  max-height: 40vh;
+  overflow: auto;
+}
+
+.MuiAccordion-root::before {
+  display: none !important;
+}
+
+.MuiAccordionSummary-root {
+  padding: 0 !important;
+  font-size: 1rem !important;
+}
+
+.MuiPaper-rounded {
+  border-radius: 12px !important;
+}
+
+.data-set-title-container .accordion-icon-wrapper {
+  display: flex;
+  background: rgba(114, 184, 177, 0.21);
+  border-radius: 6px;
+  margin-right: 0.75rem;
+  border: none;
+  width: 25px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+}
+
+.data-set-title-container .data-set-icon {
+  color: #59bab1 !important;
+  font-weight: 500;
+  font-size: 1.15rem;
+  text-align: center;
 }
 
 .data-set-divider {
   padding: 0 8px;
 }
 
-.split-container {
-  display: flex;
-  gap: 1rem;
+.data-set.amounts {
+  margin: 12px 0;
+  /* background: #1e1e1ea1; */
+  border-radius: 12px;
+  padding: 0.5rem 0.75rem;
+  height: 125px;
 }
 
 .split-label {
@@ -43,25 +221,45 @@
 }
 
 .card-data.flex {
-  margin-left: 0 !important;
   display: flex !important;
-  margin: 0.5rem 0 !important;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 0 !important;
+  width: -webkit-fill-available;
 }
 
 .card-data.flex .card-item-icon {
-  font-size: 1rem;
+  font-size: 20px;
 }
 
 .card-data.flex span {
   padding: 0 !important;
   font-weight: 100 !important;
-  margin-left: 10px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
-.card-data.flex span.bold {
-  font-weight: 700 !important;
+.card-data.flex span.data {
+  font-weight: 600 !important;
+  font-size: 1.5rem !important;
+  font-family: "Source Sans Pro", Helvetica, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  color: #59bab1;
+  line-height: normal;
+}
+.card-data.flex span.data-title {
   white-space: nowrap;
+}
+
+.card-data.flex.compare-text .gpw-compare-text {
+  position: absolute;
+  top: 60%;
+  font-size: 0.85rem;
+}
+
+.data-set .MuiDivider-wrapperVertical {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-style: italic;
 }
 
 .icon-float-container {
@@ -75,25 +273,6 @@
   font-size: 0.5rem;
   z-index: 9 !important;
   color: white;
-}
-
-.btn-plantbar {
-  font-size: 0.85rem !important;
-  margin: 0.25rem 0.25rem 0 0.25rem !important;
-  padding: 0.45rem 0.25rem !important;
-  height: fit-content !important;
-  border-radius: 10px !important;
-  background-color: #eef2f6 !important;
-  color: #8b8b8b !important;
-}
-
-.btn-plantbar:hover {
-  color: #59bab1 !important;
-  background-color: #59bab114 !important;
-}
-
-.btn-icon {
-  margin-right: 0.25rem;
 }
 
 .icon-container {
@@ -118,14 +297,6 @@
   width: 100% !important;
 }
 
-.gallons-chip-plant-card {
-  background-color: #59bab11f !important;
-}
-
-.gallons-chip-avatar.plant-card {
-  background-color: #0000002b !important;
-}
-
 .view-plant-edit-icon {
   position: absolute;
   top: 25px;
@@ -134,4 +305,72 @@
   color: #fff;
   cursor: pointer;
   z-index: 1;
+}
+
+.gauge-wrapper {
+  display: flex;
+  width: -webkit-fill-available;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gauge {
+  width: 100% !important;
+  height: 120px !important;
+  top: -15px !important;
+}
+
+.card-data-group {
+  display: flex;
+  gap: 0.25rem !important;
+  flex-direction: column;
+  background: #262628;
+  padding: 12px 0;
+  border-radius: 12px;
+}
+
+#req-specs-box {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+}
+
+.card-data.flex-row.yellow-border-left {
+  border-left: 5px solid #ffd700;
+}
+.card-data.flex-row.orange-border-left {
+  border-left: 5px solid orange;
+}
+.card-data.flex-row.red-border-left {
+  border-left: 5px solid red;
+}
+.card-data.flex-row.blue-border-left {
+  border-left: 5px solid #00aaff;
+}
+.card-data.flex-row.purple-border-left {
+  border-left: 5px solid #e100e1;
+}
+.card-data.flex-row.green-border-left {
+  border-left: 5px solid #00b500;
+}
+
+.card-data.flex-row {
+  border-radius: 0;
+  margin: 0 1rem !important;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.card-data.flex-row .req-specs-title {
+  padding: 0 0 0 1rem !important;
+  font-weight: 100;
+}
+
+.card-data.flex-row .req-specs-value {
+  /* font-weight: 600; */
+  font-family: "Source Sans Pro", Helvetica, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  color: #59bab1;
+  padding: 0 !important;
 }
