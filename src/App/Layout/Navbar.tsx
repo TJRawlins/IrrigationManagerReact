@@ -12,20 +12,29 @@ import {
   // alpha,
   // styled,
 } from "@mui/material";
-import { AccountCircle, More, Notifications } from "@mui/icons-material";
+import {
+  AccountCircle,
+  More,
+  Notifications,
+  LightModeOutlined,
+  DarkModeOutlined,
+} from "@mui/icons-material";
 // import SearchIcon from "@mui/icons-material/Search";
 import { useTheme, Theme } from "@mui/material/styles";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../assets/irrigation logo.png";
 import Sidebar from "./Sidebar";
+import { ColorModeContext, tokens } from "../../theme/theme";
 
 export default function Navbar() {
   const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
   const appBarStyles = (theme: Theme) => {
     return {
       mainBar: {
-        backgroundColor: "#002b49",
-        color: "#ffffff",
+        backgroundColor: colors.tertiary.vary,
+        color: colors.white.altPrimary,
         zIndex: theme.zIndex.drawer + 1,
         position: "relative !important",
       },
@@ -209,6 +218,18 @@ export default function Navbar() {
           </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton
+              size="large"
+              aria-label="Light Mode"
+              color="inherit"
+              onClick={colorMode.toggleColorMode}
+            >
+              {theme.palette.mode === "dark" ? (
+                <DarkModeOutlined />
+              ) : (
+                <LightModeOutlined />
+              )}
+            </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"

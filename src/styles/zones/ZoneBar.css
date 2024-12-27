@@ -1,7 +1,11 @@
 .season-btn {
-  background-color: #eef2f6;
   height: 50px;
   border: none !important;
+  box-shadow: "none";
+  height: 40px;
+  width: 150px;
+  margin-left: 1.25rem;
+  border-radius: 12px !important;
 }
 
 .season-btn .menu-text,
@@ -10,27 +14,21 @@
   transition: 220ms all ease-in-out !important;
 }
 
-.season-btn:hover {
-  background-color: #59bab114 !important;
-  color: #59bab1 !important;
+.MuiOutlinedInput-notchedOutline {
+  border: 0 !important;
 }
 
-.season-btn:hover .menu-text,
-.season-btn:hover .MuiSvgIcon-root,
-.season-btn:hover .menuIcon {
-  color: #59bab1;
+&.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: none;
+  border-radius: 5px 5px 0 0;
 }
 
 .menu-wrapper {
   display: flex;
-}
-
-.menu-text {
-  color: #777;
+  margin-left: 0.25rem;
 }
 
 .menuIcon {
-  color: #8b8b8b;
   transform: scale(1.5);
 }
 
@@ -43,7 +41,7 @@ svg.menuIcon {
   transform: rotate(-45deg) scale(1.5);
 }
 
-/* .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
-  display: flex;
-  color: #777;
-} */
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper {
+  border: none !important;
+  border-radius: 12px;
+}

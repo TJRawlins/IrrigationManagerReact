@@ -13,6 +13,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Edit as EditIcon } from "@mui/icons-material";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
@@ -34,6 +35,7 @@ import { Plant } from "../../App/models/Plant";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/zones/ZoneCard.css";
 import { deleteObject, getStorage, ref } from "firebase/storage";
+import { tokens } from "../../theme/theme";
 
 type ZoneCardProps = {
   fetchZones(args: number): void;
@@ -54,8 +56,57 @@ export default function ZoneCard({
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-
   const isImageBeingUsedRef = useRef<boolean>(false);
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const zoneCardColorTheme = () => {
+    return {
+      zoneCardContainer: {
+        backgroundColor: colors.whiteBlue.alt2 + " !important",
+      },
+      zoneCardChip: {
+        backgroundColor: colors.primary.toDarkGray + " !important",
+        color: colors.white.const,
+        ".iconStyle.seasonChipIcon": {
+          fill: colors.primary.const + " !important",
+          background: colors.white.toLightGray,
+        },
+      },
+      zoneCardMedia: {
+        "& #card-img-overlay": {
+          backgroundColor: colors.tertiary.vary2,
+          opacity: colors.opacity.zero75,
+        },
+      },
+      zoneCardText: {
+        color: colors.white.altShade,
+        "& span": { color: colors.white.altShade },
+      },
+      zoneCardActionMenu: {
+        "& .zone-card-action-button": {
+          backgroundColor: colors.whiteBlue.vary,
+        },
+        "& .zone-card-action-button:hover": {
+          backgroundColor: colors.whiteBlue.vary,
+          border: "1px solid " + colors.primary.const,
+        },
+      },
+      zoneCardGallons: {
+        display: { xs: "flex", sm: "flex", md: "flex" },
+        background: `linear-gradient(45deg, ${colors.secondary.alt}, ${colors.primary.alt})`,
+        ".gallons-chip:nth-of-type(2)": {
+          borderRight: `1px solid ${colors.white.alt2} !important`,
+          borderLeft: `1px solid ${colors.white.alt2} !important`,
+        },
+        ".gallons-chip-avatar": {
+          color: colors.white.altPrimary + " !important",
+          backgroundColor: colors.white.opacity + " !important",
+        },
+      },
+    };
+  };
 
   function handelMouseEnter() {
     setIsHovering(true);
@@ -197,29 +248,25 @@ export default function ZoneCard({
   function getChipProps(params: string): ChipProps {
     if (params === "Spring") {
       return {
-        icon: <MdLocalFlorist className="iconStyle zoneCardIcon" />,
+        icon: <MdLocalFlorist className="iconStyle seasonChipIcon" />,
         label: params,
-        style: { background: "#59bab1" },
       };
     } else if (params === "Summer") {
       return {
-        icon: <MdSunny className="iconStyle zoneCardIcon" />,
+        icon: <MdSunny className="iconStyle seasonChipIcon" />,
         label: params,
-        style: { background: "#59bab1" },
       };
     } else if (params === "Fall") {
       return {
         icon: (
-          <FaCanadianMapleLeaf className="iconStyle rotateIcon zoneCardIcon" />
+          <FaCanadianMapleLeaf className="iconStyle rotateIcon seasonChipIcon" />
         ),
         label: params,
-        style: { background: "#59bab1" },
       };
     } else if (params === "Winter") {
       return {
-        icon: <MdAcUnit className="iconStyle zoneCardIcon" />,
+        icon: <MdAcUnit className="iconStyle seasonChipIcon" />,
         label: params,
-        style: { background: "#59bab1" },
       };
     } else {
       return {
@@ -234,27 +281,23 @@ export default function ZoneCard({
         onMouseEnter={handelMouseEnter}
         onMouseLeave={handelMouseLeave}
         id="zone-card-container"
-        sx={{
-          position: "relative",
-          boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important",
-          borderRadius: "15px",
-          padding: "10px",
-          width: "300px",
-        }}
+        sx={zoneCardColorTheme().zoneCardContainer}
       >
         <CardMedia
-          className="card-img zone"
-          sx={{ height: 140, borderRadius: "10px 10px 0 0" }}
+          className="card-img-zone"
+          sx={zoneCardColorTheme().zoneCardMedia}
           image={zone.imagePath}
           title={zone.name}
-        />
+        >
+          <span id="card-img-overlay"></span>
+        </CardMedia>
         {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-  C A R D   Z O N E   D A T A  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
         <CardContent className="card-content-wrapper zone-content">
           <Chip
             className="chip"
             variant="filled"
             size="small"
-            sx={{ position: "absolute", top: "5px", left: "20px" }}
+            sx={zoneCardColorTheme().zoneCardChip}
             {...getChipProps(season.name)}
           />
           <Typography
@@ -262,6 +305,7 @@ export default function ZoneCard({
             gutterBottom
             variant="h6"
             component="div"
+            sx={zoneCardColorTheme().zoneCardText}
           >
             {zone.name.length > 15
               ? zone.name.toLocaleUpperCase().substring(0, 18) + "..."
@@ -272,6 +316,7 @@ export default function ZoneCard({
               className="card-data zone"
               variant="body2"
               color="text.secondary"
+              sx={zoneCardColorTheme().zoneCardText}
             >
               <span>Runtime:</span>
               <span>
@@ -285,6 +330,7 @@ export default function ZoneCard({
               className="card-data zone"
               variant="body2"
               color="text.secondary"
+              sx={zoneCardColorTheme().zoneCardText}
             >
               <span>Per Week:</span>
               <span>{zone.runtimePerWeek}</span>
@@ -293,6 +339,7 @@ export default function ZoneCard({
               className="card-data zone"
               variant="body2"
               color="text.secondary"
+              sx={zoneCardColorTheme().zoneCardText}
             >
               <span>Plants:</span>
               <span>{zone.totalPlants}</span>
@@ -306,73 +353,26 @@ export default function ZoneCard({
               spacing={1}
               mt={2}
               mb={0}
-              sx={{
-                display: { xs: "flex", sm: "flex", md: "flex" },
-                justifyContent: "space-between",
-                maxWidth: "100%",
-                flexWrap: "nowrap",
-              }}
+              sx={zoneCardColorTheme().zoneCardGallons}
             >
               <Tooltip title="Total Weekly Gallons" arrow>
                 <Chip
-                  className={
-                    "gallons-chip week " +
-                    season.name.toString().toLocaleLowerCase()
-                  }
-                  sx={{
-                    width: "100%",
-                    justifyContent: "left",
-                    borderRadius: "10px",
-                    margin: "0 !important",
-                    padding: "0 !important",
-                  }}
-                  avatar={
-                    <Avatar
-                      className={
-                        "gallons-chip-avatar " +
-                        season.name.toString().toLocaleLowerCase()
-                      }
-                    >
-                      W
-                    </Avatar>
-                  }
+                  className="gallons-chip"
+                  avatar={<Avatar className="gallons-chip-avatar">W</Avatar>}
                   label={zone.totalGalPerWeek}
                 />
               </Tooltip>
               <Tooltip title="Total Monthly Gallons" arrow>
                 <Chip
-                  className={
-                    "gallons-chip " + season.name.toString().toLocaleLowerCase()
-                  }
-                  avatar={
-                    <Avatar
-                      className={
-                        "gallons-chip-avatar " +
-                        season.name.toString().toLocaleLowerCase()
-                      }
-                    >
-                      M
-                    </Avatar>
-                  }
+                  className="gallons-chip"
+                  avatar={<Avatar className="gallons-chip-avatar">M</Avatar>}
                   label={zone.totalGalPerMonth}
                 />
               </Tooltip>
               <Tooltip title="Total Yearly Gallons" arrow>
                 <Chip
-                  className={
-                    "gallons-chip year " +
-                    season.name.toString().toLocaleLowerCase()
-                  }
-                  avatar={
-                    <Avatar
-                      className={
-                        "gallons-chip-avatar " +
-                        season.name.toString().toLocaleLowerCase()
-                      }
-                    >
-                      Y
-                    </Avatar>
-                  }
+                  className="gallons-chip"
+                  avatar={<Avatar className="gallons-chip-avatar">Y</Avatar>}
                   label={zone.totalGalPerYear}
                 />
               </Tooltip>
@@ -381,12 +381,8 @@ export default function ZoneCard({
         </CardContent>
         {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  A C T I O N   M E N U  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
         <CardActions
-          sx={{
-            height: "48px",
-            width: "93%",
-            position: "absolute",
-            top: "105px",
-          }}
+          id="card-action-container"
+          sx={zoneCardColorTheme().zoneCardActionMenu}
         >
           <Box
             className={isHovering ? "" : "hidden"}

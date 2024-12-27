@@ -7,6 +7,7 @@ import {
   TextField,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
@@ -30,6 +31,7 @@ import {
 import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
+import { tokens } from "../../theme/theme";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -48,22 +50,36 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const style = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   const [open, setOpen] = useState(false);
   const { season } = useSelector((state: RootState) => state.season);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // color theme
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const zoneAddBtnColorTheme = () => {
+    return {
+      zoneAddBtn: {
+        backgroundColor: colors.white.vary + " !important",
+      },
+      zoneAddBtnPlus: {
+        backgroundColor: colors.white.const + " !important",
+      },
+      zoneAddCardModal: {
+        backgroundColor: colors.overlay.modal,
+        opacity: 0.5,
+      },
+      zoneAddCard: {
+        backgroundColor: colors.white.vary,
+        border: "1px solid " + colors.primary.const + " !important",
+        boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
+      },
+      zoneAddCardTitle: {
+        color: colors.gray.toPrimary,
+      },
+    };
+  };
 
   // Firebase Storage Variables
   const [error, setError] = useState<string>("");
@@ -211,22 +227,27 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
           className="add-btn"
           onClick={handleOpen}
           disabled={isLoadingZones}
+          sx={zoneAddBtnColorTheme().zoneAddBtn}
         >
-          <FaPlus className="add-plus-icon" />
+          <FaPlus
+            className="add-plus-icon"
+            style={zoneAddBtnColorTheme().zoneAddBtnPlus}
+          />
         </Button>
       )}
       <Modal
+        className="modal-overlay"
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: { backgroundColor: "#002b49a7", opacity: 0.5 },
+            style: zoneAddBtnColorTheme().zoneAddCardModal,
           },
         }}
       >
-        <Box className="modal-box" sx={style}>
+        <Box className="modal-box" sx={zoneAddBtnColorTheme().zoneAddCard}>
           <div className="modal-title-container">
             {isLoading && (
               <Modal
@@ -258,10 +279,10 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
             <Typography
               className="modal-title"
               id="modal-modal-title"
-              variant="h6"
               component="h2"
+              sx={zoneAddBtnColorTheme().zoneAddCardTitle}
             >
-              ADD ZONE
+              Add Zone
             </Typography>
           </div>
           <Formik
