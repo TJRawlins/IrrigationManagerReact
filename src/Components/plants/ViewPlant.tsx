@@ -421,7 +421,7 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
                       >
                         <span className="req-specs-title">Water:</span>
                         <span className="req-specs-value">
-                          {plant?.galsPerWk + " gallons per week"}
+                          {plant?.galsPerWk + " gals. per week"}
                         </span>
                       </Typography>
                       <Typography

@@ -22,7 +22,7 @@ export const tokens = (mode: string) => ({
         },
         overlay: {
           modal: "#002b49a7",
-          image: "#19a0937a",
+          image: "#64c9bf7a",
         },
         primary: {
           const: "#59bab1",
