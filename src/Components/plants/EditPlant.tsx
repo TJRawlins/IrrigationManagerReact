@@ -362,7 +362,7 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
     values: any,
     event: ChangeEvent<HTMLInputElement>
   ) => {
-    const emitterGPH =
+    const emitterGallonsPerHour =
       event.target.name == "emitterGPH"
         ? Number(event.target.value)
         : values.emitterGPH;
@@ -370,13 +370,17 @@ function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
       event.target.name == "emittersPerPlant"
         ? Number(event.target.value)
         : values.emittersPerPlant;
-    if (emitterGPH && emittersPerPlant && event.target.value) {
-      const totalMins = zone.runtimeHours * 60 + zone.runtimeMinutes;
-      const totalGPH = emitterGPH * emittersPerPlant;
-      const gpm = totalGPH / 60;
-      const totalGPD = gpm * totalMins;
-      const totalGPW = totalGPD * zone.runtimePerWeek;
-      return Math.round((totalGPW + Number.EPSILON) * 100) / 100;
+    if (emitterGallonsPerHour && emittersPerPlant && event.target.value) {
+      const totalRuntimeMinutes = zone.runtimeHours * 60 + zone.runtimeMinutes;
+      const totalGallonsPerHour = emitterGallonsPerHour * emittersPerPlant;
+      const gallonsPerMinute = totalGallonsPerHour / 60;
+      const totalGallonsPerDay = gallonsPerMinute * totalRuntimeMinutes;
+      const totalCalculatedGallonsPerWeek =
+        totalGallonsPerDay * zone.runtimePerWeek;
+      const totalRoundedCalculatedGallonsPerWeek =
+        Math.round((totalCalculatedGallonsPerWeek + Number.EPSILON) * 100) /
+        100;
+      return totalRoundedCalculatedGallonsPerWeek;
     } else {
       return 0;
     }
