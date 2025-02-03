@@ -12,8 +12,8 @@ const DEV_SECURE_URL: string | undefined = process.env.VITE_DEV_SECURE_URL;
 const REACT_DEV_PORT: string | undefined = process.env.VITE_REACT_DEV_PORT;
 const PROXY_SERVER_PORT: string | number =
   process.env.VITE_PROXY_SERVER_PORT || 5000;
-const TREFLE_API_URL: string | undefined = process.env.VITE_TREFLE_API_URL;
-const API_KEY: string | undefined = process.env.VITE_TREFLE_API_KEY;
+const TREFLE_API_URL: string | undefined = import.meta.env.VITE_TREFLE_API_URL;
+const API_KEY: string | undefined = import.meta.env.VITE_TREFLE_API_KEY;
 const app = express();
 
 app.get(`/trefle/api/`, (req, res) => {
