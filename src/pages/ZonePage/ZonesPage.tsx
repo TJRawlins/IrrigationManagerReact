@@ -120,6 +120,7 @@ const ZonesPage = () => {
         <ZoneBar
           fetchZones={fetchZones}
           updateLocalStorageSeason={updateLocalStorageSeason}
+          isLoadingZones={isLoadingZones}
         />
         <Grid id="zone-grid-background" sx={zonePageColorTheme().zoneGrid}>
           <ZoneList

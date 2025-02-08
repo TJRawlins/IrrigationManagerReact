@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { FaPlus } from "react-icons/fa";
+// import { FaPlus } from "react-icons/fa";
 import CircularProgress from "@mui/material/CircularProgress";
 import { ChangeEvent, useState } from "react";
 import agent from "../../App/api/agent";
@@ -32,6 +32,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { tokens } from "../../theme/theme";
+import { MdOutlineAddCircle } from "react-icons/md";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -60,6 +61,13 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   const colors = tokens(theme.palette.mode);
   const zoneAddBtnColorTheme = () => {
     return {
+      barButtons: {
+        backgroundColor: colors.whiteBlue.vary,
+        color: colors.gray.toWhite,
+        border: "1px solid " + colors.whiteBlue.vary,
+        "& .btn-icon": { color: colors.primary.const + " !important" },
+        "&.action:hover": { border: "1px solid " + colors.primary.const },
+      },
       zoneAddBtn: {
         backgroundColor: colors.white.vary + " !important",
       },
@@ -225,18 +233,18 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   };
 
   return (
-    <div>
+    <Box ml={2.25}>
       {isZonesStoredLocally() && (
         <Button
-          className="add-btn"
+          className="bar-btn action"
           onClick={handleOpen}
           disabled={isLoadingZones}
-          sx={zoneAddBtnColorTheme().zoneAddBtn}
+          sx={zoneAddBtnColorTheme().barButtons}
         >
-          <FaPlus
-            className="add-plus-icon"
-            style={zoneAddBtnColorTheme().zoneAddBtnPlus}
-          />
+          <div className="btn-content-container">
+            <MdOutlineAddCircle className="btn-icon" />
+            <span className="btn-text">Add Zone</span>
+          </div>
         </Button>
       )}
       <Modal
@@ -495,7 +503,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
           </Formik>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }
 export default AddZone;

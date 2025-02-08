@@ -28,15 +28,18 @@ import {
   updateIsInitialLoad,
 } from "../../redux/seasonSlice";
 import { tokens } from "../../theme/theme";
+import AddZone from "./AddZone";
 
 type ZoneBarProps = {
-  fetchZones(args: number): void;
+  fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
+  isLoadingZones: boolean;
 };
 
 export default function ZoneBar({
   fetchZones,
   updateLocalStorageSeason,
+  isLoadingZones,
 }: ZoneBarProps) {
   const { season } = useSelector((state: RootState) => state.season);
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
@@ -67,7 +70,7 @@ export default function ZoneBar({
         },
         "&.season-btn:hover": {
           backgroundColor: colors.primary.opacity + " !important",
-          border: "1px solid #59bab1 !important"
+          border: "1px solid #59bab1 !important",
         },
         "&.season-btn:hover .menu-text,&.season-btn:hover .MuiSvgIcon-root,&.season-btn:hover .menuIcon":
           { color: colors.primary.const + " !important" },
@@ -275,7 +278,13 @@ export default function ZoneBar({
               orientation="vertical"
               flexItem
             />
-            <SeasonMenu />
+            <Box className="bar-btn-container">
+              <SeasonMenu />
+              <AddZone
+                fetchZones={fetchZones}
+                isLoadingZones={isLoadingZones}
+              />
+            </Box>
           </div>
         </div>
         <TotalGallonsChips />
