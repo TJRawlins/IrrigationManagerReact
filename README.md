@@ -2,8 +2,8 @@
 Droplet is an irrigation and plant management system allowing users to create watering zones within specific seasons, then add plants to those zones. Users can discover how much water they are actually using throughout the week, month, and year.
 
 ## Stack, Frameworks, and Libraries:
-Backend: C#, .NET, Entity Framework, Entity Framework Extensions (bulk actions), Infisical, MS Server, T-SQL
-Frontend: Typescript, React, Redux, Vite, Firebase, Material UI, Formik, Yup, Axios, Infisical
+Backend: C#, .NET, Entity Framework, Entity Framework Extensions (bulk actions), Infisical (Secrets Key Vault), MS Server, T-SQL
+Frontend: Typescript, React, Redux, Vite, Firebase, Material UI, Formik, Yup, Axios, Infisical (Secrets Key Vault)
 
 ## Backend Start Date: 
 Sep 10, 2023
