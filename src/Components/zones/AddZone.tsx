@@ -89,7 +89,11 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   const imageRef: StorageReference = ref(storage, imagePathAndFileName);
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setError("");
+    setImageUpload(undefined);
+  };
 
   // Form submission
   const initialValues = {
