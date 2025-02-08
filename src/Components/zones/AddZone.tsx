@@ -233,7 +233,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
   };
 
   return (
-    <div>
+    <Box ml={2.25}>
       {isZonesStoredLocally() && (
         <Button
           className="bar-btn action"
@@ -503,7 +503,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
           </Formik>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }
 export default AddZone;

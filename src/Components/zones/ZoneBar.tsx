@@ -278,8 +278,13 @@ export default function ZoneBar({
               orientation="vertical"
               flexItem
             />
-            <SeasonMenu />
-            <AddZone fetchZones={fetchZones} isLoadingZones={isLoadingZones} />
+            <Box className="bar-btn-container">
+              <SeasonMenu />
+              <AddZone
+                fetchZones={fetchZones}
+                isLoadingZones={isLoadingZones}
+              />
+            </Box>
           </div>
         </div>
         <TotalGallonsChips />
