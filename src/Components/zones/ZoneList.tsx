@@ -1,6 +1,5 @@
 import { Box, Container, CssBaseline, Grid } from "@mui/material";
 import ZoneCard from "./ZoneCard";
-import AddZone from "./AddZone";
 import EditZone from "./EditZone";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -46,7 +45,14 @@ export default function ZoneList({
               <ZoneCardSkeleton />
             ) : (
               zoneList.map((zone) => (
-                <Grid item key={zone.id} sx={{paddingTop: "1.5rem !important", paddingLeft: "1.5rem !important"}}>
+                <Grid
+                  item
+                  key={zone.id}
+                  sx={{
+                    paddingTop: "1.5rem !important",
+                    paddingLeft: "1.5rem !important",
+                  }}
+                >
                   <ZoneCard
                     zone={zone}
                     fetchZones={fetchZones}
@@ -57,10 +63,6 @@ export default function ZoneList({
               ))
             )}
             <Grid>
-              <AddZone
-                fetchZones={fetchZones}
-                isLoadingZones={isLoadingZones}
-              />
               <EditZone
                 fetchZones={fetchZones}
                 updateLocalStorageSeason={updateLocalStorageSeason}
