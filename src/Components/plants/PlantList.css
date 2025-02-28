@@ -67,9 +67,9 @@ input[placeholder="Search…"] {
   color: #59bab1;
 }
 
-.MuiInput-underline:hover:not(.Mui-disabled, .Mui-error):before {
+/* .MuiInput-underline:hover:not(.Mui-disabled, .Mui-error):before {
   border-bottom: 2px solid #59bab1 !important;
-}
+} */
 
 @media screen and (max-width: 810px) {
   .action-btn {

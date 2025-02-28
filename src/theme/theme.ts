@@ -84,6 +84,23 @@ export const tokens = (mode: string) => ({
           vary: "#303031",
           toWhite: "#303031",
         },
+        modal: {
+          overlay: "#002b49a7",
+          border: "#18d4c2",
+          titleColor: "#606162",
+          descriptionColor: "#606162",
+          closeIcon: "#707174",
+          closeIconHover: "#323232",
+          fieldLabel: "#707174",
+          fieldBackground: "#eef2f6",
+          fieldInputFont: "#606162",
+          fieldBorder: "#18d4c2",
+          buttonFont: "#eef2f6",
+          buttonBackground: "#18d4c2",
+          buttonBorder: "#18d4c2",
+          buttonBackgroundHover: "transparent",
+          buttonFontHover: "#18d4c2",
+        },
       }
     : {
         opacity: {
@@ -96,7 +113,7 @@ export const tokens = (mode: string) => ({
           one: "0",
         },
         overlay: {
-          modal: "#2b2b3473",
+          modal: "#06070ac7",
           image: "#0f5e568a",
         },
         primary: {
@@ -158,6 +175,23 @@ export const tokens = (mode: string) => ({
           const: "#303031",
           vary: "#fcfcfd",
           toWhite: "#eef2f6",
+        },
+        modal: {
+          overlay: "#06070ac7",
+          border: "#323232",
+          titleColor: "#e5e7eb",
+          descriptionColor: "#9ca3af",
+          closeIcon: "#707174",
+          closeIconHover: "#eef2f6",
+          fieldLabel: "#707174",
+          fieldBackground: "#29292f",
+          fieldInputFont: "#9b9b9b",
+          fieldBorder: "#18d4c2",
+          buttonFont: "#19191f",
+          buttonBackground: "#18d4c2",
+          buttonBorder: "#18d4c2",
+          buttonBackgroundHover: "transparent",
+          buttonFontHover: "#18d4c2",
         },
       }),
 });

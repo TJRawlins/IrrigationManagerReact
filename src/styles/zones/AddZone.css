@@ -16,10 +16,6 @@
   transition: all 0.5s;
 }
 
-.modal-box {
-  border-radius: 10px;
-}
-
 .input {
   width: 100%;
 }
