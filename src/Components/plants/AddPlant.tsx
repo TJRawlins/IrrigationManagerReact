@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   CircularProgress,
   FormControl,
@@ -39,6 +42,7 @@ import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/AddPlant.css";
 import { tokens } from "../../theme/theme";
 import { IoClose } from "react-icons/io5";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -456,6 +460,34 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                       {touched.name && errors.name ? errors.name : ""}
                     </FormHelperText>
                   </Box>
+                </div>
+                <div className="split-container">
+                  <FormControl fullWidth className="dropdown-override">
+                    <InputLabel id="plant-type-input" sx={{ padding: "0 5px" }}>
+                      Plant type *
+                    </InputLabel>
+                    <Field
+                      as={Select}
+                      required
+                      aria-hidden="false"
+                      name="type"
+                      type="select"
+                      error={touched.type && Boolean(errors.type)}
+                    >
+                      <MenuItem value={"Tree"}>Tree</MenuItem>
+                      <MenuItem value={"Shrub"}>Shrub</MenuItem>
+                      <MenuItem value={"Vegetable"}>Vegetable</MenuItem>
+                      <MenuItem value={"Herb"}>Herb</MenuItem>
+                      <MenuItem value={"Grass"}>Grass</MenuItem>
+                      <MenuItem value={"Vine"}>Vine</MenuItem>
+                      <MenuItem value={"Cacti"}>Cacti</MenuItem>
+                    </Field>
+                    <FormHelperText
+                      error={touched.type && Boolean(errors.type)}
+                    >
+                      {touched.type && errors.type ? errors.type : ""}
+                    </FormHelperText>
+                  </FormControl>
                   <Box className="input" sx={{ width: "210px" }}>
                     <Field
                       as={TextField}
@@ -477,37 +509,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                         ? errors.quantity
                         : ""}
                     </FormHelperText>
-                  </Box>
-                </div>
-                <div className="split-container">
-                  <Box className="input">
-                    <Field
-                      as={TextField}
-                      className="input input-override"
-                      id="age-input"
-                      label="Plant age"
-                      name="age"
-                      type="number"
-                      autoComplete=""
-                      variant="standard"
-                      InputProps={{
-                        min: 0,
-                        max: 150,
-                      }}
-                    />
-                  </Box>
-                  <Box className="input">
-                    <Field
-                      as={TextField}
-                      className="input input-override"
-                      id="hardiness-zone-input"
-                      label="USDA zone"
-                      name="hardinessZone"
-                      type="number"
-                      autoComplete=""
-                      variant="standard"
-                      InputProps={{ inputProps: { min: 1, max: 11 } }}
-                    />
                   </Box>
                   <Tooltip
                     title="Required Gallons Per Week (GPW), per plant"
@@ -637,142 +638,158 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                     </Box>
                   </Tooltip>
                 </div>
-                <div className="split-container">
-                  <FormControl fullWidth className="dropdown-override">
-                    <InputLabel id="plant-type-input" sx={{ padding: "0 5px" }}>
-                      Plant type
-                    </InputLabel>
-                    <Field
-                      as={Select}
-                      required
-                      aria-hidden="false"
-                      name="type"
-                      type="select"
-                      error={touched.type && Boolean(errors.type)}
-                    >
-                      <MenuItem value={"Tree"}>Tree</MenuItem>
-                      <MenuItem value={"Shrub"}>Shrub</MenuItem>
-                      <MenuItem value={"Vegetable"}>Vegetable</MenuItem>
-                      <MenuItem value={"Herb"}>Herb</MenuItem>
-                      <MenuItem value={"Grass"}>Grass</MenuItem>
-                      <MenuItem value={"Vine"}>Vine</MenuItem>
-                      <MenuItem value={"Cacti"}>Cacti</MenuItem>
-                    </Field>
-                    <FormHelperText
-                      error={touched.type && Boolean(errors.type)}
-                    >
-                      {touched.type && errors.type ? errors.type : ""}
-                    </FormHelperText>
-                  </FormControl>
-                  <FormControl fullWidth className="dropdown-override">
-                    <InputLabel id="exposure-input" sx={{ padding: "0 5px" }}>
-                      Exposure
-                    </InputLabel>
-                    <Field
-                      style={{ padding: "5px !important" }}
-                      as={Select}
-                      name="exposure"
-                      type="select"
-                    >
-                      <MenuItem
-                        value={""}
-                        className="dropdown-unselect"
-                      ></MenuItem>
-                      <MenuItem value={"Full Sun"}>Full Sun</MenuItem>
-                      <MenuItem value={"Partial Sun"}>Partial Sun</MenuItem>
-                    </Field>
-                  </FormControl>
-                  <FormControl fullWidth className="dropdown-override">
-                    <InputLabel
-                      id="harvest-month-input"
-                      sx={{ padding: "0 5px" }}
-                    >
-                      Harvest
-                    </InputLabel>
-                    <Field
-                      style={{ padding: "5px !important" }}
-                      as={Select}
-                      name="harvestMonth"
-                      type="select"
-                    >
-                      <MenuItem
-                        value={""}
-                        className="dropdown-unselect"
-                      ></MenuItem>
-                      <MenuItem value={"January"}>January</MenuItem>
-                      <MenuItem value={"February"}>February</MenuItem>
-                      <MenuItem value={"March"}>March</MenuItem>
-                      <MenuItem value={"April"}>April</MenuItem>
-                      <MenuItem value={"May"}>May</MenuItem>
-                      <MenuItem value={"June"}>June</MenuItem>
-                      <MenuItem value={"July"}>July</MenuItem>
-                      <MenuItem value={"August"}>August</MenuItem>
-                      <MenuItem value={"September"}>September</MenuItem>
-                      <MenuItem value={"October"}>October</MenuItem>
-                      <MenuItem value={"November"}>November</MenuItem>
-                      <MenuItem value={"December"}>December</MenuItem>
-                    </Field>
-                  </FormControl>
-                </div>
-                <div className="split-container">
-                  <Box className="input input-override notes">
-                    <Field
-                      sx={{ width: "100%", mt: "1rem" }}
-                      label="Notes"
-                      name="notes"
-                      as={TextField}
-                      type="text"
-                      multiline
-                      maxRows={3}
-                    />
-                  </Box>
-                </div>
-                <div
-                  className="split-container upload"
-                  style={{ position: "relative", marginTop: "12px" }}
-                >
-                  <label htmlFor="" className="img-upload-filename-label">
-                    Image file name
-                  </label>
-                  {imageUpload && !error ? (
-                    <Tooltip
-                      title={imageUpload ? imageUpload.name.toString() : ""}
-                      arrow
-                    >
-                      <Typography
-                        className="img-upload-filename"
-                        component={"div"}
-                      >
-                        {imageUpload ? imageUpload.name.toString() : ""}
-                      </Typography>
-                    </Tooltip>
-                  ) : (
-                    <Typography
-                      className="img-upload-filename error"
-                      component={"div"}
-                    >
-                      {error}
-                    </Typography>
-                  )}
-                  <Button
-                    className="img-upload-btn"
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+                <Accordion className="optional-fields-accordion">
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="optional-fields-summary"
+                    id="optional-fields-summary"
                   >
-                    Select Image
-                    <VisuallyHiddenInput
-                      type="file"
-                      accept="image/*"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleImageValidation(event)
-                      }
-                      multiple
-                    />
-                  </Button>
-                </div>
+                    <Typography component="span">Optional Fields</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="split-container">
+                      <Box className="input">
+                        <Field
+                          as={TextField}
+                          className="input input-override"
+                          id="age-input"
+                          label="Plant age"
+                          name="age"
+                          type="number"
+                          autoComplete=""
+                          variant="standard"
+                          InputProps={{
+                            min: 0,
+                            max: 150,
+                          }}
+                        />
+                      </Box>
+                      <Box className="input">
+                        <Field
+                          as={TextField}
+                          className="input input-override"
+                          id="hardiness-zone-input"
+                          label="USDA zone"
+                          name="hardinessZone"
+                          type="number"
+                          autoComplete=""
+                          variant="standard"
+                          InputProps={{ inputProps: { min: 1, max: 11 } }}
+                        />
+                      </Box>
+                    </div>
+                    <div className="split-container">
+                      <FormControl fullWidth className="dropdown-override">
+                        <InputLabel
+                          id="exposure-input"
+                          sx={{ padding: "0 5px" }}
+                        >
+                          Exposure
+                        </InputLabel>
+                        <Field
+                          style={{ padding: "5px !important" }}
+                          as={Select}
+                          name="exposure"
+                          type="select"
+                        >
+                          <MenuItem
+                            value={""}
+                            className="dropdown-unselect"
+                          ></MenuItem>
+                          <MenuItem value={"Full Sun"}>Full Sun</MenuItem>
+                          <MenuItem value={"Partial Sun"}>Partial Sun</MenuItem>
+                        </Field>
+                      </FormControl>
+                      <FormControl fullWidth className="dropdown-override">
+                        <InputLabel
+                          id="harvest-month-input"
+                          sx={{ padding: "0 5px" }}
+                        >
+                          Harvest
+                        </InputLabel>
+                        <Field
+                          style={{ padding: "5px !important" }}
+                          as={Select}
+                          name="harvestMonth"
+                          type="select"
+                        >
+                          <MenuItem
+                            value={""}
+                            className="dropdown-unselect"
+                          ></MenuItem>
+                          <MenuItem value={"January"}>January</MenuItem>
+                          <MenuItem value={"February"}>February</MenuItem>
+                          <MenuItem value={"March"}>March</MenuItem>
+                          <MenuItem value={"April"}>April</MenuItem>
+                          <MenuItem value={"May"}>May</MenuItem>
+                          <MenuItem value={"June"}>June</MenuItem>
+                          <MenuItem value={"July"}>July</MenuItem>
+                          <MenuItem value={"August"}>August</MenuItem>
+                          <MenuItem value={"September"}>September</MenuItem>
+                          <MenuItem value={"October"}>October</MenuItem>
+                          <MenuItem value={"November"}>November</MenuItem>
+                          <MenuItem value={"December"}>December</MenuItem>
+                        </Field>
+                      </FormControl>
+                    </div>
+                    <div className="split-container">
+                      <Box className="input input-override notes">
+                        <Field
+                          sx={{ width: "100%", mt: "1rem" }}
+                          label="Notes"
+                          name="notes"
+                          as={TextField}
+                          type="text"
+                          multiline
+                          maxRows={3}
+                        />
+                      </Box>
+                    </div>
+                    <div className="split-container upload">
+                      <label htmlFor="" className="img-upload-filename-label">
+                        Image file name
+                      </label>
+                      {imageUpload && !error ? (
+                        <Tooltip
+                          title={imageUpload ? imageUpload.name.toString() : ""}
+                          arrow
+                        >
+                          <Typography
+                            className="img-upload-filename"
+                            component={"div"}
+                          >
+                            {imageUpload ? imageUpload.name.toString() : ""}
+                          </Typography>
+                        </Tooltip>
+                      ) : (
+                        <Typography
+                          className="img-upload-filename error"
+                          component={"div"}
+                        >
+                          {error}
+                        </Typography>
+                      )}
+                      <Button
+                        className="img-upload-btn"
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        startIcon={<CloudUploadIcon />}
+                      >
+                        Select Image
+                        <VisuallyHiddenInput
+                          type="file"
+                          accept="image/*"
+                          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                            handleImageValidation(event)
+                          }
+                          multiple
+                        />
+                      </Button>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
                 <Box className="btn-wrapper">
                   <Button
                     className="card-btn submit-btn"

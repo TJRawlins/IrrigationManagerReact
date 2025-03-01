@@ -125,6 +125,8 @@
 }
 .split-container.upload {
   justify-content: right;
+  position: relative;
+  margin-top: 12px;
 }
 
 /* TOTAL GALLONS */
@@ -178,6 +180,32 @@
   box-shadow: none;
 }
 
+/* INPUTS */
+.input {
+  width: 100% !important;
+}
+
+/* INPUT ACCORDION */
+.optional-fields-accordion {
+  margin-top: 0 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #707174 !important;
+}
+.optional-fields-accordion .MuiButtonBase-root {
+  justify-content: left;
+}
+.optional-fields-accordion .MuiButtonBase-root .MuiAccordionSummary-content {
+  max-width: 122px !important;
+}
+.optional-fields-accordion
+  .MuiButtonBase-root
+  .MuiAccordionSummary-expandIconWrapper
+  svg {
+  fill: #707174 !important;
+}
+
 /* TEXTFIELD */
 .input-override div input {
   padding: 5px 12px !important;
@@ -217,7 +245,7 @@
   font-weight: 400;
 }
 .dropdown-override div:first-child {
-  padding: 7px 14px !important;
+  padding: 5px 14px !important;
 }
 .dropdown-override .MuiOutlinedInput-root {
   border: 1px solid transparent;
