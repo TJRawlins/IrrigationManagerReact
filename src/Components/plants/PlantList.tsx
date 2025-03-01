@@ -36,16 +36,19 @@ import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
 import { tokens } from "../../theme/theme";
 import EditPlantSkeleton from "./EditPlantSkeleton";
+import { ModalTheme } from "../../theme/ModalThemeInterface";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
   updateLocalStorageZone: (zoneId: number) => void;
+  modalColorTheme: ModalTheme;
   // updateLocalStorageTreflePlant: (plantName: string) => void;
 }
 
 export default function PlantList({
   fetchPlants,
   updateLocalStorageZone,
+  modalColorTheme,
 }: // updateLocalStorageTreflePlant,
 PlantListProps) {
   const dispatch = useDispatch();
@@ -427,6 +430,7 @@ PlantListProps) {
           fetchPlants={fetchPlants}
           setIsShowEdit={setIsShowEdit}
           isShowEdit={isShowEdit}
+          modalColorTheme={modalColorTheme}
         />
       )}
     </>

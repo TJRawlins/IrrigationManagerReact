@@ -43,9 +43,11 @@ import "../../styles/plants/AddPlant.css";
 import { tokens } from "../../theme/theme";
 import { IoClose } from "react-icons/io5";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { ModalTheme } from "../../theme/ModalThemeInterface";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
+  modalColorTheme: ModalTheme;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -60,7 +62,7 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-function AddPlant({ fetchPlants }: PlantBarProps) {
+function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -70,82 +72,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
   // color theme
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const addPlantColorTheme = () => {
-    return {
-      barButtons: {
-        backgroundColor: colors.whiteBlue.vary,
-        color: colors.gray.toWhite,
-        border: "1px solid " + colors.whiteBlue.vary,
-        "& .btn-icon": { color: colors.primary.const + " !important" },
-        "&.action:hover": { border: "1px solid " + colors.primary.const },
-      },
-      plantCardModal: {
-        backgroundColor: colors.modal.overlay,
-      },
-      plantCard: {
-        backgroundColor: colors.white.vary,
-        border: "1px solid " + colors.modal.border + " !important",
-        "& .close-icon": {
-          color: colors.modal.closeIcon,
-        },
-        "& .close-icon:hover": {
-          color: colors.modal.closeIconHover,
-        },
-        // Buttons
-        "& .cancel-btn, & .submit-btn, & .img-upload-btn": {
-          border: "2px solid" + colors.modal.buttonBorder,
-        },
-        "& .submit-btn, & .img-upload-btn": {
-          border: "2px solid" + colors.modal.buttonBorder,
-          backgroundColor: colors.modal.buttonBackground,
-        },
-        "& .submit-btn:hover, & .img-upload-btn:hover": {
-          backgroundColor: colors.modal.buttonBackgroundHover,
-          color: colors.modal.buttonFontHover,
-        },
-        "& .cancel-btn": {
-          color: colors.modal.buttonFontHover,
-        },
-        "& .cancel-btn:hover": {
-          backgroundColor: colors.modal.buttonBackground,
-          color: colors.modal.buttonFont,
-        },
-        "& .img-upload-btn, & .submit-btn": {
-          color: colors.modal.buttonFont,
-        },
-        // Fields
-        "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
-          {
-            color: colors.modal.fieldLabel,
-          },
-        "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
-          {
-            color: colors.modal.fieldInputFont,
-          },
-        ".css-hyuuor-MuiButtonBase-root-MuiMenuItem-root, & .dropdown-override div:first-child, & .dropdown-unselect::after":
-          {
-            color: colors.modal.fieldInputFont + "!important",
-          },
-        "& .MuiInputBase-multiline, & .img-upload-filename": {
-          backgroundColor: colors.modal.fieldBackground + " !important",
-        },
-        "& .MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-formControl, .input-override div input":
-          {
-            backgroundColor: colors.whiteBlue.vary + " !important",
-          },
-        "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
-          {
-            border: "1px solid " + colors.modal.fieldBorder + " !important",
-          },
-      },
-      plantCardTitle: {
-        color: colors.modal.titleColor,
-      },
-      plantCardDescription: {
-        color: colors.modal.descriptionColor,
-      },
-    };
-  };
 
   // Firebase Storage Variables
   const [error, setError] = useState<string>("");
@@ -356,7 +282,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
 
   return (
     <div>
-      {/* dropdown menu background color workaround */}
       <style>
         {`.MuiPopover-paper.MuiMenu-paper
           {
@@ -366,7 +291,8 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
       <Button
         className="bar-btn action"
         onClick={handleOpen}
-        sx={addPlantColorTheme().barButtons}
+        sx={modalColorTheme.barButtons}
+        // sx={colorTheme().barButtons}
       >
         <div className="btn-content-container">
           <MdOutlineAddCircle className="btn-icon" />
@@ -381,11 +307,11 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: addPlantColorTheme().plantCardModal,
+            style: modalColorTheme.plantCardModal,
           },
         }}
       >
-        <Box className="modal-box plant" sx={addPlantColorTheme().plantCard}>
+        <Box className="modal-box plant" sx={modalColorTheme.plantCard}>
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -420,14 +346,14 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
               id="modal-modal-title"
               variant="h6"
               component="h2"
-              sx={addPlantColorTheme().plantCardTitle}
+              sx={modalColorTheme.plantCardTitle}
             >
               Add Plant
             </Typography>
             <Typography
               className="modal-description"
               component="p"
-              sx={addPlantColorTheme().plantCardDescription}
+              sx={modalColorTheme.plantCardDescription}
             >
               Add a new plant to the {zone.name.toLocaleLowerCase()} zone
             </Typography>
@@ -559,7 +485,6 @@ function AddPlant({ fetchPlants }: PlantBarProps) {
                         type="number"
                         autoComplete=""
                         variant="standard"
-                        InputProps={{ inputProps: { min: 0, max: 150 } }}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
                           values.galsPerWkCalc = getGalsPerWkCalcValue(
                             values,

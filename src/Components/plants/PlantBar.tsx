@@ -25,12 +25,14 @@ import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
 import { tokens } from "../../theme/theme";
 import { TbDroplet } from "react-icons/tb";
+import { ModalTheme } from "../../theme/ModalThemeInterface";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
+  modalColorTheme: ModalTheme;
 };
 
-export default function PlantBar({ fetchPlants }: PlantBarProps) {
+export default function PlantBar({ fetchPlants, modalColorTheme }: PlantBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { season } = useSelector((state: RootState) => state.season);
@@ -222,7 +224,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
               flexItem
             />
             <Box className="bar-btn-container">
-              <AddPlant fetchPlants={fetchPlants} />
+              <AddPlant fetchPlants={fetchPlants} modalColorTheme={modalColorTheme} />
               <Link to="/zones">
                 <Button
                   className="bar-btn action"
