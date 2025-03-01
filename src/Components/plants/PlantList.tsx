@@ -421,6 +421,7 @@ PlantListProps) {
           fetchPlants={fetchPlants}
           setIsShowView={setIsShowView}
           isShowView={isShowView}
+          modalColorTheme={modalColorTheme}
         />
       )}
       {isLoadingEditPlant ? (
