@@ -1,7 +1,7 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { useEffect } from "react";
-import "./PlantPage.css"
+import "./PlantPage.css";
 import PlantList from "../../Components/plants/PlantList";
 import agent from "../../App/api/agent";
 import PlantBar from "../../Components/plants/PlantBar";
@@ -23,7 +23,7 @@ const PlantPage = () => {
   // const { zoneId } = useParams();
   // const zoneIdNum: number = Number(zoneId);
   const dispatch = useDispatch();
-  
+
   // color theme
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -36,77 +36,77 @@ const PlantPage = () => {
   };
 
   const modalColorTheme: ModalTheme = {
-      barButtons: {
-        backgroundColor: colors.menuBar.buttonBackground,
-        color: colors.menuBar.buttonFont,
-        border: "1px solid " + colors.menuBar.buttonBorder,
-        "& .btn-icon": { color: colors.menuBar.buttonIcon + " !important" },
-        "&.action:hover": {
-          border: "1px solid " + colors.menuBar.buttonBorderHover,
-        },
+    barButtons: {
+      backgroundColor: colors.menuBar.buttonBackground,
+      color: colors.menuBar.buttonFont,
+      border: "1px solid " + colors.menuBar.buttonBorder,
+      "& .btn-icon": { color: colors.menuBar.buttonIcon + " !important" },
+      "&.action:hover": {
+        border: "1px solid " + colors.menuBar.buttonBorderHover,
       },
-      plantCardModal: {
-        backgroundColor: colors.modal.overlay,
+    },
+    plantCardModal: {
+      backgroundColor: colors.modal.overlay,
+    },
+    plantCard: {
+      backgroundColor: colors.modal.background,
+      border: "1px solid " + colors.modal.border + " !important",
+      "& .close-icon": {
+        color: colors.modal.closeIcon,
       },
-      plantCard: {
-        backgroundColor: colors.modal.background,
-        border: "1px solid " + colors.modal.border + " !important",
-        "& .close-icon": {
-          color: colors.modal.closeIcon,
-        },
-        "& .close-icon:hover": {
-          color: colors.modal.closeIconHover,
-        },
-        // Buttons
-        "& .cancel-btn, & .submit-btn, & .img-upload-btn": {
-          border: "2px solid" + colors.modal.buttonBorder,
-        },
-        "& .submit-btn, & .img-upload-btn": {
-          border: "2px solid" + colors.modal.buttonBorder,
-          backgroundColor: colors.modal.buttonBackground,
-        },
-        "& .submit-btn:hover, & .img-upload-btn:hover": {
-          backgroundColor: colors.modal.buttonBackgroundHover,
-          color: colors.modal.buttonFontHover,
-        },
-        "& .cancel-btn": {
-          color: colors.modal.buttonFontHover,
-        },
-        "& .cancel-btn:hover": {
-          backgroundColor: colors.modal.buttonBackground,
-          color: colors.modal.buttonFont,
-        },
-        "& .img-upload-btn, & .submit-btn": {
-          color: colors.modal.buttonFont,
-        },
-        // Fields
-        "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
-          {
-            color: colors.modal.fieldLabel,
-          },
-        "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
-          {
-            color: colors.modal.fieldInputFont,
-          },
-        ".css-hyuuor-MuiButtonBase-root-MuiMenuItem-root, & .dropdown-override div:first-of-type, & .dropdown-unselect::after":
-          {
-            color: colors.modal.fieldInputFont + "!important",
-          },
-        "& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input":
-          {
-            backgroundColor: colors.modal.fieldBackground + " !important",
-          },
-        "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
-          {
-            border: "1px solid " + colors.modal.fieldBorder + " !important",
-          },
+      "& .close-icon:hover": {
+        color: colors.modal.closeIconHover,
       },
-      plantCardTitle: {
-        color: colors.modal.titleColor,
+      // Buttons
+      "& .cancel-btn, & .submit-btn, & .img-upload-btn": {
+        border: "2px solid " + colors.modal.buttonBorder,
       },
-      plantCardDescription: {
-        color: colors.modal.description,
+      "& .submit-btn, & .img-upload-btn": {
+        border: "2px solid " + colors.modal.buttonBorder,
+        backgroundColor: colors.modal.buttonBackground,
       },
+      "& .submit-btn:hover, & .img-upload-btn:hover": {
+        backgroundColor: colors.modal.buttonBackgroundHover,
+        color: colors.modal.buttonFontHover,
+      },
+      "& .cancel-btn": {
+        color: colors.modal.buttonFontHover,
+      },
+      "& .cancel-btn:hover": {
+        backgroundColor: colors.modal.buttonBackground,
+        color: colors.modal.buttonFont,
+      },
+      "& .img-upload-btn, & .submit-btn": {
+        color: colors.modal.buttonFont,
+      },
+      // Fields
+      "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
+        {
+          color: colors.modal.fieldLabel,
+        },
+      "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
+        {
+          color: colors.modal.fieldInputFont,
+        },
+      ".css-hyuuor-MuiButtonBase-root-MuiMenuItem-root, & .dropdown-override div:first-of-type, & .dropdown-unselect::after":
+        {
+          color: colors.modal.fieldInputFont + " !important",
+        },
+      "& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input":
+        {
+          backgroundColor: colors.modal.fieldBackground + " !important",
+        },
+      "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
+        {
+          border: "1px solid " + colors.modal.fieldBorder + " !important",
+        },
+    },
+    plantCardTitle: {
+      color: colors.modal.titleColor,
+    },
+    plantCardDescription: {
+      color: colors.modal.description,
+    },
   };
 
   const updateLocalStorageZone = (zoneId: number) => {
@@ -148,10 +148,7 @@ const PlantPage = () => {
     <>
       <ErrorBoundary fallback="Unable to retrieve data for plants. The server may be down.">
         <PlantBar fetchPlants={fetchPlants} modalColorTheme={modalColorTheme} />
-        <Grid
-          className="plant-page-grid"
-          sx={plantPageColorTheme().grid}
-        >
+        <Grid className="plant-page-grid" sx={plantPageColorTheme().grid}>
           <PlantList
             fetchPlants={fetchPlants}
             updateLocalStorageZone={updateLocalStorageZone}
