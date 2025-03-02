@@ -29,17 +29,20 @@ import {
 } from "../../redux/seasonSlice";
 import { tokens } from "../../theme/theme";
 import AddZone from "./AddZone";
+import { ModalTheme } from "../../theme/ModalThemeInterface";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
   isLoadingZones: boolean;
+  modalColorTheme: ModalTheme;
 };
 
 export default function ZoneBar({
   fetchZones,
   updateLocalStorageSeason,
   isLoadingZones,
+  modalColorTheme,
 }: ZoneBarProps) {
   const { season } = useSelector((state: RootState) => state.season);
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
@@ -283,6 +286,7 @@ export default function ZoneBar({
               <AddZone
                 fetchZones={fetchZones}
                 isLoadingZones={isLoadingZones}
+                modalColorTheme={modalColorTheme}
               />
             </Box>
           </div>

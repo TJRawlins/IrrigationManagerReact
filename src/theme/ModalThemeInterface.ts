@@ -8,10 +8,10 @@ export interface ModalTheme {
       border: string;
     };
   };
-  plantCardModal: {
+  cardModal: {
     backgroundColor: string;
   };
-  plantCard: {
+  card: {
     backgroundColor: string;
     border: string;
     "& .close-icon": {
@@ -59,10 +59,10 @@ export interface ModalTheme {
       border: string;
     };
   };
-  plantCardTitle: {
+  cardTitle: {
     color: string;
   };
-  plantCardDescription: {
+  cardDescription: {
     color: string;
   };
 }

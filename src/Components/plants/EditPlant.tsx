@@ -384,11 +384,11 @@ function EditPlant({
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: modalColorTheme?.plantCardModal,
+            style: modalColorTheme?.cardModal,
           },
         }}
       >
-        <Box className="modal-box plant" sx={modalColorTheme?.plantCard}>
+        <Box className="modal-box plant" sx={modalColorTheme?.card}>
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -423,14 +423,14 @@ function EditPlant({
               id="modal-modal-title"
               variant="h6"
               component="h2"
-              sx={modalColorTheme?.plantCardTitle}
+              sx={modalColorTheme?.cardTitle}
             >
               Edit Plant
             </Typography>
             <Typography
               className="modal-description"
               component="p"
-              sx={modalColorTheme?.plantCardDescription}
+              sx={modalColorTheme?.cardDescription}
             >
               Edit plant for zone {zone.name.toLocaleLowerCase()}
             </Typography>

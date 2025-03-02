@@ -292,7 +292,6 @@ function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
         className="bar-btn action"
         onClick={handleOpen}
         sx={modalColorTheme.barButtons}
-        // sx={colorTheme().barButtons}
       >
         <div className="btn-content-container">
           <MdOutlineAddCircle className="btn-icon" />
@@ -307,11 +306,11 @@ function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: modalColorTheme.plantCardModal,
+            style: modalColorTheme.cardModal,
           },
         }}
       >
-        <Box className="modal-box plant" sx={modalColorTheme.plantCard}>
+        <Box className="modal-box" sx={modalColorTheme.card}>
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -346,14 +345,14 @@ function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
               id="modal-modal-title"
               variant="h6"
               component="h2"
-              sx={modalColorTheme.plantCardTitle}
+              sx={modalColorTheme.cardTitle}
             >
               Add Plant
             </Typography>
             <Typography
               className="modal-description"
               component="p"
-              sx={modalColorTheme.plantCardDescription}
+              sx={modalColorTheme.cardDescription}
             >
               Add a new plant to the {zone.name.toLocaleLowerCase()} zone
             </Typography>

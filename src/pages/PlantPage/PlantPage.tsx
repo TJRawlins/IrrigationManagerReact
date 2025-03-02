@@ -45,10 +45,10 @@ const PlantPage = () => {
         border: "1px solid " + colors.menuBar.buttonBorderHover,
       },
     },
-    plantCardModal: {
+    cardModal: {
       backgroundColor: colors.modal.overlay,
     },
-    plantCard: {
+    card: {
       backgroundColor: colors.modal.background,
       border: "1px solid " + colors.modal.border + " !important",
       "& .close-icon": {
@@ -101,10 +101,10 @@ const PlantPage = () => {
           border: "1px solid " + colors.modal.fieldBorder + " !important",
         },
     },
-    plantCardTitle: {
+    cardTitle: {
       color: colors.modal.titleColor,
     },
-    plantCardDescription: {
+    cardDescription: {
       color: colors.modal.description,
     },
   };
