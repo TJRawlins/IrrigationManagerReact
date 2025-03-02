@@ -2,6 +2,7 @@
 import {
   Box,
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Modal,
@@ -10,12 +11,11 @@ import {
   TextField,
   Tooltip,
   Typography,
-  useTheme,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import agent from "../../App/api/agent";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -35,13 +35,15 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { Zone } from "../../App/models/Zone";
-import { tokens } from "../../theme/theme";
+import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { IoClose } from "react-icons/io5";
 
 type ZoneEditProps = {
   fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
+  modalColorTheme: ModalTheme;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -73,6 +75,7 @@ function EditZone({
   updateLocalStorageSeason,
   setIsShowEdit,
   isShowEdit,
+  modalColorTheme,
 }: ZoneEditProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
@@ -85,30 +88,30 @@ function EditZone({
   };
 
   // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const zoneEditBtnColorTheme = () => {
-    return {
-      zoneEditCardModal: {
-        backgroundColor: colors.overlay.modal,
-        opacity: 0.5,
-      },
-      zoneEditCard: {
-        backgroundColor: colors.white.vary,
-        border: "1px solid " + colors.primary.const + " !important",
-        boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
-      },
-      zoneEditCardTitle: {
-        color: colors.gray.toPrimary,
-      },
-      zoneSeasonSelection: {
-        "& #mui-component-select-season": {
-          backgroundColor: colors.whiteBlue.vary,
-          color: colors.gray.toWhite,
-        },
-      },
-    };
-  };
+  // const theme = useTheme();
+  // const colors = tokens(theme.palette.mode);
+  // const zoneEditBtnColorTheme = () => {
+  //   return {
+  //     zoneEditCardModal: {
+  //       backgroundColor: colors.overlay.modal,
+  //       opacity: 0.5,
+  //     },
+  //     zoneEditCard: {
+  //       backgroundColor: colors.white.vary,
+  //       border: "1px solid " + colors.primary.const + " !important",
+  //       boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
+  //     },
+  //     zoneEditCardTitle: {
+  //       color: colors.gray.toPrimary,
+  //     },
+  //     zoneSeasonSelection: {
+  //       "& #mui-component-select-season": {
+  //         backgroundColor: colors.whiteBlue.vary,
+  //         color: colors.gray.toWhite,
+  //       },
+  //     },
+  //   };
+  // };
 
   // Firebase Storage Variables
   const isImageBeingUsedRef = useRef<boolean>(false);
@@ -368,11 +371,12 @@ function EditZone({
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: zoneEditBtnColorTheme().zoneEditCardModal,
+            style: modalColorTheme.cardModal,
           },
         }}
       >
-        <Box className="modal-box" sx={zoneEditBtnColorTheme().zoneEditCard}>
+        <Box className="modal-box" sx={modalColorTheme.card}>
+          <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
               <Modal
@@ -397,7 +401,7 @@ function EditZone({
                     left: "0",
                   }}
                 >
-                  <CircularProgress />
+                  <CircularProgress sx={{ color: "#0069b2" }} />
                 </Box>
               </Modal>
             )}
@@ -405,9 +409,16 @@ function EditZone({
               className="modal-title"
               id="modal-modal-title"
               component="h2"
-              sx={zoneEditBtnColorTheme().zoneEditCardTitle}
+              sx={modalColorTheme.cardTitle}
             >
               Edit Zone
+            </Typography>
+            <Typography
+              className="modal-description"
+              component="p"
+              sx={modalColorTheme.cardDescription}
+            >
+              Edit zone {zone.name} for {season.name}
             </Typography>
           </div>
           <Formik
@@ -415,161 +426,162 @@ function EditZone({
             onSubmit={onSubmit}
             validationSchema={validationSchema}
           >
-            {() => (
-              <Form style={{ width: "100%" }}>
-                <Field
-                  as={TextField}
-                  required
-                  className="input"
-                  id="zone-name-input"
-                  name="name"
-                  label="Zone name"
-                  type="text"
-                  autoComplete=""
-                  variant="standard"
-                  helperText={
-                    <ErrorMessage
+            {({ errors, touched }) => (
+              <Form style={{ width: "100%", padding: "0 24px 24px" }}>
+                <div className="split-container">
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input input-override"
+                      id="zone-name-input"
                       name="name"
-                      component="span"
-                      className="error-text"
+                      label="Zone name"
+                      type="text"
+                      autoComplete=""
+                      variant="standard"
+                      error={touched.name && Boolean(errors.name)}
                     />
-                  }
-                />
-                <div className="split-container">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="runtime-hours-input"
-                    name="runtimeHours"
-                    label="Runtime hours"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 24 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="runtimeHours"
-                        component="span"
-                        className="error-text"
-                      />
-                    }
-                  />
-                  <Typography
-                    component="span"
-                    sx={{
-                      textAlign: "center !important",
-                      paddingTop: "30px",
-                    }}
-                  >
-                    :
-                  </Typography>
-                  <Field
-                    as={TextField}
-                    required
-                    className="input"
-                    id="runtime-minutes-input"
-                    name="runtimeMinutes"
-                    label="Runtime minutes"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 59 } }}
-                    helperText={
-                      <ErrorMessage
-                        name="runtimeMinutes"
-                        component="span"
-                        className="error-text"
-                      />
-                    }
-                  />
+                    <FormHelperText
+                      error={touched.name && Boolean(errors.name)}
+                    >
+                      {touched.name && errors.name ? errors.name : ""}
+                    </FormHelperText>
+                  </Box>
                 </div>
-                <Field
-                  as={TextField}
-                  required
-                  className="input"
-                  id="per-week-input"
-                  label="Times per week"
-                  name="runtimePerWeek"
-                  type="number"
-                  autoComplete=""
-                  variant="standard"
-                  InputProps={{ inputProps: { min: 0, max: 25 } }}
-                  helperText={
-                    <ErrorMessage
-                      name="runtimePerWeek"
-                      component="span"
-                      className="error-text"
-                    />
-                  }
-                />
                 <div className="split-container">
-                  {imageUpload && (
-                    <Tooltip title={imageUpload?.name.toString()} arrow>
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input input-override"
+                      id="runtime-hours-input"
+                      name="runtimeHours"
+                      label="Runtime hours"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 24 } }}
+                      error={
+                        touched.runtimeHours && Boolean(errors.runtimeHours)
+                      }
+                    />
+                    <FormHelperText
+                      error={
+                        touched.runtimeHours && Boolean(errors.runtimeHours)
+                      }
+                    >
+                      {touched.runtimeHours && errors.runtimeHours
+                        ? errors.runtimeHours
+                        : ""}
+                    </FormHelperText>
+                  </Box>
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input input-override"
+                      id="runtime-minutes-input"
+                      name="runtimeMinutes"
+                      label="Runtime minutes"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 59 } }}
+                      error={
+                        touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
+                      }
+                    />
+                    <FormHelperText
+                      error={
+                        touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
+                      }
+                    >
+                      {touched.runtimeMinutes && errors.runtimeMinutes
+                        ? errors.runtimeMinutes
+                        : ""}
+                    </FormHelperText>
+                  </Box>
+                </div>
+                <div className="split-container">
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input input-override"
+                      id="per-week-input"
+                      label="Times per week"
+                      name="runtimePerWeek"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 25 } }}
+                      error={
+                        touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
+                      }
+                    />
+                    <FormHelperText
+                      error={
+                        touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
+                      }
+                    >
+                      {touched.runtimePerWeek && errors.runtimePerWeek
+                        ? errors.runtimePerWeek
+                        : ""}
+                    </FormHelperText>
+                  </Box>
+                  <FormControl fullWidth className="dropdown-override">
+                    <InputLabel sx={{ padding: "0 5px" }}>Season</InputLabel>
+                    <Field as={Select} name="season" type="select">
+                      <MenuItem value="Summer">Summer</MenuItem>
+                      <MenuItem value="Fall">Fall</MenuItem>
+                      <MenuItem value="Winter">Winter</MenuItem>
+                      <MenuItem value="Spring">Spring</MenuItem>
+                    </Field>
+                  </FormControl>
+                </div>
+                <div className="split-container upload">
+                  <label htmlFor="" className="img-upload-filename-label">
+                    Image file name
+                  </label>
+                  {(imageUpload && !error) || zone.imagePath ? (
+                    <Tooltip
+                      title={
+                        imageUpload
+                          ? imageUpload.name.toString()
+                          : zone.imagePath
+                      }
+                      arrow
+                    >
                       <Typography
+                        className="img-upload-filename"
                         component={"div"}
-                        style={{
-                          textOverflow: "ellipsis",
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          width: "100%",
-                          marginTop: "1rem",
-                          alignSelf: "center",
-                          borderBottom: "1px solid #9d9d9d",
-                          padding: "6px",
-                        }}
                       >
-                        {imageUpload?.name.toString()}
+                        {imageUpload
+                          ? imageUpload?.name.toString()
+                          : zone.imagePath}
                       </Typography>
                     </Tooltip>
-                  )}
-                  {!error && !imageUpload && zone.imagePath && (
-                    <img
-                      src={zone.imagePath}
-                      style={{
-                        maxWidth: "155px",
-                        width: "359px",
-                        height: "45px",
-                        objectFit: "cover",
-                        borderRadius: "5px",
-                        marginTop: "1rem",
-                      }}
-                    ></img>
-                  )}
-                  {error && (
+                  ) : (
                     <Typography
+                      className="img-upload-filename error"
                       component={"div"}
-                      style={{
-                        textOverflow: "ellipsis",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        width: "100%",
-                        margin: "1rem 0",
-                        alignSelf: "center",
-                        borderBottom: "1px solid #d32f2f",
-                        padding: "6px",
-                        color: "#d32f2f",
-                      }}
                     >
                       {error}
                     </Typography>
                   )}
                   <Button
+                    className="img-upload-btn"
                     component="label"
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
-                    sx={{
-                      width: "100%",
-                      color: "#ffff",
-                      marginTop: "1rem",
-                      background: "linear-gradient(to right, #59bab1, #82a628)",
-                    }}
                   >
                     Select Image
                     <VisuallyHiddenInput
                       type="file"
+                      accept="image/*"
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
                         handleImageValidation(event)
                       }
@@ -577,28 +589,8 @@ function EditZone({
                     />
                   </Button>
                 </div>
-                <Box id="season-input-wrapper" sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel
-                      id="season-input"
-                      // sx={{ background: "#ffff", padding: "0 5px" }}
-                    >
-                      Season
-                    </InputLabel>
-                    <Field
-                      as={Select}
-                      name="season"
-                      sx={zoneEditBtnColorTheme().zoneSeasonSelection}
-                    >
-                      <MenuItem value="Summer">Summer</MenuItem>
-                      <MenuItem value="Fall">Fall</MenuItem>
-                      <MenuItem value="Winter">Winter</MenuItem>
-                      <MenuItem value="Spring">Spring</MenuItem>
-                    </Field>
-                  </FormControl>
-                </Box>
-                <Box className="card-btn btn-wrapper">
-                  <Button sx={{ p: 2 }} className="submit-btn" type="submit">
+                <Box className="btn-wrapper">
+                  <Button className="card-btn submit-btn" type="submit">
                     Submit
                   </Button>
                   <Button

@@ -204,6 +204,7 @@ const ZonesPage = () => {
             fetchZones={fetchZones}
             updateLocalStorageSeason={updateLocalStorageSeason}
             isLoadingZones={isLoadingZones}
+            modalColorTheme={modalColorTheme}
           />
         </Grid>
       </ErrorBoundary>
