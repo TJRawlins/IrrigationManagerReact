@@ -1,13 +1,4 @@
-#gals-wk-calc-input {
-  background: #59bab13d;
-  padding-left: 0.5rem;
-  border-radius: 6px;
-}
 
-.modal-box.plant {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+/* .modal-box.plant {
   width: 500px;
-}
+} */

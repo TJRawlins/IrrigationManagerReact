@@ -7,10 +7,8 @@ import {
   TextField,
   Tooltip,
   Typography,
-  useTheme,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-// import { FaPlus } from "react-icons/fa";
 import CircularProgress from "@mui/material/CircularProgress";
 import { ChangeEvent, useState } from "react";
 import agent from "../../App/api/agent";
@@ -31,12 +29,14 @@ import {
 import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
-import { tokens } from "../../theme/theme";
 import { MdOutlineAddCircle } from "react-icons/md";
+import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { IoClose } from "react-icons/io5";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
   isLoadingZones: boolean;
+  modalColorTheme: ModalTheme;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -51,43 +51,14 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
+function AddZone({
+  fetchZones,
+  isLoadingZones,
+  modalColorTheme,
+}: ZoneBarProps) {
   const [open, setOpen] = useState(false);
   const { season } = useSelector((state: RootState) => state.season);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const zoneAddBtnColorTheme = () => {
-    return {
-      barButtons: {
-        backgroundColor: colors.whiteBlue.vary,
-        color: colors.gray.toWhite,
-        border: "1px solid " + colors.whiteBlue.vary,
-        "& .btn-icon": { color: colors.primary.const + " !important" },
-        "&.action:hover": { border: "1px solid " + colors.primary.const },
-      },
-      zoneAddBtn: {
-        backgroundColor: colors.white.vary + " !important",
-      },
-      zoneAddBtnPlus: {
-        backgroundColor: colors.white.const + " !important",
-      },
-      zoneAddCardModal: {
-        backgroundColor: colors.overlay.modal,
-        opacity: 0.5,
-      },
-      zoneAddCard: {
-        backgroundColor: colors.white.vary,
-        border: "1px solid " + colors.primary.const + " !important",
-        boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
-      },
-      zoneAddCardTitle: {
-        color: colors.gray.toPrimary,
-      },
-    };
-  };
 
   // Firebase Storage Variables
   const [error, setError] = useState<string>("");
@@ -239,7 +210,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
           className="bar-btn action"
           onClick={handleOpen}
           disabled={isLoadingZones}
-          sx={zoneAddBtnColorTheme().barButtons}
+          sx={modalColorTheme.barButtons}
         >
           <div className="btn-content-container">
             <MdOutlineAddCircle className="btn-icon" />
@@ -255,11 +226,12 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: zoneAddBtnColorTheme().zoneAddCardModal,
+            style: modalColorTheme.cardModal,
           },
         }}
       >
-        <Box className="modal-box" sx={zoneAddBtnColorTheme().zoneAddCard}>
+        <Box className="modal-box" sx={modalColorTheme.card}>
+          <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
               <Modal
@@ -292,9 +264,16 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
               className="modal-title"
               id="modal-modal-title"
               component="h2"
-              sx={zoneAddBtnColorTheme().zoneAddCardTitle}
+              sx={modalColorTheme.cardTitle}
             >
               Add Zone
+            </Typography>
+            <Typography
+              className="modal-description"
+              component="p"
+              sx={modalColorTheme.cardDescription}
+            >
+              Add a new zone to {season.name}
             </Typography>
           </div>
           <Formik
@@ -303,13 +282,13 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
             validationSchema={validationSchema}
           >
             {({ errors, touched }) => (
-              <Form style={{ width: "100%" }}>
+              <Form style={{ width: "100%", padding: "0 24px 24px" }}>
                 <div className="split-container">
                   <Box className="input">
                     <Field
                       as={TextField}
                       required
-                      className="input"
+                      className="input input-override"
                       id="zone-name-input"
                       name="name"
                       label="Zone name"
@@ -330,7 +309,7 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
                     <Field
                       as={TextField}
                       required
-                      className="input"
+                      className="input input-override"
                       id="runtime-hours-input"
                       name="runtimeHours"
                       label="Runtime hours"
@@ -352,16 +331,11 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
                         : ""}
                     </FormHelperText>
                   </Box>
-                  <Typography
-                    sx={{ textAlign: "center !important", paddingTop: "30px" }}
-                  >
-                    :
-                  </Typography>
                   <Box className="input">
                     <Field
                       as={TextField}
                       required
-                      className="input"
+                      className="input input-override"
                       id="runtime-minutes-input"
                       name="runtimeMinutes"
                       label="Runtime minutes"
@@ -384,85 +358,75 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
                     </FormHelperText>
                   </Box>
                 </div>
-                <Box className="input">
+                <div className="split-container">
+                  <Box className="input">
+                    <Field
+                      as={TextField}
+                      required
+                      className="input input-override"
+                      id="per-week-input"
+                      label="Times per week"
+                      name="runtimePerWeek"
+                      type="number"
+                      autoComplete=""
+                      variant="standard"
+                      InputProps={{ inputProps: { min: 0, max: 25 } }}
+                      error={
+                        touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
+                      }
+                    />
+                    <FormHelperText
+                      error={
+                        touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
+                      }
+                    >
+                      {touched.runtimePerWeek && errors.runtimePerWeek
+                        ? errors.runtimePerWeek
+                        : ""}
+                    </FormHelperText>
+                  </Box>
                   <Field
                     as={TextField}
-                    required
-                    className="input"
-                    id="per-week-input"
-                    label="Times per week"
-                    name="runtimePerWeek"
-                    type="number"
-                    autoComplete=""
+                    disabled
+                    className="input input-override"
+                    id="standard-disabled"
+                    name={season.name}
+                    label="Season"
+                    defaultValue={season.name}
                     variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 25 } }}
-                    error={
-                      touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
-                    }
                   />
-                  <FormHelperText
-                    error={
-                      touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
-                    }
-                  >
-                    {touched.runtimePerWeek && errors.runtimePerWeek
-                      ? errors.runtimePerWeek
-                      : ""}
-                  </FormHelperText>
-                </Box>
-                <div className="split-container">
-                  {imageUpload && (
-                    <Tooltip title={imageUpload.name.toString()} arrow>
+                </div>
+                <div className="split-container upload">
+                  <label htmlFor="" className="img-upload-filename-label">
+                    Image file name
+                  </label>
+                  {imageUpload && !error ? (
+                    <Tooltip
+                      title={imageUpload ? imageUpload.name.toString() : ""}
+                      arrow
+                    >
                       <Typography
+                        className="img-upload-filename"
                         component={"div"}
-                        style={{
-                          textOverflow: "ellipsis",
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          height: "45px",
-                          width: "100%",
-                          margin: "1rem 0",
-                          alignSelf: "center",
-                          borderBottom: "1px solid #9d9d9d",
-                          padding: "6px",
-                        }}
                       >
-                        {imageUpload.name.toString()}
+                        {imageUpload ? imageUpload.name.toString() : ""}
                       </Typography>
                     </Tooltip>
-                  )}
-                  {error && (
+                  ) : (
                     <Typography
+                      className="img-upload-filename error"
                       component={"div"}
-                      style={{
-                        textOverflow: "ellipsis",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        height: "45px",
-                        width: "100%",
-                        marginTop: "1rem",
-                        alignSelf: "center",
-                        borderBottom: "1px solid #d32f2f",
-                        padding: "6px",
-                        color: "#d32f2f",
-                      }}
                     >
                       {error}
                     </Typography>
                   )}
                   <Button
+                    className="img-upload-btn"
                     component="label"
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
-                    sx={{
-                      width: "100%",
-                      height: "45px",
-                      color: "#ffff",
-                      margin: "1rem 0",
-                      background: "linear-gradient(to right, #59bab1, #82a628)",
-                    }}
                   >
                     Select Image
                     <VisuallyHiddenInput
@@ -475,22 +439,11 @@ function AddZone({ fetchZones, isLoadingZones }: ZoneBarProps) {
                     />
                   </Button>
                 </div>
-                <Field
-                  as={TextField}
-                  disabled
-                  className="input"
-                  id="standard-disabled"
-                  name={season.name}
-                  label="Season"
-                  defaultValue={season.name}
-                  variant="standard"
-                />
                 <Box className="btn-wrapper">
                   <Button className="card-btn submit-btn" type="submit">
-                    Add
+                    Add Zone
                   </Button>
                   <Button
-                    sx={{ p: 2 }}
                     className="card-btn cancel-btn"
                     type="button"
                     onClick={handleClose}

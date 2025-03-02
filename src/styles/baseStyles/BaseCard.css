@@ -1,17 +1,24 @@
-.modal-overlay {
-  backdrop-filter: blur(4px);
-}
-
 .modal-title-container {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   color: #666666;
   gap: 0.5rem;
-  border-image-source: linear-gradient(to right, #59bab1, #82a628);
+  border-image-source: linear-gradient(to right, #18d4c2, #82a628);
   border-bottom: 10px solid;
   border-image-slice: 1;
-  border-width: 3px;
-  margin-bottom: 5px;
+  border-width: 1px;
+  margin: 0 0 20px;
+  padding: 16px 24px;
+}
+
+.close-icon {
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 250ms;
 }
 
 .modal-title-icon {
@@ -20,8 +27,14 @@
 }
 
 .modal-title {
-  font-size: 1.5rem !important;
+  font-size: 1.125rem !important;
+  font-weight: 100 !important;
   font-family: "Outfit", sans-serif !important;
+}
+
+.modal-description {
+  font-size: 0.875rem !important;
+  font-weight: 100 !important;
 }
 
 .modal-box {
@@ -32,11 +45,11 @@
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  width: 400px;
+  width: 500px;
   border: 2px solid #000;
+  border-radius: 7px;
   box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
     0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
-  padding: 32px;
 }
 
 .card-content-wrapper {
@@ -100,19 +113,23 @@
 .card-data {
   display: flex;
   font-size: 1rem !important;
-  /* color: #33333386 !important; */
   margin-bottom: 2px !important;
   margin-left: 0.75rem !important;
-  /* color: #8d8d8d !important; */
   border-radius: 5px;
 }
 
 .split-container {
   display: flex;
   gap: 1rem;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
+}
+.split-container.upload {
+  justify-content: right;
+  position: relative;
+  margin-top: 12px;
 }
 
+/* TOTAL GALLONS */
 .gallons-chip {
   justify-content: left !important;
   border-radius: 0px !important;
@@ -140,43 +157,176 @@
   display: none !important;
 }
 
-.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-  padding: 10px 10px !important;
-}
-
+/* BUTTONS */
 .card-btn {
-  height: 45px;
+  /* padding: 5px 16px !important; */
+  padding: 7px 16px 5px 16px !important;
+  text-transform: unset !important;
+  min-width: 100px !important;
+  height: 39px;
 }
-
 .btn-wrapper {
   display: flex;
   gap: 0.75rem;
   margin-top: 1.5rem !important;
 }
-
-.cancel-btn,
-.submit-btn {
-  width: 100%;
-  border: 2px solid #59bab1 !important;
-  padding: 0.75rem 1.5rem !important;
+.img-upload-btn {
+  width: 50%;
+  height: 40px;
+  margin: 0.5rem 0 !important;
+  box-shadow: none;
+  text-transform: none !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+}
+.img-upload-btn:hover {
+  box-shadow: none;
 }
 
-.cancel-btn:hover,
-.submit-btn {
-  background-color: #59bab1 !important;
-  color: #ffff !important;
+/* INPUTS */
+.input {
+  width: 100% !important;
+}
+.MuiInputBase-formControl {
+  border-radius: 5px !important;
 }
 
-.submit-btn:hover {
+/* INPUT ACCORDION */
+.optional-fields-accordion {
+  margin-top: 0 !important;
   background-color: transparent !important;
-  color: #59bab1 !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #707174 !important;
+}
+.optional-fields-accordion .MuiButtonBase-root {
+  justify-content: left;
+}
+.optional-fields-accordion .MuiButtonBase-root .MuiAccordionSummary-content {
+  max-width: 122px !important;
+}
+.optional-fields-accordion
+  .MuiButtonBase-root
+  .MuiAccordionSummary-expandIconWrapper
+  svg {
+  fill: #707174 !important;
 }
 
+/* TEXTFIELD */
+.input-override div input {
+  padding: 5px 12px !important;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+.input-override p.Mui-error,
+.input-override + p.Mui-error {
+  pointer-events: none;
+}
+.input-override div::after,
+.input-override div::before {
+  border-bottom: none !important;
+}
+.input-override label,
+.img-upload-filename-label {
+  font-size: 0.875rem !important;
+  font-weight: 400;
+  transform: translate(0, -4.5px);
+}
+.input-override.notes label {
+  transform: translate(0, -22px);
+}
+.img-upload-filename-label {
+  position: absolute;
+  left: 0;
+  top: -3px;
+}
+
+/* DROPDOWN */
+.dropdown-override {
+  padding-top: 16px !important;
+}
+.dropdown-override label {
+  transform: translate(-4px, -5px) scale(1) !important;
+  font-size: 0.875rem !important;
+  font-weight: 400;
+}
+.dropdown-override div:first-child {
+  padding: 5px 14px !important;
+}
+.dropdown-override .MuiOutlinedInput-root {
+  border: 1px solid transparent;
+}
 .dropdown-unselect::after {
   content: "[Deselect]";
-  color: #979797;
+}
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 10px 10px !important;
+}
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+  margin-top: 5px;
+}
+.css-hyuuor-MuiButtonBase-root-MuiMenuItem-root.Mui-selected,
+.css-hyuuor-MuiButtonBase-root-MuiMenuItem-root:hover {
+  background-color: #ffffff1c !important;
 }
 
-.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input {
-  padding: 12px 14px !important;
+/* NOTES FIELD */
+.input-override.notes + div {
+  margin-top: 1.25rem !important;
+}
+.input-override.notes .MuiInputBase-multiline {
+  padding: 0 !important;
+}
+.input-override.notes .MuiInputBase-multiline textarea {
+  border: 1px solid transparent;
+  padding: 7px 12px !important;
+  height: 25px !important;
+  border-radius: 5px;
+}
+
+/* IMAGE UPLOAD FILENAME */
+.img-upload-filename {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 40px;
+  width: 50%;
+  align-self: center;
+  padding: 7px 8px;
+  background: #29292e;
+  color: #9ca3af;
+  border-radius: 5px;
+  margin: 0.5rem 0 !important;
+}
+.img-upload-filename.error {
+  color: #f44336;
+}
+
+/* IMAGE UPLOAD BUTTON */
+.img-upload-btn {
+  box-shadow: none !important;
+}
+
+/* REQUIRED FIELD ERROR */
+.input:has(.Mui-error),
+.dropdown-override:has(.Mui-error) {
+  position: relative;
+}
+.input-override p.Mui-error,
+.input-override + p.Mui-error {
+  position: absolute !important;
+  top: 22px;
+  left: 13px;
+}
+.dropdown-override p.Mui-error,
+.dropdown-override + p.Mui-error {
+  position: absolute !important;
+  top: 24px;
+  left: 0px;
+}
+
+.MuiInputLabel-asterisk {
+  color: #f44336;
+  font-weight: 800;
 }

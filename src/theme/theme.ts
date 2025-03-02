@@ -1,6 +1,10 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
 
+const primary = "#18d4c2" // #18d4c2
+const secondary = "#82a628" // #82a628
+const tertiary = "#002b49" // #002b49
+
 // primary: #59bab1
 // secondary: #82a628
 // tertiary: #002b49
@@ -25,21 +29,21 @@ export const tokens = (mode: string) => ({
           image: "#64c9bf7a",
         },
         primary: {
-          const: "#59bab1",
-          toDarkGray: "#59bab1",
-          alt: "#59bab1",
+          const: primary,
+          toDarkGray: primary,
+          alt: primary,
           shadowGlow: "#5252527c",
           opacity: "#59bab114",
         },
         secondary: {
-          const: "#82a628",
-          vary: "#82a628",
-          alt: "#82a628",
+          const: secondary,
+          vary: secondary,
+          alt: secondary,
         },
         tertiary: {
-          const: "#002b49",
-          vary: "#002b49",
-          vary2: "#002b49",
+          const: tertiary,
+          vary: tertiary,
+          vary2: tertiary,
         },
         white: {
           const: "#fcfcfd",
@@ -84,6 +88,31 @@ export const tokens = (mode: string) => ({
           vary: "#303031",
           toWhite: "#303031",
         },
+        menuBar: {
+          buttonBackground: "#eef2f6",
+          buttonFont: "#8b8b8b",
+          buttonBorder: "#eef2f6",
+          buttonBorderHover: primary,
+          buttonIcon: primary,
+        },
+        modal: {
+          overlay: "#002b49a7",
+          background: "#eef2f6",
+          border: primary,
+          titleColor: "#606162",
+          description: "#606162",
+          closeIcon: "#707174",
+          closeIconHover: "#323232",
+          fieldLabel: "#707174",
+          fieldBackground: "#d9e1e9",
+          fieldInputFont: "#707174",
+          fieldBorder: primary,
+          buttonFont: "#eef2f6",
+          buttonBackground: primary,
+          buttonBorder: primary,
+          buttonBackgroundHover: "transparent",
+          buttonFontHover: primary,
+        },
       }
     : {
         opacity: {
@@ -96,23 +125,23 @@ export const tokens = (mode: string) => ({
           one: "0",
         },
         overlay: {
-          modal: "#2b2b3473",
+          modal: "#06070ac7",
           image: "#0f5e568a",
         },
         primary: {
-          const: "#59bab1",
+          const: primary,
           toDarkGray: "#222228",
           alt: "#202028",
           shadowGlow: "#59bab17c",
           opacity: "#59bab114",
         },
         secondary: {
-          const: "#82a628",
+          const: secondary,
           vary: "#2d2d2d",
           alt: "#202028",
         },
         tertiary: {
-          const: "#002b49",
+          const: tertiary,
           vary: "#080808",
           vary2: "#0f5e56",
         },
@@ -124,8 +153,8 @@ export const tokens = (mode: string) => ({
           alt: "#8b8b8b",
           alt2: "#29292e",
           altShade: "#bebebe",
-          altPrimary: "#59bab1",
-          altSecondary: "#82a628",
+          altPrimary: primary,
+          altSecondary: secondary,
           opacity: "#ffffff0a",
         },
         whiteBlue: {
@@ -148,7 +177,7 @@ export const tokens = (mode: string) => ({
           const: "#8b8b8b",
           altPrimary: "#59bab1",
           toWhite: "#eef2f6",
-          toPrimary: "#59bab1",
+          toPrimary: primary,
           200: "#383838",
           300: "#535353",
           400: "#6f6f6f",
@@ -158,6 +187,31 @@ export const tokens = (mode: string) => ({
           const: "#303031",
           vary: "#fcfcfd",
           toWhite: "#eef2f6",
+        },
+        menuBar: {
+          buttonBackground: "#29292f",
+          buttonFont: "#eef2f6",
+          buttonBorder: "#29292f",
+          buttonBorderHover: primary,
+          buttonIcon: primary,
+        },
+        modal: {
+          overlay: "#06070ac7",
+          background: "#19191f",
+          border: "#323232",
+          titleColor: "#e5e7eb",
+          description: "#9ca3af",
+          closeIcon: "#707174",
+          closeIconHover: "#eef2f6",
+          fieldLabel: "#707174",
+          fieldBackground: "#29292f",
+          fieldInputFont: "#9b9b9b",
+          fieldBorder: primary,
+          buttonFont: "#19191f",
+          buttonBackground: primary,
+          buttonBorder: primary,
+          buttonBackgroundHover: "transparent",
+          buttonFontHover: primary,
         },
       }),
 });

@@ -29,14 +29,21 @@ import "../../styles/plants/ViewPlant.css";
 import { useState } from "react";
 import EditPlant from "./EditPlant";
 import { tokens } from "../../theme/theme";
+import { ModalTheme } from "../../theme/ModalThemeInterface";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
   setIsShowView: (show: boolean) => void;
   isShowView: boolean;
+  modalColorTheme: ModalTheme;
 };
 
-function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
+function ViewPlant({
+  setIsShowView,
+  isShowView,
+  fetchPlants,
+  modalColorTheme,
+}: PlantBarProps) {
   // const { treflePlant } = useSelector((state: RootState) => state.treflePlant);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
@@ -74,7 +81,9 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
           background: colors.white.toDarkGray,
         },
         "& #accordion-zone-name": { color: colors.white.const },
-        "& .MuiGauge-valueText > text > tspan": { fill: colors.gray.toWhite + " !important"}
+        "& .MuiGauge-valueText > text > tspan": {
+          fill: colors.gray.toWhite + " !important",
+        },
       },
       plantCardChip: {
         backgroundColor: colors.primary.toDarkGray + " !important",
@@ -573,6 +582,7 @@ function ViewPlant({ setIsShowView, isShowView, fetchPlants }: PlantBarProps) {
         fetchPlants={fetchPlants}
         setIsShowEdit={setIsShowEdit}
         isShowEdit={isShowEdit}
+        modalColorTheme={modalColorTheme}
       />
     </div>
   );

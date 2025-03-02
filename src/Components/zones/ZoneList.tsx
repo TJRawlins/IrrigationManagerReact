@@ -5,18 +5,21 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import ZoneCardSkeleton from "./ZoneCardSkeleton";
+import { ModalTheme } from "../../theme/ModalThemeInterface";
 
 type ZoneListProps = {
   fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
   hasError: boolean;
   isLoadingZones: boolean;
+  modalColorTheme: ModalTheme
 };
 
 export default function ZoneList({
   fetchZones,
   updateLocalStorageSeason,
   isLoadingZones,
+  modalColorTheme,
 }: ZoneListProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
@@ -68,6 +71,7 @@ export default function ZoneList({
                 updateLocalStorageSeason={updateLocalStorageSeason}
                 setIsShowEdit={setIsShowEdit}
                 isShowEdit={isShowEdit}
+                modalColorTheme={modalColorTheme}
               />
             </Grid>
           </Grid>

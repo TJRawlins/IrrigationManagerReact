@@ -1,6 +1,5 @@
 #zone-card-container {
   position: relative;
-  /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important; */
   background-image: none !important;
   border-radius: 15px;
   padding: 10px;
@@ -10,7 +9,6 @@
 .card-name.zone {
   position: absolute;
   top: 35%;
-  /* color: white; */
   text-align: center;
   text-shadow: 1px 2px 5px #000000a8;
   width: 280px;
@@ -69,7 +67,6 @@
   max-width: 100%;
   flex-wrap: nowrap;
   border-radius: 0 0 10px 10px;
-  /* opacity: 0.9; */
   margin-top: 2px;
 }
 
@@ -165,11 +162,5 @@
 
 #mui-component-select-season {
   border-radius: 4px;
-  /* color: #72b8b1; */
   padding: 12px 14px;
 }
-
-#modal-overlay {
-  backdrop-filter: blur(4px);
-}
-
