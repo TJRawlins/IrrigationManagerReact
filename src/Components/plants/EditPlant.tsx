@@ -467,7 +467,13 @@ function EditPlant({
                 <div className="split-container">
                   <FormControl fullWidth className="dropdown-override">
                     <InputLabel id="plant-type-input" sx={{ padding: "0 5px" }}>
-                      Plant type *
+                      Plant type
+                      <span
+                        aria-hidden="true"
+                        className="MuiInputLabel-asterisk"
+                      >
+                        {" " + "*"}
+                      </span>
                     </InputLabel>
                     <Field
                       as={Select}
