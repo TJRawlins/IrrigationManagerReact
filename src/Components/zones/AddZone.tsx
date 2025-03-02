@@ -441,10 +441,9 @@ function AddZone({
                 </div>
                 <Box className="btn-wrapper">
                   <Button className="card-btn submit-btn" type="submit">
-                    Add
+                    Add Zone
                   </Button>
                   <Button
-                    sx={{ p: 2 }}
                     className="card-btn cancel-btn"
                     type="button"
                     onClick={handleClose}

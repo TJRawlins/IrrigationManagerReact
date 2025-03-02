@@ -159,7 +159,8 @@
 
 /* BUTTONS */
 .card-btn {
-  padding: 5px 16px !important;
+  /* padding: 5px 16px !important; */
+  padding: 7px 16px 5px 16px !important;
   text-transform: unset !important;
   min-width: 100px !important;
   height: 39px;
@@ -175,6 +176,8 @@
   margin: 0.5rem 0 !important;
   box-shadow: none;
   text-transform: none !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
 }
 .img-upload-btn:hover {
   box-shadow: none;
@@ -183,6 +186,9 @@
 /* INPUTS */
 .input {
   width: 100% !important;
+}
+.MuiInputBase-formControl {
+  border-radius: 5px !important;
 }
 
 /* INPUT ACCORDION */
@@ -318,4 +324,9 @@
   position: absolute !important;
   top: 24px;
   left: 0px;
+}
+
+.MuiInputLabel-asterisk {
+  color: #f44336;
+  font-weight: 800;
 }

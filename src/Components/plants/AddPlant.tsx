@@ -389,7 +389,13 @@ function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
                 <div className="split-container">
                   <FormControl fullWidth className="dropdown-override">
                     <InputLabel id="plant-type-input" sx={{ padding: "0 5px" }}>
-                      Plant type *
+                      Plant type
+                      <span
+                        aria-hidden="true"
+                        className="MuiInputLabel-asterisk"
+                      >
+                        {" " + "*"}
+                      </span>
                     </InputLabel>
                     <Field
                       as={Select}
@@ -723,7 +729,6 @@ function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
                     Add Plant
                   </Button>
                   <Button
-                    sx={{ p: 2 }}
                     className="card-btn cancel-btn"
                     type="button"
                     onClick={handleClose}
