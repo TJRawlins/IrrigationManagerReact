@@ -61,7 +61,7 @@ export default function ZoneBar({
         color: colors.gray.toWhite,
       },
       dropdown: {
-        backgroundColor: colors.whiteBlue.vary,
+        backgroundColor: colors.menuBar.buttonBackground,
         ".menu-text": {
           color: colors.gray.toWhite + " !important",
         },
@@ -83,7 +83,8 @@ export default function ZoneBar({
       },
       gallonsChips: {
         // borderBottom: "1px solid " + colors.shadow.vary,
-        backgroundColor: colors.whiteBlue.vary,
+        // backgroundColor: colors.whiteBlue.vary,
+        backgroundColor: colors.menuBar.buttonBackground,
         color: colors.gray.toWhite,
       },
       gallonsChipsAvatar: {

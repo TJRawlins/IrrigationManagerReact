@@ -1,5 +1,5 @@
 import { Box, Container, CssBaseline, Grid } from "@mui/material";
-import ZoneCard from "./ZoneCard";
+import ZoneCardNew from "./ZoneCardNew";
 import EditZone from "./EditZone";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -56,11 +56,12 @@ export default function ZoneList({
                     paddingLeft: "1.5rem !important",
                   }}
                 >
-                  <ZoneCard
+                  <ZoneCardNew
                     zone={zone}
                     fetchZones={fetchZones}
                     setIsShowEdit={setIsShowEdit}
                     updateLocalStorageSeason={updateLocalStorageSeason}
+                    modalColorTheme={modalColorTheme}
                   />
                 </Grid>
               ))

@@ -1,9 +1,9 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
 
-const primary = "#18d4c2" // #18d4c2
-const secondary = "#82a628" // #82a628
-const tertiary = "#002b49" // #002b49
+const primary = "#18d4c2"; // #18d4c2
+const secondary = "#82a628"; // #82a628
+const tertiary = "#002b49"; // #002b49
 
 // primary: #59bab1
 // secondary: #82a628
@@ -88,6 +88,9 @@ export const tokens = (mode: string) => ({
           vary: "#303031",
           toWhite: "#303031",
         },
+        grid: {
+          background: "#cbd7d9",
+        },
         menuBar: {
           buttonBackground: "#eef2f6",
           buttonFont: "#8b8b8b",
@@ -161,7 +164,7 @@ export const tokens = (mode: string) => ({
           const: "#eef2f6",
           vary: "#29292f",
           varyLight: "#4f4f4f",
-          toDarkGray: "#131318",
+          toDarkGray: "#0e0e12",
           alt: "#535353",
           alt2: "#29292e",
           200: "#5f6162",
@@ -188,8 +191,11 @@ export const tokens = (mode: string) => ({
           vary: "#fcfcfd",
           toWhite: "#eef2f6",
         },
+        grid: {
+          background: "#0e0e12",
+        },
         menuBar: {
-          buttonBackground: "#29292f",
+          buttonBackground: "#292934",
           buttonFont: "#eef2f6",
           buttonBorder: "#29292f",
           buttonBorderHover: primary,

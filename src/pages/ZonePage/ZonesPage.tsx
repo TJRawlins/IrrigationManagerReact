@@ -38,7 +38,7 @@ const ZonesPage = () => {
   const zonePageColorTheme = () => {
     return {
       zoneGrid: {
-        backgroundColor: colors.whiteBlue.toDarkGray,
+        backgroundColor: colors.grid.background,
       },
     };
   };
@@ -114,6 +114,18 @@ const ZonesPage = () => {
       },
       cardDescription: {
         color: colors.modal.description,
+      },
+      gallonsChips: {
+        // borderBottom: "1px solid " + colors.shadow.vary,
+        backgroundColor: colors.whiteBlue.vary,
+        color: colors.gray.toWhite,
+      },
+      gallonsChipsAvatar: {
+        background: colors.whiteBlue.alt,
+        color: colors.primary.const + " !important",
+        "& .bar-gallons-chip-avatar-text": {
+          backgroundColor: colors.whiteBlue.vary,
+        },
       },
     };
 

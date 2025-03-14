@@ -1,0 +1,155 @@
+.MuiCard-root.card {
+  display: flex;
+  position: relative;
+  background-image: none;
+  background-color: #19191f;
+  border: 2px solid #29292e;
+  border-radius: 7px !important;
+  width: 100%;
+  height: 100%;
+}
+
+.card-img-wrapper {
+  position: relative;
+}
+
+.zone.card-img {
+  position: relative;
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 101%;
+  width: 125px;
+  border-radius: 0;
+}
+
+span.card-img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    #00ffdc5c 0%,
+    #00ffdc12 50%,
+    #19191f 100%
+  );
+  background-color: #19191f75;
+}
+
+#card-content {
+  width: 260px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 15px;
+}
+#card-content .close-icon {
+  color: #7c7c7f;
+}
+
+/* .season-icon-wrapper {
+  position: absolute;
+  top: 17px;
+  left: 17px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.season-icon {
+  color: #ffff;
+  font-size: 1.25rem;
+} */
+
+.runtime-text {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem !important;
+  color: #18d4c2;
+}
+
+.zone-title {
+  text-transform: capitalize;
+  font-weight: 800 !important;
+  font-size: 1.25rem !important;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+
+.zone-data {
+  display: flex;
+}
+
+.zone-data .card-data-group {
+  gap: 0 !important;
+}
+.card-data-group.zone-data-group {
+  background: transparent;
+  padding: 0;
+  margin: 1rem 0;
+  width: 100%;
+}
+.card-data-group.zone-data-group .card-data.flex-row.size {
+  margin: 0 !important;
+}
+.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-title {
+  font-weight: 100;
+  font-size: 0.875rem;
+}
+.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-value {
+  font-family: "Source Sans Pro", Helvetica, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-size: 0.95rem;
+  color: #18d4c2;
+}
+
+#zone-card-total-gallons-box {
+  border-top: 1px solid #29292e;
+  border-bottom: 1px solid #29292e;
+  padding: 10px 0;
+  margin-bottom: 8px;
+}
+.zone-card-total-gallons {
+  display: flex;
+  justify-content: space-between;
+}
+.zone-card-total-gallons .bar-gallons-chip {
+  padding: 0 !important;
+  background-color: transparent !important;
+}
+.zone-card-total-gallons .bar-gallons-chip {
+  font-size: 0.875rem !important;
+}
+.zone-card-total-gallons .bar-gallons-chip-avatar-icon {
+  font-size: 1.15rem;
+}
+.zone-card-total-gallons .bar-gallons-chip-avatar-text {
+  background-color: #19191f !important;
+  font-size: 0.55rem;
+}
+
+.MuiCardActions-root {
+  justify-content: right;
+  padding: 0 !important;
+  margin-top: 15px !important;
+}
+#zone-card-action-menu-box {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+.action-menu-button {
+  background-color: #18d4c2 !important;
+  color: #19191f !important;
+  width: 35px;
+  height: 35px;
+  border-radius: 50% !important;
+  font-size: 0.875rem !important;
+  min-width: 0px !important;
+}

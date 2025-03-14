@@ -65,4 +65,16 @@ export interface ModalTheme {
   cardDescription: {
     color: string;
   };
+  gallonsChips: {
+    // borderBottom: "1px solid " + colors.shadow.vary,
+    backgroundColor: string;
+    color: string;
+  };
+  gallonsChipsAvatar: {
+    background: string;
+    color: string;
+    "& .bar-gallons-chip-avatar-text": {
+      backgroundColor: string;
+    };
+  };
 }
