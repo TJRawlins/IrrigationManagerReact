@@ -93,6 +93,7 @@ export const tokens = (mode: string) => ({
         },
         menuBar: {
           buttonBackground: "#eef2f6",
+          buttonBackgroundImage: "linear-gradient(#eef2f6, #eef2f6)",
           buttonFont: "#8b8b8b",
           buttonBorder: "#eef2f6",
           buttonBorderHover: primary,
@@ -196,6 +197,7 @@ export const tokens = (mode: string) => ({
         },
         menuBar: {
           buttonBackground: "#292934",
+          buttonBackgroundImage: "linear-gradient(#292934, #292934)",
           buttonFont: "#eef2f6",
           buttonBorder: "#29292f",
           buttonBorderHover: primary,

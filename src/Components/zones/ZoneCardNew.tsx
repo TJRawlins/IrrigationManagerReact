@@ -7,6 +7,7 @@ import {
   CardActions,
   CardContent,
   Chip,
+  Divider,
   Popover,
   Stack,
   Tooltip,
@@ -15,7 +16,7 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { RiTimerLine } from "react-icons/ri";
 import { BiSolidCopyAlt } from "react-icons/bi";
-import { FaLeaf } from "react-icons/fa";
+// import { FaLeaf } from "react-icons/fa";
 import { Zone } from "../../App/models/Zone";
 import { useRef, useState } from "react";
 import agent from "../../App/api/agent";
@@ -35,6 +36,9 @@ import { deleteObject, getStorage, ref } from "firebase/storage";
 import { IoClose } from "react-icons/io5";
 import { TbDroplet } from "react-icons/tb";
 import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { PiPlantFill } from "react-icons/pi";
+// import { BarChart } from "@mui/icons-material";
+import { BarChart } from "@mui/x-charts/BarChart";
 
 type ZoneCardProps = {
   fetchZones(args: number): void;
@@ -246,6 +250,19 @@ export default function ZoneCardNew({
     }
   };
 
+  const chartSetting = {
+    xAxis: [
+      {
+        label: "Gallons",
+      },
+    ],
+    // width: "100%",
+    height: 150,
+  };
+  function valueFormatter(value: number | null) {
+    return `${value} gals`;
+  }
+
   /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  S E A S O N S   I C O N S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
   // function getSeasonIcon(season: string): JSX.Element {
   //   let seasonIcon;
@@ -349,67 +366,93 @@ export default function ZoneCardNew({
                 <span className="zone-data-value">{zone.season}</span>
               </Typography>
             </div>
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              style={{ margin: "0px 15px" }}
+            ></Divider>
+            {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  T O T A L   G A L L O N S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
+            <div className="card-data-group zone-data-group">
+              <Box id="zone-card-total-gallons-box">
+                <Stack className="zone-card-total-gallons" direction="row">
+                  <Tooltip title="Weekly Gallons" arrow>
+                    <Chip
+                      className="bar-gallons-chip"
+                      sx={modalColorTheme.gallonsChips}
+                      avatar={
+                        <Avatar
+                          className="bar-gallons-chip-avatar"
+                          sx={modalColorTheme.gallonsChipsAvatar}
+                        >
+                          <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                          <span className="bar-gallons-chip-avatar-text">
+                            W
+                          </span>
+                        </Avatar>
+                      }
+                      label={zone.totalGalPerWeek}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Monthly Gallons" arrow>
+                    <Chip
+                      className="bar-gallons-chip"
+                      sx={modalColorTheme.gallonsChips}
+                      avatar={
+                        <Avatar
+                          className="bar-gallons-chip-avatar"
+                          sx={modalColorTheme.gallonsChipsAvatar}
+                        >
+                          <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                          <span className="bar-gallons-chip-avatar-text">
+                            M
+                          </span>
+                        </Avatar>
+                      }
+                      label={zone.totalGalPerMonth}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Yearly Gallons" arrow>
+                    <Chip
+                      className="bar-gallons-chip"
+                      sx={modalColorTheme.gallonsChips}
+                      avatar={
+                        <Avatar
+                          className="bar-gallons-chip-avatar"
+                          sx={modalColorTheme.gallonsChipsAvatar}
+                        >
+                          <TbDroplet className="bar-gallons-chip-avatar-icon" />
+                          <span className="bar-gallons-chip-avatar-text">
+                            Y
+                          </span>
+                        </Avatar>
+                      }
+                      label={zone.totalGalPerYear}
+                    />
+                  </Tooltip>
+                </Stack>
+              </Box>
+            </div>
           </Box>
-          {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  T O T A L   G A L L O N S  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
-          <Box id="zone-card-total-gallons-box">
-            <Stack className="zone-card-total-gallons" direction="row">
-              <Tooltip title="Weekly Gallons" arrow>
-                <Chip
-                  className="bar-gallons-chip"
-                  sx={modalColorTheme.gallonsChips}
-                  avatar={
-                    <Avatar
-                      className="bar-gallons-chip-avatar"
-                      sx={modalColorTheme.gallonsChipsAvatar}
-                    >
-                      <TbDroplet className="bar-gallons-chip-avatar-icon" />
-                      <span className="bar-gallons-chip-avatar-text">W</span>
-                    </Avatar>
-                  }
-                  label={zone.totalGalPerWeek}
-                />
-              </Tooltip>
-              <Tooltip title="Monthly Gallons" arrow>
-                <Chip
-                  className="bar-gallons-chip"
-                  sx={modalColorTheme.gallonsChips}
-                  avatar={
-                    <Avatar
-                      className="bar-gallons-chip-avatar"
-                      sx={modalColorTheme.gallonsChipsAvatar}
-                    >
-                      <TbDroplet className="bar-gallons-chip-avatar-icon" />
-                      <span className="bar-gallons-chip-avatar-text">M</span>
-                    </Avatar>
-                  }
-                  label={zone.totalGalPerMonth}
-                />
-              </Tooltip>
-              <Tooltip title="Yearly Gallons" arrow>
-                <Chip
-                  className="bar-gallons-chip"
-                  sx={modalColorTheme.gallonsChips}
-                  avatar={
-                    <Avatar
-                      className="bar-gallons-chip-avatar"
-                      sx={modalColorTheme.gallonsChipsAvatar}
-                    >
-                      <TbDroplet className="bar-gallons-chip-avatar-icon" />
-                      <span className="bar-gallons-chip-avatar-text">Y</span>
-                    </Avatar>
-                  }
-                  label={zone.totalGalPerYear}
-                />
-              </Tooltip>
-            </Stack>
-          </Box>
+              <BarChart
+                dataset={[
+                  { time: "Week", gallons: zone.totalGalPerWeek },
+                  { time: "Month", gallons: zone.totalGalPerMonth },
+                  { time: "Year", gallons: zone.totalGalPerYear },
+                ]}
+                yAxis={[{ scaleType: "band", dataKey: "time" }]}
+                series={[{ dataKey: "gallons", label: "Water Usage", valueFormatter }]}
+                layout="horizontal"
+                grid={{ vertical: true }}
+                {...chartSetting}
+              />
           {/* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*  A C T I O N   M E N U  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */}
           <CardActions>
             <Box id="zone-card-action-menu-box">
               <Tooltip title="View plants" arrow>
                 <Link to={`/plants/zone/${zone.id}`}>
                   <Button className="action-menu-button" onClick={showPlants}>
-                    <FaLeaf />
+                    <PiPlantFill />
                   </Button>
                 </Link>
               </Tooltip>

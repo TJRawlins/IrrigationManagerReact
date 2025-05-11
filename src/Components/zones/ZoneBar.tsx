@@ -29,13 +29,15 @@ import {
 } from "../../redux/seasonSlice";
 import { tokens } from "../../theme/theme";
 import AddZone from "./AddZone";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { ModalTheme } from "../../theme/ModalTheme";
+import { MenuBarTheme } from "../../theme/MenuBarTheme";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
   isLoadingZones: boolean;
   modalColorTheme: ModalTheme;
+  menuBarColorTheme: MenuBarTheme;
 };
 
 export default function ZoneBar({
@@ -43,6 +45,7 @@ export default function ZoneBar({
   updateLocalStorageSeason,
   isLoadingZones,
   modalColorTheme,
+  menuBarColorTheme,
 }: ZoneBarProps) {
   const { season } = useSelector((state: RootState) => state.season);
   const { seasonName } = useSelector((state: RootState) => state.seasonName);
@@ -59,27 +62,6 @@ export default function ZoneBar({
       mainBar: {
         backgroundColor: colors.white.vary,
         color: colors.gray.toWhite,
-      },
-      dropdown: {
-        backgroundColor: colors.menuBar.buttonBackground,
-        ".menu-text": {
-          color: colors.gray.toWhite + " !important",
-        },
-        ".menuIcon, .MuiSvgIcon-root": {
-          color: colors.primary.const + " !important",
-        },
-        ".MuiSvgIcon-root": {
-          color: colors.gray.const + " !important",
-        },
-        "&.season-btn:hover": {
-          backgroundColor: colors.primary.opacity + " !important",
-          border: "1px solid #59bab1 !important",
-        },
-        "&.season-btn:hover .menu-text,&.season-btn:hover .MuiSvgIcon-root,&.season-btn:hover .menuIcon":
-          { color: colors.primary.const + " !important" },
-        "&:hover .menu-text,&:hover .MuiSvgIcon-root,&:hover .menuIcon": {
-          color: colors.primary.const + " !important",
-        },
       },
       gallonsChips: {
         // borderBottom: "1px solid " + colors.shadow.vary,
@@ -218,32 +200,32 @@ export default function ZoneBar({
             value={isInitialLoad ? seasonName : "Select Season"}
             onChange={handleChange}
             inputProps={{ "aria-label": "Without label" }}
-            sx={navBarColorTheme().dropdown}
+            sx={menuBarColorTheme.dropdown}
           >
             {!isInitialLoad && (
               <MenuItem value={"Select Season"}>
                 <em>Select Season</em>
               </MenuItem>
             )}
-            <MenuItem value={"Summer"} sx={navBarColorTheme().dropdown}>
+            <MenuItem value={"Summer"} sx={menuBarColorTheme.dropdown}>
               <div className="menu-wrapper">
                 <MdSunny className="menuIcon" />
                 <Typography className="menu-text">Summer</Typography>
               </div>
             </MenuItem>
-            <MenuItem value={"Fall"} sx={navBarColorTheme().dropdown}>
+            <MenuItem value={"Fall"} sx={menuBarColorTheme.dropdown}>
               <div className="menu-wrapper">
                 <FaCanadianMapleLeaf className="menuIcon iconRotate" />
                 <Typography className="menu-text">Fall</Typography>
               </div>
             </MenuItem>
-            <MenuItem value={"Winter"} sx={navBarColorTheme().dropdown}>
+            <MenuItem value={"Winter"} sx={menuBarColorTheme.dropdown}>
               <div className="menu-wrapper">
                 <MdAcUnit className="menuIcon" />
                 <Typography className="menu-text">Winter</Typography>
               </div>
             </MenuItem>
-            <MenuItem value={"Spring"} sx={navBarColorTheme().dropdown}>
+            <MenuItem value={"Spring"} sx={menuBarColorTheme.dropdown}>
               <div className="menu-wrapper">
                 <MdLocalFlorist className="menuIcon" />
                 <Typography className="menu-text">Spring</Typography>

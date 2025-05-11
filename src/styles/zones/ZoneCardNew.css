@@ -66,6 +66,8 @@ span.card-img-overlay {
   font-size: 1.25rem;
 } */
 
+/* ====== ZONE NAME & RUNTIME ====== */
+
 .runtime-text {
   display: flex;
   align-items: center;
@@ -82,44 +84,53 @@ span.card-img-overlay {
   text-overflow: ellipsis;
 }
 
+/* ====== CARD DATA: GROUPS ====== */
+
 .zone-data {
   display: flex;
+  margin-top: 1.5rem;
 }
 
 .zone-data .card-data-group {
   gap: 0 !important;
 }
+
+/* ====== CARD DATA: LEFT GROUP ====== */
+
 .card-data-group.zone-data-group {
   background: transparent;
   padding: 0;
-  margin: 1rem 0;
   width: 100%;
 }
 .card-data-group.zone-data-group .card-data.flex-row.size {
   margin: 0 !important;
+  line-height: 1.7;
 }
-.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-title {
+.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-title ,
+.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-value {
   font-weight: 100;
   font-size: 0.875rem;
-}
-.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-value {
   font-family: "Source Sans Pro", Helvetica, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-  font-size: 0.95rem;
+}
+.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-value {
   color: #18d4c2;
 }
 
-#zone-card-total-gallons-box {
-  border-top: 1px solid #29292e;
-  border-bottom: 1px solid #29292e;
-  padding: 10px 0;
-  margin-bottom: 8px;
+/* ====== CARD DATA: RIGHT GROUP ====== */
+
+#zone-card-total-gallons-box .zone-card-total-gallons{
+  display: flex;
+  flex-direction: column;
 }
 .zone-card-total-gallons {
   display: flex;
   justify-content: space-between;
 }
 .zone-card-total-gallons .bar-gallons-chip {
+  display: flex;
+  justify-content: space-between;
+  width: 100% !important;
   padding: 0 !important;
   background-color: transparent !important;
 }
@@ -134,10 +145,12 @@ span.card-img-overlay {
   font-size: 0.55rem;
 }
 
+/* ====== CARD ACTION BUTTONS ====== */
+
 .MuiCardActions-root {
   justify-content: right;
   padding: 0 !important;
-  margin-top: 15px !important;
+  margin-top: 1.5rem !important;
 }
 #zone-card-action-menu-box {
   display: flex;
@@ -146,10 +159,16 @@ span.card-img-overlay {
 }
 .action-menu-button {
   background-color: #18d4c2 !important;
+  border: 2px solid #18d4c2 !important;
   color: #19191f !important;
   width: 35px;
   height: 35px;
   border-radius: 50% !important;
   font-size: 0.875rem !important;
   min-width: 0px !important;
+  transition: all 250ms !important;
+}
+.action-menu-button:hover {
+  background-color: transparent !important;
+  color: #18d4c2 !important;
 }
