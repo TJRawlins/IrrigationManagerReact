@@ -29,7 +29,7 @@ import "../../styles/plants/ViewPlant.css";
 import { useState } from "react";
 import EditPlant from "./EditPlant";
 import { tokens } from "../../theme/theme";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { ModalTheme } from "../../theme/ModalTheme";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;

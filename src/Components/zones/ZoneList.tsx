@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import ZoneCardSkeleton from "./ZoneCardSkeleton";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { ModalTheme } from "../../theme/ModalTheme";
 
 type ZoneListProps = {
   fetchZones(args: number): Promise<void>;

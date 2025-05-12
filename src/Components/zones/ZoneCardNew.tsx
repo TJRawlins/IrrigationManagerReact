@@ -35,7 +35,7 @@ import "../../styles/zones/ZoneCardNew.css";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { IoClose } from "react-icons/io5";
 import { TbDroplet } from "react-icons/tb";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { ModalTheme } from "../../theme/ModalTheme";
 import { PiPlantFill } from "react-icons/pi";
 // import { BarChart } from "@mui/icons-material";
 import { BarChart } from "@mui/x-charts/BarChart";
@@ -63,56 +63,6 @@ export default function ZoneCardNew({
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   const isImageBeingUsedRef = useRef<boolean>(false);
-
-  // color theme
-  // const theme = useTheme();
-  // const colors = tokens(theme.palette.mode);
-  // const zoneCardColorTheme = () => {
-  //   return {
-  //     zoneCardContainer: {
-  //       backgroundColor: colors.whiteBlue.alt2 + " !important",
-  //     },
-  //     zoneCardChip: {
-  //       backgroundColor: colors.primary.toDarkGray + " !important",
-  //       color: colors.white.const,
-  //       ".iconStyle.seasonChipIcon": {
-  //         fill: colors.primary.const + " !important",
-  //         background: colors.white.toLightGray,
-  //       },
-  //     },
-  //     zoneCardMedia: {
-  //       "& #card-img-overlay": {
-  //         backgroundColor: colors.tertiary.vary2,
-  //         opacity: colors.opacity.zero75,
-  //       },
-  //     },
-  //     zoneCardText: {
-  //       color: colors.white.altShade,
-  //       "& span": { color: colors.white.altShade },
-  //     },
-  //     zoneCardActionMenu: {
-  //       "& .zone-card-action-button": {
-  //         backgroundColor: colors.whiteBlue.vary,
-  //       },
-  //       "& .zone-card-action-button:hover": {
-  //         backgroundColor: colors.whiteBlue.vary,
-  //         border: "1px solid " + colors.primary.const,
-  //       },
-  //     },
-  //     zoneCardGallons: {
-  //       display: { xs: "flex", sm: "flex", md: "flex" },
-  //       background: `linear-gradient(45deg, ${colors.secondary.alt}, ${colors.primary.alt})`,
-  //       ".gallons-chip:nth-of-type(2)": {
-  //         borderRight: `1px solid ${colors.white.alt2} !important`,
-  //         borderLeft: `1px solid ${colors.white.alt2} !important`,
-  //       },
-  //       ".gallons-chip-avatar": {
-  //         color: colors.white.altPrimary + " !important",
-  //         backgroundColor: colors.white.opacity + " !important",
-  //       },
-  //     },
-  //   };
-  // };
 
   function handelMouseEnter() {
     setIsHovering(true);
