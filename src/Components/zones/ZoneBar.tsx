@@ -12,7 +12,6 @@ import {
   Stack,
   Tooltip,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { TbDroplet } from "react-icons/tb";
 import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
@@ -27,7 +26,6 @@ import {
   updateCurrentSeasonName,
   updateIsInitialLoad,
 } from "../../redux/seasonSlice";
-import { tokens } from "../../theme/theme";
 import AddZone from "./AddZone";
 import { ModalTheme } from "../../theme/ModalTheme";
 import { MenuBarTheme } from "../../theme/MenuBarTheme";
@@ -53,31 +51,6 @@ export default function ZoneBar({
     (state: RootState) => state.isInitialLoad
   );
   const dispatch = useDispatch();
-
-  // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const navBarColorTheme = () => {
-    return {
-      mainBar: {
-        backgroundColor: colors.white.vary,
-        color: colors.gray.toWhite,
-      },
-      gallonsChips: {
-        // borderBottom: "1px solid " + colors.shadow.vary,
-        // backgroundColor: colors.whiteBlue.vary,
-        backgroundColor: colors.menuBar.buttonBackground,
-        color: colors.gray.toWhite,
-      },
-      gallonsChipsAvatar: {
-        background: colors.whiteBlue.alt,
-        color: colors.primary.const + " !important",
-        "& .bar-gallons-chip-avatar-text": {
-          backgroundColor: colors.whiteBlue.vary,
-        },
-      },
-    };
-  };
 
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
@@ -109,11 +82,11 @@ export default function ZoneBar({
           <Tooltip title="Weekly Gallons" arrow>
             <Chip
               className="bar-gallons-chip"
-              sx={navBarColorTheme().gallonsChips}
+              sx={menuBarColorTheme.barButtons}
               avatar={
                 <Avatar
                   className="bar-gallons-chip-avatar"
-                  sx={navBarColorTheme().gallonsChipsAvatar}
+                  sx={menuBarColorTheme.barButtons}
                 >
                   <TbDroplet className="bar-gallons-chip-avatar-icon" />
                   <span className="bar-gallons-chip-avatar-text">W</span>
@@ -125,11 +98,11 @@ export default function ZoneBar({
           <Tooltip title="Monthly Gallons" arrow>
             <Chip
               className="bar-gallons-chip"
-              sx={navBarColorTheme().gallonsChips}
+              sx={menuBarColorTheme.barButtons}
               avatar={
                 <Avatar
                   className="bar-gallons-chip-avatar"
-                  sx={navBarColorTheme().gallonsChipsAvatar}
+                  sx={menuBarColorTheme.barButtons}
                 >
                   <TbDroplet className="bar-gallons-chip-avatar-icon" />
                   <span className="bar-gallons-chip-avatar-text">M</span>
@@ -141,11 +114,11 @@ export default function ZoneBar({
           <Tooltip title="Yearly Gallons" arrow>
             <Chip
               className="bar-gallons-chip"
-              sx={navBarColorTheme().gallonsChips}
+              sx={menuBarColorTheme.barButtons}
               avatar={
                 <Avatar
                   className="bar-gallons-chip-avatar"
-                  sx={navBarColorTheme().gallonsChipsAvatar}
+                  sx={menuBarColorTheme.barButtons}
                 >
                   <TbDroplet className="bar-gallons-chip-avatar-icon" />
                   <span className="bar-gallons-chip-avatar-text">Y</span>
@@ -243,7 +216,7 @@ export default function ZoneBar({
   return (
     <>
       <CssBaseline />
-      <div className="main-container" style={navBarColorTheme().mainBar}>
+      <div className="main-container" style={menuBarColorTheme.mainBar}>
         <div className="content-container">
           <div className="title-container">
             <Typography className="bar-title" variant="h6" noWrap component="a">

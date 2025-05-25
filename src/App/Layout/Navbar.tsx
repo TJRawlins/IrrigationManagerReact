@@ -20,26 +20,28 @@ import {
   DarkModeOutlined,
 } from "@mui/icons-material";
 // import SearchIcon from "@mui/icons-material/Search";
-import { useTheme, Theme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import React, { useContext, useState } from "react";
 import logo from "../../assets/irrigation logo.png";
 import Sidebar from "./Sidebar";
-import { ColorModeContext, tokens } from "../../theme/theme";
+import { ColorModeContext } from "../../theme/theme";
+import { useNavBarColorTheme } from "../../theme/NavBarTheme";
 
 export default function Navbar() {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  // const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
-  const appBarStyles = (theme: Theme) => {
-    return {
-      mainBar: {
-        backgroundColor: colors.tertiary.vary,
-        color: colors.white.altPrimary,
-        zIndex: theme.zIndex.drawer + 1,
-        position: "relative !important",
-      },
-    };
-  };
+  const navBarColorTheme = useNavBarColorTheme();
+  // const appBarStyles = (theme: Theme) => {
+  //   return {
+  //     mainBar: {
+  //       backgroundColor: colors.tertiary.vary,
+  //       color: colors.white.altPrimary,
+  //       zIndex: theme.zIndex.drawer + 1,
+  //       position: "relative !important",
+  //     },
+  //   };
+  // };
 
   // const Search = styled("div")(({ theme }) => ({
   //   position: "relative",
@@ -183,7 +185,7 @@ export default function Navbar() {
    */
   return (
     <Box sx={{ flexGrow: 1, position: "relative !important" }}>
-      <AppBar sx={appBarStyles(theme).mainBar}>
+      <AppBar sx={navBarColorTheme.mainBar}>
         <Toolbar
           sx={{
             paddingLeft: "25px !important",
@@ -191,18 +193,14 @@ export default function Navbar() {
           }}
         >
           <Sidebar />
-          <img
-            src={logo}
-            style={{ width: "50px", marginRight: "0.5rem" }}
-          ></img>
+          <img id="logo" src={logo}></img>
           <Typography
+            id="logo-text"
             variant="h4"
             noWrap
             component="div"
             sx={{
               display: { xs: "none", sm: "block" },
-              fontFamily: "'MuseoModerno', sans-serif",
-              fontSize: "2.5rem",
             }}
           >
             droplet

@@ -3,11 +3,10 @@ div.main-container {
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  top: 60px;
+  top: 65px;
   width: 100%;
-  height: 60px;
-  padding: 0 1.3rem;
-  box-shadow: none;
+  height: 55px;
+  padding-bottom: 3px;
   border-bottom: none;
   box-shadow: none;
   z-index: 1;
@@ -56,7 +55,7 @@ div.main-container {
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
   font-size: 1rem !important;
   letter-spacing: 0.05em !important;
-  gap: .75rem;
+  gap: 0.75rem;
 }
 
 .bar-gallons-chip-avatar {
@@ -80,12 +79,13 @@ div.main-container {
   position: absolute;
   top: 12px;
   right: 5%;
-  font-size: .65rem;
+  font-size: 0.65rem;
   width: 11.2px;
   padding: 0.1rem !important;
 }
 
-.bar-gallons-chip .MuiChip-label, .bar-gallons-chip .MuiChip-avatar {
+.bar-gallons-chip .MuiChip-label,
+.bar-gallons-chip .MuiChip-avatar {
   padding: 0 !important;
 }
 
@@ -107,6 +107,7 @@ div.main-container {
   white-space: nowrap;
   border-radius: 10px !important;
   text-transform: capitalize !important;
+  transition: background-color 0s ease-in-out !important;
 }
 
 .btn-content-container {

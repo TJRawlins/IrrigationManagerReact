@@ -30,7 +30,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { MdOutlineAddCircle } from "react-icons/md";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { ModalTheme } from "../../theme/ModalTheme";
 import { IoClose } from "react-icons/io5";
 
 type ZoneBarProps = {
