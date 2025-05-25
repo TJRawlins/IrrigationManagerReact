@@ -91,13 +91,20 @@ export const tokens = (mode: string) => ({
         grid: {
           background: "#cbd7d9",
         },
+        navBar: {
+          background: tertiary,
+          color: "#eef2f6",
+          borderBottom: "#212a3e",
+        },
         menuBar: {
+          background: "#dae4e4",
           buttonBackground: "#eef2f6",
           buttonBackgroundImage: "linear-gradient(#eef2f6, #eef2f6)",
           buttonFont: "#8b8b8b",
           buttonBorder: "#eef2f6",
           buttonBorderHover: primary,
           buttonIcon: primary,
+          gallonsIcon: primary,
         },
         modal: {
           overlay: "#002b49a7",
@@ -195,13 +202,20 @@ export const tokens = (mode: string) => ({
         grid: {
           background: "#0e0e12",
         },
+        navBar: {
+          background: "#141b2d",
+          color: "#eef2f6",
+          borderBottom: "#212a3e",
+        },
         menuBar: {
-          buttonBackground: "#292934",
+          background: "#141b2d",
+          buttonBackground: "#212a3e",
           buttonBackgroundImage: "linear-gradient(#292934, #292934)",
           buttonFont: "#eef2f6",
           buttonBorder: "#29292f",
           buttonBorderHover: primary,
           buttonIcon: primary,
+          gallonsIcon: primary,
         },
         modal: {
           overlay: "#06070ac7",

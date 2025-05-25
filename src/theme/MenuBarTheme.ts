@@ -2,6 +2,9 @@ import { useTheme } from "@mui/material";
 import { tokens } from "./theme";
 
 export interface MenuBarTheme {
+  mainBar: {
+    backgroundColor: string;
+  };
   barButtons: {
     backgroundColor: string;
     color: string;
@@ -9,6 +12,10 @@ export interface MenuBarTheme {
     "& .btn-icon": { color: string };
     "&.action:hover": {
       border: string;
+    };
+    "& .bar-gallons-chip-avatar-text": { backgroundColor: string };
+    "& .bar-gallons-chip-avatar-icon, & .bar-gallons-chip-avatar-text": {
+      color: string;
     };
   };
   dropdown: {
@@ -40,6 +47,9 @@ export const useMenuBarColorTheme = (): MenuBarTheme => {
   const colors = tokens(theme.palette.mode);
 
   return {
+    mainBar: {
+      backgroundColor: colors.menuBar.background,
+    },
     barButtons: {
       backgroundColor: colors.menuBar.buttonBackground,
       color: colors.menuBar.buttonFont,
@@ -47,6 +57,12 @@ export const useMenuBarColorTheme = (): MenuBarTheme => {
       "& .btn-icon": { color: colors.menuBar.buttonIcon + " !important" },
       "&.action:hover": {
         border: "1px solid " + colors.menuBar.buttonBorderHover,
+      },
+      "& .bar-gallons-chip-avatar-text": {
+        backgroundColor: colors.menuBar.buttonBackground,
+      },
+      "& .bar-gallons-chip-avatar-icon, & .bar-gallons-chip-avatar-text": {
+        color: colors.menuBar.gallonsIcon + " !important",
       },
     },
     dropdown: {
