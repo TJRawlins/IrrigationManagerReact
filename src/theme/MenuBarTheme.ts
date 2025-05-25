@@ -4,6 +4,7 @@ import { tokens } from "./theme";
 export interface MenuBarTheme {
   mainBar: {
     backgroundColor: string;
+    color: string;
   };
   barButtons: {
     backgroundColor: string;
@@ -49,6 +50,7 @@ export const useMenuBarColorTheme = (): MenuBarTheme => {
   return {
     mainBar: {
       backgroundColor: colors.menuBar.background,
+      color: colors.menuBar.color,
     },
     barButtons: {
       backgroundColor: colors.menuBar.buttonBackground,

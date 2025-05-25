@@ -98,6 +98,7 @@ export const tokens = (mode: string) => ({
         },
         menuBar: {
           background: "#dae4e4",
+          color: "#606162",
           buttonBackground: "#eef2f6",
           buttonBackgroundImage: "linear-gradient(#eef2f6, #eef2f6)",
           buttonFont: "#8b8b8b",
@@ -204,15 +205,16 @@ export const tokens = (mode: string) => ({
         },
         navBar: {
           background: "#141b2d",
-          color: "#eef2f6",
+          color: "#e0e0e0",
           borderBottom: "#212a3e",
         },
         menuBar: {
           background: "#141b2d",
-          buttonBackground: "#212a3e",
+          color: "#e0e0e0",
+          buttonBackground: "#1f2a41",
           buttonBackgroundImage: "linear-gradient(#292934, #292934)",
-          buttonFont: "#eef2f6",
-          buttonBorder: "#29292f",
+          buttonFont: "#e0e0e0",
+          buttonBorder: "#1f2a41",
           buttonBorderHover: primary,
           buttonIcon: primary,
           gallonsIcon: primary,
