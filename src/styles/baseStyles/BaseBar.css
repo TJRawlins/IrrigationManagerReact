@@ -25,13 +25,14 @@ div.main-container {
 }
 
 .bar-title {
-  font-size: 1.8rem !important;
+  font-size: 2.25rem !important;
   margin-right: 1rem !important;
-  font-family: monospace !important;
+  font-family: system-ui !important;
   font-weight: 700 !important;
   letter-spacing: -0.04em !important;
   color: inherit !important;
   margin-top: 0.3rem !important;
+  opacity: 0.8;
 }
 
 .title-container {
@@ -126,4 +127,8 @@ div.main-container {
   font-weight: 500;
   line-height: 1.75;
   letter-spacing: 0.02857em;
+}
+
+.bar-chip {
+  opacity: 0.8;
 }

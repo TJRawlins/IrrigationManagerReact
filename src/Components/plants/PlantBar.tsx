@@ -171,13 +171,13 @@ export default function PlantBar({
             {/* // *-*-*-*-*-*-*-*-*-*-*-*-* ZONE & SEASON TITLE *-*-*-*-*-*-*-*-*-*-*-*-* */}
             <Box sx={{ display: { md: "block", sm: "none", xs: "none" } }}>
               <Box className="bar-btn-container">
-                <Box className="bar-btn" sx={menuBarColorTheme.barButtons}>
+                <Box className="bar-btn bar-chip" sx={menuBarColorTheme.chips}>
                   <div className="btn-content-container">
                     <MdDashboard className="btn-icon" />
                     <span className="btn-text">{zone.name}</span>
                   </div>
                 </Box>
-                <Box className="bar-btn" sx={menuBarColorTheme.barButtons}>
+                <Box className="bar-btn bar-chip" sx={menuBarColorTheme.chips}>
                   <div className="btn-content-container">
                     <IoCalendar className="btn-icon" />
                     <span className="btn-text">{zone.season}</span>

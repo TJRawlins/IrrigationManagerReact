@@ -1,15 +1,18 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
 
-const primary = "#18d4c2"; // #18d4c2
-const secondary = "#82a628"; // #82a628
-const tertiary = "#002b49"; // #002b49
+// const callToActionPrimary = "#18d4c2";
+const callToActionPrimary = "#6eb7ac";
+const callToActionSecondary = "#82a628";
+const primaryLight = "#005972";
+const primaryDark = "#141b2d";
 
 // primary: #59bab1
 // secondary: #82a628
-// tertiary: #002b49
+// primaryLight: #002b49
 // primary background: #ffffff
 // secondary background: #eef2f6
+// #1c2c2abf
 
 // color design tokens
 export const tokens = (mode: string) => ({
@@ -25,25 +28,25 @@ export const tokens = (mode: string) => ({
           one: "1",
         },
         overlay: {
-          modal: "#002b49a7",
+          modal: "#002c38a8",
           image: "#64c9bf7a",
         },
         primary: {
-          const: primary,
-          toDarkGray: primary,
-          alt: primary,
+          const: callToActionPrimary,
+          toDarkGray: callToActionPrimary,
+          alt: callToActionPrimary,
           shadowGlow: "#5252527c",
           opacity: "#59bab114",
         },
         secondary: {
-          const: secondary,
-          vary: secondary,
-          alt: secondary,
+          const: callToActionSecondary,
+          vary: callToActionSecondary,
+          alt: callToActionSecondary,
         },
-        tertiary: {
-          const: tertiary,
-          vary: tertiary,
-          vary2: tertiary,
+        primaryLight: {
+          const: primaryLight,
+          vary: primaryLight,
+          vary2: primaryLight,
         },
         white: {
           const: "#fcfcfd",
@@ -92,25 +95,27 @@ export const tokens = (mode: string) => ({
           background: "#cbd7d9",
         },
         navBar: {
-          background: tertiary,
+          background: primaryLight,
           color: "#eef2f6",
           borderBottom: "#212a3e",
         },
         menuBar: {
           background: "#dae4e4",
-          color: "#606162",
+          color: primaryLight,
+          // buttonBackground: "#eef2f6",
           buttonBackground: "#eef2f6",
           buttonBackgroundImage: "linear-gradient(#eef2f6, #eef2f6)",
-          buttonFont: "#8b8b8b",
+          buttonFont: callToActionPrimary,
           buttonBorder: "#eef2f6",
-          buttonBorderHover: primary,
-          buttonIcon: primary,
-          gallonsIcon: primary,
+          buttonBorderHover: callToActionPrimary,
+          buttonIcon: callToActionPrimary,
+          chipBackground: "#c9d5d7",
+          gallonsIcon: callToActionPrimary,
         },
         modal: {
-          overlay: "#002b49a7",
+          overlay: "#002c38a8",
           background: "#eef2f6",
-          border: primary,
+          border: "#eef2f6",
           titleColor: "#606162",
           description: "#606162",
           closeIcon: "#707174",
@@ -118,12 +123,12 @@ export const tokens = (mode: string) => ({
           fieldLabel: "#707174",
           fieldBackground: "#d9e1e9",
           fieldInputFont: "#707174",
-          fieldBorder: primary,
+          fieldBorder: callToActionPrimary,
           buttonFont: "#eef2f6",
-          buttonBackground: primary,
-          buttonBorder: primary,
+          buttonBackground: callToActionPrimary,
+          buttonBorder: callToActionPrimary,
           buttonBackgroundHover: "transparent",
-          buttonFontHover: primary,
+          buttonFontHover: callToActionPrimary,
         },
       }
     : {
@@ -141,32 +146,33 @@ export const tokens = (mode: string) => ({
           image: "#0f5e568a",
         },
         primary: {
-          const: primary,
+          const: callToActionPrimary,
           toDarkGray: "#222228",
           alt: "#202028",
           shadowGlow: "#59bab17c",
           opacity: "#59bab114",
         },
         secondary: {
-          const: secondary,
+          const: callToActionSecondary,
           vary: "#2d2d2d",
           alt: "#202028",
         },
-        tertiary: {
-          const: tertiary,
+        primaryLight: {
+          const: primaryLight,
           vary: "#080808",
           vary2: "#0f5e56",
         },
         white: {
           const: "#fcfcfd",
-          vary: "#19191f",
+          // vary: "#19191f",
+          vary: primaryDark,
           toLightGray: "#29292f",
           toDarkGray: "#1e1e1e",
           alt: "#8b8b8b",
           alt2: "#29292e",
           altShade: "#bebebe",
-          altPrimary: primary,
-          altSecondary: secondary,
+          altPrimary: callToActionPrimary,
+          altSecondary: callToActionSecondary,
           opacity: "#ffffff0a",
         },
         whiteBlue: {
@@ -189,7 +195,7 @@ export const tokens = (mode: string) => ({
           const: "#8b8b8b",
           altPrimary: "#59bab1",
           toWhite: "#eef2f6",
-          toPrimary: primary,
+          toPrimary: callToActionPrimary,
           200: "#383838",
           300: "#535353",
           400: "#6f6f6f",
@@ -204,20 +210,21 @@ export const tokens = (mode: string) => ({
           background: "#0e0e12",
         },
         navBar: {
-          background: "#141b2d",
+          background: primaryDark,
           color: "#e0e0e0",
           borderBottom: "#212a3e",
         },
         menuBar: {
-          background: "#141b2d",
+          background: primaryDark,
           color: "#e0e0e0",
           buttonBackground: "#1f2a41",
           buttonBackgroundImage: "linear-gradient(#292934, #292934)",
           buttonFont: "#e0e0e0",
           buttonBorder: "#1f2a41",
-          buttonBorderHover: primary,
-          buttonIcon: primary,
-          gallonsIcon: primary,
+          buttonBorderHover: callToActionPrimary,
+          buttonIcon: callToActionPrimary,
+          chipBackground: "#1f2a41",
+          gallonsIcon: callToActionPrimary,
         },
         modal: {
           overlay: "#06070ac7",
@@ -230,12 +237,12 @@ export const tokens = (mode: string) => ({
           fieldLabel: "#707174",
           fieldBackground: "#29292f",
           fieldInputFont: "#9b9b9b",
-          fieldBorder: primary,
+          fieldBorder: callToActionPrimary,
           buttonFont: "#19191f",
-          buttonBackground: primary,
-          buttonBorder: primary,
+          buttonBackground: callToActionPrimary,
+          buttonBorder: callToActionPrimary,
           buttonBackgroundHover: "transparent",
-          buttonFontHover: primary,
+          buttonFontHover: callToActionPrimary,
         },
       }),
 });
@@ -254,10 +261,10 @@ export const themeSettings = (mode: any): ThemeOptions => {
               main: colors.primary.const,
             },
             secondary: {
-              main: colors.secondary.const,
+              main: callToActionSecondary,
             },
-            tertiary: {
-              main: colors.tertiary.vary,
+            primaryLight: {
+              main: colors.primaryLight.vary,
             },
             neutral: {
               dark: colors.gray[500],
@@ -273,10 +280,10 @@ export const themeSettings = (mode: any): ThemeOptions => {
               main: colors.primary.const,
             },
             secondary: {
-              main: colors.secondary.const,
+              main: callToActionSecondary,
             },
-            tertiary: {
-              nav: colors.tertiary.vary,
+            primaryLight: {
+              nav: colors.primaryLight.vary,
             },
             neutral: {
               dark: colors.gray[500],

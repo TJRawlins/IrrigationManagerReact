@@ -36,17 +36,17 @@ export default function Sidebar() {
   const sideBarColorTheme = () => {
     return {
       sideBar: {
-        backgroundColor: colors.white.vary,
+        backgroundColor: colors.white.const,
         color: colors.gray.const,
       },
       hamburgerMenu: {
-        backgroundColor: colors.white.altSecondary,
+        backgroundColor: colors.white.const,
       },
       menuButton: {
         color: colors.darkGray.vary,
       },
       menuIcon: {
-        color: colors.gray.const,
+        color: colors.white.const,
       },
     };
   };

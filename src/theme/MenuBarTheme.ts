@@ -19,6 +19,10 @@ export interface MenuBarTheme {
       color: string;
     };
   };
+  chips: {
+    backgroundColor: string;
+    border: string;
+  };
   dropdown: {
     backgroundColor: string;
     ".menu-text": {
@@ -66,6 +70,10 @@ export const useMenuBarColorTheme = (): MenuBarTheme => {
       "& .bar-gallons-chip-avatar-icon, & .bar-gallons-chip-avatar-text": {
         color: colors.menuBar.gallonsIcon + " !important",
       },
+    },
+    chips: {
+      backgroundColor: colors.menuBar.chipBackground,
+      border: "1px solid " + colors.menuBar.chipBackground,
     },
     dropdown: {
       backgroundColor: colors.menuBar.buttonBackground,
