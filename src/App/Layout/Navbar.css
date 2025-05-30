@@ -7,6 +7,7 @@ header > .MuiToolbar-regular,
 header {
   background-image: none !important;
   box-shadow: none !important;
+  min-height: 48px !important;
 }
 
 #logo {
