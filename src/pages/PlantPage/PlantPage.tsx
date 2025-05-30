@@ -18,6 +18,7 @@ import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
 import { tokens } from "../../theme/theme";
 import { useModalColorTheme } from "../../theme/ModalTheme";
 import { useMenuBarColorTheme } from "../../theme/MenuBarTheme";
+import { useGridColorTheme } from "../../theme/GridTheme";
 // import { TreflePlant } from "../../App/models/TreflePlant";
 
 const PlantPage = () => {
@@ -26,6 +27,7 @@ const PlantPage = () => {
   const dispatch = useDispatch();
   const modalColorTheme = useModalColorTheme();
   const menuBarColorTheme = useMenuBarColorTheme();
+  const gridColorTheme = useGridColorTheme();
 
   // color theme
   const theme = useTheme();
@@ -82,6 +84,7 @@ const PlantPage = () => {
             fetchPlants={fetchPlants}
             updateLocalStorageZone={updateLocalStorageZone}
             modalColorTheme={modalColorTheme}
+            gridColorTheme={gridColorTheme}
             // updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
           />
         </Grid>

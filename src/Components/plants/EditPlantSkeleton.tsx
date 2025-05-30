@@ -46,7 +46,7 @@ function EditPlantSkeleton() {
         <Card
           sx={{
             width: "500px",
-            height: "581px",
+            height: "433px",
             m: 2,
             borderRadius: "10px",
           }}

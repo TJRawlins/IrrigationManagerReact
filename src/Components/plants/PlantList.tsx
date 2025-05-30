@@ -34,14 +34,15 @@ import ViewPlantSkeleton from "./ViewPlantSkeleton";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
-import { tokens } from "../../theme/theme";
 import EditPlantSkeleton from "./EditPlantSkeleton";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { ModalTheme } from "../../theme/ModalTheme";
+import { GridTheme } from "../../theme/GridTheme";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
   updateLocalStorageZone: (zoneId: number) => void;
   modalColorTheme: ModalTheme;
+  gridColorTheme: GridTheme;
   // updateLocalStorageTreflePlant: (plantName: string) => void;
 }
 
@@ -49,6 +50,7 @@ export default function PlantList({
   fetchPlants,
   updateLocalStorageZone,
   modalColorTheme,
+  gridColorTheme,
 }: // updateLocalStorageTreflePlant,
 PlantListProps) {
   const dispatch = useDispatch();
@@ -71,18 +73,7 @@ PlantListProps) {
 
   // color theme
   const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const colors = tokens(theme.palette.mode);
-  const plantListColorTheme = () => {
-    return {
-      grid: {
-        backgroundColor: colors.whiteBlue.vary,
-        "& .MuiDataGrid-container--top [role=row]": {
-          backgroundColor: colors.whiteBlue.vary,
-        },
-      },
-    };
-  };
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));  
 
   const isImageBeingUsedRef = useRef<boolean>(false);
 
@@ -388,7 +379,7 @@ PlantListProps) {
               noRowsVariant: "skeleton",
             },
           }}
-          sx={plantListColorTheme().grid}
+          sx={{...gridColorTheme.grid, border: "none"}}
           initialState={{
             columns: {
               columnVisibilityModel: {
