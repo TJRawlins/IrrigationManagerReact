@@ -91,9 +91,6 @@ export const tokens = (mode: string) => ({
           vary: "#303031",
           toWhite: "#303031",
         },
-        grid: {
-          background: "#cbd7d9",
-        },
         navBar: {
           background: primaryLight,
           color: "#eef2f6",
@@ -102,7 +99,6 @@ export const tokens = (mode: string) => ({
         menuBar: {
           background: "#dae4e4",
           color: primaryLight,
-          // buttonBackground: "#eef2f6",
           buttonBackground: "#eef2f6",
           buttonBackgroundImage: "linear-gradient(#eef2f6, #eef2f6)",
           buttonFont: callToActionPrimary,
@@ -129,6 +125,15 @@ export const tokens = (mode: string) => ({
           buttonBorder: callToActionPrimary,
           buttonBackgroundHover: "transparent",
           buttonFontHover: callToActionPrimary,
+        },
+        grid: {
+          dataGridBackground: "#ced8da",
+          dataGridRowBackground: "#eef2f6",
+          dataGridText: "#555555",
+          dataGridRowHover: "#dae4e4",
+          dataGridColumnHighlight: "#dae4e473",
+          dataGridColumnText: "#555555",
+          buttonColor: "#497487",
         },
       }
     : {
@@ -206,9 +211,6 @@ export const tokens = (mode: string) => ({
           vary: "#fcfcfd",
           toWhite: "#eef2f6",
         },
-        grid: {
-          background: "#0e0e12",
-        },
         navBar: {
           background: primaryDark,
           color: "#e0e0e0",
@@ -243,6 +245,15 @@ export const tokens = (mode: string) => ({
           buttonBorder: callToActionPrimary,
           buttonBackgroundHover: "transparent",
           buttonFontHover: callToActionPrimary,
+        },
+        grid: {
+          dataGridBackground: "#1f2a41",
+          dataGridRowBackground: "#1f2a41",
+          dataGridText: "#e0e0e0",
+          dataGridRowHover: "#141b2d",
+          dataGridColumnHighlight: "#141b2d69",
+          dataGridColumnText: "#e0e0e0",
+          buttonColor: "#eef2f6",
         },
       }),
 });
