@@ -131,9 +131,12 @@ export const tokens = (mode: string) => ({
           dataGridRowBackground: "#eef2f6",
           dataGridText: "#555555",
           dataGridRowHover: "#dae4e4",
+          border: "#ced8da59",
           dataGridColumnHighlight: "#dae4e473",
           dataGridColumnText: "#555555",
           buttonColor: "#497487",
+          buttonWarningPrimary: "#ff9e48",
+          buttonWarningBackground: "#fff0e4",
         },
       }
     : {
@@ -253,7 +256,10 @@ export const tokens = (mode: string) => ({
           dataGridRowHover: "#141b2d",
           dataGridColumnHighlight: "#141b2d69",
           dataGridColumnText: "#e0e0e0",
+          border: "#ffffff1f",
           buttonColor: "#eef2f6",
+          buttonWarningPrimary: "#ff9e48",
+          buttonWarningBackground: "#202940",
         },
       }),
 });

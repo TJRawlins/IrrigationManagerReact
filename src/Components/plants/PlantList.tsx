@@ -19,6 +19,7 @@ import {
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
+import { TiWarning } from "react-icons/ti";
 import { useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
@@ -331,8 +332,18 @@ PlantListProps) {
                 horizontal: "left",
               }}
             >
-              <Button sx={{ p: 2 }} onClick={deletePlant}>
+              {/* <Button sx={{ p: 2, ...menuBarColorTheme.barButtons }} onClick={deletePlant}>
                 Confirm
+              </Button> */}
+              <Button
+                className="grid-btn action"
+                sx={gridColorTheme.buttonWarning}
+                onClick={deletePlant}
+              >
+                <div className="btn-content-container">
+                  <TiWarning className="btn-icon" />
+                  <span className="btn-text">Confirm</span>
+                </div>
               </Button>
             </Popover>
           </ButtonGroup>

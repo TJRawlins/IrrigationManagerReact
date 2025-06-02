@@ -22,7 +22,16 @@ export interface GridTheme {
       backgroundColor: string;
       color: string;
     };
+    "& .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor, & .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor": {
+      borderColor: string;
+    };
   };
+  buttonWarning: {
+    backgroundColor: string;
+    color: string;
+    border: string;
+    "& .btn-icon": { color: string };
+  }
 }
 
 export const useGridColorTheme = (): GridTheme => {
@@ -53,6 +62,16 @@ export const useGridColorTheme = (): GridTheme => {
           backgroundColor: colors.grid.dataGridColumnHighlight,
           color: colors.grid.dataGridColumnText,
         },
+      "& .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor, & .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor":
+        {
+          borderColor: colors.grid.border + " !important",
+        },
+    },
+    buttonWarning: {
+      backgroundColor: colors.grid.buttonWarningBackground,
+      color: colors.grid.buttonWarningPrimary,
+      border: "1px solid " + colors.grid.buttonWarningPrimary + " !important",
+      "& .btn-icon": { color: colors.grid.buttonWarningPrimary + " !important" },
     },
   };
 };
