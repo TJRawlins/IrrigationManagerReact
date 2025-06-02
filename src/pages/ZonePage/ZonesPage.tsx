@@ -38,13 +38,6 @@ const ZonesPage = () => {
   // color theme
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const zonePageColorTheme = () => {
-    return {
-      zoneGrid: {
-        backgroundColor: colors.grid.background,
-      },
-    };
-  };
 
   const StyledZoneContainer = `
     ul[role="listbox"] {
@@ -135,7 +128,7 @@ const ZonesPage = () => {
           modalColorTheme={modalColorTheme}
           menuBarColorTheme={menuBarColorTheme}
         />
-        <Grid id="zone-grid-background" sx={zonePageColorTheme().zoneGrid}>
+        <Grid id="zone-grid-background">
           <ZoneList
             hasError
             fetchZones={fetchZones}
