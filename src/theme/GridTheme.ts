@@ -25,6 +25,10 @@ export interface GridTheme {
     "& .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor, & .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor": {
       borderColor: string;
     };
+    "& .MuiPopover-paper.MuiMenu-paper": {
+      background: string;
+      backgroundColor: string;
+    }
   };
   buttonWarning: {
     backgroundColor: string;
@@ -66,12 +70,16 @@ export const useGridColorTheme = (): GridTheme => {
         {
           borderColor: colors.grid.border + " !important",
         },
+        "& .MuiPopover-paper.MuiMenu-paper": {
+          background: colors.grid.dataGridRowBackground + " !important",
+          backgroundColor: "none !important",
+        }
     },
     buttonWarning: {
       backgroundColor: colors.grid.buttonWarningBackground,
-      color: colors.grid.buttonWarningPrimary,
-      border: "1px solid " + colors.grid.buttonWarningPrimary + " !important",
-      "& .btn-icon": { color: colors.grid.buttonWarningPrimary + " !important" },
+      color: colors.grid.buttonWarningText,
+      border: "1px solid " + colors.grid.buttonWarningBorder + " !important",
+      "& .btn-icon": { color: colors.grid.buttonWarningIcon + " !important" },
     },
   };
 };

@@ -57,7 +57,7 @@ export const useMenuBarColorTheme = (): MenuBarTheme => {
       color: colors.menuBar.color,
     },
     barButtons: {
-      backgroundColor: colors.menuBar.buttonBackground,
+      backgroundColor: colors.menuBar.buttonBackground + " !important",
       color: colors.menuBar.buttonFont,
       border: "1px solid " + colors.menuBar.buttonBorder,
       "& .btn-icon": { color: colors.menuBar.buttonIcon + " !important" },
@@ -72,11 +72,11 @@ export const useMenuBarColorTheme = (): MenuBarTheme => {
       },
     },
     chips: {
-      backgroundColor: colors.menuBar.chipBackground,
+      backgroundColor: colors.menuBar.chipBackground + " !important",
       border: "1px solid " + colors.menuBar.chipBackground,
     },
     dropdown: {
-      backgroundColor: colors.menuBar.buttonBackground,
+      backgroundColor: colors.menuBar.buttonBackground + " !important",
       ".menu-text": {
         color: colors.gray.toWhite + " !important",
       },

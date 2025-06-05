@@ -62,6 +62,10 @@ export interface ModalTheme {
     "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus": {
       border: string;
     };
+    // Accordion
+    "& .optional-fields-accordion": {
+      color: string;
+    };
   };
   cardTitle: {
     color: string;
@@ -89,7 +93,7 @@ export const useModalColorTheme = (): ModalTheme => {
 
   return {
     barButtons: {
-      backgroundColor: colors.menuBar.buttonBackground,
+      backgroundColor: colors.menuBar.buttonBackground + " !important",
       color: colors.menuBar.buttonFont,
       border: "1px solid " + colors.menuBar.buttonBorder,
       "& .btn-icon": { color: colors.menuBar.buttonIcon + " !important" },
@@ -152,6 +156,10 @@ export const useModalColorTheme = (): ModalTheme => {
         {
           border: "1px solid " + colors.modal.fieldBorder + " !important",
         },
+      // Accordion
+      "& .optional-fields-accordion": {
+        color: colors.modal.titleColor + " !important",
+      },
     },
     cardTitle: {
       color: colors.modal.titleColor,
