@@ -93,7 +93,7 @@
 }
 
 /* PlantList confirm delete button box */
-& .MuiPopover-paper {
+& #simple-popover .MuiPopover-paper {
   background: none !important;
 }
 #simple-popover .MuiPopover-paper {

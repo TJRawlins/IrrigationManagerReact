@@ -332,9 +332,6 @@ PlantListProps) {
                 horizontal: "left",
               }}
             >
-              {/* <Button sx={{ p: 2, ...menuBarColorTheme.barButtons }} onClick={deletePlant}>
-                Confirm
-              </Button> */}
               <Button
                 className="grid-btn action"
                 sx={gridColorTheme.buttonWarning}
@@ -427,7 +424,7 @@ PlantListProps) {
         />
       )}
       {isLoadingEditPlant ? (
-        <EditPlantSkeleton />
+        <EditPlantSkeleton modalColorTheme={modalColorTheme} />
       ) : (
         <EditPlant
           fetchPlants={fetchPlants}
