@@ -306,6 +306,10 @@ export const tokens = (mode: string) => ({
 
 const toggleColorMode: () => void = () => {};
 
+export const ColorModeContext = createContext({
+  toggleColorMode,
+});
+
 export const useMode = () => {
   const [mode, setMode] = useState<string>("dark");
   const colorMode = useMemo(
