@@ -470,7 +470,7 @@ npm run type-check
 - Use useCallback for event handlers
 - Implement virtual scrolling for large datasets
 
-## 🔮 Upcoming Features
+## 💡 Upcoming Features
 
 - **Dark/Light Theme Toggle**: User preference system
 - **Advanced Analytics Dashboard**: Charts and graphs
