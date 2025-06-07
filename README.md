@@ -25,6 +25,23 @@ A modern React-based web application for managing irrigation systems, tracking w
 - **Image Storage**: Firebase Storage
 - **Secrets Management**: Infisical
 
+### Main Dependencies
+- React 18
+- Material-UI
+- Redux Toolkit
+- Firebase
+- Axios
+- Formik & Yup
+- React Router DOM
+- Styled Components
+
+### Development Dependencies
+- TypeScript
+- Vite
+- ESLint
+- Node Types
+- Various TypeScript type definitions
+
 ## 📋 Prerequisites
 
 - Node.js 18+ and npm/yarn
@@ -411,6 +428,10 @@ CMD ["nginx", "-g", "daemon off;"]
 - Input validation and sanitization
 - XSS protection with proper escaping
 - HTTPS enforcement in production
+- HTTPS enabled development server
+- SSL certificates required in `/ssl` directory
+- Firebase authentication integration
+- Secure API communication
 
 ## 📱 Mobile Responsiveness
 
