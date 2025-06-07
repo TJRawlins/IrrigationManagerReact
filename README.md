@@ -5,7 +5,7 @@ A modern React-based web application for managing irrigation systems, tracking w
 
 <img src="https://github.com/user-attachments/assets/e29a866f-8d99-43c1-bc54-1f6d74d1f09e" width="500px">  <img src="https://github.com/user-attachments/assets/89eb9b77-54f9-4ccc-b953-c5bb2181092e" width="500px">
 
-<img src="https://github.com/user-attachments/assets/adac4aa1-574f-4241-ac3d-ecca42a3438a" width="500px">  <img src="https://github.com/user-attachments/assets/53a4240a-8ba4-4ae4-b95b-21bc654bdd39" width="500px">
+<img src="https://github.com/user-attachments/assets/adac4aa1-574f-4241-ac3d-ecca42a3438a" width="300px">  <img src="https://github.com/user-attachments/assets/53a4240a-8ba4-4ae4-b95b-21bc654bdd39" width="300px">
 
 ## 🚀 Features
 
