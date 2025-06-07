@@ -43,7 +43,7 @@ import "../../styles/plants/AddPlant.css";
 import { tokens } from "../../theme/theme";
 import { IoClose } from "react-icons/io5";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { ModalTheme } from "../../theme/ModalTheme";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
