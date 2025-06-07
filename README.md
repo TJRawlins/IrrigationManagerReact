@@ -1,16 +1,11 @@
-# <img src="https://github.com/TJRawlins/IrrigationManagerReact/blob/main/src/assets/irrigation%20logo%20icon.png?raw=true" width="45px" style="transform: translateY(10px);"> Droplet Frontend - Irrigation & Plant Management Application
-
+# <img src="https://github.com/user-attachments/assets/041ab30c-ca40-4f1e-93ac-f6bc961a3d3c" width="45px"> Droplet Frontend - Irrigation & Plant Management Application
 A modern React-based web application for managing irrigation systems, tracking water usage, and organizing plant care schedules with an intuitive user interface.
 
-
 ## 📷 Screenshots
-![Screenshot 2025-06-07 135603](https://github.com/user-attachments/assets/e29a866f-8d99-43c1-bc54-1f6d74d1f09e)
 
-![image](https://github.com/user-attachments/assets/89eb9b77-54f9-4ccc-b953-c5bb2181092e)
+<img src="https://github.com/user-attachments/assets/e29a866f-8d99-43c1-bc54-1f6d74d1f09e" width="500px">  <img src="https://github.com/user-attachments/assets/89eb9b77-54f9-4ccc-b953-c5bb2181092e" width="500px">
 
-![Screenshot 2025-06-07 135746](https://github.com/user-attachments/assets/adac4aa1-574f-4241-ac3d-ecca42a3438a)
-
-![Screenshot 2025-06-07 135836](https://github.com/user-attachments/assets/53a4240a-8ba4-4ae4-b95b-21bc654bdd39)
+<img src="https://github.com/user-attachments/assets/adac4aa1-574f-4241-ac3d-ecca42a3438a" width="500px">  <img src="https://github.com/user-attachments/assets/53a4240a-8ba4-4ae4-b95b-21bc654bdd39" width="500px">
 
 ## 🚀 Features
 
