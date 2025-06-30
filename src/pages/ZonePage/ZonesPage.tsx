@@ -27,10 +27,12 @@ import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
 import { tokens } from "../../theme/theme";
 import { useModalColorTheme } from "../../theme/ModalTheme";
 import { useMenuBarColorTheme } from "../../theme/MenuBarTheme";
+import { useGridColorTheme } from "../../theme/GridTheme";
 
 const ZonesPage = () => {
   const modalColorTheme = useModalColorTheme();
   const menuBarColorTheme = useMenuBarColorTheme();
+  const gridColorTheme = useGridColorTheme();
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
   const [isLoadingZones, setIsLoadingZones] = useState<boolean>(true);
@@ -128,7 +130,7 @@ const ZonesPage = () => {
           modalColorTheme={modalColorTheme}
           menuBarColorTheme={menuBarColorTheme}
         />
-        <Grid id="zone-grid-background">
+        <Grid id="zone-grid-background" sx={gridColorTheme.grid}>
           <ZoneList
             hasError
             fetchZones={fetchZones}
