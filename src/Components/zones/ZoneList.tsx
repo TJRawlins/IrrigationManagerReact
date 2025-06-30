@@ -1,5 +1,5 @@
 import { Box, Container, CssBaseline, Grid } from "@mui/material";
-import ZoneCardNew from "./ZoneCardNew";
+import ZoneCard from "./zoneCard/ZoneCard";
 import EditZone from "./EditZone";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ type ZoneListProps = {
   updateLocalStorageSeason(args: number): void;
   hasError: boolean;
   isLoadingZones: boolean;
-  modalColorTheme: ModalTheme
+  modalColorTheme: ModalTheme;
 };
 
 export default function ZoneList({
@@ -56,7 +56,7 @@ export default function ZoneList({
                     paddingLeft: "1.5rem !important",
                   }}
                 >
-                  <ZoneCardNew
+                  <ZoneCard
                     zone={zone}
                     fetchZones={fetchZones}
                     setIsShowEdit={setIsShowEdit}
