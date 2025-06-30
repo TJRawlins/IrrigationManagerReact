@@ -10,6 +10,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import styled from "styled-components";
 
 interface ZoneData {
   totalGalPerWeek: number;
@@ -38,130 +39,58 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
   zone,
   CustomTabPanel,
 }) => (
-  <Box sx={{ width: "100%", paddingTop: 0, paddingBottom: "1.75rem" }}>
+  <StyledTabsContainer>
     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
       <Tabs
         value={value}
         onChange={handleChange}
         aria-label="basic tabs example"
       >
-        <Tab className="tab-title" label="Water usage" {...a11yProps(0)} />
-        <Tab className="tab-title" label="Environment" {...a11yProps(1)} />
-        <Tab className="tab-title" label="Notes" {...a11yProps(2)} />
+        <TabTitle label="Water usage" {...a11yProps(0)} />
+        <TabTitle label="Environment" {...a11yProps(1)} />
+        <TabTitle label="Notes" {...a11yProps(2)} />
       </Tabs>
     </Box>
-    <Box id="tab-panel-content">
+    <TabPanelContent>
       <CustomTabPanel value={value} index={0}>
-        <Table
-          className="zone-table"
-          size="small"
-          aria-label="water usage table"
-        >
+        <ZoneTable size="small" aria-label="water usage table">
           <TableHead>
             <TableRow>
-              <TableCell
-                className="table-panel-cell"
-                sx={{
-                  color: "#459588",
-                  fontSize: "0.75rem",
-                  padding: "4px 8px",
-                }}
-              >
-                Period
-              </TableCell>
-              <TableCell
-                className="table-panel-cell"
-                align="right"
-                sx={{
-                  color: "#459588",
-                  fontSize: "0.75rem",
-                  padding: "4px 8px",
-                }}
-              >
-                Usage
-              </TableCell>
-              <TableCell
-                className="table-panel-cell"
-                align="right"
-                sx={{
-                  color: "#459588",
-                  fontSize: "0.75rem",
-                  padding: "4px 8px",
-                }}
-              >
-                Cost
-              </TableCell>
+              <TablePanelHeaderCell>Period</TablePanelHeaderCell>
+              <TablePanelHeaderCell align="right">Usage</TablePanelHeaderCell>
+              <TablePanelHeaderCell align="right">Cost</TablePanelHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow sx={{ background: "#dce4e487" }}>
-              <TableCell
-                className="table-panel-cell"
-                sx={{ padding: "4px 8px", color: "#606162" }}
-              >
-                Week
-              </TableCell>
-              <TableCell
-                className="table-panel-cell"
-                align="right"
-                sx={{ padding: "4px 8px", color: "#606162" }}
-              >
+            <TableRowEven>
+              <TablePanelCell>Week</TablePanelCell>
+              <TablePanelCell align="right">
                 {zone.totalGalPerWeek} gal
-              </TableCell>
-              <TableCell
-                className="table-panel-cell"
-                align="right"
-                sx={{ padding: "4px 8px", color: "#606162" }}
-              >
+              </TablePanelCell>
+              <TablePanelCell align="right">
                 ${(zone.totalGalPerWeek * 0.01).toFixed(2)}
-              </TableCell>
-            </TableRow>
-            <TableRow sx={{ border: "none" }}>
-              <TableCell
-                className="table-panel-cell"
-                sx={{ padding: "4px 8px", color: "#606162" }}
-              >
-                Month
-              </TableCell>
-              <TableCell
-                className="table-panel-cell"
-                align="right"
-                sx={{ padding: "4px 8px", color: "#606162" }}
-              >
+              </TablePanelCell>
+            </TableRowEven>
+            <TableRowOdd>
+              <TablePanelCell>Month</TablePanelCell>
+              <TablePanelCell align="right">
                 {zone.totalGalPerMonth} gal
-              </TableCell>
-              <TableCell
-                className="table-panel-cell"
-                align="right"
-                sx={{ padding: "4px 8px", color: "#606162" }}
-              >
+              </TablePanelCell>
+              <TablePanelCell align="right">
                 ${(zone.totalGalPerMonth * 0.01).toFixed(2)}
-              </TableCell>
-            </TableRow>
-            <TableRow sx={{ background: "#dce4e487" }}>
-              <TableCell
-                className="table-panel-cell"
-                sx={{ padding: "4px 8px", color: "#606162" }}
-              >
-                Year
-              </TableCell>
-              <TableCell
-                className="table-panel-cell"
-                align="right"
-                sx={{ padding: "4px 8px", color: "#606162" }}
-              >
+              </TablePanelCell>
+            </TableRowOdd>
+            <TableRowEven>
+              <TablePanelCell>Year</TablePanelCell>
+              <TablePanelCell align="right">
                 {zone.totalGalPerYear} gal
-              </TableCell>
-              <TableCell
-                className="table-panel-cell"
-                align="right"
-                sx={{ padding: "4px 8px", color: "#606162" }}
-              >
+              </TablePanelCell>
+              <TablePanelCell align="right">
                 ${(zone.totalGalPerYear * 0.01).toFixed(2)}
-              </TableCell>
-            </TableRow>
+              </TablePanelCell>
+            </TableRowEven>
           </TableBody>
-        </Table>
+        </ZoneTable>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Environment content...
@@ -172,8 +101,58 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
           sapiente explicabo asperiores magni commodi.
         </Typography>
       </CustomTabPanel>
-    </Box>
-  </Box>
+    </TabPanelContent>
+  </StyledTabsContainer>
 );
 
 export default ZoneCardTabs;
+
+// Styled Components
+const StyledTabsContainer = styled(Box)`
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 1.75rem;
+`;
+
+const TabPanelContent = styled(Box)`
+  margin-top: 0.75rem;
+`;
+
+import type { TabProps } from "@mui/material/Tab";
+
+const TabTitle = styled((props: TabProps) => <Tab {...props} />)`
+  text-transform: none !important;
+  font-family: "Open Sans" !important;
+  font-size: 0.75rem !important;
+  &.Mui-selected {
+    color: rgba(0, 0, 0, 0.795) !important;
+  }
+`;
+
+const TablePanelHeaderCell = styled(TableCell)`
+  border: none !important;
+  color: #459588;
+  font-size: 0.75rem !important;
+  padding: 4px 8px !important;
+`;
+
+const TablePanelCell = styled(TableCell)`
+  border: none !important;
+  color: #606162;
+  font-size: 0.75rem !important;
+  padding: 4px 8px !important;
+`;
+
+const TableRowEven = styled(TableRow)`
+  background: #dce4e487;
+`;
+
+const TableRowOdd = styled(TableRow)`
+  border: none;
+`;
+
+const ZoneTable = styled(Table)`
+  & .MuiTableBody-root tr td {
+    font-size: 0.75rem !important;
+  }
+`;

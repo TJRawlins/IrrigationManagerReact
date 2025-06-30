@@ -20,6 +20,7 @@ import ZoneCardHeader from "./ZoneCardHeader";
 import ZoneCardImage from "./ZoneCardImage";
 import ZoneCardDetails from "./ZoneCardDetails";
 import ZoneCardTabs from "./ZoneCardTabs";
+import styled from "styled-components";
 
 type ZoneCardProps = {
   fetchZones(args: number): void;
@@ -246,19 +247,8 @@ export default function ZoneCard({
   };
 
   return (
-    <Card
-      className="card"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      sx={{
-        margin: 0.05,
-        display: "flex",
-        flexDirection: "column",
-        width: "365px !important",
-        boxShadow: "none",
-      }}
-    >
-      <Box id="zone-card-header">
+    <StyledCard onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <StyledZoneCardHeader>
         <ZoneCardHeader
           zone={zone}
           isHovering={isHovering}
@@ -275,46 +265,24 @@ export default function ZoneCard({
           handleDeleteClose={handleDeleteClose}
           deleteZone={deleteZone}
         />
-      </Box>
-      <Box className="zone-card-content-wrapper">
-        <Box
-          className="zone-card-content"
-          display={"flex"}
-          flexDirection="row"
-          gap={4}
-        >
+      </StyledZoneCardHeader>
+      <ZoneCardContentWrapper>
+        <ZoneCardContentRow>
           <Box>
             <Stack direction="column" spacing={1} alignItems="left">
               <ZoneCardImage imagePath={zone.imagePath} name={zone.name} />
             </Stack>
           </Box>
-          <Box sx={{ fontSize: "0.75rem", width: "100%" }}>
+          <ZoneCardDetailsBox>
             <ZoneCardDetails />
-          </Box>
-        </Box>
-        <Box className="zone-card-content">
+          </ZoneCardDetailsBox>
+        </ZoneCardContentRow>
+        <Box sx={{ padding: "1rem 0" }}>
           <Link
             style={{ textDecoration: "none" }}
             to={`/plants/zone/${zone.id}`}
           >
-            <Button
-              className="zone-card-btn action"
-              sx={{
-                width: "100% !important",
-                backgroundColor: "#f9d114",
-                color: "#606162",
-                fontSize: ".85rem !important",
-                transition: "all 0.3s ease-in-out !important",
-                fontWeight: "600",
-                ":hover": {
-                  backgroundColor: "#005972",
-                  color: "#f0f2f5",
-                },
-              }}
-              onClick={showPlants}
-            >
-              Plants
-            </Button>
+            <StyledZoneCardBtn onClick={showPlants}>Plants</StyledZoneCardBtn>
           </Link>
         </Box>
         <ZoneCardTabs
@@ -324,7 +292,60 @@ export default function ZoneCard({
           zone={zone}
           CustomTabPanel={CustomTabPanel}
         />
-      </Box>
-    </Card>
+      </ZoneCardContentWrapper>
+    </StyledCard>
   );
 }
+
+// Styled-components
+const StyledCard = styled(Card)`
+  margin: 0.05 !important;
+  display: flex;
+  flex-direction: column;
+  width: 365px !important;
+  box-shadow: none !important;
+`;
+
+const StyledZoneCardHeader = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem 1.75rem;
+  background-color: #dce4e487;
+`;
+
+const ZoneCardContentWrapper = styled(Box)`
+  padding: 0 1.75rem;
+`;
+
+const ZoneCardContentRow = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  padding: 1rem 0;
+`;
+
+const ZoneCardDetailsBox = styled(Box)`
+  font-size: 0.75rem;
+  width: 100%;
+`;
+
+const StyledZoneCardBtn = styled(Button)`
+  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-size: 0.85rem !important;
+  padding: 0.45rem 0.75rem !important;
+  height: fit-content !important;
+  white-space: nowrap;
+  border-radius: 5px !important;
+  text-transform: capitalize !important;
+  transition: background-color 0s ease-in-out !important;
+  width: 100% !important;
+  background-color: #f9d114;
+  color: #606162;
+  font-weight: 600;
+  &:hover {
+    background-color: #005972;
+    color: #f0f2f5;
+  }
+`;

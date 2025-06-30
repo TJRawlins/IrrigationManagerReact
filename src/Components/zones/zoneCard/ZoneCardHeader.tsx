@@ -5,6 +5,7 @@ import { BsCalendar4Week } from "react-icons/bs";
 import { RiTimerLine } from "react-icons/ri";
 import { PiPlant } from "react-icons/pi";
 import { getSeasonIcon } from "./zoneCardUtils";
+import styled from "styled-components";
 
 interface Zone {
   name: string;
@@ -50,36 +51,27 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
   handleDeleteClose,
   deleteZone,
 }) => (
-  <CardHeader
-    className="zone-title"
-    sx={{ padding: "0", color: "#606162" }}
+  <StyledCardHeader
     title={
-      zone.name.length > 18 ? zone.name.substring(0, 18) + "..." : zone.name
+      <ZoneTitle>
+        {zone.name.length > 18 ? zone.name.substring(0, 18) + "..." : zone.name}
+      </ZoneTitle>
     }
     subheader={
-      <div
-        className="card-subheader"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "1rem",
-          fontFamily: "system-ui",
-          fontSize: "0.75rem",
-        }}
-      >
-        <div className="card-subheader-item">
+      <CardSubheader>
+        <CardSubheaderItem>
           <RiTimerLine /> {zone.runtimeHours}h {zone.runtimeMinutes}m
-        </div>
-        <div className="card-subheader-item">
+        </CardSubheaderItem>
+        <CardSubheaderItem>
           <BsCalendar4Week /> {zone.runtimePerWeek} days
-        </div>
-        <div className="card-subheader-item">
+        </CardSubheaderItem>
+        <CardSubheaderItem>
           {getSeasonIcon(zone.season)} {zone.season}
-        </div>
-        <div className="card-subheader-item">
+        </CardSubheaderItem>
+        <CardSubheaderItem>
           <PiPlant /> {zone.totalPlants}
-        </div>
-      </div>
+        </CardSubheaderItem>
+      </CardSubheader>
     }
     action={
       isHovering ? (
@@ -117,28 +109,19 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
               </MenuItem>
             ))}
           </Menu>
-          <Popover
+          <StyledPopover
             id={id}
             open={open}
             anchorEl={anchorEl}
             onClose={handleDeleteClose}
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            sx={{
-              display: "flex !important",
-              flexDirection: "column",
-              padding: "1rem",
-            }}
           >
             <span>This will delete all associated plants.</span>
-            <div style={{ display: "flex", gap: ".5rem" }}>
-              <button style={{ padding: "8px" }} onClick={deleteZone}>
-                Confirm
-              </button>
-              <button style={{ padding: "8px" }} onClick={handleDeleteClose}>
-                Cancel
-              </button>
-            </div>
-          </Popover>
+            <PopoverActions>
+              <PopoverButton onClick={deleteZone}>Confirm</PopoverButton>
+              <PopoverButton onClick={handleDeleteClose}>Cancel</PopoverButton>
+            </PopoverActions>
+          </StyledPopover>
         </>
       ) : null
     }
@@ -146,3 +129,55 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
 );
 
 export default ZoneCardHeader;
+
+// Styled Components
+const StyledCardHeader = styled(CardHeader)`
+  padding: 0 !important;
+  color: #606162;
+`;
+
+const ZoneTitle = styled.span`
+  text-transform: capitalize;
+  font-family: "Raleway", "Source Sans Pro", Helvetica, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-weight: 800 !important;
+  font-size: 1.2rem !important;
+  line-height: 1.334;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+const CardSubheader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: system-ui;
+  font-size: 0.75rem;
+  border-radius: 5px;
+  margin: 0.25rem 0px 0rem 0 !important;
+`;
+
+const CardSubheaderItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+`;
+
+const StyledPopover = styled(Popover)`
+  display: flex !important;
+  flex-direction: column;
+  padding: 1rem;
+`;
+
+const PopoverActions = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const PopoverButton = styled.button`
+  padding: 8px;
+`;
