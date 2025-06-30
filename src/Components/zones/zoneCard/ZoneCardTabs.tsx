@@ -115,7 +115,7 @@ const StyledTabsContainer = styled(Box)`
 `;
 
 const TabPanelContent = styled(Box)`
-  margin-top: 0.75rem;
+  margin-top: 1rem;
 `;
 
 import type { TabProps } from "@mui/material/Tab";
@@ -123,15 +123,16 @@ import type { TabProps } from "@mui/material/Tab";
 const TabTitle = styled((props: TabProps) => <Tab {...props} />)`
   text-transform: none !important;
   font-family: "Open Sans" !important;
-  font-size: 0.75rem !important;
+  font-size: 0.8rem !important;
   &.Mui-selected {
-    color: rgba(0, 0, 0, 0.795) !important;
+    color: #606162 !important;
+    font-weight: 600 !important;
   }
 `;
 
 const TablePanelHeaderCell = styled(TableCell)`
   border: none !important;
-  color: #459588;
+  color: #606162;
   font-size: 0.75rem !important;
   padding: 4px 8px !important;
 `;

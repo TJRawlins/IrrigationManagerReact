@@ -151,7 +151,7 @@ const ZoneTitle = styled.span`
 const CardSubheader = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
   font-family: system-ui;
   font-size: 0.75rem;
   border-radius: 5px;
