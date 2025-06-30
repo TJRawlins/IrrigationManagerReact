@@ -1,0 +1,270 @@
+.MuiCard-root.card {
+  display: flex;
+  position: relative;
+  background-image: none;
+  background-color: #eff2f5;
+  border-radius: 8px !important;
+  width: 100%;
+  height: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.MuiCardActions-root {
+  width: 100%;
+}
+
+.card-img-wrapper {
+  position: relative;
+}
+
+.zone.card-img {
+  position: relative;
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 0;
+}
+
+span.card-img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    #00ffdc5c 0%,
+    #00ffdc12 50%,
+    #19191f 100%
+  );
+  background-color: #19191f75;
+}
+
+#card-content {
+  width: 260px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 15px;
+}
+#card-content .close-icon {
+  color: #7c7c7f;
+}
+
+.card-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+.MuiTable-root.zone-table {
+  tbody.MuiTableBody-root tr td {
+    font-size: 0.75rem !important;
+  }
+}
+
+/* .season-icon-wrapper {
+  position: absolute;
+  top: 17px;
+  left: 17px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.season-icon {
+  color: #ffff;
+  font-size: 1.25rem;
+} */
+
+/* ====== ZONE NAME & RUNTIME ====== */
+
+#zone-card-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem 1.75rem;
+  background-color: #dce4e487;
+}
+
+.runtime-text {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem !important;
+  color: #18d4c2;
+}
+
+.zone-title {
+  text-transform: capitalize;
+}
+
+.zone-title div .MuiCardHeader-title {
+  font-family: "Raleway", "Source Sans Pro", Helvetica, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-weight: 800 !important;
+  font-size: 1.2rem !important;
+  line-height: 1.334;
+  letter-spacing: -0.5px;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  padding: 0;
+}
+
+.MuiCardHeader-subheader {
+  /* background: #dce4e4; */
+  border-radius: 5px;
+  margin: 0.25rem 0px 0rem 0 !important;
+}
+
+.card-subheader-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+.card-subheader-item.status {
+  color: #f0f2f5;
+  background: #54b836;
+  padding: 0 5px;
+  border-radius: 10px;
+}
+
+/* ====== CARD DATA: GROUPS ====== */
+
+.zone-card-content-wrapper {
+  padding: 0 1.75rem;
+}
+.zone-card-content {
+  padding: 1rem 0;
+}
+
+.zone-data {
+  display: flex;
+  margin-top: 1.5rem;
+}
+
+.zone-data .card-data-group {
+  gap: 0 !important;
+}
+
+/* ====== CARD DATA: LEFT GROUP ====== */
+
+.card-data-group.zone-data-group {
+  background: transparent;
+  padding: 0;
+  width: 100%;
+}
+.card-data-group.zone-data-group .card-data.flex-row.size {
+  margin: 0 !important;
+  line-height: 1.7;
+}
+.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-title,
+.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-value {
+  font-weight: 100;
+  font-size: 0.875rem;
+  font-family: "Source Sans Pro", Helvetica, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+.card-data-group.zone-data-group .card-data.flex-row.size span.zone-data-value {
+  color: #18d4c2;
+}
+
+/* ====== CARD DATA: RIGHT GROUP ====== */
+
+#zone-card-total-gallons-box .zone-card-total-gallons {
+  display: flex;
+  flex-direction: column;
+}
+.zone-card-total-gallons {
+  display: flex;
+  justify-content: space-between;
+}
+.zone-card-total-gallons .bar-gallons-chip {
+  display: flex;
+  justify-content: space-between;
+  width: 100% !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+}
+.zone-card-total-gallons .bar-gallons-chip {
+  font-size: 0.875rem !important;
+}
+.zone-card-total-gallons .bar-gallons-chip-avatar-icon {
+  font-size: 1.15rem;
+}
+.zone-card-total-gallons .bar-gallons-chip-avatar-text {
+  background-color: #19191f !important;
+  font-size: 0.55rem;
+}
+
+/* ====== CARD ACTION BUTTONS ====== */
+
+.MuiCardActions-root {
+  padding: 0 !important;
+}
+#zone-card-action-menu-box {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+.action-menu-button {
+  background-color: #18d4c2 !important;
+  border: 2px solid #18d4c2 !important;
+  color: #19191f !important;
+  width: 35px;
+  height: 35px;
+  border-radius: 50% !important;
+  font-size: 0.875rem !important;
+  min-width: 0px !important;
+  transition: all 250ms !important;
+}
+.action-menu-button:hover {
+  background-color: transparent !important;
+  color: #18d4c2 !important;
+}
+
+.zone-card-btn {
+  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-size: 0.75rem !important;
+  padding: 0.45rem 0.75rem !important;
+  height: fit-content !important;
+  white-space: nowrap;
+  border-radius: 5px !important;
+  text-transform: capitalize !important;
+  transition: background-color 0s ease-in-out !important;
+}
+
+
+/* tab menu */
+
+#tab-panel-content {
+  margin-top: .75rem;
+}
+
+.tab-title {
+    text-transform: none !important;
+    font-family: "Open Sans" !important;
+    font-size: 0.75rem !important;
+}
+
+.tab-title.Mui-selected {
+    color: rgba(0, 0, 0, 0.795) !important;
+}
+
+.table-panel-cell {
+  border: none !important;
+}
