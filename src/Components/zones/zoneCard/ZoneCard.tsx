@@ -13,7 +13,7 @@ import {
 } from "../../../redux/plantSlice";
 import { Plant } from "../../../App/models/Plant";
 import "../../../styles/baseStyles/BaseCard.css";
-import "../../../styles/zones/ZoneCardNewer.css";
+import "./ZoneCard.css";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { ModalTheme } from "../../../theme/ModalTheme";
 import ZoneCardHeader from "./ZoneCardHeader";

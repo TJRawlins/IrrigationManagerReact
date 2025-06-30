@@ -1,3 +1,4 @@
+/* Moved from styles/zones/ZoneCardNewer.css */
 .MuiCard-root.card {
   display: flex;
   position: relative;
@@ -248,21 +249,20 @@ span.card-img-overlay {
   transition: background-color 0s ease-in-out !important;
 }
 
-
 /* tab menu */
 
 #tab-panel-content {
-  margin-top: .75rem;
+  margin-top: 0.75rem;
 }
 
 .tab-title {
-    text-transform: none !important;
-    font-family: "Open Sans" !important;
-    font-size: 0.75rem !important;
+  text-transform: none !important;
+  font-family: "Open Sans" !important;
+  font-size: 0.75rem !important;
 }
 
 .tab-title.Mui-selected {
-    color: rgba(0, 0, 0, 0.795) !important;
+  color: rgba(0, 0, 0, 0.795) !important;
 }
 
 .table-panel-cell {
