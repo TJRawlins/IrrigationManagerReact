@@ -29,7 +29,7 @@ type ZoneCardProps = {
   modalColorTheme: ModalTheme;
 };
 
-export default function ZoneCardNew({
+export default function ZoneCard({
   zone,
   fetchZones,
   setIsShowEdit,
