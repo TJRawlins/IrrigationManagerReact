@@ -2,7 +2,8 @@ import { createContext, useState, useMemo } from "react";
 import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
 
 // const callToActionPrimary = "#18d4c2";
-const callToActionPrimary = "#6eb7ac";
+// const callToActionPrimary = "#6eb7ac";
+const callToActionPrimary = "#64cdbd";
 const callToActionSecondary = "#82a628";
 const primaryLight = "#005972";
 const primaryDark = "#141b2d";
