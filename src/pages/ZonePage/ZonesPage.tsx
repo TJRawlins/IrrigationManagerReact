@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ZoneList from "../../Components/zones/ZoneList";
 import agent from "../../App/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
-import { Grid, useTheme } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
@@ -24,35 +24,20 @@ import {
 } from "../../redux/seasonSlice";
 import { Season } from "../../App/models/Season";
 import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
-import { tokens } from "../../theme/theme";
-import { useModalColorTheme } from "../../theme/ModalTheme";
-import { useMenuBarColorTheme } from "../../theme/MenuBarTheme";
-import { useGridColorTheme } from "../../theme/GridTheme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 const ZonesPage = () => {
-  const modalColorTheme = useModalColorTheme();
-  const menuBarColorTheme = useMenuBarColorTheme();
-  const gridColorTheme = useGridColorTheme();
+  const appTheme = useAppTheme();
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
   const [isLoadingZones, setIsLoadingZones] = useState<boolean>(true);
 
   // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
   const StyledZoneContainer = `
     ul[role="listbox"] {
-      background-image: ${colors.menuBar.buttonBackgroundImage} !important; // Dropdown list background
+      background-image: ${appTheme.colors.menuBar.buttonBackgroundImage} !important; // Dropdown list background
     }
   `;
-
-  // const fetchSeasons = () => {
-  //   agent.Seasons.list().then((seasons) => {
-  //     dispatch(updateCurrentSeasonList(seasons));
-  //     console.log("%cZones: Seasons Fetched", "color:#1CA1E6");
-  //   });
-  // };
 
   //* Initial zone list
   const fetchZones = async (seasonString: number) => {
@@ -127,16 +112,13 @@ const ZonesPage = () => {
           fetchZones={fetchZones}
           updateLocalStorageSeason={updateLocalStorageSeason}
           isLoadingZones={isLoadingZones}
-          modalColorTheme={modalColorTheme}
-          menuBarColorTheme={menuBarColorTheme}
         />
-        <Grid id="zone-grid-background" sx={gridColorTheme.grid}>
+        <Grid id="zone-grid-background" sx={appTheme.grid.sx}>
           <ZoneList
             hasError
             fetchZones={fetchZones}
             updateLocalStorageSeason={updateLocalStorageSeason}
             isLoadingZones={isLoadingZones}
-            modalColorTheme={modalColorTheme}
           />
         </Grid>
       </ErrorBoundary>

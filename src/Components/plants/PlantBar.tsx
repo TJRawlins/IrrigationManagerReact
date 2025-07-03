@@ -23,24 +23,20 @@ import { useEffect } from "react";
 import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
 import { TbDroplet } from "react-icons/tb";
-import { ModalTheme } from "../../theme/ModalTheme";
-import { MenuBarTheme } from "../../theme/MenuBarTheme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
-  modalColorTheme: ModalTheme;
-  menuBarColorTheme: MenuBarTheme;
 };
 
 export default function PlantBar({
   fetchPlants,
-  modalColorTheme,
-  menuBarColorTheme,
 }: PlantBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
+  const appTheme = useAppTheme();
 
   const updateLocalStorageSeason = (seasonId: number) => {
     agent.Seasons.details(seasonId).then((season) => {
@@ -91,11 +87,11 @@ export default function PlantBar({
           <Tooltip title="Weekly Gallons" arrow>
             <Chip
               className="bar-gallons-chip"
-              sx={menuBarColorTheme.barButtons}
+              sx={appTheme.menuBar.buttons}
               avatar={
                 <Avatar
                   className="bar-gallons-chip-avatar"
-                  sx={menuBarColorTheme.barButtons}
+                  sx={appTheme.menuBar.buttons}
                 >
                   <TbDroplet className="bar-gallons-chip-avatar-icon" />
                   <span className="bar-gallons-chip-avatar-text">W</span>
@@ -107,11 +103,11 @@ export default function PlantBar({
           <Tooltip title="Monthly Gallons" arrow>
             <Chip
               className="bar-gallons-chip"
-              sx={menuBarColorTheme.barButtons}
+              sx={appTheme.menuBar.buttons}
               avatar={
                 <Avatar
                   className="bar-gallons-chip-avatar"
-                  sx={menuBarColorTheme.barButtons}
+                  sx={appTheme.menuBar.buttons}
                 >
                   <TbDroplet className="bar-gallons-chip-avatar-icon" />
                   <span className="bar-gallons-chip-avatar-text">M</span>
@@ -123,11 +119,11 @@ export default function PlantBar({
           <Tooltip title="Yearly Gallons" arrow>
             <Chip
               className="bar-gallons-chip"
-              sx={menuBarColorTheme.barButtons}
+              sx={appTheme.menuBar.buttons}
               avatar={
                 <Avatar
                   className="bar-gallons-chip-avatar"
-                  sx={menuBarColorTheme.barButtons}
+                  sx={appTheme.menuBar.buttons}
                 >
                   <TbDroplet className="bar-gallons-chip-avatar-icon" />
                   <span className="bar-gallons-chip-avatar-text">Y</span>
@@ -147,7 +143,7 @@ export default function PlantBar({
   return (
     <>
       <CssBaseline />
-      <div className="main-container" style={menuBarColorTheme.mainBar}>
+      <div className="main-container" style={appTheme.menuBar.mainBar}>
         <div className="content-container">
           <div className="title-container">
             <Typography className="bar-title" variant="h6" noWrap component="a">
@@ -171,13 +167,13 @@ export default function PlantBar({
             {/* // *-*-*-*-*-*-*-*-*-*-*-*-* ZONE & SEASON TITLE *-*-*-*-*-*-*-*-*-*-*-*-* */}
             <Box sx={{ display: { md: "block", sm: "none", xs: "none" } }}>
               <Box className="bar-btn-container">
-                <Box className="bar-btn bar-chip" sx={menuBarColorTheme.chips}>
+                <Box className="bar-btn bar-chip" sx={appTheme.menuBar.chips}>
                   <div className="btn-content-container">
                     <MdDashboard className="btn-icon" />
                     <span className="btn-text">{zone.name}</span>
                   </div>
                 </Box>
-                <Box className="bar-btn bar-chip" sx={menuBarColorTheme.chips}>
+                <Box className="bar-btn bar-chip" sx={appTheme.menuBar.chips}>
                   <div className="btn-content-container">
                     <IoCalendar className="btn-icon" />
                     <span className="btn-text">{zone.season}</span>
@@ -193,12 +189,11 @@ export default function PlantBar({
             <Box className="bar-btn-container">
               <AddPlant
                 fetchPlants={fetchPlants}
-                modalColorTheme={modalColorTheme}
               />
               <Link to="/zones">
                 <Button
                   className="bar-btn action"
-                  sx={menuBarColorTheme.barButtons}
+                  sx={appTheme.menuBar.buttons}
                   onClick={backToSeason}
                 >
                   <div className="btn-content-container">

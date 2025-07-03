@@ -15,7 +15,7 @@ import { Plant } from "../../../App/models/Plant";
 import "../../../styles/baseStyles/BaseCard.css";
 import "./ZoneCard.css";
 import { deleteObject, getStorage, ref } from "firebase/storage";
-import { ModalTheme } from "../../../theme/ModalTheme";
+import { useAppTheme } from "../../../theme/useAppTheme";
 import ZoneCardHeader from "./ZoneCardHeader";
 import ZoneCardImage from "./ZoneCardImage";
 import ZoneCardDetails from "./ZoneCardDetails";
@@ -27,7 +27,6 @@ type ZoneCardProps = {
   setIsShowEdit(args: boolean): void;
   updateLocalStorageSeason(args: number): void;
   zone: Zone;
-  modalColorTheme: ModalTheme;
 };
 
 export default function ZoneCard({
@@ -36,6 +35,7 @@ export default function ZoneCard({
   setIsShowEdit,
   updateLocalStorageSeason,
 }: ZoneCardProps) {
+  const { colors } = useAppTheme();
   const dispatch = useDispatch();
   const { season } = useSelector((state: RootState) => state.season);
   const [isHovering, setIsHovering] = useState(false);

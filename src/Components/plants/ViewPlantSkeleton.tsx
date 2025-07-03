@@ -6,23 +6,12 @@ import {
   Modal,
   Skeleton,
   Stack,
-  useTheme,
 } from "@mui/material";
 import "../../styles/baseStyles/BaseCard.css";
-import { tokens } from "../../theme/theme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 function ViewPlantSkeleton() {
-  // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const skeletonPlantColorTheme = () => {
-    return {
-      plantCardModal: {
-        backgroundColor: colors.overlay.modal,
-        opacity: 0.5,
-      },
-    };
-  };
+  const { modal } = useAppTheme();
 
   return (
     <Modal
@@ -30,7 +19,7 @@ function ViewPlantSkeleton() {
       open={true}
       slotProps={{
         backdrop: {
-          style: skeletonPlantColorTheme().plantCardModal,
+          style: modal.overlay,
         },
       }}
     >

@@ -17,11 +17,11 @@ import {
   WaterDropOutlined as WaterDropIcon,
 } from "@mui/icons-material";
 import Box from "@mui/material/Box";
-import { Grid, useTheme } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "/src/App/Layout/Sidebar.css";
-import { tokens } from "../../theme/theme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 type Anchor = "left";
 
@@ -31,22 +31,21 @@ export default function Sidebar() {
   });
 
   // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  const appTheme = useAppTheme();
   const sideBarColorTheme = () => {
     return {
       sideBar: {
-        backgroundColor: colors.white.const,
-        color: colors.gray.const,
+        backgroundColor: appTheme.colors.white.const,
+        color: appTheme.colors.gray.const,
       },
       hamburgerMenu: {
-        backgroundColor: colors.white.const,
+        backgroundColor: appTheme.colors.white.const,
       },
       menuButton: {
-        color: colors.darkGray.vary,
+        color: appTheme.colors.darkGray.vary,
       },
       menuIcon: {
-        color: colors.white.const,
+        color: appTheme.colors.white.const,
       },
     };
   };

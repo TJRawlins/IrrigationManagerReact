@@ -40,14 +40,12 @@ import Compressor from "compressorjs";
 import "../../styles/plants/PlantBar.css";
 import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/AddPlant.css";
-import { tokens } from "../../theme/theme";
 import { IoClose } from "react-icons/io5";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { ModalTheme } from "../../theme/ModalTheme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
-  modalColorTheme: ModalTheme;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -62,16 +60,16 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
+function AddPlant({ fetchPlants }: PlantBarProps) {
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const { zone } = useSelector((state: RootState) => state.zone);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const appTheme = useAppTheme();
 
   // color theme
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
 
   // Firebase Storage Variables
   const [error, setError] = useState<string>("");
@@ -285,14 +283,14 @@ function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
       <style>
         {`.MuiPopover-paper.MuiMenu-paper
           {
-            background-color: ${colors.modal.fieldBackground}
+            background-color: ${theme.palette.mode === "light" ? theme.palette.background.paper : theme.palette.background.default}
           }`}
       </style>
-      <Button
-        className="bar-btn action"
-        onClick={handleOpen}
-        sx={modalColorTheme.barButtons}
-      >
+              <Button
+          className="bar-btn action"
+          onClick={handleOpen}
+          sx={appTheme.menuBar.buttons}
+        >
         <div className="btn-content-container">
           <MdOutlineAddCircle className="btn-icon" />
           <span className="btn-text">Add Plant</span>
@@ -304,13 +302,13 @@ function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        slotProps={{
-          backdrop: {
-            style: modalColorTheme.cardModal,
-          },
-        }}
-      >
-        <Box className="modal-box" sx={modalColorTheme.card}>
+                  slotProps={{
+            backdrop: {
+              style: appTheme.modal.overlay,
+            },
+          }}
+        >
+         <Box className="modal-box" sx={appTheme.modal.card}>
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -336,24 +334,24 @@ function AddPlant({ fetchPlants, modalColorTheme }: PlantBarProps) {
                     left: "0",
                   }}
                 >
-                  <CircularProgress sx={{ color: "#0069b2" }} />
+                  <CircularProgress sx={{ color: theme.palette.primary.main }} />
                 </Box>
               </Modal>
             )}
             <Typography
               className="modal-title"
               id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              sx={modalColorTheme.cardTitle}
-            >
-              Add Plant
-            </Typography>
-            <Typography
-              className="modal-description"
-              component="p"
-              sx={modalColorTheme.cardDescription}
-            >
+                              variant="h6"
+                component="h2"
+                sx={appTheme.modal.title}
+              >
+                Add Plant
+              </Typography>
+              <Typography
+                className="modal-description"
+                component="p"
+                sx={appTheme.modal.description}
+              >
               Add a new plant to the {zone.name.toLocaleLowerCase()} zone
             </Typography>
           </div>

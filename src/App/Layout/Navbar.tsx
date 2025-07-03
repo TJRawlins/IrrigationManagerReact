@@ -25,12 +25,12 @@ import React, { useContext, useState } from "react";
 import logo from "../../assets/irrigation logo.png";
 import Sidebar from "./Sidebar";
 import { ColorModeContext } from "../../theme/theme";
-import { useNavBarColorTheme } from "../../theme/NavBarTheme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 export default function Navbar() {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
-  const navBarColorTheme = useNavBarColorTheme();
+  const appTheme = useAppTheme();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -134,7 +134,7 @@ export default function Navbar() {
    */
   return (
     <Box sx={{ flexGrow: 1, position: "relative !important" }}>
-      <AppBar sx={navBarColorTheme.mainBar}>
+      <AppBar sx={appTheme.navBar.mainBar}>
         <Toolbar
           sx={{
             paddingLeft: "25px !important",

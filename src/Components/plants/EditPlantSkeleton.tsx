@@ -9,27 +9,21 @@ import {
   useTheme,
 } from "@mui/material";
 import "../../styles/baseStyles/BaseCard.css";
-import { ModalTheme } from "../../theme/ModalTheme";
-import { tokens } from "../../theme/theme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 interface EditPlantSkeletonProps {
-  modalColorTheme: ModalTheme;
+  // No props needed anymore - uses useAppTheme directly
 }
 
-
-
-function EditPlantSkeleton({ modalColorTheme }: EditPlantSkeletonProps) {
-
-  // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+function EditPlantSkeleton({}: EditPlantSkeletonProps) {
+  const appTheme = useAppTheme();
 
   return (
     <div>
       <style>
         {`.MuiPopover-paper.MuiMenu-paper
           {
-            background-color: ${colors.modal.fieldBackground}
+            background-color: ${appTheme.colors.modal.fieldBackground}
             }`}
       </style>
       <Modal
@@ -37,7 +31,7 @@ function EditPlantSkeleton({ modalColorTheme }: EditPlantSkeletonProps) {
         open={true}
         slotProps={{
           backdrop: {
-            style: modalColorTheme?.cardModal,
+            style: appTheme.modal.overlay,
           },
         }}
       >
@@ -57,7 +51,7 @@ function EditPlantSkeleton({ modalColorTheme }: EditPlantSkeletonProps) {
               height: "433px",
               m: 2,
               borderRadius: "10px",
-              ... modalColorTheme?.card
+              ...appTheme.modal.card
             }}
           >
             <CardHeader

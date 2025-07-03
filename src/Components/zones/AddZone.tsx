@@ -30,13 +30,12 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { MdOutlineAddCircle } from "react-icons/md";
-import { ModalTheme } from "../../theme/ModalTheme";
+import { useAppTheme } from "../../theme/useAppTheme";
 import { IoClose } from "react-icons/io5";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
   isLoadingZones: boolean;
-  modalColorTheme: ModalTheme;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -54,8 +53,8 @@ const VisuallyHiddenInput = styled("input")({
 function AddZone({
   fetchZones,
   isLoadingZones,
-  modalColorTheme,
 }: ZoneBarProps) {
+  const { modal, menuBar } = useAppTheme();
   const [open, setOpen] = useState(false);
   const { season } = useSelector((state: RootState) => state.season);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -210,7 +209,7 @@ function AddZone({
           className="bar-btn action"
           onClick={handleOpen}
           disabled={isLoadingZones}
-          sx={modalColorTheme.barButtons}
+          sx={menuBar.buttons}
         >
           <div className="btn-content-container">
             <MdOutlineAddCircle className="btn-icon" />
@@ -226,11 +225,11 @@ function AddZone({
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: modalColorTheme.cardModal,
+            style: modal.overlay,
           },
         }}
       >
-        <Box className="modal-box" sx={modalColorTheme.card}>
+        <Box className="modal-box" sx={modal.card}>
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -264,14 +263,14 @@ function AddZone({
               className="modal-title"
               id="modal-modal-title"
               component="h2"
-              sx={modalColorTheme.cardTitle}
+              sx={modal.title}
             >
               Add Zone
             </Typography>
             <Typography
               className="modal-description"
               component="p"
-              sx={modalColorTheme.cardDescription}
+              sx={modal.description}
             >
               Add a new zone to {season.name}
             </Typography>

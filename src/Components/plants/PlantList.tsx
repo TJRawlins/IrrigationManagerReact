@@ -36,22 +36,17 @@ import { BiSolidCopyAlt } from "react-icons/bi";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
 import EditPlantSkeleton from "./EditPlantSkeleton";
-import { ModalTheme } from "../../theme/ModalTheme";
-import { GridTheme } from "../../theme/GridTheme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
   updateLocalStorageZone: (zoneId: number) => void;
-  modalColorTheme: ModalTheme;
-  gridColorTheme: GridTheme;
   // updateLocalStorageTreflePlant: (plantName: string) => void;
 }
 
 export default function PlantList({
   fetchPlants,
   updateLocalStorageZone,
-  modalColorTheme,
-  gridColorTheme,
 }: // updateLocalStorageTreflePlant,
 PlantListProps) {
   const dispatch = useDispatch();
@@ -74,6 +69,7 @@ PlantListProps) {
 
   // color theme
   const theme = useTheme();
+  const appTheme = useAppTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));  
 
   const isImageBeingUsedRef = useRef<boolean>(false);
@@ -332,11 +328,11 @@ PlantListProps) {
                 horizontal: "left",
               }}
             >
-              <Button
-                className="grid-btn action"
-                sx={gridColorTheme.buttonWarning}
-                onClick={deletePlant}
-              >
+                              <Button
+                  className="grid-btn action"
+                  sx={appTheme.grid.buttonWarning}
+                  onClick={deletePlant}
+                >
                 <div className="btn-content-container">
                   <TiWarning className="btn-icon" />
                   <span className="btn-text">Confirm</span>
@@ -387,7 +383,7 @@ PlantListProps) {
               noRowsVariant: "skeleton",
             },
           }}
-          sx={{...gridColorTheme.grid, border: "none"}}
+                      sx={{...appTheme.grid.sx, border: "none"}}
           initialState={{
             columns: {
               columnVisibilityModel: {
@@ -420,17 +416,15 @@ PlantListProps) {
           fetchPlants={fetchPlants}
           setIsShowView={setIsShowView}
           isShowView={isShowView}
-          modalColorTheme={modalColorTheme}
         />
       )}
       {isLoadingEditPlant ? (
-        <EditPlantSkeleton modalColorTheme={modalColorTheme} />
+        <EditPlantSkeleton />
       ) : (
         <EditPlant
           fetchPlants={fetchPlants}
           setIsShowEdit={setIsShowEdit}
           isShowEdit={isShowEdit}
-          modalColorTheme={modalColorTheme}
         />
       )}
     </>

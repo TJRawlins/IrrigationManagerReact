@@ -5,7 +5,7 @@ import "./PlantPage.css";
 import PlantList from "../../Components/plants/PlantList";
 import agent from "../../App/api/agent";
 import PlantBar from "../../Components/plants/PlantBar";
-import { Grid, useTheme } from "@mui/material";
+import { Grid } from "@mui/material";
 // import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import {
@@ -15,27 +15,20 @@ import {
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { Plant } from "../../App/models/Plant";
 import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
-import { tokens } from "../../theme/theme";
-import { useModalColorTheme } from "../../theme/ModalTheme";
-import { useMenuBarColorTheme } from "../../theme/MenuBarTheme";
-import { useGridColorTheme } from "../../theme/GridTheme";
+import { useAppTheme } from "../../theme/useAppTheme";
 // import { TreflePlant } from "../../App/models/TreflePlant";
 
 const PlantPage = () => {
   // const { zoneId } = useParams();
   // const zoneIdNum: number = Number(zoneId);
   const dispatch = useDispatch();
-  const modalColorTheme = useModalColorTheme();
-  const menuBarColorTheme = useMenuBarColorTheme();
-  const gridColorTheme = useGridColorTheme();
+  const appTheme = useAppTheme();
 
-  // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  // color theme - much cleaner now!
   const plantPageColorTheme = () => {
     return {
       grid: {
-        backgroundColor: colors.whiteBlue.toDarkGray,
+        backgroundColor: appTheme.colors.whiteBlue.toDarkGray,
       },
     };
   };
@@ -78,13 +71,11 @@ const PlantPage = () => {
   return (
     <>
       <ErrorBoundary fallback="Unable to retrieve data for plants. The server may be down.">
-        <PlantBar fetchPlants={fetchPlants} modalColorTheme={modalColorTheme} menuBarColorTheme={menuBarColorTheme} />
+        <PlantBar fetchPlants={fetchPlants} />
         <Grid className="plant-page-grid" sx={plantPageColorTheme().grid}>
           <PlantList
             fetchPlants={fetchPlants}
             updateLocalStorageZone={updateLocalStorageZone}
-            modalColorTheme={modalColorTheme}
-            gridColorTheme={gridColorTheme}
             // updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
           />
         </Grid>

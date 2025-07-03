@@ -35,7 +35,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { Zone } from "../../App/models/Zone";
-import { ModalTheme } from "../../theme/ModalTheme";
+import { useAppTheme } from "../../theme/useAppTheme";
 import { IoClose } from "react-icons/io5";
 
 type ZoneEditProps = {
@@ -43,7 +43,6 @@ type ZoneEditProps = {
   updateLocalStorageSeason(args: number): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
-  modalColorTheme: ModalTheme;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -75,8 +74,8 @@ function EditZone({
   updateLocalStorageSeason,
   setIsShowEdit,
   isShowEdit,
-  modalColorTheme,
 }: ZoneEditProps) {
+  const { modal } = useAppTheme();
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
   const seasonIdValue = useRef<number>();
@@ -371,11 +370,11 @@ function EditZone({
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: modalColorTheme.cardModal,
+            style: { backgroundColor: "transparent" },
           },
         }}
       >
-        <Box className="modal-box" sx={modalColorTheme.card}>
+        <Box className="modal-box" sx={modal.card}>
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -409,14 +408,14 @@ function EditZone({
               className="modal-title"
               id="modal-modal-title"
               component="h2"
-              sx={modalColorTheme.cardTitle}
+              sx={modal.title}
             >
               Edit Zone
             </Typography>
             <Typography
               className="modal-description"
               component="p"
-              sx={modalColorTheme.cardDescription}
+              sx={modal.description}
             >
               Edit zone {zone.name} for {season.name}
             </Typography>

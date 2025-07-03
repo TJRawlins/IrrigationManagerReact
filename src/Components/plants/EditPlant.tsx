@@ -40,16 +40,14 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { Plant } from "../../App/models/Plant";
-import { tokens } from "../../theme/theme";
 import { IoClose } from "react-icons/io5";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { ModalTheme } from "../../theme/ModalTheme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
-  modalColorTheme: ModalTheme;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -68,22 +66,18 @@ function EditPlant({
   fetchPlants,
   setIsShowEdit,
   isShowEdit,
-  modalColorTheme,
 }: PlantBarProps) {
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { modal } = useAppTheme();
   const handleClose = () => {
     setError("");
     setIsShowEdit(false);
     setImageUpload(undefined);
     setIsNewImage(false);
   };
-
-  // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
 
   // Firebase Storage Variables
   const isImageBeingUsedRef = useRef<boolean>(false);
@@ -373,7 +367,7 @@ function EditPlant({
       <style>
         {`.MuiPopover-paper.MuiMenu-paper
           {
-            background-color: ${colors.modal.fieldBackground}
+            background-color: ${modal.card["& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input"].backgroundColor}
           }`}
       </style>
       <Modal
@@ -382,13 +376,13 @@ function EditPlant({
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        slotProps={{
+                          slotProps={{
           backdrop: {
-            style: modalColorTheme?.cardModal,
+            style: modal.overlay,
           },
         }}
       >
-        <Box className="modal-box plant" sx={modalColorTheme?.card}>
+       <Box className="modal-box plant" sx={modal.card}>
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -418,20 +412,20 @@ function EditPlant({
                 </Box>
               </Modal>
             )}
-            <Typography
-              className="modal-title"
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              sx={modalColorTheme?.cardTitle}
-            >
-              Edit Plant
-            </Typography>
-            <Typography
-              className="modal-description"
-              component="p"
-              sx={modalColorTheme?.cardDescription}
-            >
+                          <Typography
+                className="modal-title"
+                id="modal-modal-title"
+                                variant="h6"
+                component="h2"
+                sx={modal.title}
+              >
+                Edit Plant
+              </Typography>
+                <Typography
+                  className="modal-description"
+                  component="p"
+                  sx={modal.description}
+                >
               Edit plant for zone {zone.name.toLocaleLowerCase()}
             </Typography>
           </div>
