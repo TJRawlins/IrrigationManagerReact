@@ -438,10 +438,41 @@ export const ColorModeContext = createContext({
 });
 
 export const useMode = () => {
-  const [mode, setMode] = useState<'light' | 'dark'>('dark');
+  // Get initial mode from localStorage, system preference, or default to 'dark'
+  const getInitialMode = (): 'light' | 'dark' => {
+    try {
+      // First check localStorage
+      const savedMode = localStorage.getItem('theme-mode');
+      if (savedMode === 'light' || savedMode === 'dark') {
+        return savedMode;
+      }
+      
+      // Fall back to system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        return 'light';
+      }
+      
+      return 'dark';
+    } catch {
+      return 'dark';
+    }
+  };
+
+  const [mode, setMode] = useState<'light' | 'dark'>(getInitialMode);
   
   const colorMode = useMemo(() => ({
-    toggleColorMode: () => setMode(prev => prev === 'light' ? 'dark' : 'light')
+    toggleColorMode: () => {
+      setMode(prev => {
+        const newMode = prev === 'light' ? 'dark' : 'light';
+        // Save to localStorage
+        try {
+          localStorage.setItem('theme-mode', newMode);
+        } catch (error) {
+          console.warn('Failed to save theme mode to localStorage:', error);
+        }
+        return newMode;
+      });
+    }
   }), []);
 
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
