@@ -302,7 +302,7 @@ const StyledCard = styled(Card)`
   margin: 0.05 !important;
   display: flex;
   flex-direction: column;
-  width: 365px !important;
+  width: 370px !important;
   box-shadow: none !important;
 `;
 

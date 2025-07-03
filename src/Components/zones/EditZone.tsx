@@ -35,7 +35,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { Zone } from "../../App/models/Zone";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { ModalTheme } from "../../theme/ModalTheme";
 import { IoClose } from "react-icons/io5";
 
 type ZoneEditProps = {
