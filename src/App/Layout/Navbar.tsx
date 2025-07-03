@@ -20,66 +20,17 @@ import {
   DarkModeOutlined,
 } from "@mui/icons-material";
 // import SearchIcon from "@mui/icons-material/Search";
-import { useTheme, Theme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import React, { useContext, useState } from "react";
 import logo from "../../assets/irrigation logo.png";
 import Sidebar from "./Sidebar";
-import { ColorModeContext, tokens } from "../../theme/theme";
+import { ColorModeContext } from "../../theme/theme";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 export default function Navbar() {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
-  const appBarStyles = (theme: Theme) => {
-    return {
-      mainBar: {
-        backgroundColor: colors.tertiary.vary,
-        color: colors.white.altPrimary,
-        zIndex: theme.zIndex.drawer + 1,
-        position: "relative !important",
-      },
-    };
-  };
-
-  // const Search = styled("div")(({ theme }) => ({
-  //   position: "relative",
-  //   borderRadius: theme.shape.borderRadius,
-  //   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  //   "&:hover": {
-  //     backgroundColor: alpha(theme.palette.common.white, 0.25),
-  //   },
-  //   marginRight: theme.spacing(2),
-  //   marginLeft: 0,
-  //   width: "100%",
-  //   [theme.breakpoints.up("sm")]: {
-  //     marginLeft: theme.spacing(3),
-  //     width: "auto",
-  //   },
-  // }));
-
-  // const SearchIconWrapper = styled("div")(({ theme }) => ({
-  //   padding: theme.spacing(0, 2),
-  //   height: "100%",
-  //   position: "absolute",
-  //   pointerEvents: "none",
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // }));
-
-  // const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  //   color: "inherit",
-  //   "& .MuiInputBase-input": {
-  //     padding: theme.spacing(1, 1, 1, 0),
-  //     // vertical padding + font size from searchIcon
-  //     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-  //     transition: theme.transitions.create("width"),
-  //     width: "100%",
-  //     [theme.breakpoints.up("md")]: {
-  //       width: "20ch",
-  //     },
-  //   },
-  // }));
+  const appTheme = useAppTheme();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -183,7 +134,7 @@ export default function Navbar() {
    */
   return (
     <Box sx={{ flexGrow: 1, position: "relative !important" }}>
-      <AppBar sx={appBarStyles(theme).mainBar}>
+      <AppBar sx={appTheme.navBar.mainBar}>
         <Toolbar
           sx={{
             paddingLeft: "25px !important",
@@ -191,18 +142,14 @@ export default function Navbar() {
           }}
         >
           <Sidebar />
-          <img
-            src={logo}
-            style={{ width: "50px", marginRight: "0.5rem" }}
-          ></img>
+          <img id="logo" src={logo}></img>
           <Typography
+            id="logo-text"
             variant="h4"
             noWrap
             component="div"
             sx={{
               display: { xs: "none", sm: "block" },
-              fontFamily: "'MuseoModerno', sans-serif",
-              fontSize: "2.5rem",
             }}
           >
             droplet

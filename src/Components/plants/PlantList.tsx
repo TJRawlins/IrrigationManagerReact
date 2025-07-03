@@ -19,6 +19,7 @@ import {
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
+import { TiWarning } from "react-icons/ti";
 import { useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
@@ -34,21 +35,18 @@ import ViewPlantSkeleton from "./ViewPlantSkeleton";
 import { BiSolidCopyAlt } from "react-icons/bi";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
-import { tokens } from "../../theme/theme";
 import EditPlantSkeleton from "./EditPlantSkeleton";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
   updateLocalStorageZone: (zoneId: number) => void;
-  modalColorTheme: ModalTheme;
   // updateLocalStorageTreflePlant: (plantName: string) => void;
 }
 
 export default function PlantList({
   fetchPlants,
   updateLocalStorageZone,
-  modalColorTheme,
 }: // updateLocalStorageTreflePlant,
 PlantListProps) {
   const dispatch = useDispatch();
@@ -71,18 +69,8 @@ PlantListProps) {
 
   // color theme
   const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const colors = tokens(theme.palette.mode);
-  const plantListColorTheme = () => {
-    return {
-      grid: {
-        backgroundColor: colors.whiteBlue.vary,
-        "& .MuiDataGrid-container--top [role=row]": {
-          backgroundColor: colors.whiteBlue.vary,
-        },
-      },
-    };
-  };
+  const appTheme = useAppTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));  
 
   const isImageBeingUsedRef = useRef<boolean>(false);
 
@@ -340,8 +328,15 @@ PlantListProps) {
                 horizontal: "left",
               }}
             >
-              <Button sx={{ p: 2 }} onClick={deletePlant}>
-                Confirm
+                              <Button
+                  className="grid-btn action"
+                  sx={appTheme.grid.buttonWarning}
+                  onClick={deletePlant}
+                >
+                <div className="btn-content-container">
+                  <TiWarning className="btn-icon" />
+                  <span className="btn-text">Confirm</span>
+                </div>
               </Button>
             </Popover>
           </ButtonGroup>
@@ -388,7 +383,7 @@ PlantListProps) {
               noRowsVariant: "skeleton",
             },
           }}
-          sx={plantListColorTheme().grid}
+                      sx={{...appTheme.grid.sx, border: "none"}}
           initialState={{
             columns: {
               columnVisibilityModel: {
@@ -421,7 +416,6 @@ PlantListProps) {
           fetchPlants={fetchPlants}
           setIsShowView={setIsShowView}
           isShowView={isShowView}
-          modalColorTheme={modalColorTheme}
         />
       )}
       {isLoadingEditPlant ? (
@@ -431,7 +425,6 @@ PlantListProps) {
           fetchPlants={fetchPlants}
           setIsShowEdit={setIsShowEdit}
           isShowEdit={isShowEdit}
-          modalColorTheme={modalColorTheme}
         />
       )}
     </>

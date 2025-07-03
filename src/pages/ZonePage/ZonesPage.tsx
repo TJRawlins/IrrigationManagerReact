@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ZoneList from "../../Components/zones/ZoneList";
 import agent from "../../App/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
-import { Grid, useTheme } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
@@ -24,105 +24,20 @@ import {
 } from "../../redux/seasonSlice";
 import { Season } from "../../App/models/Season";
 import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
-import { tokens } from "../../theme/theme";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 const ZonesPage = () => {
+  const appTheme = useAppTheme();
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
   const [isLoadingZones, setIsLoadingZones] = useState<boolean>(true);
 
   // color theme
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const zonePageColorTheme = () => {
-    return {
-      zoneGrid: {
-        backgroundColor: colors.whiteBlue.toDarkGray,
-      },
-    };
-  };
-
-  const modalColorTheme: ModalTheme = {
-      barButtons: {
-        backgroundColor: colors.menuBar.buttonBackground,
-        color: colors.menuBar.buttonFont,
-        border: "1px solid " + colors.menuBar.buttonBorder,
-        "& .btn-icon": { color: colors.menuBar.buttonIcon + " !important" },
-        "&.action:hover": {
-          border: "1px solid " + colors.menuBar.buttonBorderHover,
-        },
-      },
-      cardModal: {
-        backgroundColor: colors.modal.overlay,
-      },
-      card: {
-        backgroundColor: colors.modal.background,
-        border: "1px solid " + colors.modal.border + " !important",
-        "& .close-icon": {
-          color: colors.modal.closeIcon,
-        },
-        "& .close-icon:hover": {
-          color: colors.modal.closeIconHover,
-        },
-        // Buttons
-        "& .cancel-btn, & .submit-btn, & .img-upload-btn": {
-          border: "2px solid " + colors.modal.buttonBorder,
-        },
-        "& .submit-btn, & .img-upload-btn": {
-          border: "2px solid " + colors.modal.buttonBorder,
-          backgroundColor: colors.modal.buttonBackground,
-        },
-        "& .submit-btn:hover, & .img-upload-btn:hover": {
-          backgroundColor: colors.modal.buttonBackgroundHover,
-          color: colors.modal.buttonFontHover,
-        },
-        "& .cancel-btn": {
-          color: colors.modal.buttonFontHover,
-        },
-        "& .cancel-btn:hover": {
-          backgroundColor: colors.modal.buttonBackground,
-          color: colors.modal.buttonFont,
-        },
-        "& .img-upload-btn, & .submit-btn": {
-          color: colors.modal.buttonFont,
-        },
-        // Fields
-        "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
-          {
-            color: colors.modal.fieldLabel,
-          },
-        "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
-          {
-            color: colors.modal.fieldInputFont,
-          },
-        ".css-hyuuor-MuiButtonBase-root-MuiMenuItem-root, & .dropdown-override div:first-of-type, & .dropdown-unselect::after":
-          {
-            color: colors.modal.fieldInputFont + " !important",
-          },
-        "& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input":
-          {
-            backgroundColor: colors.modal.fieldBackground + " !important",
-          },
-        "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
-          {
-            border: "1px solid " + colors.modal.fieldBorder + " !important",
-          },
-      },
-      cardTitle: {
-        color: colors.modal.titleColor,
-      },
-      cardDescription: {
-        color: colors.modal.description,
-      },
-    };
-
-  // const fetchSeasons = () => {
-  //   agent.Seasons.list().then((seasons) => {
-  //     dispatch(updateCurrentSeasonList(seasons));
-  //     console.log("%cZones: Seasons Fetched", "color:#1CA1E6");
-  //   });
-  // };
+  const StyledZoneContainer = `
+    ul[role="listbox"] {
+      background-image: ${appTheme.colors.menuBar.buttonBackgroundImage} !important; // Dropdown list background
+    }
+  `;
 
   //* Initial zone list
   const fetchZones = async (seasonString: number) => {
@@ -192,19 +107,18 @@ const ZonesPage = () => {
   return (
     <>
       <ErrorBoundary fallback="Unable to retrieve data for zones. The server may be down.">
+        <style>{StyledZoneContainer}</style>
         <ZoneBar
           fetchZones={fetchZones}
           updateLocalStorageSeason={updateLocalStorageSeason}
           isLoadingZones={isLoadingZones}
-          modalColorTheme={modalColorTheme}
         />
-        <Grid id="zone-grid-background" sx={zonePageColorTheme().zoneGrid}>
+        <Grid id="zone-grid-background" sx={appTheme.grid.sx}>
           <ZoneList
             hasError
             fetchZones={fetchZones}
             updateLocalStorageSeason={updateLocalStorageSeason}
             isLoadingZones={isLoadingZones}
-            modalColorTheme={modalColorTheme}
           />
         </Grid>
       </ErrorBoundary>

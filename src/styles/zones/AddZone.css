@@ -19,3 +19,7 @@
 .error-text {
   color: red !important;
 } */
+
+.add-btn {
+  transition: background-color none !important;
+}
