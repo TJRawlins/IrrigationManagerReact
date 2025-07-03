@@ -35,7 +35,7 @@ export default function ZoneCard({
   setIsShowEdit,
   updateLocalStorageSeason,
 }: ZoneCardProps) {
-  const { colors } = useAppTheme();
+  const { zoneCard } = useAppTheme();
   const dispatch = useDispatch();
   const { season } = useSelector((state: RootState) => state.season);
   const [isHovering, setIsHovering] = useState(false);
@@ -247,8 +247,12 @@ export default function ZoneCard({
   };
 
   return (
-    <StyledCard onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <StyledZoneCardHeader>
+    <StyledCard 
+      onMouseEnter={handleMouseEnter} 
+      onMouseLeave={handleMouseLeave}
+      sx={zoneCard.card}
+    >
+      <StyledZoneCardHeader sx={zoneCard.header}>
         <ZoneCardHeader
           zone={zone}
           isHovering={isHovering}
@@ -282,7 +286,7 @@ export default function ZoneCard({
             style={{ textDecoration: "none" }}
             to={`/plants/zone/${zone.id}`}
           >
-            <StyledZoneCardBtn onClick={showPlants}>Plants</StyledZoneCardBtn>
+            <StyledZoneCardBtn onClick={showPlants} sx={zoneCard.button}>Plants</StyledZoneCardBtn>
           </Link>
         </Box>
         <ZoneCardTabs
@@ -311,7 +315,6 @@ const StyledZoneCardHeader = styled(Box)`
   flex-direction: column;
   width: 100%;
   padding: 1rem 1.75rem;
-  background-color: #dce4e487;
 `;
 
 const ZoneCardContentWrapper = styled(Box)`
@@ -341,11 +344,5 @@ const StyledZoneCardBtn = styled(Button)`
   text-transform: capitalize !important;
   transition: background-color 0s ease-in-out !important;
   width: 100% !important;
-  background-color: #f9d114;
-  color: #606162;
   font-weight: 600;
-  &:hover {
-    background-color: #005972;
-    color: #f0f2f5;
-  }
 `;

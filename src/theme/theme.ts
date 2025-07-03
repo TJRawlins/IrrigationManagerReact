@@ -127,6 +127,18 @@ declare module '@mui/material/styles' {
         modal: string;
         image: string;
       };
+      zoneCard: {
+        headerBackground: string;
+        headerText: string;
+        contentBackground: string;
+        text: string;
+        buttonBackground: string;
+        buttonText: string;
+        buttonHoverBackground: string;
+        buttonHoverText: string;
+        border: string;
+        shadow: string;
+      };
     };
   }
   interface ThemeOptions {
@@ -142,6 +154,7 @@ declare module '@mui/material/styles' {
       primary?: Partial<Theme['custom']['primary']>;
       secondary?: Partial<Theme['custom']['secondary']>;
       overlay?: Partial<Theme['custom']['overlay']>;
+      zoneCard?: Partial<Theme['custom']['zoneCard']>;
     };
   }
 }
@@ -264,6 +277,18 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
     overlay: {
       modal: "#002c38a8",
       image: "#64c9bf7a"
+    },
+    zoneCard: {
+      headerBackground: "#dce4e487",
+      headerText: "#606162",
+      contentBackground: "#ffffff",
+      text: "#606162",
+      buttonBackground: "#f9d114",
+      buttonText: "#606162",
+      buttonHoverBackground: "#005972",
+      buttonHoverText: "#f0f2f5",
+      border: "#e0e0e0",
+      shadow: "0 2px 4px rgba(0,0,0,0.1)"
     }
   } : {
     grid: {
@@ -381,6 +406,18 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
     overlay: {
       modal: "#06070ac7",
       image: "#0f5e568a"
+    },
+    zoneCard: {
+      headerBackground: "#1f2a41",
+      headerText: "#e0e0e0",
+      contentBackground: "#141b2d",
+      text: "#e0e0e0",
+      buttonBackground: "#64cdbd",
+      buttonText: "#19191f",
+      buttonHoverBackground: "#005972",
+      buttonHoverText: "#eef2f6",
+      border: "#2a3441",
+      shadow: "0 2px 4px rgba(0,0,0,0.3)"
     }
   };
 

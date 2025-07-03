@@ -1,9 +1,13 @@
 import React from "react";
 import { Stack, Typography } from "@mui/material";
+import { useAppTheme } from "../../../theme/useAppTheme";
 import styled from "styled-components";
 
-const ZoneCardDetails: React.FC = () => (
-  <Stack color="#606162" gap="7px" direction="column">
+const ZoneCardDetails: React.FC = () => {
+  const { zoneCard } = useAppTheme();
+  
+  return (
+    <Stack color={zoneCard.text.color} gap="7px" direction="column">
     <CardText variant="body2">
       <ZoneDataTitle>Start time:</ZoneDataTitle>
       <ZoneDataValue>8:30 am</ZoneDataValue>
@@ -21,7 +25,8 @@ const ZoneCardDetails: React.FC = () => (
       <ZoneDataValue>06/10/2025</ZoneDataValue>
     </CardText>
   </Stack>
-);
+  );
+};
 
 export default ZoneCardDetails;
 

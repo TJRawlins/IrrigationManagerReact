@@ -5,6 +5,7 @@ import { BsCalendar4Week } from "react-icons/bs";
 import { RiTimerLine } from "react-icons/ri";
 import { PiPlant } from "react-icons/pi";
 import { getSeasonIcon } from "./zoneCardUtils";
+import { useAppTheme } from "../../../theme/useAppTheme";
 import styled from "styled-components";
 
 interface Zone {
@@ -50,29 +51,33 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
   anchorEl,
   handleDeleteClose,
   deleteZone,
-}) => (
-  <StyledCardHeader
-    title={
-      <ZoneTitle>
-        {zone.name.length > 18 ? zone.name.substring(0, 18) + "..." : zone.name}
-      </ZoneTitle>
-    }
-    subheader={
-      <CardSubheader>
-        <CardSubheaderItem>
-          <RiTimerLine /> {zone.runtimeHours}h {zone.runtimeMinutes}m
-        </CardSubheaderItem>
-        <CardSubheaderItem>
-          <BsCalendar4Week /> {zone.runtimePerWeek} days
-        </CardSubheaderItem>
-        <CardSubheaderItem>
-          {getSeasonIcon(zone.season)} {zone.season}
-        </CardSubheaderItem>
-        <CardSubheaderItem>
-          <PiPlant /> {zone.totalPlants}
-        </CardSubheaderItem>
-      </CardSubheader>
-    }
+}) => {
+  const { zoneCard } = useAppTheme();
+  
+    return (
+    <StyledCardHeader
+      sx={{ color: zoneCard.text.color }}
+      title={
+        <ZoneTitle>
+          {zone.name.length > 18 ? zone.name.substring(0, 18) + "..." : zone.name}
+        </ZoneTitle>
+      }
+      subheader={
+        <CardSubheader>
+          <CardSubheaderItem>
+            <RiTimerLine /> {zone.runtimeHours}h {zone.runtimeMinutes}m
+          </CardSubheaderItem>
+          <CardSubheaderItem>
+            <BsCalendar4Week /> {zone.runtimePerWeek} days
+          </CardSubheaderItem>
+          <CardSubheaderItem>
+            {getSeasonIcon(zone.season)} {zone.season}
+          </CardSubheaderItem>
+          <CardSubheaderItem>
+            <PiPlant /> {zone.totalPlants}
+          </CardSubheaderItem>
+        </CardSubheader>
+      }
     action={
       isHovering ? (
         <>
@@ -126,14 +131,14 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
       ) : null
     }
   />
-);
+  );
+};
 
 export default ZoneCardHeader;
 
 // Styled Components
 const StyledCardHeader = styled(CardHeader)`
   padding: 0 !important;
-  color: #606162;
 `;
 
 const ZoneTitle = styled.span`

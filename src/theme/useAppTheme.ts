@@ -157,6 +157,30 @@ export const useAppTheme = () => {
       }
     },
 
+    // Zone card styles - replaces hardcoded colors
+    zoneCard: {
+      card: {
+        backgroundColor: theme.custom.zoneCard.contentBackground,
+        border: `1px solid ${theme.custom.zoneCard.border}`,
+        boxShadow: theme.custom.zoneCard.shadow,
+      },
+      header: {
+        backgroundColor: theme.custom.zoneCard.headerBackground,
+        color: theme.custom.zoneCard.headerText,
+      },
+      text: {
+        color: theme.custom.zoneCard.text,
+      },
+      button: {
+        backgroundColor: theme.custom.zoneCard.buttonBackground,
+        color: theme.custom.zoneCard.buttonText,
+        "&:hover": {
+          backgroundColor: theme.custom.zoneCard.buttonHoverBackground,
+          color: theme.custom.zoneCard.buttonHoverText,
+        }
+      }
+    },
+
     // Direct access to colors for custom styling
     colors: theme.custom
   };
