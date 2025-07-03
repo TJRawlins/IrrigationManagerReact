@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import ZoneCardSkeleton from "./ZoneCardSkeleton";
-import { useAppTheme } from "../../theme/useAppTheme";
 
 type ZoneListProps = {
   fetchZones(args: number): Promise<void>;
@@ -21,7 +20,6 @@ export default function ZoneList({
 }: ZoneListProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
-  const appTheme = useAppTheme();
 
   return (
     <>
