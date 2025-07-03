@@ -50,8 +50,8 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
           onChange={handleChange}
           aria-label="basic tabs example"
           sx={{ 
-            "& .MuiTab-root": { color: zoneCard.text.color },
-            "& .Mui-selected": { color: zoneCard.text.color }
+            "&& .MuiTab-root": { color: zoneCard.text.color },
+            "&& .Mui-selected": { color: zoneCard.header.color }
           }}
         >
           <TabTitle label="Water usage" {...a11yProps(0)} />

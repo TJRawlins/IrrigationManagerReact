@@ -19,7 +19,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import "../../styles/zones/AddZone.css";
+
 import { ChangeEvent, useRef, useState } from "react";
 import { app } from "../../App/firebase/firebase";
 import {

@@ -13,7 +13,7 @@ import {
 } from "../../../redux/plantSlice";
 import { Plant } from "../../../App/models/Plant";
 import "../../../styles/baseStyles/BaseCard.css";
-import "./ZoneCard.css";
+
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { useAppTheme } from "../../../theme/useAppTheme";
 import ZoneCardHeader from "./ZoneCardHeader";
@@ -344,5 +344,5 @@ const StyledZoneCardBtn = styled(Button)`
   text-transform: capitalize !important;
   transition: background-color 0s ease-in-out !important;
   width: 100% !important;
-  font-weight: 600;
+  font-weight: 600 !important;
 `;

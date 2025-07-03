@@ -237,7 +237,7 @@ export default function ZoneBar({
               flexItem
             />
             <Box className="bar-btn-container">
-              <AddZone fetchZones={fetchZones} />
+              <AddZone fetchZones={fetchZones} isLoadingZones={isLoadingZones} />
             </Box>
           </div>
           <TotalGallonsChips />

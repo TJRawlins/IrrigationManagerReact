@@ -279,7 +279,7 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
       image: "#64c9bf7a"
     },
     zoneCard: {
-      headerBackground: "#dce4e487",
+      headerBackground: "#edf1f1",
       headerText: "#606162",
       contentBackground: "#ffffff",
       text: "#606162",

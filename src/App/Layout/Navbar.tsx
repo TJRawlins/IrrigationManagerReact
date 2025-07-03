@@ -1,4 +1,3 @@
-import "./Navbar.css";
 import {
   AppBar,
   Badge,
@@ -10,7 +9,7 @@ import {
   Toolbar,
   Typography,
   // alpha,
-  // styled,
+  styled,
 } from "@mui/material";
 import {
   AccountCircle,
@@ -134,17 +133,16 @@ export default function Navbar() {
    */
   return (
     <Box sx={{ flexGrow: 1, position: "relative !important" }}>
-      <AppBar sx={appTheme.navBar.mainBar}>
-        <Toolbar
+      <StyledAppBar sx={appTheme.navBar.mainBar}>
+        <StyledToolbar
           sx={{
             paddingLeft: "25px !important",
             paddingRight: "40px !important",
           }}
         >
           <Sidebar />
-          <img id="logo" src={logo}></img>
-          <Typography
-            id="logo-text"
+          <StyledLogo src={logo} alt="logo" />
+          <StyledLogoText
             variant="h4"
             noWrap
             component="div"
@@ -153,7 +151,7 @@ export default function Navbar() {
             }}
           >
             droplet
-          </Typography>
+          </StyledLogoText>
           {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -210,10 +208,34 @@ export default function Navbar() {
               <More />
             </IconButton>
           </Box>
-        </Toolbar>
-      </AppBar>
+        </StyledToolbar>
+      </StyledAppBar>
       {renderMobileMenu()}
       {renderMenu()}
     </Box>
   );
 }
+
+// Styled Components
+const StyledAppBar = styled(AppBar)`
+  background-image: none !important;
+  box-shadow: none !important;
+  min-height: 48px !important;
+`;
+
+const StyledToolbar = styled(Toolbar)`
+  background-image: none !important;
+  box-shadow: none !important;
+  min-height: 48px !important;
+`;
+
+const StyledLogo = styled("img")`
+  width: 38px;
+  margin-right: 0.25rem;
+`;
+
+const StyledLogoText = styled((props: any) => <Typography {...props} />)`
+  font-family: "MuseoModerno", sans-serif;
+  font-size: 2.25rem;
+  letter-spacing: -0.1rem;
+`;

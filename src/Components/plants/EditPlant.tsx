@@ -23,7 +23,7 @@ import { RootState } from "../../redux/store";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import agent from "../../App/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
-import "../../styles/zones/AddZone.css";
+
 import "../../styles/baseStyles/BaseCard.css";
 import { app } from "../../App/firebase/firebase";
 import {

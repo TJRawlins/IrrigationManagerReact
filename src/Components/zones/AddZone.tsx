@@ -16,7 +16,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
-import "../../styles/zones/AddZone.css";
+
 import { app } from "../../App/firebase/firebase";
 import {
   getStorage,

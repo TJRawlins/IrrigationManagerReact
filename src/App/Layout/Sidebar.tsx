@@ -1,6 +1,5 @@
 import * as React from "react";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
@@ -20,8 +19,8 @@ import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import "/src/App/Layout/Sidebar.css";
 import { useAppTheme } from "../../theme/useAppTheme";
+import styled from "styled-components";
 
 type Anchor = "left";
 
@@ -75,132 +74,99 @@ export default function Sidebar() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List className="route-link-list">
-        <ListItem className="route-link-item">
-          <Link className="route-link" to="/dashboard">
-            <ListItemButton
-              className="route-link-btn"
-              sx={sideBarColorTheme().menuButton}
-            >
-              <ListItemIcon className="route-link-icon">
+      <StyledRouteLinkList>
+        <StyledRouteLinkItem>
+          <StyledRouteLink to="/dashboard">
+            <ListItemButton sx={sideBarColorTheme().menuButton}>
+              <StyledRouteLinkIcon>
                 <SpeedIcon sx={sideBarColorTheme().menuIcon} />
-              </ListItemIcon>
+              </StyledRouteLinkIcon>
               Dashboard
             </ListItemButton>
-          </Link>
-        </ListItem>
-        <ListItem className="route-link-item">
-          <Link className="route-link" to="/zones">
-            <ListItemButton
-              className="route-link-btn"
-              sx={sideBarColorTheme().menuButton}
-            >
-              <ListItemIcon className="route-link-icon">
+          </StyledRouteLink>
+        </StyledRouteLinkItem>
+        <StyledRouteLinkItem>
+          <StyledRouteLink to="/zones">
+            <ListItemButton sx={sideBarColorTheme().menuButton}>
+              <StyledRouteLinkIcon>
                 <DashboardOutlinedIcon sx={sideBarColorTheme().menuIcon} />
-              </ListItemIcon>
+              </StyledRouteLinkIcon>
               Zones
             </ListItemButton>
-          </Link>
-        </ListItem>
-        {/* <ListItem className="route-link-item">
-          <Link className="route-link" to="/plants">
-            <ListItemButton className="route-link-btn">
-              <ListItemIcon className="route-link-icon">
-                <GrassIcon />
-              </ListItemIcon>
-              Plants
-            </ListItemButton>
-          </Link>
-        </ListItem> */}
-        <ListItem className="route-link-item">
-          <Link className="route-link" to="/emitter-calculator">
-            <ListItemButton
-              className="route-link-btn"
-              sx={sideBarColorTheme().menuButton}
-            >
-              <ListItemIcon className="route-link-icon">
+          </StyledRouteLink>
+        </StyledRouteLinkItem>
+        <StyledRouteLinkItem>
+          <StyledRouteLink to="/emitter-calculator">
+            <ListItemButton sx={sideBarColorTheme().menuButton}>
+              <StyledRouteLinkIcon>
                 <WaterDropIcon sx={sideBarColorTheme().menuIcon} />
-              </ListItemIcon>
+              </StyledRouteLinkIcon>
               Emitter Calculator
             </ListItemButton>
-          </Link>
-        </ListItem>
-        <ListItem className="route-link-item">
-          <Link className="route-link" to="/about">
-            <ListItemButton
-              className="route-link-btn"
-              sx={sideBarColorTheme().menuButton}
-            >
-              <ListItemIcon className="route-link-icon">
+          </StyledRouteLink>
+        </StyledRouteLinkItem>
+        <StyledRouteLinkItem>
+          <StyledRouteLink to="/about">
+            <ListItemButton sx={sideBarColorTheme().menuButton}>
+              <StyledRouteLinkIcon>
                 <QuestionMarkOutlinedIcon sx={sideBarColorTheme().menuIcon} />
-              </ListItemIcon>
+              </StyledRouteLinkIcon>
               About
             </ListItemButton>
-          </Link>
-        </ListItem>
-      </List>
+          </StyledRouteLink>
+        </StyledRouteLinkItem>
+      </StyledRouteLinkList>
       <Divider />
-      <List>
-        <ListItem className="route-link-item">
-          <Link className="route-link" to="/about">
-            <ListItemButton
-              className="route-link-btn"
-              sx={sideBarColorTheme().menuButton}
-            >
-              <ListItemIcon className="route-link-icon">
+      <StyledRouteLinkList>
+        <StyledRouteLinkItem>
+          <StyledRouteLink to="/about">
+            <ListItemButton sx={sideBarColorTheme().menuButton}>
+              <StyledRouteLinkIcon>
                 <AccountCircleIcon sx={sideBarColorTheme().menuIcon} />
-              </ListItemIcon>
+              </StyledRouteLinkIcon>
               Account
             </ListItemButton>
-          </Link>
-        </ListItem>
-        <ListItem className="route-link-item">
-          <Link className="route-link" to="/about">
-            <ListItemButton
-              className="route-link-btn"
-              sx={sideBarColorTheme().menuButton}
-            >
-              <ListItemIcon className="route-link-icon">
-                <SettingsSuggestOutlinedIcon
-                  sx={sideBarColorTheme().menuIcon}
-                />
-              </ListItemIcon>
+          </StyledRouteLink>
+        </StyledRouteLinkItem>
+        <StyledRouteLinkItem>
+          <StyledRouteLink to="/about">
+            <ListItemButton sx={sideBarColorTheme().menuButton}>
+              <StyledRouteLinkIcon>
+                <SettingsSuggestOutlinedIcon sx={sideBarColorTheme().menuIcon} />
+              </StyledRouteLinkIcon>
               Settings
             </ListItemButton>
-          </Link>
-        </ListItem>
-        <ListItem className="route-link-item">
-          <Link className="route-link" to="/about">
-            <ListItemButton
-              className="route-link-btn"
-              sx={sideBarColorTheme().menuButton}
-            >
-              <ListItemIcon className="route-link-icon">
+          </StyledRouteLink>
+        </StyledRouteLinkItem>
+        <StyledRouteLinkItem>
+          <StyledRouteLink to="/about">
+            <ListItemButton sx={sideBarColorTheme().menuButton}>
+              <StyledRouteLinkIcon>
                 <LogoutIcon sx={sideBarColorTheme().menuIcon} />
-              </ListItemIcon>
+              </StyledRouteLinkIcon>
               Sign-out
             </ListItemButton>
-          </Link>
-        </ListItem>
-      </List>
+          </StyledRouteLink>
+        </StyledRouteLinkItem>
+      </StyledRouteLinkList>
     </Box>
   );
 
   const HamburgerIcon = () => {
     return (
       <>
-        <div
-          className="icon top"
+        <StyledHamburgerLine
+          className="top"
           style={sideBarColorTheme().hamburgerMenu}
-        ></div>
-        <div
-          className="icon middle"
+        />
+        <StyledHamburgerLine
+          className="middle"
           style={sideBarColorTheme().hamburgerMenu}
-        ></div>
-        <div
-          className="icon bottom"
+        />
+        <StyledHamburgerLine
+          className="bottom"
           style={sideBarColorTheme().hamburgerMenu}
-        ></div>
+        />
       </>
     );
   };
@@ -215,13 +181,12 @@ export default function Sidebar() {
     <div>
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button
+          <StyledNavToggle
             className={isActive ? "navToggle icon" : "nav-open navToggle icon"}
-            sx={{ padding: 1, minWidth: 0 }}
             onClick={toggleDrawer(anchor, isActive ? true : false)}
           >
             <HamburgerIcon />
-          </Button>
+          </StyledNavToggle>
           <Grid></Grid>
           <SwipeableDrawer
             className="sidebar"
@@ -243,3 +208,74 @@ export default function Sidebar() {
     </div>
   );
 }
+
+// Styled Components
+const StyledNavToggle = styled.button`
+  width: 50px;
+  height: 50px;
+  z-index: 2;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  transition: 0.66s all ease-in;
+  padding: 0;
+  margin-right: 10px;
+  min-width: 0;
+  border: none;
+  background: none;
+  position: relative;
+`;
+
+const StyledHamburgerLine = styled.div`
+  width: 30px;
+  height: 4px;
+  position: absolute;
+  top: 28px;
+  left: 15px;
+  transition: 0.5s all ease-in !important;
+
+  &.top {
+    top: 19px;
+  }
+
+  &.bottom {
+    top: 37px;
+  }
+
+  .nav-open.navToggle &.middle {
+    width: 0;
+  }
+
+  .nav-open.navToggle &.top {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .nav-open.navToggle &.bottom {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+`;
+
+const StyledRouteLinkList = styled(List)`
+  padding: 0.5rem 0 !important;
+  margin: 0 !important;
+`;
+
+const StyledRouteLinkItem = styled(ListItem)`
+  padding: 0 !important;
+  margin: 0 !important;
+`;
+
+const StyledRouteLink = styled(Link)`
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100%;
+  text-decoration: none;
+  color: #333;
+`;
+
+const StyledRouteLinkIcon = styled(ListItemIcon)`
+  height: 100%;
+  min-width: 40px !important;
+`;

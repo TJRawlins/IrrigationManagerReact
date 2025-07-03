@@ -38,14 +38,12 @@ interface ZoneCardHeaderProps {
 
 const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
   zone,
-  isHovering,
   openCardMenu,
   anchorElCardMenu,
   handleCardMenuClick,
   handleCardMenuClose,
   handleCardMenuSelect,
   options,
-  ITEM_HEIGHT,
   id,
   open,
   anchorEl,
@@ -79,56 +77,69 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
         </CardSubheader>
       }
     action={
-      isHovering ? (
-        <>
-          <IconButton
-            aria-label="more"
-            id="long-button"
-            aria-controls={openCardMenu ? "long-menu" : undefined}
-            aria-expanded={openCardMenu ? "true" : undefined}
-            aria-haspopup="true"
-            onClick={handleCardMenuClick}
-          >
-            <HiOutlineDotsHorizontal />
-          </IconButton>
-          <Menu
-            id="long-menu"
-            anchorEl={anchorElCardMenu}
-            open={openCardMenu}
-            onClose={handleCardMenuClose}
-            slotProps={{
-              paper: {
-                style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: "20ch",
-                },
+      <>
+        <IconButton
+          aria-label="more"
+          id="long-button"
+          aria-controls={openCardMenu ? "long-menu" : undefined}
+          aria-expanded={openCardMenu ? "true" : undefined}
+          aria-haspopup="true"
+          onClick={handleCardMenuClick}
+        >
+          <HiOutlineDotsHorizontal />
+        </IconButton>
+        <Menu
+          id="long-menu"
+          anchorEl={anchorElCardMenu}
+          open={openCardMenu && Boolean(anchorElCardMenu)}
+          onClose={handleCardMenuClose}
+          slotProps={{
+            paper: {
+              sx: {
+                backgroundColor: zoneCard.card.backgroundColor,
+                color: zoneCard.header.color,
+                boxShadow: 3,
+                borderRadius: 2,
               },
-            }}
-            MenuListProps={{
-              "aria-labelledby": "long-button",
-            }}
-          >
-            {options.map((option) => (
-              <MenuItem key={option} onClick={handleCardMenuSelect(option)}>
-                {option}
-              </MenuItem>
-            ))}
-          </Menu>
-          <StyledPopover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleDeleteClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          >
-            <span>This will delete all associated plants.</span>
-            <PopoverActions>
-              <PopoverButton onClick={deleteZone}>Confirm</PopoverButton>
-              <PopoverButton onClick={handleDeleteClose}>Cancel</PopoverButton>
-            </PopoverActions>
-          </StyledPopover>
-        </>
-      ) : null
+            },
+          }}
+          MenuListProps={{
+            "aria-labelledby": "long-button",
+            sx: { padding: 0 },
+          }}
+        >
+          {options.map((option) => (
+            <MenuItem
+              key={option}
+              onClick={handleCardMenuSelect(option)}
+              sx={{
+                color: zoneCard.text.color,
+                fontFamily: '"Open Sans", "Source Sans Pro", Helvetica, sans-serif',
+                fontSize: '0.95rem',
+                '&:hover': {
+                  backgroundColor: zoneCard.button.backgroundColor,
+                  color: zoneCard.button.color,
+                },
+              }}
+            >
+              {option}
+            </MenuItem>
+          ))}
+        </Menu>
+        <StyledPopover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleDeleteClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <span>This will delete all associated plants.</span>
+          <PopoverActions>
+            <PopoverButton onClick={deleteZone}>Confirm</PopoverButton>
+            <PopoverButton onClick={handleDeleteClose}>Cancel</PopoverButton>
+          </PopoverActions>
+        </StyledPopover>
+      </>
     }
   />
   );

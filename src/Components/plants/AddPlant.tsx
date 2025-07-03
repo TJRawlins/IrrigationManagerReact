@@ -39,7 +39,6 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import "../../styles/plants/PlantBar.css";
 import "../../styles/baseStyles/BaseCard.css";
-import "../../styles/plants/AddPlant.css";
 import { IoClose } from "react-icons/io5";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useAppTheme } from "../../theme/useAppTheme";
