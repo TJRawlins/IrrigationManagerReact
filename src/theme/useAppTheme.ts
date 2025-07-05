@@ -178,6 +178,9 @@ export const useAppTheme = () => {
           backgroundColor: theme.custom.zoneCard.buttonHoverBackground,
           color: theme.custom.zoneCard.buttonHoverText,
         }
+      },
+      image: {
+        backgroundColor: theme.custom.zoneCard.imageBackground,
       }
     },
 

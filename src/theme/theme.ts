@@ -136,6 +136,7 @@ declare module '@mui/material/styles' {
         buttonText: string;
         buttonHoverBackground: string;
         buttonHoverText: string;
+        imageBackground: string;
         border: string;
         shadow: string;
       };
@@ -283,6 +284,7 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
       headerText: "#606162",
       contentBackground: "#ffffff",
       text: "#606162",
+      imageBackground: "#dce4e4",
       buttonBackground: "#f9d114",
       buttonText: "#606162",
       buttonHoverBackground: "#005972",

@@ -27,9 +27,7 @@ interface ZoneCardHeaderProps {
     option: string
   ) => (event: React.MouseEvent<HTMLElement>) => void;
   options: string[];
-  ITEM_HEIGHT: number;
   id: string | undefined;
-  open: boolean;
   anchorEl: HTMLButtonElement | null;
   handleDeleteClose: () => void;
   deleteZone: () => void;
@@ -44,7 +42,6 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
   handleCardMenuSelect,
   options,
   id,
-  open,
   anchorEl,
   handleDeleteClose,
   deleteZone,

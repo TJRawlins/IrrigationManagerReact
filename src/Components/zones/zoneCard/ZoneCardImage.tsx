@@ -1,16 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { useAppTheme } from "../../../theme/useAppTheme";
 
 interface ZoneCardImageProps {
   imagePath: string;
   name: string;
 }
 
-const ZoneCardImage: React.FC<ZoneCardImageProps> = ({ imagePath, name }) => (
-  <Wrapper>
+const ZoneCardImage: React.FC<ZoneCardImageProps> = ({ imagePath, name }) => {
+  const { zoneCard } = useAppTheme();
+  return (
+  <Wrapper style={{ backgroundColor: zoneCard.image.backgroundColor }}>
     <CardImg imagePath={imagePath} title={name} />
   </Wrapper>
 );
+}
 
 export default ZoneCardImage;
 
@@ -20,7 +24,6 @@ const Wrapper = styled.div`
   height: 100px;
   width: 100px;
   padding: 0.35rem;
-  background: #dce4e4;
   border-radius: 10px;
 `;
 
