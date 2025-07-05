@@ -113,7 +113,6 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
                 fontFamily: '"Open Sans", "Source Sans Pro", Helvetica, sans-serif',
                 fontSize: '0.95rem',
                 '&:hover': {
-                  backgroundColor: zoneCard.button.backgroundColor,
                   color: zoneCard.button.color,
                 },
               }}
@@ -143,21 +142,10 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
         >
           <span style={{ display: 'block', marginBottom: '1rem' }}>This will delete all associated plants.</span>
           <PopoverActions>
-            <Button
+            <StyledButton
               sx={{
                 backgroundColor: zoneCard.button.backgroundColor,
                 color: zoneCard.button.color,
-                fontFamily: '"Open Sans", "Source Sans Pro", Helvetica, sans-serif',
-                fontSize: '0.85rem',
-                padding: '0.45rem 0.75rem',
-                height: 'fit-content',
-                whiteSpace: 'nowrap',
-                borderRadius: '5px',
-                textTransform: 'capitalize',
-                transition: 'background-color 0s ease-in-out',
-                fontWeight: 600,
-                border: 'none',
-                boxShadow: 'none',
                 '&:hover': {
                   backgroundColor: zoneCard.button['&:hover'].backgroundColor,
                   color: zoneCard.button['&:hover'].color,
@@ -166,22 +154,11 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
               onClick={deleteZone}
             >
               Confirm
-            </Button>
-            <Button
+            </StyledButton>
+            <StyledButton
               sx={{
                 backgroundColor: zoneCard.button.backgroundColor,
                 color: zoneCard.button.color,
-                fontFamily: '"Open Sans", "Source Sans Pro", Helvetica, sans-serif',
-                fontSize: '0.85rem',
-                padding: '0.45rem 0.75rem',
-                height: 'fit-content',
-                whiteSpace: 'nowrap',
-                borderRadius: '5px',
-                textTransform: 'capitalize',
-                transition: 'background-color 0s ease-in-out',
-                fontWeight: 600,
-                border: 'none',
-                boxShadow: 'none',
                 '&:hover': {
                   backgroundColor: zoneCard.button['&:hover'].backgroundColor,
                   color: zoneCard.button['&:hover'].color,
@@ -190,7 +167,7 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
               onClick={handleDeleteClose}
             >
               Cancel
-            </Button>
+            </StyledButton>
           </PopoverActions>
         </Popover>
       </>
@@ -240,4 +217,18 @@ const CardSubheaderItem = styled.div`
 const PopoverActions = styled.div`
   display: flex;
   gap: 0.5rem;
+`;
+
+const StyledButton = styled(Button)`
+  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.75rem;
+  height: fit-content;
+  white-space: nowrap;
+  border-radius: 5px;
+  text-transform: capitalize;
+  transition: background-color 0s ease-in-out;
+  font-weight: 600;
+  border: none;
+  box-shadow: none;
 `;

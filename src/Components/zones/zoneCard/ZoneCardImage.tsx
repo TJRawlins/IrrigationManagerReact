@@ -9,12 +9,13 @@ interface ZoneCardImageProps {
 
 const ZoneCardImage: React.FC<ZoneCardImageProps> = ({ imagePath, name }) => {
   const { zoneCard } = useAppTheme();
+  
   return (
-  <Wrapper style={{ backgroundColor: zoneCard.image.backgroundColor }}>
-    <CardImg imagePath={imagePath} title={name} />
-  </Wrapper>
-);
-}
+    <Wrapper style={{ backgroundColor: zoneCard.image.backgroundColor }}>
+      <CardImg imagePath={imagePath} title={name} />
+    </Wrapper>
+  );
+};
 
 export default ZoneCardImage;
 
