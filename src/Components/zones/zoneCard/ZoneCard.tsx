@@ -135,10 +135,6 @@ export default function ZoneCard({
       .finally(() => fetchZones(seasonID));
   };
 
-  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const handleDeleteClose = () => {
     setAnchorEl(null);
   };
@@ -208,8 +204,6 @@ export default function ZoneCard({
 
   const options = ["Edit", "Copy", "Delete"];
 
-  const ITEM_HEIGHT = 48;
-
   const [anchorElCardMenu, setAnchorElCardMenu] = useState<null | HTMLElement>(
     null
   );
@@ -218,7 +212,7 @@ export default function ZoneCard({
     setAnchorElCardMenu(event.currentTarget);
   };
   const handleCardMenuSelect =
-    (option: string) => (event: React.MouseEvent<HTMLElement>) => {
+    (option: string) => () => {
       switch (option) {
         case "Edit":
           showEdit();
@@ -251,9 +245,7 @@ export default function ZoneCard({
           handleCardMenuClose={handleCardMenuClose}
           handleCardMenuSelect={handleCardMenuSelect}
           options={options}
-          ITEM_HEIGHT={ITEM_HEIGHT}
           id={id}
-          open={open}
           anchorEl={anchorEl}
           handleDeleteClose={handleDeleteClose}
           deleteZone={deleteZone}
