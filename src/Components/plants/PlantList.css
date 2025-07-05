@@ -92,20 +92,6 @@
   width: 25px !important;
 }
 
-/* PlantList confirm delete button box */
-& #simple-popover .MuiPopover-paper {
-  background: none !important;
-}
-#simple-popover .MuiPopover-paper {
-  box-shadow: none !important;
-  background-image: none !important;
-}
-#simple-popover .MuiPopover-paper button {
-  /* border: 1px solid #7fb5ac; */
-  border-radius: 12px;
-  text-transform: capitalize;
-}
-
 .lazy-load-image-background {
   height: 35px;
   display: flex;

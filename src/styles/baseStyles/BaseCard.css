@@ -266,10 +266,6 @@
 .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   padding: 10px 10px !important;
 }
-.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper {
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
-  margin-top: 5px;
-}
 .css-hyuuor-MuiButtonBase-root-MuiMenuItem-root.Mui-selected,
 .css-hyuuor-MuiButtonBase-root-MuiMenuItem-root:hover {
   background-color: #ffffff1c !important;

@@ -38,7 +38,6 @@ export default function ZoneCard({
   const { zoneCard } = useAppTheme();
   const dispatch = useDispatch();
   const { season } = useSelector((state: RootState) => state.season);
-  const [isHovering, setIsHovering] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -73,13 +72,6 @@ export default function ZoneCard({
         {value === index && <Box>{children}</Box>}
       </div>
     );
-  }
-
-  function handleMouseEnter() {
-    setIsHovering(true);
-  }
-  function handleMouseLeave() {
-    setIsHovering(false);
   }
 
   // This gets passed to AddPlant to update and persist gallons on PlantBar
@@ -235,7 +227,7 @@ export default function ZoneCard({
           copyZone();
           break;
         case "Delete":
-          handleDeleteClick(event as React.MouseEvent<HTMLButtonElement>);
+          setAnchorEl(anchorElCardMenu as HTMLButtonElement);
           break;
         default:
           console.error("Invalid option selected");
@@ -248,14 +240,11 @@ export default function ZoneCard({
 
   return (
     <StyledCard 
-      onMouseEnter={handleMouseEnter} 
-      onMouseLeave={handleMouseLeave}
       sx={zoneCard.card}
     >
       <StyledZoneCardHeader sx={zoneCard.header}>
         <ZoneCardHeader
           zone={zone}
-          isHovering={isHovering}
           openCardMenu={openCardMenu}
           anchorElCardMenu={anchorElCardMenu}
           handleCardMenuClick={handleCardMenuClick}

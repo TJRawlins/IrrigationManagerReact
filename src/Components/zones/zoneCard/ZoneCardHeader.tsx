@@ -1,5 +1,5 @@
 import React from "react";
-import { CardHeader, IconButton, Menu, MenuItem, Popover } from "@mui/material";
+import { CardHeader, IconButton, Menu, MenuItem, Popover, Button } from "@mui/material";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { BsCalendar4Week } from "react-icons/bs";
 import { RiTimerLine } from "react-icons/ri";
@@ -19,7 +19,6 @@ interface Zone {
 
 interface ZoneCardHeaderProps {
   zone: Zone;
-  isHovering: boolean;
   openCardMenu: boolean;
   anchorElCardMenu: null | HTMLElement;
   handleCardMenuClick: (event: React.MouseEvent<HTMLElement>) => void;
@@ -126,19 +125,77 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
             </MenuItem>
           ))}
         </Menu>
-        <StyledPopover
+        <Popover
           id={id}
-          open={open}
+          open={Boolean(anchorEl) && !!anchorEl}
           anchorEl={anchorEl}
           onClose={handleDeleteClose}
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          slotProps={{
+            paper: {
+              sx: {
+                backgroundColor: zoneCard.card.backgroundColor,
+                color: zoneCard.header.color,
+                boxShadow: 3,
+                borderRadius: 2,
+                minWidth: 220,
+                p: '1.5rem 1.5rem 1rem 1.5rem',
+              }
+            }
+          }}
         >
-          <span>This will delete all associated plants.</span>
+          <span style={{ display: 'block', marginBottom: '1rem' }}>This will delete all associated plants.</span>
           <PopoverActions>
-            <PopoverButton onClick={deleteZone}>Confirm</PopoverButton>
-            <PopoverButton onClick={handleDeleteClose}>Cancel</PopoverButton>
+            <Button
+              sx={{
+                backgroundColor: zoneCard.button.backgroundColor,
+                color: zoneCard.button.color,
+                fontFamily: '"Open Sans", "Source Sans Pro", Helvetica, sans-serif',
+                fontSize: '0.85rem',
+                padding: '0.45rem 0.75rem',
+                height: 'fit-content',
+                whiteSpace: 'nowrap',
+                borderRadius: '5px',
+                textTransform: 'capitalize',
+                transition: 'background-color 0s ease-in-out',
+                fontWeight: 600,
+                border: 'none',
+                boxShadow: 'none',
+                '&:hover': {
+                  backgroundColor: zoneCard.button['&:hover'].backgroundColor,
+                  color: zoneCard.button['&:hover'].color,
+                },
+              }}
+              onClick={deleteZone}
+            >
+              Confirm
+            </Button>
+            <Button
+              sx={{
+                backgroundColor: zoneCard.button.backgroundColor,
+                color: zoneCard.button.color,
+                fontFamily: '"Open Sans", "Source Sans Pro", Helvetica, sans-serif',
+                fontSize: '0.85rem',
+                padding: '0.45rem 0.75rem',
+                height: 'fit-content',
+                whiteSpace: 'nowrap',
+                borderRadius: '5px',
+                textTransform: 'capitalize',
+                transition: 'background-color 0s ease-in-out',
+                fontWeight: 600,
+                border: 'none',
+                boxShadow: 'none',
+                '&:hover': {
+                  backgroundColor: zoneCard.button['&:hover'].backgroundColor,
+                  color: zoneCard.button['&:hover'].color,
+                },
+              }}
+              onClick={handleDeleteClose}
+            >
+              Cancel
+            </Button>
           </PopoverActions>
-        </StyledPopover>
+        </Popover>
       </>
     }
   />
@@ -183,17 +240,7 @@ const CardSubheaderItem = styled.div`
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 `;
 
-const StyledPopover = styled(Popover)`
-  display: flex !important;
-  flex-direction: column;
-  padding: 1rem;
-`;
-
 const PopoverActions = styled.div`
   display: flex;
   gap: 0.5rem;
-`;
-
-const PopoverButton = styled.button`
-  padding: 8px;
 `;
