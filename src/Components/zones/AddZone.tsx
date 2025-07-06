@@ -54,7 +54,7 @@ function AddZone({
   fetchZones,
   isLoadingZones,
 }: ZoneBarProps) {
-  const { modal, menuBar } = useAppTheme();
+  const { modal, menuBar, colors } = useAppTheme();
   const [open, setOpen] = useState(false);
   const { season } = useSelector((state: RootState) => state.season);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -388,7 +388,7 @@ function AddZone({
                     </FormHelperText>
                   </Box>
                   <Field
-                    as={TextField}
+                    as={StyledTextField}
                     disabled
                     className="input input-override"
                     id="standard-disabled"
@@ -396,6 +396,11 @@ function AddZone({
                     label="Season"
                     defaultValue={season.name}
                     variant="standard"
+                    sx={{
+                      "& .MuiInputBase-input": {
+                        color: colors.modal.fieldInputFont,
+                      }
+                    }}
                   />
                 </div>
                 <div className="split-container upload">
@@ -461,4 +466,14 @@ function AddZone({
     </Box>
   );
 }
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiInputBase-input": {
+    padding: "5px 12px !important",
+  },
+  "& .MuiInputBase-input:focus, & .MuiInputBase-input:hover": {
+    border: `1px solid ${theme.custom.modal.fieldBorder}`,
+  }
+}));
+
 export default AddZone;

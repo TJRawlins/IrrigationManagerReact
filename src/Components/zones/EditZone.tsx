@@ -1,12 +1,9 @@
 /* eslint-disable no-debugger */
 import {
   Box,
-  FormControl,
   FormHelperText,
-  InputLabel,
   MenuItem,
   Modal,
-  Select,
   styled,
   TextField,
   Tooltip,
@@ -57,25 +54,13 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-// const style = {
-//   position: "absolute" as const,
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 400,
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   p: 4,
-// };
-
 function EditZone({
   fetchZones,
   updateLocalStorageSeason,
   setIsShowEdit,
   isShowEdit,
 }: ZoneEditProps) {
-  const { modal } = useAppTheme();
+  const { modal, colors } = useAppTheme();
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
   const seasonIdValue = useRef<number>();
@@ -506,15 +491,32 @@ function EditZone({
                         : ""}
                     </FormHelperText>
                   </Box>
-                  <FormControl fullWidth className="dropdown-override">
-                    <InputLabel sx={{ padding: "0 5px" }}>Season</InputLabel>
-                    <Field as={Select} name="season" type="select">
+                  <Box className="input">
+                    <Field
+                      as={StyledTextField}
+                      className="input input-override"
+                      id="season-input"
+                      name="season"
+                      label="Season"
+                      type="text"
+                      autoComplete=""
+                      variant="standard"
+                      select
+                      sx={{
+                        "& .MuiInputBase-input": {
+                          color: colors.modal.fieldInputFont,
+                        },
+                        "& .MuiSelect-select": {
+                          color: colors.modal.fieldInputFont,
+                        }
+                      }}
+                    >
                       <MenuItem value="Summer">Summer</MenuItem>
                       <MenuItem value="Fall">Fall</MenuItem>
                       <MenuItem value="Winter">Winter</MenuItem>
                       <MenuItem value="Spring">Spring</MenuItem>
                     </Field>
-                  </FormControl>
+                  </Box>
                 </div>
                 <div className="split-container upload">
                   <label htmlFor="" className="img-upload-filename-label">
@@ -586,4 +588,17 @@ function EditZone({
     </div>
   );
 }
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiInputBase-input": {
+    padding: "5px 12px !important",
+  },
+  "& .MuiSelect-select": {
+    padding: "5px 12px !important",
+  },
+  "& .MuiInputBase-input:focus, & .MuiInputBase-input:hover, & .MuiSelect-select:focus, & .MuiSelect-select:hover": {
+    border: `1px solid ${theme.custom.modal.fieldBorder}`,
+  }
+}));
+
 export default EditZone;
