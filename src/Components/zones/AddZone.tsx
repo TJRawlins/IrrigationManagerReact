@@ -220,7 +220,10 @@ function AddZone({
       <Modal
         className="modal-overlay"
         open={open}
-        onClose={handleClose}
+        onClose={(reason) => {
+          if (reason === "backdropClick" || reason === "escapeKeyDown") return;
+          handleClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         slotProps={{

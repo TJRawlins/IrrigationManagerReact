@@ -339,7 +339,10 @@ function EditZone({
       <Modal
         id="modal-overlay"
         open={isShowEdit}
-        onClose={handleClose}
+        onClose={(reason) => {
+          if (reason === "backdropClick" || reason === "escapeKeyDown") return;
+          handleClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         slotProps={{
