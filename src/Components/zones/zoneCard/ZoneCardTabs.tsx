@@ -47,7 +47,7 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
   const { zoneCard } = useAppTheme();
   const [expanded, setExpanded] = useState(false);
   
-  const handleAccordionChange = (event: React.SyntheticEvent, isExpanded: boolean) => {
+  const handleAccordionChange = (_event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded);
   };
   

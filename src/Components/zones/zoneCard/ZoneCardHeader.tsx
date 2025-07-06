@@ -46,13 +46,13 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
   handleDeleteClose,
   deleteZone,
 }) => {
-  const { zoneCard, messages } = useAppTheme();
+  const { zoneCard, messages, fonts } = useAppTheme();
   
     return (
     <StyledCardHeader
       sx={{ color: zoneCard.text.color }}
       title={
-        <ZoneTitle>
+        <ZoneTitle style={{ ...fonts.headers}}>
           {zone.name.length > 18 ? zone.name.substring(0, 18) + "..." : zone.name}
         </ZoneTitle>
       }
@@ -110,7 +110,7 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
               onClick={handleCardMenuSelect(option)}
               sx={{
                 color: zoneCard.text.color,
-                fontFamily: '"Open Sans", "Source Sans Pro", Helvetica, sans-serif',
+                ...fonts.content,
                 fontSize: '0.95rem',
                 '&:hover': {
                   color: zoneCard.header.color,
@@ -140,7 +140,12 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
             }
           }}
         >
-          <span style={{ display: 'flex', marginBottom: '1rem', alignItems: 'center' }}>
+          <span style={{ 
+            display: 'flex', 
+            marginBottom: '1rem', 
+            alignItems: 'center',
+            ...fonts.content,
+          }}>
             <PiWarningFill className="message-icon" style={ messages.warning.icon } /> This will delete all associated plants.
             </span>
           <PopoverActions>
@@ -148,6 +153,7 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
               sx={{
                 backgroundColor: zoneCard.button.backgroundColor,
                 color: zoneCard.button.color,
+                ...fonts.content,
                 '&:hover': {
                   backgroundColor: zoneCard.button['&:hover'].backgroundColor,
                   color: zoneCard.button['&:hover'].color,
@@ -161,6 +167,7 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
               sx={{
                 backgroundColor: zoneCard.button.backgroundColor,
                 color: zoneCard.button.color,
+                ...fonts.content,
                 '&:hover': {
                   backgroundColor: zoneCard.button['&:hover'].backgroundColor,
                   color: zoneCard.button['&:hover'].color,
@@ -187,12 +194,9 @@ const StyledCardHeader = styled(CardHeader)`
 
 const ZoneTitle = styled.span`
   text-transform: capitalize;
-  font-family: "Raleway", "Source Sans Pro", Helvetica, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
   font-weight: 800 !important;
   font-size: 1.2rem !important;
   line-height: 1.334;
-  letter-spacing: -0.5px;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
@@ -201,7 +205,6 @@ const CardSubheader = styled.div`
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  font-family: system-ui;
   font-size: 0.75rem;
   border-radius: 5px;
   margin: 0.25rem 0px 0rem 0 !important;
@@ -212,8 +215,6 @@ const CardSubheaderItem = styled.div`
   align-items: center;
   gap: 5px;
   font-size: 0.75rem;
-  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 `;
 
 const PopoverActions = styled.div`
@@ -222,7 +223,6 @@ const PopoverActions = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif;
   font-size: 0.85rem;
   padding: 0.45rem 0.75rem;
   height: fit-content;
