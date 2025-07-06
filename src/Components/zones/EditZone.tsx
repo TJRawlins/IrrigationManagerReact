@@ -86,32 +86,6 @@ function EditZone({
     setIsNewImage(false);
   };
 
-  // color theme
-  // const theme = useTheme();
-  // const colors = tokens(theme.palette.mode);
-  // const zoneEditBtnColorTheme = () => {
-  //   return {
-  //     zoneEditCardModal: {
-  //       backgroundColor: colors.overlay.modal,
-  //       opacity: 0.5,
-  //     },
-  //     zoneEditCard: {
-  //       backgroundColor: colors.white.vary,
-  //       border: "1px solid " + colors.primary.const + " !important",
-  //       boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
-  //     },
-  //     zoneEditCardTitle: {
-  //       color: colors.gray.toPrimary,
-  //     },
-  //     zoneSeasonSelection: {
-  //       "& #mui-component-select-season": {
-  //         backgroundColor: colors.whiteBlue.vary,
-  //         color: colors.gray.toWhite,
-  //       },
-  //     },
-  //   };
-  // };
-
   // Firebase Storage Variables
   const isImageBeingUsedRef = useRef<boolean>(false);
   const [isNewImage, setIsNewImage] = useState<boolean>(false);
@@ -370,7 +344,7 @@ function EditZone({
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: { backgroundColor: "transparent" },
+            style: modal.overlay,
           },
         }}
       >
