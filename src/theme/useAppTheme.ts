@@ -8,6 +8,22 @@ export const useAppTheme = () => {
   const theme = useTheme();
   
   return {
+    // Font styles - standardized typography
+    fonts: {
+      headers: {
+        fontFamily: theme.custom.fonts.headers.fontFamily,
+        letterSpacing: theme.custom.fonts.headers.letterSpacing,
+      },
+      logo: {
+        fontFamily: theme.custom.fonts.logo.fontFamily,
+        letterSpacing: theme.custom.fonts.logo.letterSpacing,
+      },
+      content: {
+        fontFamily: theme.custom.fonts.content.fontFamily,
+        letterSpacing: theme.custom.fonts.content.letterSpacing,
+      }
+    },
+
     // Grid styles - replaces GridTheme.ts
     grid: {
       sx: {

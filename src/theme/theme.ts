@@ -7,10 +7,40 @@ const callToActionSecondary = "#82a628";
 const primaryLight = "#005972";
 const primaryDark = "#141b2d";
 
+// Font constants
+const FONTS = {
+  headers: {
+    fontFamily: '"Raleway", sans-serif',
+    letterSpacing: '-0.03125em',
+  },
+  logo: {
+    fontFamily: '"MuseoModerno", cursive',
+    letterSpacing: '-0.1em',
+  },
+  content: {
+    fontFamily: '"Open Sans", sans-serif',
+    letterSpacing: '0.01071em',
+  }
+};
+
 // Extend MUI theme interface
 declare module '@mui/material/styles' {
   interface Theme {
     custom: {
+      fonts: {
+        headers: {
+          fontFamily: string;
+          letterSpacing: string;
+        };
+        logo: {
+          fontFamily: string;
+          letterSpacing: string;
+        };
+        content: {
+          fontFamily: string;
+          letterSpacing: string;
+        };
+      };
       grid: {
         background: string;
         rowBackground: string;
@@ -175,6 +205,7 @@ declare module '@mui/material/styles' {
   }
   interface ThemeOptions {
     custom?: {
+      fonts?: Partial<Theme['custom']['fonts']>;
       grid?: Partial<Theme['custom']['grid']>;
       modal?: Partial<Theme['custom']['modal']>;
       menuBar?: Partial<Theme['custom']['menuBar']>;
@@ -195,6 +226,7 @@ declare module '@mui/material/styles' {
 // Theme settings with custom properties
 export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
   const colors = mode === 'light' ? {
+    fonts: FONTS,
     grid: {
       background: "#ced8da",
       rowBackground: "#eef2f6",
@@ -358,6 +390,7 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
       shadow: "0 2px 4px rgba(0,0,0,0.1)"
     }
   } : {
+    fonts: FONTS,
     grid: {
       background: "#1f2a41",
       rowBackground: "#1f2a41",
@@ -525,6 +558,53 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
       primary: { main: callToActionPrimary },
       secondary: { main: callToActionSecondary },
       background: { default: colors.white.vary }
+    },
+    typography: {
+      fontFamily: FONTS.content.fontFamily,
+      h1: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h2: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h3: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h4: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h5: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h6: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      body1: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
+      body2: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
+      button: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
+      caption: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
+      overline: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
     },
     custom: colors
   };
