@@ -262,12 +262,13 @@ export default function ZoneCard({
             <ZoneCardDetails />
           </ZoneCardDetailsBox>
         </ZoneCardContentRow>
-        <Box sx={{ padding: "1rem 0" }}>
+        <Box sx={{ padding: ".5rem 0" }}>
           <Link
             style={{ textDecoration: "none" }}
             to={`/plants/zone/${zone.id}`}
+            onClick={showPlants}
           >
-            <StyledZoneCardBtn onClick={showPlants} sx={zoneCard.button}>Plants</StyledZoneCardBtn>
+            <StyledZoneCardBtn sx={zoneCard.button}>Plants</StyledZoneCardBtn>
           </Link>
         </Box>
         <ZoneCardTabs

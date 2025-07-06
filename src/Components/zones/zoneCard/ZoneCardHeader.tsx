@@ -3,7 +3,7 @@ import { CardHeader, IconButton, Menu, MenuItem, Popover, Button } from "@mui/ma
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { BsCalendar4Week } from "react-icons/bs";
 import { RiTimerLine } from "react-icons/ri";
-import { PiPlant } from "react-icons/pi";
+import { PiPlant, PiWarningFill } from "react-icons/pi";
 import { getSeasonIcon } from "./zoneCardUtils";
 import { useAppTheme } from "../../../theme/useAppTheme";
 import styled from "styled-components";
@@ -46,7 +46,7 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
   handleDeleteClose,
   deleteZone,
 }) => {
-  const { zoneCard } = useAppTheme();
+  const { zoneCard, messages } = useAppTheme();
   
     return (
     <StyledCardHeader
@@ -113,7 +113,7 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
                 fontFamily: '"Open Sans", "Source Sans Pro", Helvetica, sans-serif',
                 fontSize: '0.95rem',
                 '&:hover': {
-                  color: zoneCard.button.color,
+                  color: zoneCard.header.color,
                 },
               }}
             >
@@ -140,7 +140,9 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
             }
           }}
         >
-          <span style={{ display: 'block', marginBottom: '1rem' }}>This will delete all associated plants.</span>
+          <span style={{ display: 'flex', marginBottom: '1rem', alignItems: 'center' }}>
+            <PiWarningFill className="message-icon" style={ messages.warning.icon } /> This will delete all associated plants.
+            </span>
           <PopoverActions>
             <StyledButton
               sx={{
