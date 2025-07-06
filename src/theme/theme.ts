@@ -72,6 +72,37 @@ declare module '@mui/material/styles' {
         color: string;
         borderBottom: string;
       };
+      messages: {
+        info: {
+          background: string;
+          text: string;
+          border: string;
+          icon: string;
+        };
+        warning: {
+          background: string;
+          text: string;
+          border: string;
+          icon: string;
+        };
+        error: {
+          background: string;
+          text: string;
+          border: string;
+          icon: string;
+        };
+        success: {
+          background: string;
+          text: string;
+          border: string;
+          icon: string;
+        };
+        toast: {
+          background: string;
+          text: string;
+          border: string;
+        };
+      };
       white: {
         const: string;
         vary: string;
@@ -148,6 +179,7 @@ declare module '@mui/material/styles' {
       modal?: Partial<Theme['custom']['modal']>;
       menuBar?: Partial<Theme['custom']['menuBar']>;
       navBar?: Partial<Theme['custom']['navBar']>;
+      messages?: Partial<Theme['custom']['messages']>;
       white?: Partial<Theme['custom']['white']>;
       whiteBlue?: Partial<Theme['custom']['whiteBlue']>;
       gray?: Partial<Theme['custom']['gray']>;
@@ -224,6 +256,37 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
       color: "#eef2f6",
       borderBottom: "#212a3e"
     },
+    messages: {
+      info: {
+        background: "#e3f2fd",
+        text: "#0d47a1",
+        border: "#2196f3",
+        icon: "#2196f3"
+      },
+      warning: {
+        background: "#fff3e0",
+        text: "#e65100",
+        border: "#e69700",
+        icon: "#e69700"
+      },
+      error: {
+        background: "#ffebee",
+        text: "#c62828",
+        border: "#f44336",
+        icon: "#f44336"
+      },
+      success: {
+        background: "#e8f5e8",
+        text: "#2e7d32",
+        border: "#4caf50",
+        icon: "#4caf50"
+      },
+      toast: {
+        background: "#f5f5f5",
+        text: "#333333",
+        border: "#e0e0e0"
+      }
+    },
     white: {
       const: "#fcfcfd",
       vary: "#dae4e4",
@@ -285,8 +348,10 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
       contentBackground: "#ffffff",
       text: "#606162",
       imageBackground: "#dce4e4",
-      buttonBackground: "#f9d114",
-      buttonText: "#606162",
+      // buttonBackground: "#f9d114",
+      buttonBackground: "#497487",
+      // buttonText: "#606162",
+      buttonText: "#ffffff",
       buttonHoverBackground: "#005972",
       buttonHoverText: "#f0f2f5",
       border: "#e0e0e0",
@@ -353,6 +418,37 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
       background: primaryDark,
       color: "#e0e0e0",
       borderBottom: "#212a3e"
+    },
+    messages: {
+      info: {
+        background: "#1a237e",
+        text: "#90caf9",
+        border: "#2196f3",
+        icon: "#2196f3"
+      },
+      warning: {
+        background: "#3e2723",
+        text: "#ffcc02",
+        border: "#e69700",
+        icon: "#e69700"
+      },
+      error: {
+        background: "#3e2723",
+        text: "#ef5350",
+        border: "#f44336",
+        icon: "#f44336"
+      },
+      success: {
+        background: "#1b5e20",
+        text: "#81c784",
+        border: "#4caf50",
+        icon: "#4caf50"
+      },
+      toast: {
+        background: "#2d3748",
+        text: "#e2e8f0",
+        border: "#4a5568"
+      }
     },
     white: {
       const: "#fcfcfd",

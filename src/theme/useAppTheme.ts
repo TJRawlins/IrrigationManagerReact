@@ -184,6 +184,46 @@ export const useAppTheme = () => {
       }
     },
 
+    // Message styles - for alerts, notifications, and toasts
+    messages: {
+      info: {
+        backgroundColor: theme.custom.messages.info.background,
+        color: theme.custom.messages.info.text,
+        border: `1px solid ${theme.custom.messages.info.border}`,
+        icon: theme.custom.messages.info.icon,
+      },
+      warning: {
+        backgroundColor: theme.custom.messages.warning.background,
+        color: theme.custom.messages.warning.text,
+        border: `1px solid ${theme.custom.messages.warning.border}`,
+        icon: {
+          color: theme.custom.messages.warning.icon,
+          marginRight: '0.5rem',
+          fontSize: '1.2rem',
+        }
+      },
+      error: {
+        backgroundColor: theme.custom.messages.error.background,
+        color: theme.custom.messages.error.text,
+        border: `1px solid ${theme.custom.messages.error.border}`,
+        icon: theme.custom.messages.error.icon,
+      },
+      success: {
+        backgroundColor: theme.custom.messages.success.background,
+        color: theme.custom.messages.success.text,
+        border: `1px solid ${theme.custom.messages.success.border}`,
+        icon: theme.custom.messages.success.icon,
+      },
+      toast: {
+        backgroundColor: theme.custom.messages.toast.background,
+        color: theme.custom.messages.toast.text,
+        border: `1px solid ${theme.custom.messages.toast.border}`,
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+        borderRadius: "8px",
+        padding: "12px 16px",
+      }
+    },
+
     // Direct access to colors for custom styling
     colors: theme.custom
   };
