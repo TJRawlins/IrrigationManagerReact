@@ -8,23 +8,23 @@ const ZoneCardDetails: React.FC = () => {
   
   return (
     <Stack color={zoneCard.text.color} gap="7px" direction="column">
-    <CardText variant="body2">
-      <ZoneDataTitle>Start time:</ZoneDataTitle>
-      <ZoneDataValue>8:30 am</ZoneDataValue>
-    </CardText>
-    <CardText variant="body2">
-      <ZoneDataTitle>End time:</ZoneDataTitle>
-      <ZoneDataValue>10:00 am</ZoneDataValue>
-    </CardText>
-    <CardText variant="body2">
-      <ZoneDataTitle>Last watered:</ZoneDataTitle>
-      <ZoneDataValue>06/09/2025</ZoneDataValue>
-    </CardText>
-    <CardText variant="body2">
-      <ZoneDataTitle>Next watering:</ZoneDataTitle>
-      <ZoneDataValue>06/10/2025</ZoneDataValue>
-    </CardText>
-  </Stack>
+      <CardText variant="body2">
+        <ZoneDataTitle>Start time:</ZoneDataTitle>
+        <ZoneDataValue>8:30 am</ZoneDataValue>
+      </CardText>
+      <CardText variant="body2">
+        <ZoneDataTitle>End time:</ZoneDataTitle>
+        <ZoneDataValue>10:00 am</ZoneDataValue>
+      </CardText>
+      <CardText variant="body2">
+        <ZoneDataTitle>Last watered:</ZoneDataTitle>
+        <ZoneDataValue>06/09/2025</ZoneDataValue>
+      </CardText>
+      <CardText variant="body2">
+        <ZoneDataTitle>Next watering:</ZoneDataTitle>
+        <ZoneDataValue>06/10/2025</ZoneDataValue>
+      </CardText>
+    </Stack>
   );
 };
 
@@ -37,8 +37,6 @@ const CardText = styled(Typography)`
   justify-content: space-between;
   font-size: 0.75rem !important;
   font-weight: 500 !important;
-  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 `;
 
 const ZoneDataTitle = styled.span`
@@ -46,8 +44,5 @@ const ZoneDataTitle = styled.span`
 `;
 
 const ZoneDataValue = styled.span`
-  font-weight: 100;
-  font-size: 0.875rem;
-  font-family: "Source Sans Pro", Helvetica, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-weight: 100 ;
 `;

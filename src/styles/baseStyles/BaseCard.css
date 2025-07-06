@@ -1,7 +1,4 @@
-.MuiModal-backdrop {
-  transition: none !important;
-}
-
+/* MODAL */
 .modal-title-container {
   display: flex;
   flex-direction: column;
@@ -56,6 +53,7 @@
     0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
 }
 
+/* PLANT CARD */
 .card-content-wrapper {
   padding: 6px 0 0 0 !important;
   border-radius: 0 0 15px 15px !important;
@@ -131,30 +129,6 @@
   justify-content: right;
   position: relative;
   margin-top: 12px;
-}
-
-/* TOTAL GALLONS */
-.gallons-chip {
-  justify-content: left !important;
-  border-radius: 0px !important;
-  color: #ffffff !important;
-  margin-left: 0 !important;
-  font-family: "Source Sans Pro", Helvetica, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-}
-.gallons-chip:nth-of-type(2) {
-  border-right: 1px solid white;
-  border-left: 1px solid white;
-}
-.gallons-chip-avatar {
-  min-width: fit-content !important;
-  font-weight: 700 !important;
-}
-.gallons-chip.week {
-  border-radius: 0 0 0 10px !important;
-}
-.gallons-chip.year {
-  border-radius: 0 0 10px 0 !important;
 }
 
 .hidden {
