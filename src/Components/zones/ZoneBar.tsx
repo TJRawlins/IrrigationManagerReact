@@ -40,7 +40,7 @@ export default function ZoneBar({
     (state: RootState) => state.season
   );
   const dispatch = useDispatch();
-  const appTheme = useAppTheme();
+  const { menuBar, fonts } = useAppTheme();
 
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
@@ -72,11 +72,11 @@ export default function ZoneBar({
           <Tooltip title="Weekly Gallons" arrow>
             <Chip
               className="bar-gallons-chip"
-              sx={appTheme.menuBar.buttons}
+              sx={menuBar.buttons}
               avatar={
                 <Avatar
                   className="bar-gallons-chip-avatar"
-                  sx={appTheme.menuBar.buttons}
+                  sx={menuBar.buttons}
                 >
                   <TbDroplet className="bar-gallons-chip-avatar-icon" />
                   <span className="bar-gallons-chip-avatar-text">W</span>
@@ -88,11 +88,11 @@ export default function ZoneBar({
           <Tooltip title="Monthly Gallons" arrow>
             <Chip
               className="bar-gallons-chip"
-              sx={appTheme.menuBar.buttons}
+              sx={menuBar.buttons}
               avatar={
                 <Avatar
                   className="bar-gallons-chip-avatar"
-                  sx={appTheme.menuBar.buttons}
+                  sx={menuBar.buttons}
                 >
                   <TbDroplet className="bar-gallons-chip-avatar-icon" />
                   <span className="bar-gallons-chip-avatar-text">M</span>
@@ -104,11 +104,11 @@ export default function ZoneBar({
           <Tooltip title="Yearly Gallons" arrow>
             <Chip
               className="bar-gallons-chip"
-              sx={appTheme.menuBar.buttons}
+              sx={menuBar.buttons}
               avatar={
                 <Avatar
                   className="bar-gallons-chip-avatar"
-                  sx={appTheme.menuBar.buttons}
+                  sx={menuBar.buttons}
                 >
                   <TbDroplet className="bar-gallons-chip-avatar-icon" />
                   <span className="bar-gallons-chip-avatar-text">Y</span>
@@ -210,10 +210,10 @@ export default function ZoneBar({
   return (
     <>
       <CssBaseline />
-      <div className="main-container" style={appTheme.menuBar.mainBar}>
+      <div className="main-container" style={menuBar.mainBar}>
         <div className="content-container">
           <div className="title-container">
-            <Typography className="bar-title" variant="h6" noWrap component="a">
+            <Typography className="bar-title" variant="h6" noWrap component="a" style={{ ...fonts.headers }}>
               ZONES
             </Typography>
           </div>
