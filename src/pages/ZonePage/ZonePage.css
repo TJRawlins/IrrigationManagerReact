@@ -1,6 +1,6 @@
 #zone-grid-background {
   border-radius: 10px;
-  width: 100vw;
+  /* width: 100vw; */
   margin-top: 31px;
   min-height: 80vh;
 }
