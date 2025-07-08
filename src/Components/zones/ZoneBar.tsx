@@ -5,17 +5,12 @@ import {
   Chip,
   CssBaseline,
   Divider,
-  FormControl,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   Stack,
   Tooltip,
   Typography,
+  IconButton,
 } from "@mui/material";
 import { TbDroplet } from "react-icons/tb";
-import { MdSunny, MdLocalFlorist, MdAcUnit } from "react-icons/md";
-import { FaCanadianMapleLeaf } from "react-icons/fa";
 import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -28,6 +23,7 @@ import {
 } from "../../redux/seasonSlice";
 import AddZone from "./AddZone";
 import { useAppTheme } from "../../theme/useAppTheme";
+import { getSeasonIcon } from "./zoneCard/zoneCardUtils";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -40,10 +36,8 @@ export default function ZoneBar({
   updateLocalStorageSeason,
   isLoadingZones,
 }: ZoneBarProps) {
-  const { season } = useSelector((state: RootState) => state.season);
-  const { seasonName } = useSelector((state: RootState) => state.seasonName);
-  const { isInitialLoad } = useSelector(
-    (state: RootState) => state.isInitialLoad
+  const { season, seasonName } = useSelector(
+    (state: RootState) => state.season
   );
   const dispatch = useDispatch();
   const appTheme = useAppTheme();
@@ -128,20 +122,18 @@ export default function ZoneBar({
     );
   };
 
-  // *-*-*-*-*-*-*-*-*-*-*-*-* SEASON DROPDOWN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
+  // *-*-*-*-*-*-*-*-*-*-*-*-* SEASON ICONS COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
 
-  const SeasonMenu = () => {
-    const handleChange = (event: SelectChangeEvent) => {
-      if (event.target.value !== "Select Season") {
-        dispatch(updateCurrentSeasonName(event.target.value));
-        updateLocalStorageSeason(seasonNameToSeasonId(event.target.value));
-        fetchZones(seasonNameToSeasonId(event.target.value));
-      }
+  const SeasonIcons = () => {
+    const handleSeasonClick = (seasonName: string) => {
+      dispatch(updateCurrentSeasonName(seasonName));
+      updateLocalStorageSeason(seasonNameToSeasonId(seasonName));
+      fetchZones(seasonNameToSeasonId(seasonName));
       dispatch(updateIsInitialLoad(true));
-      console.info("%cZoneBar: handleChange Called", "color:#1CA1E6");
+      console.info("%cZoneBar: handleSeasonClick Called", "color:#1CA1E6");
     };
 
-    // Get dropdown selection name (string) and convert it to corresponding ID number
+    // Get season name (string) and convert it to corresponding ID number
     const seasonNameToSeasonId = (seasonName: string): number => {
       let seasonId: number = 1;
       switch (seasonName.toLowerCase()) {
@@ -161,47 +153,56 @@ export default function ZoneBar({
       return seasonId;
     };
 
+    const seasons = [
+      {
+        name: "Spring",
+        id: 4,
+        color: "#efd4ff",
+        background: "#7695dd",
+      },
+      {
+        name: "Summer",
+        id: 1,
+        color: "#fbec9a",
+        background: "#32bea6",
+      },
+      {
+        name: "Fall",
+        id: 2,
+        color: "#fabc3d",
+        background: "#e04f5ff7",
+      },
+      {
+        name: "Winter",
+        id: 3,
+        color: "#fafafa",
+        background: "#25b7d3",
+      },
+    ];
+
     return (
-      <Box>
-        <FormControl sx={{ width: "140px" }}>
-          <Select
-            className="season-btn"
-            value={isInitialLoad ? seasonName : "Select Season"}
-            onChange={handleChange}
-            inputProps={{ "aria-label": "Without label" }}
-            sx={appTheme.menuBar.dropdown}
-          >
-            {!isInitialLoad && (
-              <MenuItem value={"Select Season"}>
-                <em>Select Season</em>
-              </MenuItem>
-            )}
-            <MenuItem value={"Summer"} sx={appTheme.menuBar.dropdown}>
-              <div className="menu-wrapper">
-                <MdSunny className="menuIcon" />
-                <Typography className="menu-text">Summer</Typography>
-              </div>
-            </MenuItem>
-            <MenuItem value={"Fall"} sx={appTheme.menuBar.dropdown}>
-              <div className="menu-wrapper">
-                <FaCanadianMapleLeaf className="menuIcon iconRotate" />
-                <Typography className="menu-text">Fall</Typography>
-              </div>
-            </MenuItem>
-            <MenuItem value={"Winter"} sx={appTheme.menuBar.dropdown}>
-              <div className="menu-wrapper">
-                <MdAcUnit className="menuIcon" />
-                <Typography className="menu-text">Winter</Typography>
-              </div>
-            </MenuItem>
-            <MenuItem value={"Spring"} sx={appTheme.menuBar.dropdown}>
-              <div className="menu-wrapper">
-                <MdLocalFlorist className="menuIcon" />
-                <Typography className="menu-text">Spring</Typography>
-              </div>
-            </MenuItem>
-          </Select>
-        </FormControl>
+      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        {seasons.map((s) => (
+          <Tooltip key={s.name} title={s.name} arrow>
+            <IconButton
+              onClick={() => handleSeasonClick(s.name)}
+              sx={{
+                color: s.color,
+                backgroundColor: s.background,
+                opacity: seasonName === s.name ? 1 : 0.4,
+                "&:hover, &:focus, &:active": {
+                  color: s.color,
+                  backgroundColor: s.background,
+                  opacity: 1,
+                },
+                padding: "8px",
+                transition: "opacity 0.2s ease-in-out",
+              }}
+            >
+              {getSeasonIcon(s.name)}
+            </IconButton>
+          </Tooltip>
+        ))}
       </Box>
     );
   };
@@ -227,17 +228,20 @@ export default function ZoneBar({
           >
             <Divider
               sx={{ height: "60%", marginTop: "12px" }}
-              orientation="vertical"
+              // orientation="vertical"
               flexItem
             />
-            <SeasonMenu />
+            <SeasonIcons />
             <Divider
-              sx={{ height: "60%", marginTop: "12px", marginRight: ".75rem" }}
+              sx={{ height: "60%", marginTop: "12px", margin: ".75rem" }}
               orientation="vertical"
               flexItem
             />
             <Box className="bar-btn-container">
-              <AddZone fetchZones={fetchZones} isLoadingZones={isLoadingZones} />
+              <AddZone
+                fetchZones={fetchZones}
+                isLoadingZones={isLoadingZones}
+              />
             </Box>
           </div>
           <TotalGallonsChips />
