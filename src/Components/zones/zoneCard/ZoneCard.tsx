@@ -17,7 +17,7 @@ import "../../../styles/baseStyles/BaseCard.css";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { useAppTheme } from "../../../theme/useAppTheme";
 import ZoneCardHeader from "./ZoneCardHeader";
-import ZoneCardImage from "./ZoneCardImage";
+import ImageCard from "../../common/ImageCard";
 import ZoneCardDetails from "./ZoneCardDetails";
 import ZoneCardTabs from "./ZoneCardTabs";
 import styled from "styled-components";
@@ -211,31 +211,28 @@ export default function ZoneCard({
   const handleCardMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElCardMenu(event.currentTarget);
   };
-  const handleCardMenuSelect =
-    (option: string) => () => {
-      switch (option) {
-        case "Edit":
-          showEdit();
-          break;
-        case "Copy":
-          copyZone();
-          break;
-        case "Delete":
-          setAnchorEl(anchorElCardMenu as HTMLButtonElement);
-          break;
-        default:
-          console.error("Invalid option selected");
-      }
-      setAnchorElCardMenu(null);
-    };
+  const handleCardMenuSelect = (option: string) => () => {
+    switch (option) {
+      case "Edit":
+        showEdit();
+        break;
+      case "Copy":
+        copyZone();
+        break;
+      case "Delete":
+        setAnchorEl(anchorElCardMenu as HTMLButtonElement);
+        break;
+      default:
+        console.error("Invalid option selected");
+    }
+    setAnchorElCardMenu(null);
+  };
   const handleCardMenuClose = () => {
     setAnchorElCardMenu(null);
   };
 
   return (
-    <StyledCard 
-      sx={zoneCard.card}
-    >
+    <StyledCard sx={zoneCard.card}>
       <StyledZoneCardHeader sx={zoneCard.header}>
         <ZoneCardHeader
           zone={zone}
@@ -255,7 +252,12 @@ export default function ZoneCard({
         <ZoneCardContentRow>
           <Box>
             <Stack direction="column" spacing={1} alignItems="left">
-              <ZoneCardImage imagePath={zone.imagePath} name={zone.name} />
+              <ImageCard
+                imagePath={zone.imagePath}
+                name={zone.name}
+                customSize={"90px"}
+                overlayOpacity={0.4}
+              />
             </Stack>
           </Box>
           <ZoneCardDetailsBox>
