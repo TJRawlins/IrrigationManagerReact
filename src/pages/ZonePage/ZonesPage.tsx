@@ -25,6 +25,7 @@ import {
 import { Season } from "../../App/models/Season";
 import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
 import { useAppTheme } from "../../theme/useAppTheme";
+import { Box } from "@mui/material";
 
 const ZonesPage = () => {
   const appTheme = useAppTheme();
@@ -108,19 +109,29 @@ const ZonesPage = () => {
     <>
       <ErrorBoundary fallback="Unable to retrieve data for zones. The server may be down.">
         <style>{StyledZoneContainer}</style>
-        <ZoneBar
-          fetchZones={fetchZones}
-          updateLocalStorageSeason={updateLocalStorageSeason}
-          isLoadingZones={isLoadingZones}
-        />
-        <Grid id="zone-grid-background" sx={appTheme.grid.sx}>
-          <ZoneList
-            hasError
+        <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+          <ZoneBar
             fetchZones={fetchZones}
             updateLocalStorageSeason={updateLocalStorageSeason}
             isLoadingZones={isLoadingZones}
           />
-        </Grid>
+          <Grid
+            id="zone-grid-background"
+            sx={{
+              ...appTheme.grid.sx,
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <ZoneList
+              hasError
+              fetchZones={fetchZones}
+              updateLocalStorageSeason={updateLocalStorageSeason}
+              isLoadingZones={isLoadingZones}
+            />
+          </Grid>
+        </Box>
       </ErrorBoundary>
     </>
   );

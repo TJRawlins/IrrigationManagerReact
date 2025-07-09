@@ -4,15 +4,13 @@ import RouterComponent from "../../routes/RouterComponent";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ColorModeContext, useMode } from "../../theme/theme";
 import { DrawerProvider } from "./DrawerContext";
-import { styled } from "@mui/material/styles";
 import Navbar from "./Navbar";
 
 function AppContent() {
   return (
     <Box sx={{ display: "flex" }}>
       <Navbar />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
+      <Box component="main" sx={{ flexGrow: 1, p: 3, pt: 0 }}>
         <RouterComponent />
       </Box>
     </Box>
@@ -37,15 +35,5 @@ function App() {
     </>
   );
 }
-
-// ===================== STYLED COMPONENTS =====================
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
 
 export default App;
