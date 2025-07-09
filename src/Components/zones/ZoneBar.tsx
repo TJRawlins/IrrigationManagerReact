@@ -40,7 +40,7 @@ export default function ZoneBar({
     (state: RootState) => state.season
   );
   const dispatch = useDispatch();
-  const { menuBar, fonts } = useAppTheme();
+  const { menuBar, fonts, seasonIcons } = useAppTheme();
 
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
@@ -187,8 +187,11 @@ export default function ZoneBar({
             <IconButton
               onClick={() => handleSeasonClick(s.name)}
               sx={{
-                color: s.color,
-                backgroundColor: s.background,
+                color: seasonName === s.name ? s.color : "#eef1f1",
+                backgroundColor:
+                  seasonName === s.name
+                    ? s.background
+                    : seasonIcons.inactiveBackground,
                 opacity: seasonName === s.name ? 1 : 0.4,
                 "&:hover, &:focus, &:active": {
                   color: s.color,
@@ -213,7 +216,13 @@ export default function ZoneBar({
       <div className="main-container" style={menuBar.mainBar}>
         <div className="content-container">
           <div className="title-container">
-            <Typography className="bar-title" variant="h6" noWrap component="a" style={{ ...fonts.headers }}>
+            <Typography
+              className="bar-title"
+              variant="h6"
+              noWrap
+              component="a"
+              style={{ ...fonts.headers }}
+            >
               ZONES
             </Typography>
           </div>
