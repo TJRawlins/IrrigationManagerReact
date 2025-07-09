@@ -250,5 +250,6 @@ export const useAppTheme = () => {
     // Direct access to colors for custom styling
     colors: theme.custom,
     sidePanel: theme.custom.sidePanel,
+    seasonIcons: theme.custom.seasonIcons,
   };
 };

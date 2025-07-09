@@ -204,6 +204,10 @@ declare module "@mui/material/styles" {
       sidePanel: {
         backgroundColor: string;
         iconColor: string;
+        dividerColor: string;
+      };
+      seasonIcons: {
+        inactiveBackground: string;
       };
     };
   }
@@ -224,6 +228,7 @@ declare module "@mui/material/styles" {
       overlay?: Partial<Theme["custom"]["overlay"]>;
       zoneCard?: Partial<Theme["custom"]["zoneCard"]>;
       sidePanel?: Partial<Theme["custom"]["sidePanel"]>;
+      seasonIcons?: Partial<Theme["custom"]["seasonIcons"]>;
     };
   }
 }
@@ -298,6 +303,10 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           sidePanel: {
             backgroundColor: primaryLight,
             iconColor: "#eff2f5",
+            dividerColor: "#ffffff52",
+          },
+          seasonIcons: {
+            inactiveBackground: "#b6c2c5",
           },
           messages: {
             info: {
@@ -467,6 +476,10 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           sidePanel: {
             backgroundColor: primaryDark,
             iconColor: "#eff2f5",
+            dividerColor: "#ffffff29",
+          },
+          seasonIcons: {
+            inactiveBackground: "#475a82",
           },
           messages: {
             info: {
