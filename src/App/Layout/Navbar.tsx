@@ -21,7 +21,7 @@ import {
 } from "@mui/icons-material";
 import { useContext } from "react";
 import { ColorModeContext } from "../../theme/theme";
-import logo from "../../assets/irrigation logo.png";
+import logoIcon from "../../assets/irrigation logo icon.png";
 import { useDrawer } from "./DrawerContext";
 import { Link } from "react-router-dom";
 import List from "@mui/material/List";
@@ -87,40 +87,40 @@ export default function Navbar() {
   return (
     <>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <LogoContainer>
-            <StyledLogo src={logo} alt="logo" />
-            <StyledLogoText variant="h4" noWrap>
-              droplet
-            </StyledLogoText>
-          </LogoContainer>
-          <Spacer />
-        </Toolbar>
-      </AppBar>
+      {/* Remove AppBar and Toolbar, move logo/title to DrawerHeader */}
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon style={{ color: sidePanel.iconColor }} />
-            ) : (
-              <ChevronLeftIcon style={{ color: sidePanel.iconColor }} />
-            )}
-          </IconButton>
+        <DrawerHeader
+          sx={{ justifyContent: open ? "space-between" : "center", px: 2 }}
+        >
+          {open ? (
+            <>
+              <LogoContainer>
+                <StyledLogo
+                  src={logoIcon}
+                  alt="logo"
+                  style={{ cursor: "default" }}
+                />
+                <StyledLogoText variant="h4" noWrap>
+                  droplet
+                </StyledLogoText>
+              </LogoContainer>
+              <IconButton onClick={() => setOpen(false)}>
+                {theme.direction === "rtl" ? (
+                  <ChevronRightIcon style={{ color: sidePanel.iconColor }} />
+                ) : (
+                  <ChevronLeftIcon style={{ color: sidePanel.iconColor }} />
+                )}
+              </IconButton>
+            </>
+          ) : (
+            <StyledLogo
+              src={logoIcon}
+              alt="logo"
+              style={{ cursor: "pointer" }}
+              onClick={() => setOpen(true)}
+            />
+          )}
         </DrawerHeader>
-        <Divider />
         <List>
           {topMenuItems.map((item) => (
             <StyledListItem key={item.text} disablePadding>
@@ -135,7 +135,7 @@ export default function Navbar() {
             </StyledListItem>
           ))}
         </List>
-        <Divider />
+        <Divider sx={{ backgroundColor: sidePanel.dividerColor }} />
         <List>
           {userMenuItems.map((item) => (
             <StyledListItem key={item.text} disablePadding>
@@ -150,7 +150,7 @@ export default function Navbar() {
             </StyledListItem>
           ))}
         </List>
-        <Divider />
+        <Divider sx={{ backgroundColor: sidePanel.dividerColor }} />
         <BottomList>
           <StyledListItem disablePadding>
             <StyledListItemButton
@@ -207,7 +207,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 
-const drawerWidth = 240;
+const drawerWidth = 275;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -299,7 +299,7 @@ const Drawer = styled(MuiDrawer, {
 
 const StyledLogo = styled("img")`
   width: 38px;
-  margin-right: 0.25rem;
+  margin-right: 0.5rem;
 `;
 
 const StyledLogoText = styled(Typography)(({ theme }) => ({
@@ -361,7 +361,7 @@ const StyledListItemIcon = styled(ListItemIcon, {
   justifyContent: "center",
   ...(open
     ? {
-        marginRight: theme.spacing(3),
+        marginRight: theme.spacing(2),
       }
     : {
         marginRight: "auto",

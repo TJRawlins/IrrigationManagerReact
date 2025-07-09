@@ -1,4 +1,3 @@
-import Navbar from "./Navbar";
 import "/src/App.css";
 import { CssBaseline, Box, ThemeProvider } from "@mui/material";
 import RouterComponent from "../../routes/RouterComponent";
@@ -6,6 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ColorModeContext, useMode } from "../../theme/theme";
 import { DrawerProvider } from "./DrawerContext";
 import { styled } from "@mui/material/styles";
+import Navbar from "./Navbar";
 
 function AppContent() {
   return (
