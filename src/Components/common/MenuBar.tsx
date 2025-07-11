@@ -2,6 +2,7 @@ import { CssBaseline, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import "../../styles/baseStyles/BaseBar.css";
 import TotalGallons from "./TotalGallons";
+import { styled } from "styled-components";
 
 type MenuBarProps = {
   title: string;
@@ -26,33 +27,62 @@ export default function MenuBar({
   return (
     <>
       <CssBaseline />
-      <div className="main-container" style={mainBarStyles}>
-        <div className="content-container">
-          <div className="title-container">
-            <Typography
-              className="bar-title"
-              variant="h6"
-              noWrap
-              component="a"
-              style={titleStyles}
-            >
-              {title}
-            </Typography>
-          </div>
-          <div
-            className="action-container"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
-            {children}
-          </div>
-        </div>
+      <StyledMenuBarWrapper style={mainBarStyles}>
+        <StyledContentContainer>
+          <StyledTitleContainer>
+            <StyledTitle style={titleStyles}>{title}</StyledTitle>
+          </StyledTitleContainer>
+          <StyledActionContainer>{children}</StyledActionContainer>
+        </StyledContentContainer>
         <TotalGallons {...totalGallonsProps} />
-      </div>
+      </StyledMenuBarWrapper>
     </>
   );
 }
+
+// Styled components
+const StyledMenuBarWrapper = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 55px;
+  padding-bottom: 3px;
+  border-bottom: none;
+  box-shadow: none;
+  z-index: 1;
+  flex-shrink: 0;
+`;
+
+const StyledContentContainer = styled("div")`
+  display: flex;
+  justify-content: left;
+  height: 100%;
+  align-items: center;
+`;
+
+const StyledTitleContainer = styled("div")`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+const StyledTitle = styled(Typography)`
+  font-size: 2.25rem !important;
+  margin-right: 1rem !important;
+  font-family: system-ui !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.04em !important;
+  color: inherit !important;
+  opacity: 0.8;
+`;
+
+const StyledActionContainer = styled("div")`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
