@@ -193,6 +193,18 @@ export default function ZoneBar({
                     ? s.background
                     : seasonIcons.inactiveBackground,
                 opacity: seasonName === s.name ? 1 : 0.4,
+                position: "relative",
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  top: "50%",
+                  left: "27%",
+                  background: "#00000015",
+                  width: "20px",
+                  height: "40px",
+                  borderRadius: "0px 150px 150px 0px",
+                  transform: "translate(50%, -50%)",
+                },
                 "&:hover, &:focus, &:active": {
                   color: s.color,
                   backgroundColor: s.background,
