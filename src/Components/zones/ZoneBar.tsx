@@ -1,17 +1,12 @@
 /* eslint-disable no-debugger */
 import {
-  Avatar,
   Box,
-  Chip,
   CssBaseline,
   Divider,
-  Stack,
-  Tooltip,
   Typography,
   IconButton,
+  Tooltip,
 } from "@mui/material";
-import { TbDroplet } from "react-icons/tb";
-import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
@@ -24,6 +19,7 @@ import {
 import AddZone from "./AddZone";
 import { useAppTheme } from "../../theme/useAppTheme";
 import { getSeasonIcon } from "./zoneCard/zoneCardUtils";
+import TotalGallons from "../common/TotalGallons";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -41,86 +37,6 @@ export default function ZoneBar({
   );
   const dispatch = useDispatch();
   const { menuBar, fonts, seasonIcons } = useAppTheme();
-
-  /*
-   *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
-   */
-
-  const TotalGallonsChips = () => {
-    return (
-      <>
-        <Box
-          ml={2}
-          mt={0.5}
-          sx={{
-            display: { md: "none", sm: "flex", xs: "flex" },
-            alignItems: "center",
-          }}
-        >
-          <FlipCameraAndroidIcon sx={{ color: "silver" }} />
-          <Typography ml={1} sx={{ color: "silver", fontSize: 13 }}>
-            Flip to see gallons
-          </Typography>
-        </Box>
-        <Stack
-          direction="row"
-          spacing={1}
-          ml={2}
-          mt={0.5}
-          sx={{ display: { md: "block", sm: "none", xs: "none" } }}
-        >
-          <Tooltip title="Weekly Gallons" arrow>
-            <Chip
-              className="bar-gallons-chip"
-              sx={menuBar.buttons}
-              avatar={
-                <Avatar
-                  className="bar-gallons-chip-avatar"
-                  sx={menuBar.buttons}
-                >
-                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
-                  <span className="bar-gallons-chip-avatar-text">W</span>
-                </Avatar>
-              }
-              label={season.totalGalPerWeek}
-            />
-          </Tooltip>
-          <Tooltip title="Monthly Gallons" arrow>
-            <Chip
-              className="bar-gallons-chip"
-              sx={menuBar.buttons}
-              avatar={
-                <Avatar
-                  className="bar-gallons-chip-avatar"
-                  sx={menuBar.buttons}
-                >
-                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
-                  <span className="bar-gallons-chip-avatar-text">M</span>
-                </Avatar>
-              }
-              label={season.totalGalPerMonth}
-            />
-          </Tooltip>
-          <Tooltip title="Yearly Gallons" arrow>
-            <Chip
-              className="bar-gallons-chip"
-              sx={menuBar.buttons}
-              avatar={
-                <Avatar
-                  className="bar-gallons-chip-avatar"
-                  sx={menuBar.buttons}
-                >
-                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
-                  <span className="bar-gallons-chip-avatar-text">Y</span>
-                </Avatar>
-              }
-              label={season.totalGalPerYear}
-            />
-          </Tooltip>
-        </Stack>
-      </>
-    );
-  };
 
   // *-*-*-*-*-*-*-*-*-*-*-*-* SEASON ICONS COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -265,7 +181,12 @@ export default function ZoneBar({
               />
             </Box>
           </div>
-          <TotalGallonsChips />
+          <TotalGallons
+            totalGalPerWeek={season.totalGalPerWeek}
+            totalGalPerMonth={season.totalGalPerMonth}
+            totalGalPerYear={season.totalGalPerYear}
+            buttonStyles={menuBar.buttons}
+          />
         </div>
       </div>
     </>

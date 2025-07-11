@@ -1,18 +1,7 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  CssBaseline,
-  Divider,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CssBaseline, Divider, Typography } from "@mui/material";
 import { MdDashboard } from "react-icons/md";
 import { IoCalendar } from "react-icons/io5";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
-import { FlipCameraAndroid as FlipCameraAndroidIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import AddPlant from "./AddPlant";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,16 +11,14 @@ import "../../styles/plants/PlantBar.css";
 import { useEffect } from "react";
 import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
-import { TbDroplet } from "react-icons/tb";
 import { useAppTheme } from "../../theme/useAppTheme";
+import TotalGallons from "../common/TotalGallons";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
 };
 
-export default function PlantBar({
-  fetchPlants,
-}: PlantBarProps) {
+export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { plant } = useSelector((state: RootState) => state.plant);
   const { season } = useSelector((state: RootState) => state.season);
@@ -51,91 +38,6 @@ export default function PlantBar({
   useEffect(() => {
     console.log("%cPlantBar: useEffect", "color:#1CA1E6");
   }, [plant, zone, season]);
-
-  /*
-   *-*-*-*-*-*-*-*-*-*-*-*-* GALS - DAILY MONTHLY YEARLY *-*-*-*-*-*-*-*-*-*-*-*-*
-   */
-  const TotalGallonsChips = () => {
-    return (
-      <>
-        <Box
-          ml={2}
-          mt={0.5}
-          sx={{
-            display: { md: "none", sm: "flex", xs: "flex" },
-            alignItems: "center",
-          }}
-        >
-          <FlipCameraAndroidIcon sx={{ color: "silver" }} />
-          <Typography
-            ml={1}
-            sx={{ color: "silver", fontSize: 13, whiteSpace: "nowrap" }}
-          >
-            Flip to see gallons
-          </Typography>
-        </Box>
-        <Stack
-          direction="row"
-          spacing={1}
-          ml={2}
-          mt={0.5}
-          sx={{
-            display: { md: "block", sm: "none", xs: "none" },
-            whiteSpace: "nowrap",
-          }}
-        >
-          <Tooltip title="Weekly Gallons" arrow>
-            <Chip
-              className="bar-gallons-chip"
-              sx={appTheme.menuBar.buttons}
-              avatar={
-                <Avatar
-                  className="bar-gallons-chip-avatar"
-                  sx={appTheme.menuBar.buttons}
-                >
-                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
-                  <span className="bar-gallons-chip-avatar-text">W</span>
-                </Avatar>
-              }
-              label={zone.totalGalPerWeek}
-            />
-          </Tooltip>
-          <Tooltip title="Monthly Gallons" arrow>
-            <Chip
-              className="bar-gallons-chip"
-              sx={appTheme.menuBar.buttons}
-              avatar={
-                <Avatar
-                  className="bar-gallons-chip-avatar"
-                  sx={appTheme.menuBar.buttons}
-                >
-                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
-                  <span className="bar-gallons-chip-avatar-text">M</span>
-                </Avatar>
-              }
-              label={zone.totalGalPerMonth}
-            />
-          </Tooltip>
-          <Tooltip title="Yearly Gallons" arrow>
-            <Chip
-              className="bar-gallons-chip"
-              sx={appTheme.menuBar.buttons}
-              avatar={
-                <Avatar
-                  className="bar-gallons-chip-avatar"
-                  sx={appTheme.menuBar.buttons}
-                >
-                  <TbDroplet className="bar-gallons-chip-avatar-icon" />
-                  <span className="bar-gallons-chip-avatar-text">Y</span>
-                </Avatar>
-              }
-              label={zone.totalGalPerYear}
-            />
-          </Tooltip>
-        </Stack>
-      </>
-    );
-  };
 
   /*
    *-*-*-*-*-*-*-*-*-*-*-*-* MAIN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
@@ -187,9 +89,7 @@ export default function PlantBar({
               flexItem
             />
             <Box className="bar-btn-container">
-              <AddPlant
-                fetchPlants={fetchPlants}
-              />
+              <AddPlant fetchPlants={fetchPlants} />
               <Link to="/zones">
                 <Button
                   className="bar-btn action"
@@ -205,7 +105,12 @@ export default function PlantBar({
             </Box>
           </div>
         </div>
-        <TotalGallonsChips />
+        <TotalGallons
+          totalGalPerWeek={zone.totalGalPerWeek}
+          totalGalPerMonth={zone.totalGalPerMonth}
+          totalGalPerYear={zone.totalGalPerYear}
+          buttonStyles={appTheme.menuBar.buttons}
+        />
       </div>
     </>
   );
