@@ -1,4 +1,4 @@
-import { Box, Button, CssBaseline, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
 import { MdDashboard } from "react-icons/md";
 import { IoCalendar } from "react-icons/io5";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
@@ -6,13 +6,12 @@ import { Link } from "react-router-dom";
 import AddPlant from "./AddPlant";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import "../../styles/baseStyles/BaseBar.css";
 import "../../styles/plants/PlantBar.css";
 import { useEffect } from "react";
 import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
 import { useAppTheme } from "../../theme/useAppTheme";
-import TotalGallons from "../common/TotalGallons";
+import MenuBar from "../common/MenuBar";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -39,79 +38,59 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
     console.log("%cPlantBar: useEffect", "color:#1CA1E6");
   }, [plant, zone, season]);
 
-  /*
-   *-*-*-*-*-*-*-*-*-*-*-*-* MAIN COMPONENT *-*-*-*-*-*-*-*-*-*-*-*-*
-   */
   return (
-    <>
-      <CssBaseline />
-      <div className="main-container" style={appTheme.menuBar.mainBar}>
-        <div className="content-container">
-          <div className="title-container">
-            <Typography className="bar-title" variant="h6" noWrap component="a">
-              PLANTS
-            </Typography>
-          </div>
-          <div
-            className="action-container"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100%",
-            }}
+    <MenuBar
+      title="PLANTS"
+      mainBarStyles={appTheme.menuBar.mainBar}
+      totalGallonsProps={{
+        totalGalPerWeek: zone.totalGalPerWeek,
+        totalGalPerMonth: zone.totalGalPerMonth,
+        totalGalPerYear: zone.totalGalPerYear,
+        buttonStyles: appTheme.menuBar.buttons,
+      }}
+    >
+      <Divider
+        sx={{ height: "60%", marginTop: "12px" }}
+        orientation="vertical"
+        flexItem
+      />
+      {/* // *-*-*-*-*-*-*-*-*-*-*-*-* ZONE & SEASON TITLE *-*-*-*-*-*-*-*-*-*-*-*-* */}
+      <Box sx={{ display: { md: "block", sm: "none", xs: "none" } }}>
+        <Box className="bar-btn-container">
+          <Box className="bar-btn bar-chip" sx={appTheme.menuBar.chips}>
+            <div className="btn-content-container">
+              <MdDashboard className="btn-icon" />
+              <span className="btn-text">{zone.name}</span>
+            </div>
+          </Box>
+          <Box className="bar-btn bar-chip" sx={appTheme.menuBar.chips}>
+            <div className="btn-content-container">
+              <IoCalendar className="btn-icon" />
+              <span className="btn-text">{zone.season}</span>
+            </div>
+          </Box>
+        </Box>
+      </Box>
+      <Divider
+        sx={{ height: "60%", marginTop: "12px", marginRight: ".75rem" }}
+        orientation="vertical"
+        flexItem
+      />
+      <Box className="bar-btn-container">
+        <AddPlant fetchPlants={fetchPlants} />
+        <Link to="/zones">
+          <Button
+            className="bar-btn action"
+            sx={appTheme.menuBar.buttons}
+            onClick={backToSeason}
           >
-            <Divider
-              sx={{ height: "60%", marginTop: "12px" }}
-              orientation="vertical"
-              flexItem
-            />
-            {/* // *-*-*-*-*-*-*-*-*-*-*-*-* ZONE & SEASON TITLE *-*-*-*-*-*-*-*-*-*-*-*-* */}
-            <Box sx={{ display: { md: "block", sm: "none", xs: "none" } }}>
-              <Box className="bar-btn-container">
-                <Box className="bar-btn bar-chip" sx={appTheme.menuBar.chips}>
-                  <div className="btn-content-container">
-                    <MdDashboard className="btn-icon" />
-                    <span className="btn-text">{zone.name}</span>
-                  </div>
-                </Box>
-                <Box className="bar-btn bar-chip" sx={appTheme.menuBar.chips}>
-                  <div className="btn-content-container">
-                    <IoCalendar className="btn-icon" />
-                    <span className="btn-text">{zone.season}</span>
-                  </div>
-                </Box>
-              </Box>
-            </Box>
-            <Divider
-              sx={{ height: "60%", marginTop: "12px", marginRight: ".75rem" }}
-              orientation="vertical"
-              flexItem
-            />
-            <Box className="bar-btn-container">
-              <AddPlant fetchPlants={fetchPlants} />
-              <Link to="/zones">
-                <Button
-                  className="bar-btn action"
-                  sx={appTheme.menuBar.buttons}
-                  onClick={backToSeason}
-                >
-                  <div className="btn-content-container">
-                    <IoIosArrowDropleftCircle className="btn-icon" />
-                    <span className="btn-text">Go Back</span>
-                  </div>
-                </Button>
-              </Link>
-            </Box>
-          </div>
-        </div>
-        <TotalGallons
-          totalGalPerWeek={zone.totalGalPerWeek}
-          totalGalPerMonth={zone.totalGalPerMonth}
-          totalGalPerYear={zone.totalGalPerYear}
-          buttonStyles={appTheme.menuBar.buttons}
-        />
-      </div>
-    </>
+            <div className="btn-content-container">
+              <IoIosArrowDropleftCircle className="btn-icon" />
+              <span className="btn-text">Go Back</span>
+            </div>
+          </Button>
+        </Link>
+      </Box>
+    </MenuBar>
   );
 }
