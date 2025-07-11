@@ -57,7 +57,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
       }}
       onClick={onClick}
     >
-      <Overlay overlayOpacity={overlayOpacity} />
+      <Overlay $overlayOpacity={overlayOpacity} />
       <StyledImg src={imagePath} alt={name} draggable={false} />
       {text && <TextOverlay>{text}</TextOverlay>}
     </Wrapper>
@@ -87,7 +87,7 @@ const StyledImg = styled.img`
   user-select: none;
 `;
 
-const Overlay = styled.div<{ overlayOpacity: number }>`
+const Overlay = styled.div<{ $overlayOpacity: number }>`
   position: absolute;
   top: 0.35rem;
   left: 0.35rem;
@@ -95,8 +95,8 @@ const Overlay = styled.div<{ overlayOpacity: number }>`
   bottom: 0.35rem;
   border-radius: 7px;
   pointer-events: none;
-  background: ${({ overlayOpacity }) =>
-    `linear-gradient(rgba(127,181,172,${overlayOpacity}), rgba(36,88,111,${overlayOpacity}))`};
+  background: ${({ $overlayOpacity }) =>
+    `linear-gradient(rgba(127,181,172,${$overlayOpacity}), rgba(36,88,111,${$overlayOpacity}))`};
 `;
 
 const TextOverlay = styled.div`
