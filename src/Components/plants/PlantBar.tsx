@@ -24,6 +24,10 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const dispatch = useDispatch();
   const appTheme = useAppTheme();
 
+  const subtitle = `${zone.totalPlants} plant${
+    zone.totalPlants !== 1 ? "s" : ""
+  }`;
+
   const updateLocalStorageSeason = (seasonId: number) => {
     agent.Seasons.details(seasonId).then((season) => {
       dispatch(updateCurrentSeason(season));
@@ -40,7 +44,8 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
 
   return (
     <MenuBar
-      title="PLANTS"
+      title="Plants"
+      subtitle={subtitle}
       mainBarStyles={appTheme.menuBar.mainBar}
       totalGallonsProps={{
         totalGalPerWeek: zone.totalGalPerWeek,

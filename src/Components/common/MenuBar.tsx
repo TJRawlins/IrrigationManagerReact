@@ -61,8 +61,8 @@ const StyledMenuBarWrapper = styled("div")`
   top: 0;
   width: 100%;
   height: 64px;
-  padding-bottom: 3px;
-  border-bottom: none;
+  padding: 0 1.3rem;
+  border-bottom: 1px solid #e5e7eb;
   box-shadow: none;
   z-index: 1;
   flex-shrink: 0;
@@ -88,11 +88,11 @@ const StyledTitle = styled(Typography)`
   font-weight: 800 !important;
   letter-spacing: -0.04em !important;
   opacity: 0.8;
-  height: 33px;
+  height: 30px;
 `;
 
 const StyledSubtitle = styled(Typography)`
-  font-size: 0.95rem !important;
+  font-size: 0.9rem !important;
   font-weight: 400 !important;
   color: inherit !important;
   margin-left: 2px;
