@@ -16,7 +16,7 @@ type MenuBarProps = {
     totalGalPerYear: number;
     buttonStyles: any;
   };
-  subtitle?: string | ReactNode; // <-- Add this line
+  subtitle?: string | ReactNode;
 };
 
 export default function MenuBar({
@@ -25,7 +25,7 @@ export default function MenuBar({
   mainBarStyles,
   children,
   totalGallonsProps,
-  subtitle, // <-- Add this line
+  subtitle,
 }: MenuBarProps) {
   const { menuBar } = useAppTheme();
 
