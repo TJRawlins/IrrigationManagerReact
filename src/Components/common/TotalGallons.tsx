@@ -165,12 +165,12 @@ const ValueItem = styled(Box)({
 const ValueDisplay = styled(Typography)({
   fontSize: "1.125rem",
   fontWeight: 600,
-  color: "#111827",
+  color: "#606162",
 });
 
 const ValueLabel = styled(Typography)({
   fontSize: "0.75rem",
-  color: "#6b7280",
+  color: "#606162",
 });
 
 const MobileHintContainer = styled(Box)({
