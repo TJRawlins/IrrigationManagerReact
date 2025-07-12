@@ -51,6 +51,7 @@ export default function ZoneBar({
   return (
     <MenuBar
       title="Zones"
+      subtitle={subtitle}
       titleStyles={{ ...fonts.headers }}
       mainBarStyles={menuBar.mainBar}
       totalGallonsProps={{
@@ -59,7 +60,6 @@ export default function ZoneBar({
         totalGalPerYear: season.totalGalPerYear,
         buttonStyles: menuBar.buttons,
       }}
-      subtitle={subtitle}
     >
       <Divider sx={{ height: "60%", marginTop: "12px" }} flexItem />
       <SeasonIcons
