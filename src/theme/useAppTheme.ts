@@ -129,17 +129,18 @@ export const useAppTheme = () => {
         color: theme.custom.menuBar.color,
       },
       buttons: {
-        backgroundColor: theme.custom.menuBar.buttonBackground,
-        color: theme.custom.menuBar.buttonFont,
-        border: `1px solid ${theme.custom.menuBar.buttonBorder}`,
+        ...theme.custom.buttons.primary,
+        border: `1px solid ${theme.custom.buttons.primary.border}`,
         "& .btn-icon": {
-          color: theme.custom.menuBar.buttonIcon,
+          color: theme.custom.buttons.primary.color,
         },
-        "&.action:hover": {
-          border: `1px solid ${theme.custom.menuBar.buttonBorderHover}`,
+        "&:hover": {
+          backgroundColor: theme.custom.buttons.primary.hover.background,
+          color: theme.custom.buttons.primary.hover.color,
+          border: `1px solid ${theme.custom.buttons.primary.hover.border}`,
         },
         "& .bar-gallons-chip-avatar-text": {
-          backgroundColor: theme.custom.menuBar.buttonBackground,
+          backgroundColor: theme.custom.buttons.primary.background,
         },
         "& .bar-gallons-chip-avatar-icon, & .bar-gallons-chip-avatar-text": {
           color: theme.custom.menuBar.gallonsIcon,

@@ -3,9 +3,13 @@ import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 // Color constants
 const callToActionPrimary = "#64cdbd";
-const callToActionSecondary = "#82a628";
-const primaryLight = "#005972";
+const callToActionSecondary = "#2f87ad";
+const primaryLight = "#173e5b";
 const primaryDark = "#141b2d";
+const buttonPrimary = "#2f87ad";
+const buttonSecondary = "#497487";
+const white = "#eff1f6";
+const black = "#606162";
 
 // Font constants
 const FONTS = {
@@ -20,6 +24,41 @@ const FONTS = {
   content: {
     fontFamily: '"Open Sans", sans-serif',
     letterSpacing: "0.01071em",
+  },
+};
+
+// Button constants
+const BUTTON_BASE = {
+  borderRadius: "4px",
+  fontFamily:
+    '"Open Sans","Source Sans Pro",Helvetica,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
+  fontWeight: "600",
+  fontSize: "0.85rem",
+  padding: "0.4rem 0.75rem",
+  textTransform: "capitalize",
+  color: white,
+};
+
+const BUTTONS = {
+  primary: {
+    ...BUTTON_BASE,
+    background: buttonPrimary,
+    border: buttonPrimary,
+    hover: {
+      background: "#005972",
+      color: white,
+      border: "#005972",
+    },
+  },
+  secondary: {
+    ...BUTTON_BASE,
+    background: buttonSecondary,
+    border: buttonSecondary,
+    hover: {
+      background: "#3a5a6a",
+      color: white,
+      border: "#3a5a6a",
+    },
   },
 };
 
@@ -209,6 +248,40 @@ declare module "@mui/material/styles" {
       seasonIcons: {
         inactiveBackground: string;
       };
+      buttons: {
+        primary: {
+          background: string;
+          color: string;
+          border: string;
+          borderRadius: string;
+          fontFamily: string;
+          fontWeight: string;
+          fontSize: string;
+          padding: string;
+          textTransform: string;
+          hover: {
+            background: string;
+            color: string;
+            border: string;
+          };
+        };
+        secondary: {
+          background: string;
+          color: string;
+          border: string;
+          borderRadius: string;
+          fontFamily: string;
+          fontWeight: string;
+          fontSize: string;
+          padding: string;
+          textTransform: string;
+          hover: {
+            background: string;
+            color: string;
+            border: string;
+          };
+        };
+      };
     };
   }
   interface ThemeOptions {
@@ -229,6 +302,7 @@ declare module "@mui/material/styles" {
       zoneCard?: Partial<Theme["custom"]["zoneCard"]>;
       sidePanel?: Partial<Theme["custom"]["sidePanel"]>;
       seasonIcons?: Partial<Theme["custom"]["seasonIcons"]>;
+      buttons?: Partial<Theme["custom"]["buttons"]>;
     };
   }
 }
@@ -239,6 +313,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
     mode === "light"
       ? {
           fonts: FONTS,
+          buttons: BUTTONS,
           grid: {
             background: "#ced8da",
             rowBackground: "#eef2f6",
@@ -269,8 +344,8 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             overlay: "#002c38a8",
             background: "#eef2f6",
             border: "#eef2f6",
-            titleColor: "#606162",
-            description: "#606162",
+            titleColor: black,
+            description: black,
             closeIcon: "#707174",
             closeIconHover: "#323232",
             fieldLabel: "#707174",
@@ -284,14 +359,14 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             buttonFontHover: callToActionPrimary,
           },
           menuBar: {
-            background: "#dae4e4",
+            background: white,
             color: primaryLight,
-            buttonBackground: "#eef2f6",
-            buttonBackgroundImage: "linear-gradient(#eef2f6, #eef2f6)",
-            buttonFont: callToActionPrimary,
+            buttonBackground: "#2f87ad",
+            buttonBackgroundImage: white,
+            buttonFont: white,
             buttonBorder: "#eef2f6",
-            buttonBorderHover: callToActionPrimary,
-            buttonIcon: callToActionPrimary,
+            buttonBorderHover: callToActionSecondary,
+            buttonIcon: white,
             chipBackground: "#c9d5d7",
             gallonsIcon: callToActionPrimary,
           },
@@ -367,7 +442,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             const: "#8b8b8b",
             altPrimary: "#8b8b8b",
             toWhite: "#8b8b8b",
-            toPrimary: "#606162",
+            toPrimary: black,
             200: "#6f6f6f",
             300: "#535353",
             400: "#383838",
@@ -396,13 +471,13 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           zoneCard: {
             headerBackground: "#edf1f1",
-            headerText: "#606162",
+            headerText: black,
             contentBackground: "#ffffff",
-            text: "#606162",
+            text: black,
             imageBackground: "#dce4e4",
             // buttonBackground: "#f9d114",
             buttonBackground: "#497487",
-            // buttonText: "#606162",
+            // buttonText: black,
             buttonText: "#ffffff",
             buttonHoverBackground: "#005972",
             buttonHoverText: "#f0f2f5",
@@ -412,6 +487,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
         }
       : {
           fonts: FONTS,
+          buttons: BUTTONS,
           grid: {
             background: "#1f2a41",
             rowBackground: "#1f2a41",

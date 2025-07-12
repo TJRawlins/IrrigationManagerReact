@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import "../../styles/baseStyles/BaseBar.css";
 import TotalGallons from "./TotalGallons";
 import { styled } from "styled-components";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 type MenuBarProps = {
   title: string;
@@ -24,10 +25,18 @@ export default function MenuBar({
   children,
   totalGallonsProps,
 }: MenuBarProps) {
+  const { menuBar } = useAppTheme();
+
   return (
     <>
       <CssBaseline />
-      <StyledMenuBarWrapper style={mainBarStyles}>
+      <StyledMenuBarWrapper
+        style={{
+          ...mainBarStyles,
+          backgroundColor: menuBar.mainBar.backgroundColor,
+          color: menuBar.mainBar.color,
+        }}
+      >
         <StyledContentContainer>
           <StyledTitleContainer>
             <StyledTitle style={titleStyles}>{title}</StyledTitle>

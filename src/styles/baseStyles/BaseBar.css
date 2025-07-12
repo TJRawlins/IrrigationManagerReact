@@ -1,51 +1,3 @@
-div.main-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 55px;
-  padding-bottom: 3px;
-  border-bottom: none;
-  box-shadow: none;
-  z-index: 1;
-  flex-shrink: 0;
-}
-
-.content-container {
-  display: flex;
-  justify-content: left;
-  height: 100%;
-  align-items: center;
-}
-
-.bar-title-icon {
-  margin-top: 3px;
-  margin-right: 5px;
-}
-
-.bar-title {
-  font-size: 2.25rem !important;
-  margin-right: 1rem !important;
-  font-family: system-ui !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.04em !important;
-  color: inherit !important;
-  opacity: 0.8;
-}
-
-.title-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.season-btn:hover {
-  background: rgb(235, 235, 235) !important;
-}
-
 .bar-gallons-chip {
   justify-content: left;
   border-radius: 12px !important;
@@ -92,41 +44,6 @@ div.main-container {
 
 .action-container .MuiDivider-vertical {
   margin-right: 0;
-}
-
-.bar-btn-container {
-  display: flex;
-  margin: 0 15px;
-  gap: 0.5rem;
-}
-
-.bar-btn {
-  font-size: 0.85rem !important;
-  margin: 0.25rem 0.25rem 0 0.25rem !important;
-  padding: 0.45rem 0.75rem !important;
-  height: fit-content !important;
-  white-space: nowrap;
-  border-radius: 10px !important;
-  text-transform: capitalize !important;
-  transition: background-color 0s ease-in-out !important;
-}
-
-.btn-content-container {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.btn-icon {
-  font-size: 1.25rem;
-  height: auto;
-}
-
-.btn-text {
-  font-size: 0.85rem !important;
-  transform: translateY(1px);
-  font-weight: 500;
-  line-height: 1.75;
-  letter-spacing: 0.02857em;
 }
 
 .bar-chip {

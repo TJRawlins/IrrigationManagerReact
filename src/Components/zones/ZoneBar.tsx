@@ -1,10 +1,11 @@
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import AddZone from "./AddZone";
+import AddZoneModal from "./AddZoneModal";
 import { useAppTheme } from "../../theme/useAppTheme";
 import MenuBar from "../common/MenuBar";
 import SeasonIcons from "../common/SeasonIcons";
+import { useState } from "react";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -19,6 +20,19 @@ export default function ZoneBar({
 }: ZoneBarProps) {
   const { season } = useSelector((state: RootState) => state.season);
   const { menuBar, fonts } = useAppTheme();
+  const [isAddZoneModalOpen, setIsAddZoneModalOpen] = useState(false);
+
+  const isZonesStoredLocally = () => {
+    const zonesLocalStorageValue = localStorage.getItem("zones");
+    const isZonesStored =
+      zonesLocalStorageValue &&
+      zonesLocalStorageValue !== "undefined" &&
+      zonesLocalStorageValue !== "[]";
+    return isZonesStored;
+  };
+
+  const handleOpenAddZoneModal = () => setIsAddZoneModalOpen(true);
+  const handleCloseAddZoneModal = () => setIsAddZoneModalOpen(false);
 
   return (
     <MenuBar
@@ -42,8 +56,21 @@ export default function ZoneBar({
         orientation="vertical"
         flexItem
       />
-      <Box className="bar-btn-container">
-        <AddZone fetchZones={fetchZones} isLoadingZones={isLoadingZones} />
+      <Box sx={{ display: "flex", margin: "0 15px", gap: "0.5rem" }}>
+        {isZonesStoredLocally() && (
+          <Button
+            onClick={handleOpenAddZoneModal}
+            disabled={isLoadingZones}
+            sx={menuBar.buttons}
+          >
+            Add Zone
+          </Button>
+        )}
+        <AddZoneModal
+          open={isAddZoneModalOpen}
+          onClose={handleCloseAddZoneModal}
+          fetchZones={fetchZones}
+        />
       </Box>
     </MenuBar>
   );
