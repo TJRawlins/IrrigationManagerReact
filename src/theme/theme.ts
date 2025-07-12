@@ -8,7 +8,7 @@ const primaryLight = "#173e5b";
 const primaryDark = "#141b2d";
 const buttonPrimary = "#2f87ad";
 const buttonSecondary = "#497487";
-const white = "#eff1f6";
+const white = "#ffffff";
 const black = "#606162";
 
 // Font constants

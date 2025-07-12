@@ -57,7 +57,7 @@ const StyledMenuBarWrapper = styled("div")`
   position: sticky;
   top: 0;
   width: 100%;
-  height: 55px;
+  height: 64px;
   padding-bottom: 3px;
   border-bottom: none;
   box-shadow: none;
