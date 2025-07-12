@@ -147,8 +147,7 @@ const ToggleButton = styled(Button)<{ isSelected: boolean }>(
 const DesktopContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
-  gap: "35px",
-  padding: "16px 32px",
+  gap: "25px",
   marginLeft: "16px",
   marginTop: "4px",
 });
@@ -156,6 +155,7 @@ const DesktopContainer = styled(Box)({
 const ValuesContainer = styled(Box)({
   display: "flex",
   gap: "24px",
+  minWidth: "200px",
 });
 
 const ValueItem = styled(Box)({
