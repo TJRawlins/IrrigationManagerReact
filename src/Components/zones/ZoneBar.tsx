@@ -19,8 +19,22 @@ export default function ZoneBar({
   isLoadingZones,
 }: ZoneBarProps) {
   const { season } = useSelector((state: RootState) => state.season);
+  const { zoneList } = useSelector((state: RootState) => state.zoneList);
   const { menuBar, fonts } = useAppTheme();
   const [isAddZoneModalOpen, setIsAddZoneModalOpen] = useState(false);
+
+  // Filter zones for the current season
+  const zonesForSeason = Array.isArray(zoneList)
+    ? zoneList.filter((zone) => zone.seasonId === season.id)
+    : [];
+  const numZones = zonesForSeason.length;
+  const numPlants = zonesForSeason.reduce(
+    (sum, zone) => sum + (zone.totalPlants || 0),
+    0
+  );
+  const subtitle = `${numZones} zone${
+    numZones !== 1 ? "s" : ""
+  }, ${numPlants} plant${numPlants !== 1 ? "s" : ""}`;
 
   const isZonesStoredLocally = () => {
     const zonesLocalStorageValue = localStorage.getItem("zones");
@@ -36,7 +50,7 @@ export default function ZoneBar({
 
   return (
     <MenuBar
-      title="ZONES"
+      title="Zones"
       titleStyles={{ ...fonts.headers }}
       mainBarStyles={menuBar.mainBar}
       totalGallonsProps={{
@@ -45,6 +59,7 @@ export default function ZoneBar({
         totalGalPerYear: season.totalGalPerYear,
         buttonStyles: menuBar.buttons,
       }}
+      subtitle={subtitle}
     >
       <Divider sx={{ height: "60%", marginTop: "12px" }} flexItem />
       <SeasonIcons

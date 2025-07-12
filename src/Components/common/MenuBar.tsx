@@ -16,6 +16,7 @@ type MenuBarProps = {
     totalGalPerYear: number;
     buttonStyles: any;
   };
+  subtitle?: string | ReactNode; // <-- Add this line
 };
 
 export default function MenuBar({
@@ -24,6 +25,7 @@ export default function MenuBar({
   mainBarStyles,
   children,
   totalGallonsProps,
+  subtitle, // <-- Add this line
 }: MenuBarProps) {
   const { menuBar } = useAppTheme();
 
@@ -40,6 +42,7 @@ export default function MenuBar({
         <StyledContentContainer>
           <StyledTitleContainer>
             <StyledTitle style={titleStyles}>{title}</StyledTitle>
+            {subtitle && <StyledSubtitle>{subtitle}</StyledSubtitle>}
           </StyledTitleContainer>
           <StyledActionContainer>{children}</StyledActionContainer>
         </StyledContentContainer>
@@ -74,19 +77,26 @@ const StyledContentContainer = styled("div")`
 
 const StyledTitleContainer = styled("div")`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  flex-direction: column;
+  margin-right: 1rem;
 `;
 
 const StyledTitle = styled(Typography)`
-  font-size: 2.25rem !important;
+  font-size: 1.75rem !important;
   margin-right: 1rem !important;
-  font-family: system-ui !important;
-  font-weight: 700 !important;
+  font-family: "Raleway" !important;
+  font-weight: 800 !important;
   letter-spacing: -0.04em !important;
-  color: inherit !important;
   opacity: 0.8;
+  height: 33px;
+`;
+
+const StyledSubtitle = styled(Typography)`
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  color: inherit !important;
+  margin-left: 2px;
+  letter-spacing: 0.01em;
 `;
 
 const StyledActionContainer = styled("div")`
