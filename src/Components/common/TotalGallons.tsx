@@ -4,6 +4,7 @@ import { LuDroplets } from "react-icons/lu";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
+import { useAppTheme } from "../../theme/useAppTheme";
 import "../../styles/baseStyles/BaseBar.css";
 
 type TotalGallonsProps = {
@@ -25,6 +26,7 @@ export default function TotalGallons({
   totalCostPerYear = 0,
 }: // buttonStyles,
 TotalGallonsProps) {
+  const theme = useAppTheme();
   const [selectedType, setSelectedType] = useState<"gallons" | "cost">(() => {
     const saved = localStorage.getItem("totalGallonsToggle");
     return saved === "cost" || saved === "gallons" ? saved : "gallons";
@@ -100,10 +102,16 @@ TotalGallonsProps) {
           display: { md: "none", sm: "flex", xs: "flex" },
         }}
       >
-        <FlipCameraAndroidIcon sx={{ color: "silver" }} />
+        <FlipCameraAndroidIcon
+          sx={{ color: theme.totalGallons.mobileHint.iconColor }}
+        />
         <Typography
           ml={1}
-          sx={{ color: "silver", fontSize: 13, whiteSpace: "nowrap" }}
+          sx={{
+            color: theme.totalGallons.mobileHint.textColor,
+            fontSize: 13,
+            whiteSpace: "nowrap",
+          }}
         >
           Flip to see {selectedType === "gallons" ? "gallons" : "cost"}
         </Typography>
@@ -113,16 +121,16 @@ TotalGallonsProps) {
 }
 
 // Styled Components
-const ToggleContainer = styled(Box)({
+const ToggleContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  backgroundColor: "#f3f4f6",
+  backgroundColor: theme.custom.totalGallons.toggleContainer.background,
   borderRadius: "14px",
   padding: "4px",
-});
+}));
 
 const ToggleButton = styled(Button)<{ isSelected: boolean }>(
-  ({ isSelected }) => ({
+  ({ isSelected, theme }) => ({
     display: "flex",
     alignItems: "center",
     padding: "6.4px 12px",
@@ -132,14 +140,20 @@ const ToggleButton = styled(Button)<{ isSelected: boolean }>(
     transition: "all 0.2s",
     border: "none",
     cursor: "pointer",
-    backgroundColor: isSelected ? "white" : "transparent",
-    color: isSelected ? "#606162" : "#7f8287",
+    backgroundColor: isSelected
+      ? theme.custom.totalGallons.toggleButton.selected.background
+      : theme.custom.totalGallons.toggleButton.unselected.background,
+    color: isSelected
+      ? theme.custom.totalGallons.toggleButton.selected.color
+      : theme.custom.totalGallons.toggleButton.unselected.color,
     boxShadow: isSelected
-      ? "rgb(50 50 93 / 4%) 0px 2px 5px -1px, rgb(0 0 0 / 19%) 0px 1px 3px -1px"
+      ? theme.custom.totalGallons.toggleButton.selected.boxShadow
       : "none",
     textTransform: "none",
     "&:hover": {
-      backgroundColor: isSelected ? "white" : "transparent",
+      backgroundColor: isSelected
+        ? theme.custom.totalGallons.toggleButton.selected.background
+        : theme.custom.totalGallons.toggleButton.unselected.background,
     },
   })
 );
@@ -162,16 +176,16 @@ const ValueItem = styled(Box)({
   textAlign: "center",
 });
 
-const ValueDisplay = styled(Typography)({
+const ValueDisplay = styled(Typography)(({ theme }) => ({
   fontSize: "1.125rem",
   fontWeight: 600,
-  color: "#606162",
-});
+  color: theme.custom.totalGallons.valueDisplay.color,
+}));
 
-const ValueLabel = styled(Typography)({
+const ValueLabel = styled(Typography)(({ theme }) => ({
   fontSize: "0.75rem",
-  color: "#606162",
-});
+  color: theme.custom.totalGallons.valueLabel.color,
+}));
 
 const MobileHintContainer = styled(Box)({
   display: "flex",

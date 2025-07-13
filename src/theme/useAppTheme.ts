@@ -230,6 +230,36 @@ export const useAppTheme = () => {
       },
     },
 
+    // TotalGallons styles
+    totalGallons: {
+      toggleContainer: {
+        backgroundColor: theme.custom.totalGallons.toggleContainer.background,
+      },
+      toggleButton: {
+        selected: {
+          backgroundColor:
+            theme.custom.totalGallons.toggleButton.selected.background,
+          color: theme.custom.totalGallons.toggleButton.selected.color,
+          boxShadow: theme.custom.totalGallons.toggleButton.selected.boxShadow,
+        },
+        unselected: {
+          backgroundColor:
+            theme.custom.totalGallons.toggleButton.unselected.background,
+          color: theme.custom.totalGallons.toggleButton.unselected.color,
+        },
+      },
+      valueDisplay: {
+        color: theme.custom.totalGallons.valueDisplay.color,
+      },
+      valueLabel: {
+        color: theme.custom.totalGallons.valueLabel.color,
+      },
+      mobileHint: {
+        iconColor: theme.custom.totalGallons.mobileHint.iconColor,
+        textColor: theme.custom.totalGallons.mobileHint.textColor,
+      },
+    },
+
     // Direct access to colors
     colors: theme.custom,
     sidePanel: theme.custom.sidePanel,

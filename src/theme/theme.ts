@@ -252,6 +252,32 @@ declare module "@mui/material/styles" {
       seasonIcons: {
         inactiveBackground: string;
       };
+      totalGallons: {
+        toggleContainer: {
+          background: string;
+        };
+        toggleButton: {
+          selected: {
+            background: string;
+            color: string;
+            boxShadow: string;
+          };
+          unselected: {
+            background: string;
+            color: string;
+          };
+        };
+        valueDisplay: {
+          color: string;
+        };
+        valueLabel: {
+          color: string;
+        };
+        mobileHint: {
+          iconColor: string;
+          textColor: string;
+        };
+      };
       buttons: {
         primary: {
           background: string;
@@ -306,6 +332,7 @@ declare module "@mui/material/styles" {
       zoneCard?: Partial<Theme["custom"]["zoneCard"]>;
       sidePanel?: Partial<Theme["custom"]["sidePanel"]>;
       seasonIcons?: Partial<Theme["custom"]["seasonIcons"]>;
+      totalGallons?: Partial<Theme["custom"]["totalGallons"]>;
       buttons?: Partial<Theme["custom"]["buttons"]>;
     };
   }
@@ -388,6 +415,33 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           seasonIcons: {
             inactiveBackground: "#b6c2c5",
+          },
+          totalGallons: {
+            toggleContainer: {
+              background: "#f3f4f6",
+            },
+            toggleButton: {
+              selected: {
+                background: "white",
+                color: "#606162",
+                boxShadow:
+                  "rgb(50 50 93 / 4%) 0px 2px 5px -1px, rgb(0 0 0 / 19%) 0px 1px 3px -1px",
+              },
+              unselected: {
+                background: "transparent",
+                color: "#7f8287",
+              },
+            },
+            valueDisplay: {
+              color: "#606162",
+            },
+            valueLabel: {
+              color: "#606162",
+            },
+            mobileHint: {
+              iconColor: "silver",
+              textColor: "silver",
+            },
           },
           messages: {
             info: {
@@ -564,6 +618,33 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           seasonIcons: {
             inactiveBackground: "#475a82",
+          },
+          totalGallons: {
+            toggleContainer: {
+              background: "#1f2a41",
+            },
+            toggleButton: {
+              selected: {
+                background: "#141b2d",
+                color: "#e0e0e0",
+                boxShadow:
+                  "rgb(0 0 0 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px",
+              },
+              unselected: {
+                background: "transparent",
+                color: "#9ca3af",
+              },
+            },
+            valueDisplay: {
+              color: "#e0e0e0",
+            },
+            valueLabel: {
+              color: "#e0e0e0",
+            },
+            mobileHint: {
+              iconColor: "#9ca3af",
+              textColor: "#9ca3af",
+            },
           },
           messages: {
             info: {
