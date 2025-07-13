@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { MdOutlineBrandingWatermark as ZonesIcon } from "react-icons/md";
-import Badge from "@mui/material/Badge";
+
 import {
   Speed as DashboardIcon,
   WaterDropOutlined as EmitterCalculatorIcon,
@@ -13,12 +13,8 @@ import {
   AccountCircleOutlined as AccountIcon,
   SettingsSuggestOutlined as SettingsIcon,
   Logout as LogoutIcon,
-  Notifications as NotificationsIcon,
-  LightModeOutlined,
-  DarkModeOutlined,
 } from "@mui/icons-material";
-import { useContext } from "react";
-import { ColorModeContext } from "../../theme/theme";
+
 import logoIcon from "../../assets/irrigation logo icon.png";
 import { useDrawer } from "./DrawerContext";
 import { Link } from "react-router-dom";
@@ -27,7 +23,6 @@ import { useAppTheme } from "../../theme/useAppTheme";
 
 export default function Navbar() {
   const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
   const { open, setOpen } = useDrawer();
   const { sidePanel } = useAppTheme();
 
@@ -140,47 +135,7 @@ export default function Navbar() {
             </StyledListItem>
           ))}
         </List>
-        <Divider sx={{ backgroundColor: sidePanel.dividerColor }} />
-        <BottomList>
-          <StyledListItem disablePadding>
-            <StyledListItemButton
-              open={open}
-              onClick={colorMode.toggleColorMode}
-            >
-              <StyledListItemIcon open={open}>
-                {theme.palette.mode === "dark" ? (
-                  <DarkModeOutlined style={{ color: sidePanel.iconColor }} />
-                ) : (
-                  <LightModeOutlined style={{ color: sidePanel.iconColor }} />
-                )}
-              </StyledListItemIcon>
-              <StyledListItemText
-                primary={
-                  theme.palette.mode === "dark" ? "Light Mode" : "Dark Mode"
-                }
-                open={open}
-              />
-            </StyledListItemButton>
-          </StyledListItem>
-          <StyledListItem disablePadding>
-            <StyledListItemButton open={open}>
-              <StyledListItemIcon open={open}>
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon style={{ color: sidePanel.iconColor }} />
-                </Badge>
-              </StyledListItemIcon>
-              <StyledListItemText primary="Notifications" open={open} />
-            </StyledListItemButton>
-          </StyledListItem>
-          <StyledListItem disablePadding>
-            <StyledListItemButton open={open}>
-              <StyledListItemIcon open={open}>
-                <AccountIcon style={{ color: sidePanel.iconColor }} />
-              </StyledListItemIcon>
-              <StyledListItemText primary="Profile" open={open} />
-            </StyledListItemButton>
-          </StyledListItem>
-        </BottomList>
+        {/* Removed dark/light mode, notifications, and profile buttons - moved to MenuBar */}
       </Drawer>
     </>
   );
@@ -286,6 +241,7 @@ const LogoContainer = styled(Box)`
 const StyledListItem = styled(ListItem)`
   padding: 0;
   display: block;
+  // height: 40px;
 `;
 
 interface StyledListItemButtonProps {
@@ -295,7 +251,7 @@ interface StyledListItemButtonProps {
 const StyledListItemButton = styled(ListItemButton, {
   shouldForwardProp: (prop) => prop !== "open",
 })<StyledListItemButtonProps>(({ theme, open }) => ({
-  minHeight: 48,
+  // minHeight: 48,
   paddingLeft: theme.spacing(2.5),
   paddingRight: theme.spacing(2.5),
   ...(open
