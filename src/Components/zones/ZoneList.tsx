@@ -9,14 +9,17 @@ import ZoneCardSkeleton from "./ZoneCardSkeleton";
 type ZoneListProps = {
   fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
-  hasError: boolean;
   isLoadingZones: boolean;
+  expanded?: boolean;
+  onExpandedChange?: (expanded: boolean) => void;
 };
 
 export default function ZoneList({
   fetchZones,
   updateLocalStorageSeason,
   isLoadingZones,
+  expanded,
+  onExpandedChange,
 }: ZoneListProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
@@ -58,6 +61,8 @@ export default function ZoneList({
                     fetchZones={fetchZones}
                     setIsShowEdit={setIsShowEdit}
                     updateLocalStorageSeason={updateLocalStorageSeason}
+                    expanded={expanded}
+                    onExpandedChange={onExpandedChange}
                   />
                 </Grid>
               ))

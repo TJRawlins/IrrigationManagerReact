@@ -71,11 +71,11 @@ export default function MenuBar({
                 <TotalGallons {...totalGallonsProps} />
               </>
             )}
-            <StyledDivider orientation="vertical" flexItem />
-            {children}
           </StyledActionContainer>
         </StyledLeftSection>
         <StyledRightSection>
+          {children}
+          <StyledDivider orientation="vertical" flexItem />
           <UserControls />
         </StyledRightSection>
       </StyledMenuBarWrapper>
@@ -110,6 +110,7 @@ const StyledRightSection = styled("div")`
   display: flex;
   align-items: center;
   gap: 1rem;
+  height: 100%;
 `;
 
 const StyledTitleContainer = styled("div")`

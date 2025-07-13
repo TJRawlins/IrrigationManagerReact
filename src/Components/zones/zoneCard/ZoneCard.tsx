@@ -27,6 +27,8 @@ type ZoneCardProps = {
   setIsShowEdit(args: boolean): void;
   updateLocalStorageSeason(args: number): void;
   zone: Zone;
+  expanded?: boolean;
+  onExpandedChange?: (expanded: boolean) => void;
 };
 
 export default function ZoneCard({
@@ -34,6 +36,8 @@ export default function ZoneCard({
   fetchZones,
   setIsShowEdit,
   updateLocalStorageSeason,
+  expanded,
+  onExpandedChange,
 }: ZoneCardProps) {
   const { zoneCard } = useAppTheme();
   const dispatch = useDispatch();
@@ -279,6 +283,8 @@ export default function ZoneCard({
           a11yProps={a11yProps}
           zone={zone}
           CustomTabPanel={CustomTabPanel}
+          expanded={expanded}
+          onExpandedChange={onExpandedChange}
         />
       </ZoneCardContentWrapper>
     </StyledCard>

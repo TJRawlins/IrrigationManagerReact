@@ -5,17 +5,23 @@ import AddZoneModal from "./AddZoneModal";
 import { useAppTheme } from "../../theme/useAppTheme";
 import MenuBar from "../common/MenuBar";
 import { useState } from "react";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
   isLoadingZones: boolean;
+  expanded?: boolean;
+  onExpandedChange?: (expanded: boolean) => void;
 };
 
 export default function ZoneBar({
   fetchZones,
   updateLocalStorageSeason,
   isLoadingZones,
+  expanded = false,
+  onExpandedChange,
 }: ZoneBarProps) {
   const { season } = useSelector((state: RootState) => state.season);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
@@ -47,6 +53,12 @@ export default function ZoneBar({
   const handleOpenAddZoneModal = () => setIsAddZoneModalOpen(true);
   const handleCloseAddZoneModal = () => setIsAddZoneModalOpen(false);
 
+  const handleToggleExpanded = () => {
+    if (onExpandedChange) {
+      onExpandedChange(!expanded);
+    }
+  };
+
   return (
     <MenuBar
       title="Zones"
@@ -74,6 +86,14 @@ export default function ZoneBar({
             Add Zone
           </Button>
         )}
+        <Button
+          onClick={handleToggleExpanded}
+          disabled={isLoadingZones}
+          sx={menuBar.buttons}
+          startIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        >
+          {expanded ? "Collapse" : "Expand"}
+        </Button>
         <AddZoneModal
           open={isAddZoneModalOpen}
           onClose={handleCloseAddZoneModal}

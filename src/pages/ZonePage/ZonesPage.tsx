@@ -32,6 +32,7 @@ const ZonesPage = () => {
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
   const [isLoadingZones, setIsLoadingZones] = useState<boolean>(true);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
   // color theme
   const StyledZoneContainer = `
@@ -105,6 +106,10 @@ const ZonesPage = () => {
     // updateLocalStorageTreflePlant("Peach");
   }, []);
 
+  const handleExpandedChange = (newExpanded: boolean) => {
+    setExpanded(newExpanded);
+  };
+
   return (
     <>
       <ErrorBoundary fallback="Unable to retrieve data for zones. The server may be down.">
@@ -114,6 +119,8 @@ const ZonesPage = () => {
             fetchZones={fetchZones}
             updateLocalStorageSeason={updateLocalStorageSeason}
             isLoadingZones={isLoadingZones}
+            expanded={expanded}
+            onExpandedChange={handleExpandedChange}
           />
           <Grid
             id="zone-grid-background"
@@ -125,10 +132,11 @@ const ZonesPage = () => {
             }}
           >
             <ZoneList
-              hasError
               fetchZones={fetchZones}
               updateLocalStorageSeason={updateLocalStorageSeason}
               isLoadingZones={isLoadingZones}
+              expanded={expanded}
+              onExpandedChange={handleExpandedChange}
             />
           </Grid>
         </Box>
