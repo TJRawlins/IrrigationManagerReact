@@ -60,7 +60,6 @@ export default function ZoneBar({
         buttonStyles: menuBar.buttons,
       }}
     >
-      <Divider sx={{ height: "60%", marginTop: "12px" }} flexItem />
       <SeasonIcons
         fetchZones={fetchZones}
         updateLocalStorageSeason={updateLocalStorageSeason}

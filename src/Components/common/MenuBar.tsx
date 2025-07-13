@@ -1,7 +1,8 @@
-import { CssBaseline, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import { CssBaseline, Divider, Typography } from "@mui/material";
+import { ReactNode, useState } from "react";
 import "../../styles/baseStyles/BaseBar.css";
 import TotalGallons from "./TotalGallons";
+import UserControls from "./UserControls";
 import { styled } from "styled-components";
 import { useAppTheme } from "../../theme/useAppTheme";
 
@@ -25,7 +26,7 @@ export default function MenuBar({
   totalGallonsProps,
   subtitle,
 }: MenuBarProps) {
-  const { menuBar, fonts } = useAppTheme();
+  const { menuBar, fonts, navBar } = useAppTheme();
 
   return (
     <>
@@ -35,9 +36,10 @@ export default function MenuBar({
           ...mainBarStyles,
           backgroundColor: menuBar.mainBar.backgroundColor,
           color: menuBar.mainBar.color,
+          borderBottom: navBar.mainBar.borderBottom,
         }}
       >
-        <StyledContentContainer>
+        <StyledLeftSection>
           <StyledTitleContainer>
             <StyledTitle sx={{ ...fonts.headers, ...menuBar.title }}>
               {title}
@@ -48,9 +50,19 @@ export default function MenuBar({
               </StyledSubtitle>
             )}
           </StyledTitleContainer>
-          <StyledActionContainer>{children}</StyledActionContainer>
-        </StyledContentContainer>
-        <TotalGallons {...totalGallonsProps} />
+          <StyledActionContainer>
+            {children}
+            <Divider
+              sx={{ height: "60%", marginTop: "12px", margin: ".75rem" }}
+              orientation="vertical"
+              flexItem
+            />
+            <TotalGallons {...totalGallonsProps} />
+          </StyledActionContainer>
+        </StyledLeftSection>
+        <StyledRightSection>
+          <UserControls />
+        </StyledRightSection>
       </StyledMenuBarWrapper>
     </>
   );
@@ -66,17 +78,23 @@ const StyledMenuBarWrapper = styled("div")`
   width: 100%;
   height: 64px;
   padding: 0 1.3rem;
-  border-bottom: 1px solid #e5e7eb;
   box-shadow: none;
   z-index: 1;
   flex-shrink: 0;
 `;
 
-const StyledContentContainer = styled("div")`
+const StyledLeftSection = styled("div")`
   display: flex;
   justify-content: left;
   height: 100%;
   align-items: center;
+  flex: 1;
+`;
+
+const StyledRightSection = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;
 
 const StyledTitleContainer = styled("div")`

@@ -162,8 +162,7 @@ const DesktopContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
   gap: "25px",
-  marginLeft: "16px",
-  marginTop: "4px",
+  margin: "0 15px",
 });
 
 const ValuesContainer = styled(Box)({

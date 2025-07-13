@@ -136,7 +136,6 @@ declare module "@mui/material/styles" {
         buttonFont: string;
         buttonBorder: string;
         buttonBorderHover: string;
-        buttonIcon: string;
         chipBackground: string;
         gallonsIcon: string;
       };
@@ -399,14 +398,13 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             buttonFont: white,
             buttonBorder: "#eef2f6",
             buttonBorderHover: callToActionSecondary,
-            buttonIcon: white,
             chipBackground: "#c9d5d7",
             gallonsIcon: callToActionPrimary,
           },
           navBar: {
             background: primaryLight,
             color: "#eef2f6",
-            borderBottom: "#212a3e",
+            borderBottom: "#0000001f",
           },
           sidePanel: {
             backgroundColor: primaryLight,
@@ -602,14 +600,13 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             buttonFont: softWhite,
             buttonBorder: "#1f2a41",
             buttonBorderHover: callToActionPrimary,
-            buttonIcon: callToActionPrimary,
             chipBackground: "#1f2a41",
             gallonsIcon: callToActionPrimary,
           },
           navBar: {
             background: primaryDark,
             color: white,
-            borderBottom: "#212a3e",
+            borderBottom: "#ffffff1f",
           },
           sidePanel: {
             backgroundColor: primaryDark,
