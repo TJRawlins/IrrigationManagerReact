@@ -20,7 +20,7 @@ export default function ZoneBar({
 }: ZoneBarProps) {
   const { season } = useSelector((state: RootState) => state.season);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
-  const { menuBar, fonts } = useAppTheme();
+  const { menuBar } = useAppTheme();
   const [isAddZoneModalOpen, setIsAddZoneModalOpen] = useState(false);
 
   // Filter zones for the current season
@@ -52,7 +52,6 @@ export default function ZoneBar({
     <MenuBar
       title="Zones"
       subtitle={subtitle}
-      titleStyles={{ ...fonts.headers }}
       mainBarStyles={menuBar.mainBar}
       totalGallonsProps={{
         totalGalPerWeek: season.totalGalPerWeek,

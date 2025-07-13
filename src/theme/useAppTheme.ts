@@ -8,7 +8,7 @@ export const useAppTheme = () => {
   const theme = useTheme();
 
   return {
-    // Font styles - standardized typography
+    // Font styles
     fonts: {
       headers: {
         fontFamily: theme.custom.fonts.headers.fontFamily,
@@ -24,7 +24,7 @@ export const useAppTheme = () => {
       },
     },
 
-    // Grid styles - replaces GridTheme.ts
+    // Grid styles
     grid: {
       sx: {
         backgroundColor: theme.custom.grid.background,
@@ -62,7 +62,7 @@ export const useAppTheme = () => {
       },
     },
 
-    // Modal styles - replaces ModalTheme.ts
+    // Modal styles
     modal: {
       overlay: {
         backgroundColor: theme.custom.modal.overlay,
@@ -122,11 +122,17 @@ export const useAppTheme = () => {
       },
     },
 
-    // Menu bar styles - replaces MenuBarTheme.ts
+    // Menu bar styles
     menuBar: {
       mainBar: {
         backgroundColor: theme.custom.menuBar.background,
         color: theme.custom.menuBar.color,
+      },
+      title: {
+        color: theme.custom.menuBar.title,
+      },
+      subtitle: {
+        color: theme.custom.menuBar.subtitle,
       },
       buttons: {
         ...theme.custom.buttons.primary,
@@ -146,33 +152,9 @@ export const useAppTheme = () => {
           color: theme.custom.menuBar.gallonsIcon,
         },
       },
-      chips: {
-        backgroundColor: theme.custom.menuBar.chipBackground,
-        border: `1px solid ${theme.custom.menuBar.chipBackground}`,
-      },
-      dropdown: {
-        backgroundColor: theme.custom.menuBar.buttonBackground,
-        ".menu-text": {
-          color: theme.custom.gray.toWhite,
-        },
-        ".menuIcon, .MuiSvgIcon-root": {
-          color: theme.custom.primary.const,
-        },
-        "&.season-btn:hover": {
-          backgroundColor: theme.custom.primary.opacity,
-          border: "1px solid #59bab1",
-        },
-        "&.season-btn:hover .menu-text,&.season-btn:hover .MuiSvgIcon-root,&.season-btn:hover .menuIcon":
-          {
-            color: theme.custom.primary.const,
-          },
-        "&:hover .menu-text,&:hover .MuiSvgIcon-root,&:hover .menuIcon": {
-          color: theme.custom.primary.const,
-        },
-      },
     },
 
-    // Nav bar styles - replaces NavBarTheme.ts
+    // Nav bar styles
     navBar: {
       mainBar: {
         backgroundColor: theme.custom.navBar.background,
@@ -181,7 +163,7 @@ export const useAppTheme = () => {
       },
     },
 
-    // Zone card styles - replaces hardcoded colors
+    // Zone card styles
     zoneCard: {
       card: {
         backgroundColor: theme.custom.zoneCard.contentBackground,
@@ -208,7 +190,7 @@ export const useAppTheme = () => {
       },
     },
 
-    // Message styles - for alerts, notifications, and toasts
+    // Message styles
     messages: {
       info: {
         backgroundColor: theme.custom.messages.info.background,
@@ -248,7 +230,7 @@ export const useAppTheme = () => {
       },
     },
 
-    // Direct access to colors for custom styling
+    // Direct access to colors
     colors: theme.custom,
     sidePanel: theme.custom.sidePanel,
     seasonIcons: theme.custom.seasonIcons,

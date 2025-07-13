@@ -9,6 +9,7 @@ const primaryDark = "#141b2d";
 const buttonPrimary = "#2f87ad";
 const buttonSecondary = "#497487";
 const white = "#ffffff";
+const softWhite = "#e0e0e0";
 const black = "#606162";
 
 // Font constants
@@ -34,6 +35,7 @@ const BUTTON_BASE = {
     '"Open Sans","Source Sans Pro",Helvetica,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
   fontWeight: "600",
   fontSize: "0.85rem",
+  textWrap: "nowrap",
   padding: "0.4rem 0.75rem",
   textTransform: "capitalize",
   color: white,
@@ -127,6 +129,8 @@ declare module "@mui/material/styles" {
       menuBar: {
         background: string;
         color: string;
+        title: string;
+        subtitle: string;
         buttonBackground: string;
         buttonBackgroundImage: string;
         buttonFont: string;
@@ -361,6 +365,8 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           menuBar: {
             background: white,
             color: primaryLight,
+            title: black,
+            subtitle: black,
             buttonBackground: "#2f87ad",
             buttonBackgroundImage: white,
             buttonFont: white,
@@ -491,11 +497,11 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           grid: {
             background: "#1f2a41",
             rowBackground: "#1f2a41",
-            text: "#e0e0e0",
+            text: softWhite,
             rowHover: "#141b2d",
             border: "#ffffff1f",
             columnHighlight: "#141b2d69",
-            columnText: "#e0e0e0",
+            columnText: softWhite,
             buttonColor: "#eef2f6",
             buttonWarning: {
               background: "#c23f37",
@@ -505,10 +511,10 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             },
             dataGridBackground: "#1f2a41",
             dataGridRowBackground: "#1f2a41",
-            dataGridText: "#e0e0e0",
+            dataGridText: softWhite,
             dataGridRowHover: "#141b2d",
             dataGridColumnHighlight: "#141b2d69",
-            dataGridColumnText: "#e0e0e0",
+            dataGridColumnText: softWhite,
             buttonWarningBackground: "#c23f37",
             buttonWarningText: "#eff2f5",
             buttonWarningBorder: "#7fb5ac00",
@@ -534,10 +540,12 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           menuBar: {
             background: primaryDark,
-            color: "#e0e0e0",
+            color: softWhite,
+            title: softWhite,
+            subtitle: softWhite,
             buttonBackground: "#1f2a41",
             buttonBackgroundImage: "linear-gradient(#292934, #292934)",
-            buttonFont: "#e0e0e0",
+            buttonFont: softWhite,
             buttonBorder: "#1f2a41",
             buttonBorderHover: callToActionPrimary,
             buttonIcon: callToActionPrimary,
@@ -546,7 +554,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           navBar: {
             background: primaryDark,
-            color: "#e0e0e0",
+            color: white,
             borderBottom: "#212a3e",
           },
           sidePanel: {

@@ -7,7 +7,6 @@ import { useAppTheme } from "../../theme/useAppTheme";
 
 type MenuBarProps = {
   title: string;
-  titleStyles?: any;
   mainBarStyles: any;
   children: ReactNode;
   totalGallonsProps: {
@@ -21,13 +20,12 @@ type MenuBarProps = {
 
 export default function MenuBar({
   title,
-  titleStyles,
   mainBarStyles,
   children,
   totalGallonsProps,
   subtitle,
 }: MenuBarProps) {
-  const { menuBar } = useAppTheme();
+  const { menuBar, fonts } = useAppTheme();
 
   return (
     <>
@@ -41,8 +39,14 @@ export default function MenuBar({
       >
         <StyledContentContainer>
           <StyledTitleContainer>
-            <StyledTitle style={titleStyles}>{title}</StyledTitle>
-            {subtitle && <StyledSubtitle>{subtitle}</StyledSubtitle>}
+            <StyledTitle sx={{ ...fonts.headers, ...menuBar.title }}>
+              {title}
+            </StyledTitle>
+            {subtitle && (
+              <StyledSubtitle sx={{ ...menuBar.subtitle }}>
+                {subtitle}
+              </StyledSubtitle>
+            )}
           </StyledTitleContainer>
           <StyledActionContainer>{children}</StyledActionContainer>
         </StyledContentContainer>
@@ -83,20 +87,20 @@ const StyledTitleContainer = styled("div")`
 
 const StyledTitle = styled(Typography)`
   font-size: 1.75rem !important;
+  text-wrap: nowrap;
   margin-right: 1rem !important;
   font-family: "Raleway" !important;
   font-weight: 800 !important;
   letter-spacing: -0.04em !important;
-  opacity: 0.8;
-  height: 30px;
+  line-height: 1 !important;
 `;
 
 const StyledSubtitle = styled(Typography)`
   font-size: 0.9rem !important;
   font-weight: 400 !important;
-  color: inherit !important;
-  margin-left: 2px;
-  letter-spacing: 0.01em;
+  text-wrap: nowrap;
+  letter-spacing: 0.01em !important;
+  line-height: 1 !important;
 `;
 
 const StyledActionContainer = styled("div")`
