@@ -136,9 +136,9 @@ const ToggleButton = styled(Button)<{ isSelected: boolean }>(
     borderRadius: "10px",
     fontSize: "0.875rem",
     fontWeight: 600,
-    transition: "all 0.2s",
     border: "none",
     cursor: "pointer",
+    transition: "none !important",
     backgroundColor: isSelected
       ? theme.custom.totalGallons.toggleButton.selected.background
       : theme.custom.totalGallons.toggleButton.unselected.background,
@@ -177,11 +177,13 @@ const ValueItem = styled(Box)({
 const ValueDisplay = styled(Typography)(({ theme }) => ({
   fontSize: "1.125rem",
   fontWeight: 600,
+  lineHeight: "1.45rem",
   color: theme.custom.totalGallons.valueDisplay.color,
 }));
 
 const ValueLabel = styled(Typography)(({ theme }) => ({
   fontSize: "0.75rem",
+  lineHeight: "1.2rem",
   color: theme.custom.totalGallons.valueLabel.color,
 }));
 

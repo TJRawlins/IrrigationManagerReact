@@ -77,7 +77,9 @@ export default function SeasonIcons({
   ];
 
   return (
-    <Box sx={{ display: "flex", gap: 1, alignItems: "center", margin: "0 1rem" }}>
+    <Box
+      sx={{ display: "flex", gap: 1, alignItems: "center", margin: "0 1rem" }}
+    >
       {seasons.map((s) => (
         <Tooltip key={s.name} title={s.name} arrow>
           <IconButton
@@ -89,6 +91,7 @@ export default function SeasonIcons({
                   ? s.background
                   : seasonIcons.inactiveBackground,
               opacity: seasonName === s.name ? 1 : 0.4,
+              borderRadius: "4px",
               position: "relative",
               "&::after": {
                 content: '""',
@@ -98,7 +101,7 @@ export default function SeasonIcons({
                 background: "#00000015",
                 width: "20px",
                 height: "40px",
-                borderRadius: "0px 150px 150px 0px",
+                borderRadius: "4px",
                 transform: "translate(50%, -50%)",
               },
               "&:hover, &:focus, &:active": {

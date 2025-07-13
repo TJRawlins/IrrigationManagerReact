@@ -60,6 +60,7 @@ export default function MenuBar({
           <StyledActionContainer>
             {isSeasonRelated && seasonFunctions && (
               <>
+                <StyledDivider orientation="vertical" flexItem />
                 <SeasonIcons
                   fetchZones={seasonFunctions.fetchZones}
                   updateLocalStorageSeason={
