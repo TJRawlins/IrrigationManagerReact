@@ -10,7 +10,7 @@ function AppContent() {
   return (
     <Box sx={{ display: "flex" }}>
       <Navbar />
-      <Box component="main" sx={{ flexGrow: 1, p: 3, pt: 0 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
         <RouterComponent />
       </Box>
     </Box>
