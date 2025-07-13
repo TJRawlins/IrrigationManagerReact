@@ -1,6 +1,5 @@
 import { CssBaseline, Divider, Typography } from "@mui/material";
 import { ReactNode } from "react";
-import "../../styles/baseStyles/BaseBar.css";
 import TotalGallons from "./TotalGallons";
 import UserControls from "./UserControls";
 import SeasonIcons from "./SeasonIcons";
@@ -109,7 +108,6 @@ const StyledLeftSection = styled("div")`
 const StyledRightSection = styled("div")`
   display: flex;
   align-items: center;
-  gap: 1rem;
   height: 100%;
 `;
 

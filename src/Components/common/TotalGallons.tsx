@@ -5,7 +5,6 @@ import { MdOutlineAttachMoney } from "react-icons/md";
 import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import { useAppTheme } from "../../theme/useAppTheme";
-import "../../styles/baseStyles/BaseBar.css";
 
 type TotalGallonsProps = {
   totalGalPerWeek: number;

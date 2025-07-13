@@ -1,7 +1,4 @@
 import { Box, Button, Divider } from "@mui/material";
-import { MdDashboard } from "react-icons/md";
-import { IoCalendar } from "react-icons/io5";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import AddPlant from "./AddPlant";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +22,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const appTheme = useAppTheme();
   const navigate = useNavigate();
 
-  const subtitle = `${zone.totalPlants} plant${
+  const subtitle = `${zone.name}, ${zone.totalPlants} plant${
     zone.totalPlants !== 1 ? "s" : ""
   }`;
 
@@ -72,40 +69,11 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
         orientation="vertical"
         flexItem
       />
-      {/* // *-*-*-*-*-*-*-*-*-*-*-*-* ZONE & SEASON TITLE *-*-*-*-*-*-*-*-*-*-*-*-* */}
-      <Box sx={{ display: { md: "block", sm: "none", xs: "none" } }}>
-        <Box className="bar-btn-container">
-          <Box className="bar-btn bar-chip">
-            <div className="btn-content-container">
-              <MdDashboard className="btn-icon" />
-              <span className="btn-text">{zone.name}</span>
-            </div>
-          </Box>
-          <Box className="bar-btn bar-chip">
-            <div className="btn-content-container">
-              <IoCalendar className="btn-icon" />
-              <span className="btn-text">{zone.season}</span>
-            </div>
-          </Box>
-        </Box>
-      </Box>
-      <Divider
-        sx={{ height: "60%", marginTop: "12px", marginRight: ".75rem" }}
-        orientation="vertical"
-        flexItem
-      />
-      <Box className="bar-btn-container">
+      <Box sx={{ display: "flex", margin: "0 15px", gap: "0.5rem" }}>
         <AddPlant fetchPlants={fetchPlants} />
         <Link to="/zones">
-          <Button
-            className="bar-btn action"
-            sx={appTheme.menuBar.buttons}
-            onClick={backToSeason}
-          >
-            <div className="btn-content-container">
-              <IoIosArrowDropleftCircle className="btn-icon" />
-              <span className="btn-text">Go Back</span>
-            </div>
+          <Button sx={appTheme.menuBar.buttons} onClick={backToSeason}>
+            Go Back
           </Button>
         </Link>
       </Box>
