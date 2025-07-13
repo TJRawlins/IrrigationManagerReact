@@ -1,8 +1,9 @@
 import { CssBaseline, Divider, Typography } from "@mui/material";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import "../../styles/baseStyles/BaseBar.css";
 import TotalGallons from "./TotalGallons";
 import UserControls from "./UserControls";
+import SeasonIcons from "./SeasonIcons";
 import { styled } from "styled-components";
 import { useAppTheme } from "../../theme/useAppTheme";
 
@@ -17,6 +18,11 @@ type MenuBarProps = {
     buttonStyles: any;
   };
   subtitle?: string | ReactNode;
+  isSeasonRelated?: boolean;
+  seasonFunctions?: {
+    fetchZones: (args: number) => Promise<void>;
+    updateLocalStorageSeason: (args: number) => void;
+  };
 };
 
 export default function MenuBar({
@@ -25,6 +31,8 @@ export default function MenuBar({
   children,
   totalGallonsProps,
   subtitle,
+  isSeasonRelated = false,
+  seasonFunctions,
 }: MenuBarProps) {
   const { menuBar, fonts, navBar } = useAppTheme();
 
@@ -51,13 +59,20 @@ export default function MenuBar({
             )}
           </StyledTitleContainer>
           <StyledActionContainer>
+            {isSeasonRelated && seasonFunctions && (
+              <>
+                <SeasonIcons
+                  fetchZones={seasonFunctions.fetchZones}
+                  updateLocalStorageSeason={
+                    seasonFunctions.updateLocalStorageSeason
+                  }
+                />
+                <StyledDivider orientation="vertical" flexItem />
+                <TotalGallons {...totalGallonsProps} />
+              </>
+            )}
+            <StyledDivider orientation="vertical" flexItem />
             {children}
-            <Divider
-              sx={{ height: "60%", marginTop: "12px", margin: ".75rem" }}
-              orientation="vertical"
-              flexItem
-            />
-            <TotalGallons {...totalGallonsProps} />
           </StyledActionContainer>
         </StyledLeftSection>
         <StyledRightSection>
@@ -126,4 +141,10 @@ const StyledActionContainer = styled("div")`
   justify-content: center;
   align-items: center;
   height: 100%;
+`;
+
+const StyledDivider = styled(Divider)`
+  height: 60% !important;
+  margin-top: 12px !important;
+  margin: 0.75rem !important;
 `;

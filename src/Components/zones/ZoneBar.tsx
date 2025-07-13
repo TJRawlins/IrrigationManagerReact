@@ -4,7 +4,6 @@ import { RootState } from "../../redux/store";
 import AddZoneModal from "./AddZoneModal";
 import { useAppTheme } from "../../theme/useAppTheme";
 import MenuBar from "../common/MenuBar";
-import SeasonIcons from "../common/SeasonIcons";
 import { useState } from "react";
 
 type ZoneBarProps = {
@@ -59,16 +58,12 @@ export default function ZoneBar({
         totalGalPerYear: season.totalGalPerYear,
         buttonStyles: menuBar.buttons,
       }}
+      isSeasonRelated={true}
+      seasonFunctions={{
+        fetchZones,
+        updateLocalStorageSeason,
+      }}
     >
-      <SeasonIcons
-        fetchZones={fetchZones}
-        updateLocalStorageSeason={updateLocalStorageSeason}
-      />
-      <Divider
-        sx={{ height: "60%", marginTop: "12px", margin: ".75rem" }}
-        orientation="vertical"
-        flexItem
-      />
       <Box sx={{ display: "flex", margin: "0 15px", gap: "0.5rem" }}>
         {isZonesStoredLocally() && (
           <Button
