@@ -1,10 +1,10 @@
 import { Box, Button, Divider } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import AddPlant from "./AddPlant";
+import AddPlantModal from "./AddPlantModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import "../../styles/plants/PlantBar.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
 import { useAppTheme } from "../../theme/useAppTheme";
@@ -21,6 +21,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const dispatch = useDispatch();
   const appTheme = useAppTheme();
   const navigate = useNavigate();
+  const [isAddPlantModalOpen, setIsAddPlantModalOpen] = useState(false);
 
   const subtitle = `${zone.name}, ${zone.totalPlants} plant${
     zone.totalPlants !== 1 ? "s" : ""
@@ -43,6 +44,9 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
     updateLocalStorageSeason(season.id);
   };
 
+  const handleOpenAddPlantModal = () => setIsAddPlantModalOpen(true);
+  const handleCloseAddPlantModal = () => setIsAddPlantModalOpen(false);
+
   useEffect(() => {
     console.log("%cPlantBar: useEffect", "color:#1CA1E6");
   }, [plant, zone, season]);
@@ -64,18 +68,24 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
         updateLocalStorageSeason,
       }}
     >
-      <Divider
-        sx={{ height: "60%", marginTop: "12px" }}
-        orientation="vertical"
-        flexItem
-      />
       <Box sx={{ display: "flex", margin: "0 15px", gap: "0.5rem" }}>
-        <AddPlant fetchPlants={fetchPlants} />
+        <Button
+          className="bar-btn action"
+          onClick={handleOpenAddPlantModal}
+          sx={appTheme.menuBar.buttons}
+        >
+          Add Plant
+        </Button>
         <Link to="/zones">
           <Button sx={appTheme.menuBar.buttons} onClick={backToSeason}>
             Go Back
           </Button>
         </Link>
+        <AddPlantModal
+          open={isAddPlantModalOpen}
+          onClose={handleCloseAddPlantModal}
+          fetchPlants={fetchPlants}
+        />
       </Box>
     </MenuBar>
   );

@@ -78,7 +78,7 @@ export default function ZoneCard({
     );
   }
 
-  // This gets passed to AddPlant to update and persist gallons on PlantBar
+  // This gets passed to AddPlantModal to update and persist gallons on PlantBar
   const updateLocalStorageZone = async () => {
     await agent.Zones.details(zone.id)
       .then((zone) => {
