@@ -14,20 +14,6 @@ type ZoneGridProps = {
   onExpandedChange?: (expanded: boolean) => void;
 };
 
-// Styled container with background styling
-const StyledZoneGridContainer = styled(Container)(({ theme }) => ({
-  maxWidth: "100% !important",
-  padding: "0 !important",
-  margin: "0 !important",
-  height: "100% !important",
-  backgroundColor: theme.custom.zonePage.gridBackground,
-  borderRadius: theme.custom.zonePage.gridBorderRadius,
-  minHeight: theme.custom.zonePage.gridMinHeight,
-  flexGrow: 1,
-  display: "flex",
-  flexDirection: "column",
-}));
-
 export default function ZoneGrid({
   fetchZones,
   updateLocalStorageSeason,
@@ -88,3 +74,17 @@ export default function ZoneGrid({
     </>
   );
 }
+
+// Styled container with background styling
+const StyledZoneGridContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "100% !important",
+  padding: "0 !important",
+  margin: "0 !important",
+  height: "100% !important",
+  backgroundColor: theme.custom.zonePage.gridBackground,
+  borderRadius: theme.custom.zonePage.gridBorderRadius,
+  minHeight: theme.custom.zonePage.gridMinHeight,
+  flexGrow: 1,
+  display: "flex",
+  flexDirection: "column",
+}));
