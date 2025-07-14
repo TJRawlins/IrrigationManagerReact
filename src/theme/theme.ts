@@ -243,6 +243,12 @@ declare module "@mui/material/styles" {
         border: string;
         shadow: string;
       };
+      zonePage: {
+        gridBackground: string;
+        gridBorderRadius: string;
+        gridMinHeight: string;
+        containerBackground: string;
+      };
       sidePanel: {
         backgroundColor: string;
         iconColor: string;
@@ -329,6 +335,7 @@ declare module "@mui/material/styles" {
       secondary?: Partial<Theme["custom"]["secondary"]>;
       overlay?: Partial<Theme["custom"]["overlay"]>;
       zoneCard?: Partial<Theme["custom"]["zoneCard"]>;
+      zonePage?: Partial<Theme["custom"]["zonePage"]>;
       sidePanel?: Partial<Theme["custom"]["sidePanel"]>;
       seasonIcons?: Partial<Theme["custom"]["seasonIcons"]>;
       totalGallons?: Partial<Theme["custom"]["totalGallons"]>;
@@ -542,6 +549,12 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             border: "#e0e0e0",
             shadow: "0 2px 4px rgba(0,0,0,0.1)",
           },
+          zonePage: {
+            gridBackground: "#ced8da",
+            gridBorderRadius: "8px",
+            gridMinHeight: "calc(100vh - 200px)", // Adjust based on navBar height
+            containerBackground: "#eef2f6",
+          },
         }
       : {
           fonts: FONTS,
@@ -740,6 +753,12 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             buttonHoverText: "#eef2f6",
             border: "#2a3441",
             shadow: "0 2px 4px rgba(0,0,0,0.3)",
+          },
+          zonePage: {
+            gridBackground: "#1f2a41",
+            gridBorderRadius: "8px",
+            gridMinHeight: "calc(100vh - 200px)", // Adjust based on navBar height
+            containerBackground: "#141b2d",
           },
         };
 

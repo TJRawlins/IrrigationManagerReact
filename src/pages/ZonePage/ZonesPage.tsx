@@ -1,11 +1,10 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
-import "./ZonePage.css";
 import { useEffect, useState } from "react";
 import ZoneList from "../../Components/zones/ZoneList";
 import agent from "../../App/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
-import { Grid } from "@mui/material";
+import { Grid, Box, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
@@ -25,21 +24,12 @@ import {
 import { Season } from "../../App/models/Season";
 import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
 import { useAppTheme } from "../../theme/useAppTheme";
-import { Box } from "@mui/material";
 
 const ZonesPage = () => {
-  const appTheme = useAppTheme();
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
   const [isLoadingZones, setIsLoadingZones] = useState<boolean>(true);
   const [expanded, setExpanded] = useState<boolean>(false);
-
-  // color theme
-  const StyledZoneContainer = `
-    ul[role="listbox"] {
-      background-image: ${appTheme.colors.menuBar.buttonBackgroundImage} !important; // Dropdown list background
-    }
-  `;
 
   //* Initial zone list
   const fetchZones = async (seasonString: number) => {
@@ -113,8 +103,7 @@ const ZonesPage = () => {
   return (
     <>
       <ErrorBoundary fallback="Unable to retrieve data for zones. The server may be down.">
-        <style>{StyledZoneContainer}</style>
-        <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <StyledZoneContainer>
           <ZoneBar
             fetchZones={fetchZones}
             updateLocalStorageSeason={updateLocalStorageSeason}
@@ -122,15 +111,7 @@ const ZonesPage = () => {
             expanded={expanded}
             onExpandedChange={handleExpandedChange}
           />
-          <Grid
-            id="zone-grid-background"
-            sx={{
-              ...appTheme.grid.sx,
-              flexGrow: 1,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+          <StyledZoneGrid>
             <ZoneList
               fetchZones={fetchZones}
               updateLocalStorageSeason={updateLocalStorageSeason}
@@ -138,10 +119,27 @@ const ZonesPage = () => {
               expanded={expanded}
               onExpandedChange={handleExpandedChange}
             />
-          </Grid>
-        </Box>
+          </StyledZoneGrid>
+        </StyledZoneContainer>
       </ErrorBoundary>
     </>
   );
 };
 export default ZonesPage;
+
+// Styled components
+const StyledZoneContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
+  backgroundColor: theme.custom.zonePage.containerBackground,
+}));
+
+const StyledZoneGrid = styled(Grid)(({ theme }) => ({
+  backgroundColor: theme.custom.zonePage.gridBackground,
+  borderRadius: theme.custom.zonePage.gridBorderRadius,
+  minHeight: theme.custom.zonePage.gridMinHeight,
+  flexGrow: 1,
+  display: "flex",
+  flexDirection: "column",
+}));
