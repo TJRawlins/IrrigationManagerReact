@@ -1,10 +1,10 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import ZoneList from "../../Components/zones/ZoneList";
+import ZoneGrid from "../../Components/zones/ZoneGrid";
 import agent from "../../App/api/agent";
 import ZoneBar from "../../Components/zones/ZoneBar";
-import { Grid, Box, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
@@ -23,7 +23,6 @@ import {
 } from "../../redux/seasonSlice";
 import { Season } from "../../App/models/Season";
 import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
-import { useAppTheme } from "../../theme/useAppTheme";
 
 const ZonesPage = () => {
   const { season } = useSelector((state: RootState) => state.season);
@@ -101,45 +100,49 @@ const ZonesPage = () => {
   };
 
   return (
-    <>
-      <ErrorBoundary fallback="Unable to retrieve data for zones. The server may be down.">
-        <StyledZoneContainer>
-          <ZoneBar
-            fetchZones={fetchZones}
-            updateLocalStorageSeason={updateLocalStorageSeason}
-            isLoadingZones={isLoadingZones}
-            expanded={expanded}
-            onExpandedChange={handleExpandedChange}
-          />
-          <StyledZoneGrid>
-            <ZoneList
-              fetchZones={fetchZones}
-              updateLocalStorageSeason={updateLocalStorageSeason}
-              isLoadingZones={isLoadingZones}
-              expanded={expanded}
-              onExpandedChange={handleExpandedChange}
-            />
-          </StyledZoneGrid>
-        </StyledZoneContainer>
-      </ErrorBoundary>
-    </>
+    <ErrorBoundary fallback="Unable to retrieve data for zones. The server may be down.">
+      <ZonePageContainer
+        component="main"
+        role="main"
+        aria-label="Zones Management Page"
+      >
+        <ZoneBar
+          fetchZones={fetchZones}
+          updateLocalStorageSeason={updateLocalStorageSeason}
+          isLoadingZones={isLoadingZones}
+          expanded={expanded}
+          onExpandedChange={handleExpandedChange}
+        />
+        <ZoneGrid
+          fetchZones={fetchZones}
+          updateLocalStorageSeason={updateLocalStorageSeason}
+          isLoadingZones={isLoadingZones}
+          expanded={expanded}
+          onExpandedChange={handleExpandedChange}
+        />
+      </ZonePageContainer>
+    </ErrorBoundary>
   );
 };
 export default ZonesPage;
 
 // Styled components
-const StyledZoneContainer = styled(Box)(({ theme }) => ({
+const ZonePageContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
+  minHeight: "100vh",
   height: "100%",
   backgroundColor: theme.custom.zonePage.containerBackground,
-}));
-
-const StyledZoneGrid = styled(Grid)(({ theme }) => ({
-  backgroundColor: theme.custom.zonePage.gridBackground,
-  borderRadius: theme.custom.zonePage.gridBorderRadius,
-  minHeight: theme.custom.zonePage.gridMinHeight,
-  flexGrow: 1,
-  display: "flex",
-  flexDirection: "column",
+  // Accessibility: Ensure proper focus management
+  outline: "none",
+  "&:focus-visible": {
+    outline: `2px solid ${theme.palette.primary.main}`,
+    outlineOffset: "2px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    minHeight: "100vh",
+  },
+  [theme.breakpoints.up("md")]: {
+    minHeight: "calc(100vh - 64px)", // Account for navbar height
+  },
 }));

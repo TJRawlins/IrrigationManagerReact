@@ -1,4 +1,4 @@
-import { Box, Container, CssBaseline, Grid } from "@mui/material";
+import { Box, Container, CssBaseline, Grid, styled } from "@mui/material";
 import ZoneCard from "./zoneCard/ZoneCard";
 import EditZone from "./EditZone";
 import { useState } from "react";
@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import ZoneCardSkeleton from "./ZoneCardSkeleton";
 
-type ZoneListProps = {
+type ZoneGridProps = {
   fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
   isLoadingZones: boolean;
@@ -14,27 +14,34 @@ type ZoneListProps = {
   onExpandedChange?: (expanded: boolean) => void;
 };
 
-export default function ZoneList({
+// Styled container with background styling
+const StyledZoneGridContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "100% !important",
+  padding: "0 !important",
+  margin: "0 !important",
+  height: "100% !important",
+  backgroundColor: theme.custom.zonePage.gridBackground,
+  borderRadius: theme.custom.zonePage.gridBorderRadius,
+  minHeight: theme.custom.zonePage.gridMinHeight,
+  flexGrow: 1,
+  display: "flex",
+  flexDirection: "column",
+}));
+
+export default function ZoneGrid({
   fetchZones,
   updateLocalStorageSeason,
   isLoadingZones,
   expanded,
   onExpandedChange,
-}: ZoneListProps) {
+}: ZoneGridProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
 
   return (
     <>
       <CssBaseline />
-      <Container
-        sx={{
-          maxWidth: "100% !important",
-          padding: "0 !important",
-          margin: "0 !important",
-          height: "100% !important",
-        }}
-      >
+      <StyledZoneGridContainer>
         <Box sx={{ flexGrow: 1, height: "100%" }}>
           <Grid
             container
@@ -77,7 +84,7 @@ export default function ZoneList({
             </Grid>
           </Grid>
         </Box>
-      </Container>
+      </StyledZoneGridContainer>
     </>
   );
 }

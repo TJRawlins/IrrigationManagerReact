@@ -192,11 +192,6 @@ export const useAppTheme = () => {
 
     // Zone page styles
     zonePage: {
-      grid: {
-        backgroundColor: theme.custom.zonePage.gridBackground,
-        borderRadius: theme.custom.zonePage.gridBorderRadius,
-        minHeight: theme.custom.zonePage.gridMinHeight,
-      },
       container: {
         backgroundColor: theme.custom.zonePage.containerBackground,
       },
