@@ -1,9 +1,8 @@
-import { CssBaseline, Divider, Typography } from "@mui/material";
+import { CssBaseline, Divider, Typography, Box, styled } from "@mui/material";
 import { ReactNode } from "react";
 import TotalGallons from "./TotalGallons";
 import UserControls from "./UserControls";
 import SeasonIcons from "./SeasonIcons";
-import { styled } from "styled-components";
 import { useAppTheme } from "../../theme/useAppTheme";
 
 type MenuBarProps = {
@@ -39,7 +38,7 @@ export default function MenuBar({
     <>
       <CssBaseline />
       <StyledMenuBarWrapper
-        style={{
+        sx={{
           ...mainBarStyles,
           backgroundColor: menuBar.mainBar.backgroundColor,
           color: menuBar.mainBar.color,
@@ -83,68 +82,90 @@ export default function MenuBar({
   );
 }
 
-// Styled components
-const StyledMenuBarWrapper = styled("div")`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 64px;
-  padding: 0 1.3rem;
-  box-shadow: none;
-  z-index: 1;
-  flex-shrink: 0;
-`;
+// Styled components using MUI styled system
+const StyledMenuBarWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  position: "sticky",
+  top: 0,
+  width: "100%",
+  height: "64px",
+  padding: "0 1.3rem",
+  boxShadow: "none",
+  zIndex: 1,
+  flexShrink: 0,
+  // Responsive design
+  [theme.breakpoints.down("sm")]: {
+    height: "56px",
+    padding: "0 1rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    height: "64px",
+    padding: "0 1.3rem",
+  },
+}));
 
-const StyledLeftSection = styled("div")`
-  display: flex;
-  justify-content: left;
-  height: 100%;
-  align-items: center;
-  flex: 1;
-`;
+const StyledLeftSection = styled(Box)({
+  display: "flex",
+  justifyContent: "left",
+  height: "100%",
+  alignItems: "center",
+  flex: 1,
+});
 
-const StyledRightSection = styled("div")`
-  display: flex;
-  align-items: center;
-  height: 100%;
-`;
+const StyledRightSection = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  height: "100%",
+});
 
-const StyledTitleContainer = styled("div")`
-  display: flex;
-  flex-direction: column;
-  margin-right: 1rem;
-`;
+const StyledTitleContainer = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  marginRight: "1rem",
+});
 
-const StyledTitle = styled(Typography)`
-  font-size: 1.75rem !important;
-  text-wrap: nowrap;
-  margin-right: 1rem !important;
-  font-family: "Raleway" !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.04em !important;
-  line-height: 1 !important;
-`;
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  fontSize: "1.75rem",
+  textWrap: "nowrap",
+  marginRight: "1rem",
+  fontFamily: "Raleway",
+  fontWeight: "800",
+  letterSpacing: "-0.04em",
+  lineHeight: 1,
+  // Responsive design
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.5rem",
+    marginRight: "0.75rem",
+  },
+}));
 
-const StyledSubtitle = styled(Typography)`
-  font-size: 0.9rem !important;
-  font-weight: 400 !important;
-  text-wrap: nowrap;
-  letter-spacing: 0.01em !important;
-  line-height: 1 !important;
-`;
+const StyledSubtitle = styled(Typography)(({ theme }) => ({
+  fontSize: "0.9rem",
+  fontWeight: "400",
+  textWrap: "nowrap",
+  letterSpacing: "0.01em",
+  lineHeight: 1,
+  // Responsive design
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.8rem",
+  },
+}));
 
-const StyledActionContainer = styled("div")`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
+const StyledActionContainer = styled(Box)({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100%",
+});
 
-const StyledDivider = styled(Divider)`
-  height: 60% !important;
-  margin-top: 12px !important;
-  margin: 0.75rem !important;
-`;
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  height: "60%",
+  margin: "0.75rem",
+  // Responsive design
+  [theme.breakpoints.down("sm")]: {
+    height: "50%",
+    margin: "0.5rem",
+  },
+}));
