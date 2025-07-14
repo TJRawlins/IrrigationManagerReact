@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import AddZoneModal from "./AddZoneModal";
@@ -76,30 +76,59 @@ export default function ZoneBar({
         updateLocalStorageSeason,
       }}
     >
-      <Box sx={{ display: "flex", margin: "0 15px", gap: "0.5rem" }}>
+      <StyledButtonContainer>
         {isZonesStoredLocally() && (
-          <Button
+          <StyledButton
             onClick={handleOpenAddZoneModal}
             disabled={isLoadingZones}
             sx={menuBar.buttons}
           >
             Add Zone
-          </Button>
+          </StyledButton>
         )}
-        <Button
+        <StyledButton
           onClick={handleToggleExpanded}
           disabled={isLoadingZones}
           sx={menuBar.buttons}
           startIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         >
           {expanded ? "Collapse" : "Expand"}
-        </Button>
+        </StyledButton>
         <AddZoneModal
           open={isAddZoneModalOpen}
           onClose={handleCloseAddZoneModal}
           fetchZones={fetchZones}
         />
-      </Box>
+      </StyledButtonContainer>
     </MenuBar>
   );
 }
+
+// Styled components
+const StyledButtonContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  margin: "0 15px",
+  gap: "0.5rem",
+  // Responsive design
+  [theme.breakpoints.down("sm")]: {
+    margin: "0 10px",
+    gap: "0.25rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    margin: "0 15px",
+    gap: "0.5rem",
+  },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  // Responsive design for button text
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.8rem",
+    padding: "0.25rem 0.5rem",
+    minWidth: "auto",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "0.85rem",
+    padding: "0.4rem 0.75rem",
+  },
+}));
