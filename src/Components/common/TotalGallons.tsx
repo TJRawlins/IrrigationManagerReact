@@ -2,7 +2,6 @@ import { Typography, Box, Button, styled } from "@mui/material";
 import { LuDroplets } from "react-icons/lu";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { useState, useEffect } from "react";
-import { useAppTheme } from "../../theme/useAppTheme";
 
 type TotalGallonsProps = {
   totalGalPerWeek: number;

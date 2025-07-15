@@ -72,7 +72,6 @@ export default function MenuBar({
             )}
           </StyledActionContainer>
         </StyledLeftSection>
-        <StyledDivider orientation="vertical" flexItem />
         <StyledRightSection>
           {children}
           <StyledDivider orientation="vertical" flexItem />
@@ -132,11 +131,6 @@ const StyledTitle = styled(Typography)({
   fontWeight: "800",
   letterSpacing: "-0.04em",
   lineHeight: 1,
-  // Medium screens
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    fontSize: "1.5rem",
-    marginRight: "0.75rem",
-  },
 });
 
 const StyledSubtitle = styled(Typography)({
