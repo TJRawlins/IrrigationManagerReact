@@ -1,40 +1,33 @@
-import { Box, Container, CssBaseline, Grid } from "@mui/material";
-import ZoneCard from "./ZoneCard";
+import { Box, Container, CssBaseline, Grid, styled } from "@mui/material";
+import ZoneCard from "./zoneCard/ZoneCard";
 import EditZone from "./EditZone";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import ZoneCardSkeleton from "./ZoneCardSkeleton";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
 
-type ZoneListProps = {
+type ZoneGridProps = {
   fetchZones(args: number): Promise<void>;
   updateLocalStorageSeason(args: number): void;
-  hasError: boolean;
   isLoadingZones: boolean;
-  modalColorTheme: ModalTheme
+  expanded?: boolean;
+  onExpandedChange?: (expanded: boolean) => void;
 };
 
-export default function ZoneList({
+export default function ZoneGrid({
   fetchZones,
   updateLocalStorageSeason,
   isLoadingZones,
-  modalColorTheme,
-}: ZoneListProps) {
+  expanded,
+  onExpandedChange,
+}: ZoneGridProps) {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
 
   return (
     <>
       <CssBaseline />
-      <Container
-        sx={{
-          maxWidth: "100% !important",
-          padding: "0 !important",
-          margin: "0 !important",
-          height: "100% !important",
-        }}
-      >
+      <StyledZoneGridContainer>
         <Box sx={{ flexGrow: 1, height: "100%" }}>
           <Grid
             container
@@ -61,6 +54,8 @@ export default function ZoneList({
                     fetchZones={fetchZones}
                     setIsShowEdit={setIsShowEdit}
                     updateLocalStorageSeason={updateLocalStorageSeason}
+                    expanded={expanded}
+                    onExpandedChange={onExpandedChange}
                   />
                 </Grid>
               ))
@@ -71,12 +66,25 @@ export default function ZoneList({
                 updateLocalStorageSeason={updateLocalStorageSeason}
                 setIsShowEdit={setIsShowEdit}
                 isShowEdit={isShowEdit}
-                modalColorTheme={modalColorTheme}
               />
             </Grid>
           </Grid>
         </Box>
-      </Container>
+      </StyledZoneGridContainer>
     </>
   );
 }
+
+// Styled container with background styling
+const StyledZoneGridContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "100% !important",
+  padding: "0 !important",
+  margin: "0 !important",
+  height: "100% !important",
+  backgroundColor: theme.custom.zonePage.gridBackground,
+  borderRadius: theme.custom.zonePage.gridBorderRadius,
+  minHeight: theme.custom.zonePage.gridMinHeight,
+  flexGrow: 1,
+  display: "flex",
+  flexDirection: "column",
+}));

@@ -1,12 +1,9 @@
 /* eslint-disable no-debugger */
 import {
   Box,
-  FormControl,
   FormHelperText,
-  InputLabel,
   MenuItem,
   Modal,
-  Select,
   styled,
   TextField,
   Tooltip,
@@ -19,7 +16,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import "../../styles/zones/AddZone.css";
+
 import { ChangeEvent, useRef, useState } from "react";
 import { app } from "../../App/firebase/firebase";
 import {
@@ -35,7 +32,7 @@ import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { Zone } from "../../App/models/Zone";
-import { ModalTheme } from "../../theme/ModalThemeInterface";
+import { useAppTheme } from "../../theme/useAppTheme";
 import { IoClose } from "react-icons/io5";
 
 type ZoneEditProps = {
@@ -43,7 +40,6 @@ type ZoneEditProps = {
   updateLocalStorageSeason(args: number): void;
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
-  modalColorTheme: ModalTheme;
 };
 
 const VisuallyHiddenInput = styled("input")({
@@ -58,25 +54,13 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-// const style = {
-//   position: "absolute" as const,
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 400,
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   p: 4,
-// };
-
 function EditZone({
   fetchZones,
   updateLocalStorageSeason,
   setIsShowEdit,
   isShowEdit,
-  modalColorTheme,
 }: ZoneEditProps) {
+  const { modal, colors } = useAppTheme();
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
   const seasonIdValue = useRef<number>();
@@ -86,32 +70,6 @@ function EditZone({
     setImageUpload(undefined);
     setIsNewImage(false);
   };
-
-  // color theme
-  // const theme = useTheme();
-  // const colors = tokens(theme.palette.mode);
-  // const zoneEditBtnColorTheme = () => {
-  //   return {
-  //     zoneEditCardModal: {
-  //       backgroundColor: colors.overlay.modal,
-  //       opacity: 0.5,
-  //     },
-  //     zoneEditCard: {
-  //       backgroundColor: colors.white.vary,
-  //       border: "1px solid " + colors.primary.const + " !important",
-  //       boxShadow: "1px -1px 20px 3px " + colors.primary.shadowGlow,
-  //     },
-  //     zoneEditCardTitle: {
-  //       color: colors.gray.toPrimary,
-  //     },
-  //     zoneSeasonSelection: {
-  //       "& #mui-component-select-season": {
-  //         backgroundColor: colors.whiteBlue.vary,
-  //         color: colors.gray.toWhite,
-  //       },
-  //     },
-  //   };
-  // };
 
   // Firebase Storage Variables
   const isImageBeingUsedRef = useRef<boolean>(false);
@@ -366,16 +324,19 @@ function EditZone({
       <Modal
         id="modal-overlay"
         open={isShowEdit}
-        onClose={handleClose}
+        onClose={(reason) => {
+          if (reason === "backdropClick" || reason === "escapeKeyDown") return;
+          handleClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         slotProps={{
           backdrop: {
-            style: modalColorTheme.cardModal,
+            style: modal.overlay,
           },
         }}
       >
-        <Box className="modal-box" sx={modalColorTheme.card}>
+        <Box className="modal-box" sx={modal.card}>
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -409,14 +370,14 @@ function EditZone({
               className="modal-title"
               id="modal-modal-title"
               component="h2"
-              sx={modalColorTheme.cardTitle}
+              sx={modal.title}
             >
               Edit Zone
             </Typography>
             <Typography
               className="modal-description"
               component="p"
-              sx={modalColorTheme.cardDescription}
+              sx={modal.description}
             >
               Edit zone {zone.name} for {season.name}
             </Typography>
@@ -530,15 +491,32 @@ function EditZone({
                         : ""}
                     </FormHelperText>
                   </Box>
-                  <FormControl fullWidth className="dropdown-override">
-                    <InputLabel sx={{ padding: "0 5px" }}>Season</InputLabel>
-                    <Field as={Select} name="season" type="select">
+                  <Box className="input">
+                    <Field
+                      as={StyledTextField}
+                      className="input input-override"
+                      id="season-input"
+                      name="season"
+                      label="Season"
+                      type="text"
+                      autoComplete=""
+                      variant="standard"
+                      select
+                      sx={{
+                        "& .MuiInputBase-input": {
+                          color: colors.modal.fieldInputFont,
+                        },
+                        "& .MuiSelect-select": {
+                          color: colors.modal.fieldInputFont,
+                        }
+                      }}
+                    >
                       <MenuItem value="Summer">Summer</MenuItem>
                       <MenuItem value="Fall">Fall</MenuItem>
                       <MenuItem value="Winter">Winter</MenuItem>
                       <MenuItem value="Spring">Spring</MenuItem>
                     </Field>
-                  </FormControl>
+                  </Box>
                 </div>
                 <div className="split-container upload">
                   <label htmlFor="" className="img-upload-filename-label">
@@ -610,4 +588,17 @@ function EditZone({
     </div>
   );
 }
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiInputBase-input": {
+    padding: "5px 12px !important",
+  },
+  "& .MuiSelect-select": {
+    padding: "5px 12px !important",
+  },
+  "& .MuiInputBase-input:focus, & .MuiInputBase-input:hover, & .MuiSelect-select:focus, & .MuiSelect-select:hover": {
+    border: `1px solid ${theme.custom.modal.fieldBorder}`,
+  }
+}));
+
 export default EditZone;

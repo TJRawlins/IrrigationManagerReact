@@ -1,318 +1,881 @@
 import { createContext, useState, useMemo } from "react";
-import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
+import { createTheme, ThemeOptions } from "@mui/material/styles";
 
-const primary = "#18d4c2" // #18d4c2
-const secondary = "#82a628" // #82a628
-const tertiary = "#002b49" // #002b49
+// Color constants
+const callToActionPrimary = "#64cdbd";
+const callToActionSecondary = "#2f87ad";
+const primaryLight = "#173e5b";
+const primaryDark = "#141b2d";
+const buttonPrimary = "#2f87ad";
+const buttonSecondary = "#497487";
+const white = "#ffffff";
+const softWhite = "#e0e0e0";
+const black = "#606162";
 
-// primary: #59bab1
-// secondary: #82a628
-// tertiary: #002b49
-// primary background: #ffffff
-// secondary background: #eef2f6
+// Font constants
+const FONTS = {
+  headers: {
+    fontFamily: '"Raleway", sans-serif',
+    letterSpacing: "-0.03125em",
+  },
+  logo: {
+    fontFamily: '"MuseoModerno", cursive',
+    letterSpacing: "-0.1em",
+  },
+  content: {
+    fontFamily: '"Open Sans", sans-serif',
+    letterSpacing: "0.01071em",
+  },
+};
 
-// color design tokens
-export const tokens = (mode: string) => ({
-  ...(mode === "light"
-    ? {
-        opacity: {
-          zero: "0",
-          zero45: "0.45",
-          zeroto45: "0",
-          zero5const: "0.5",
-          zero75: "0.45",
-          zero9: "0.9",
-          one: "1",
-        },
-        overlay: {
-          modal: "#002b49a7",
-          image: "#64c9bf7a",
-        },
+// Button constants
+const BUTTON_BASE = {
+  borderRadius: "4px",
+  fontFamily:
+    '"Open Sans","Source Sans Pro",Helvetica,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
+  fontWeight: "600",
+  fontSize: "0.85rem",
+  textWrap: "nowrap",
+  padding: "0.5rem 0.75rem",
+  textTransform: "capitalize",
+  color: white,
+};
+
+const BUTTONS = {
+  primary: {
+    ...BUTTON_BASE,
+    background: buttonPrimary,
+    border: buttonPrimary,
+    hover: {
+      background: "#005972",
+      color: white,
+      border: "#005972",
+    },
+  },
+  secondary: {
+    ...BUTTON_BASE,
+    background: buttonSecondary,
+    border: buttonSecondary,
+    hover: {
+      background: "#3a5a6a",
+      color: white,
+      border: "#3a5a6a",
+    },
+  },
+};
+
+// Extend MUI theme interface
+declare module "@mui/material/styles" {
+  interface Theme {
+    custom: {
+      fonts: {
+        headers: {
+          fontFamily: string;
+          letterSpacing: string;
+        };
+        logo: {
+          fontFamily: string;
+          letterSpacing: string;
+        };
+        content: {
+          fontFamily: string;
+          letterSpacing: string;
+        };
+      };
+      grid: {
+        background: string;
+        rowBackground: string;
+        text: string;
+        rowHover: string;
+        border: string;
+        columnHighlight: string;
+        columnText: string;
+        buttonColor: string;
+        buttonWarning: {
+          background: string;
+          text: string;
+          border: string;
+          icon: string;
+        };
+        dataGridBackground: string;
+        dataGridRowBackground: string;
+        dataGridText: string;
+        dataGridRowHover: string;
+        dataGridColumnHighlight: string;
+        dataGridColumnText: string;
+        buttonWarningBackground: string;
+        buttonWarningText: string;
+        buttonWarningBorder: string;
+        buttonWarningIcon: string;
+      };
+      modal: {
+        overlay: string;
+        background: string;
+        border: string;
+        titleColor: string;
+        description: string;
+        closeIcon: string;
+        closeIconHover: string;
+        fieldLabel: string;
+        fieldBackground: string;
+        fieldInputFont: string;
+        fieldBorder: string;
+        buttonFont: string;
+        buttonBackground: string;
+        buttonBorder: string;
+        buttonBackgroundHover: string;
+        buttonFontHover: string;
+      };
+      menuBar: {
+        background: string;
+        color: string;
+        title: string;
+        subtitle: string;
+        buttonBackground: string;
+        buttonBackgroundImage: string;
+        buttonFont: string;
+        buttonBorder: string;
+        buttonBorderHover: string;
+        chipBackground: string;
+        gallonsIcon: string;
+      };
+      navBar: {
+        background: string;
+        color: string;
+        borderBottom: string;
+      };
+      messages: {
+        info: {
+          background: string;
+          text: string;
+          border: string;
+          icon: string;
+        };
+        warning: {
+          background: string;
+          text: string;
+          border: string;
+          icon: string;
+        };
+        error: {
+          background: string;
+          text: string;
+          border: string;
+          icon: string;
+        };
+        success: {
+          background: string;
+          text: string;
+          border: string;
+          icon: string;
+        };
+        toast: {
+          background: string;
+          text: string;
+          border: string;
+        };
+      };
+      white: {
+        const: string;
+        vary: string;
+        toLightGray: string;
+        toDarkGray: string;
+        alt: string;
+        alt2: string;
+        altShade: string;
+        altPrimary: string;
+        altSecondary: string;
+        opacity: string;
+      };
+      whiteBlue: {
+        const: string;
+        vary: string;
+        varyLight: string;
+        toDarkGray: string;
+        alt: string;
+        alt2: string;
+        200: string;
+        300: string;
+        400: string;
+        500: string;
+      };
+      gray: {
+        const: string;
+        altPrimary: string;
+        toWhite: string;
+        toPrimary: string;
+        200: string;
+        300: string;
+        400: string;
+        500: string;
+      };
+      darkGray: {
+        const: string;
+        vary: string;
+        toWhite: string;
+      };
+      primary: {
+        const: string;
+        toDarkGray: string;
+        alt: string;
+        shadowGlow: string;
+        opacity: string;
+      };
+      secondary: {
+        const: string;
+        vary: string;
+        alt: string;
+      };
+      overlay: {
+        modal: string;
+        image: string;
+      };
+      zoneCard: {
+        headerBackground: string;
+        headerText: string;
+        contentBackground: string;
+        text: string;
+        buttonBackground: string;
+        buttonText: string;
+        buttonHoverBackground: string;
+        buttonHoverText: string;
+        imageBackground: string;
+        border: string;
+        shadow: string;
+      };
+      zonePage: {
+        gridBackground: string;
+        gridBorderRadius: string;
+        gridMinHeight: string;
+        containerBackground: string;
+      };
+      sidePanel: {
+        backgroundColor: string;
+        iconColor: string;
+        dividerColor: string;
+      };
+      seasonIcons: {
+        inactiveBackground: string;
+      };
+      totalGallons: {
+        toggleContainer: {
+          background: string;
+        };
+        toggleButton: {
+          selected: {
+            background: string;
+            color: string;
+            boxShadow: string;
+          };
+          unselected: {
+            background: string;
+            color: string;
+          };
+        };
+        valueDisplay: {
+          color: string;
+        };
+        valueLabel: {
+          color: string;
+        };
+        mobileHint: {
+          iconColor: string;
+          textColor: string;
+        };
+      };
+      buttons: {
         primary: {
-          const: primary,
-          toDarkGray: primary,
-          alt: primary,
-          shadowGlow: "#5252527c",
-          opacity: "#59bab114",
-        },
+          background: string;
+          color: string;
+          border: string;
+          borderRadius: string;
+          fontFamily: string;
+          fontWeight: string;
+          fontSize: string;
+          padding: string;
+          textTransform: string;
+          hover: {
+            background: string;
+            color: string;
+            border: string;
+          };
+        };
         secondary: {
-          const: secondary,
-          vary: secondary,
-          alt: secondary,
-        },
-        tertiary: {
-          const: tertiary,
-          vary: tertiary,
-          vary2: tertiary,
-        },
-        white: {
-          const: "#fcfcfd",
-          vary: "#dae4e4",
-          toLightGray: "#fcfcfd",
-          toDarkGray: "#fcfcfd",
-          alt: "#fcfcfd",
-          alt2: "#fcfcfd",
-          altShade: "#fcfcfd",
-          altPrimary: "#fcfcfd",
-          altSecondary: "#fcfcfd",
-          opacity: "#00000017",
-        },
-        whiteBlue: {
-          const: "#eef2f6",
-          vary: "#eef2f6",
-          varyLight: "#eef2f6",
-          toDarkGray: "#cbd7d9",
-          alt: "#0e2a4714",
-          alt2: "#eef2f6",
-          200: "#bec2c5",
-          300: "#8f9194",
-          400: "#5f6162",
-          500: "#303031",
-        },
-        shadow: {
-          const: "#bec2c5",
-          vary: "#bec2c5",
-        },
-        gray: {
-          const: "#8b8b8b",
-          altPrimary: "#8b8b8b",
-          toWhite: "#8b8b8b",
-          toPrimary: "#606162",
-          200: "#6f6f6f",
-          300: "#535353",
-          400: "#383838",
-          500: "#1c1c1c",
-        },
-        darkGray: {
-          const: "#303031",
-          vary: "#303031",
-          toWhite: "#303031",
-        },
-        menuBar: {
-          buttonBackground: "#eef2f6",
-          buttonFont: "#8b8b8b",
-          buttonBorder: "#eef2f6",
-          buttonBorderHover: primary,
-          buttonIcon: primary,
-        },
-        modal: {
-          overlay: "#002b49a7",
-          background: "#eef2f6",
-          border: primary,
-          titleColor: "#606162",
-          description: "#606162",
-          closeIcon: "#707174",
-          closeIconHover: "#323232",
-          fieldLabel: "#707174",
-          fieldBackground: "#d9e1e9",
-          fieldInputFont: "#707174",
-          fieldBorder: primary,
-          buttonFont: "#eef2f6",
-          buttonBackground: primary,
-          buttonBorder: primary,
-          buttonBackgroundHover: "transparent",
-          buttonFontHover: primary,
-        },
-      }
-    : {
-        opacity: {
-          zero: "1",
-          zeroto45: "0.5",
-          zero75: "0.75",
-          zero5const: "0.75",
-          zero45: "0.55",
-          zero9: "0.5",
-          one: "0",
-        },
-        overlay: {
-          modal: "#06070ac7",
-          image: "#0f5e568a",
-        },
-        primary: {
-          const: primary,
-          toDarkGray: "#222228",
-          alt: "#202028",
-          shadowGlow: "#59bab17c",
-          opacity: "#59bab114",
-        },
-        secondary: {
-          const: secondary,
-          vary: "#2d2d2d",
-          alt: "#202028",
-        },
-        tertiary: {
-          const: tertiary,
-          vary: "#080808",
-          vary2: "#0f5e56",
-        },
-        white: {
-          const: "#fcfcfd",
-          vary: "#19191f",
-          toLightGray: "#29292f",
-          toDarkGray: "#1e1e1e",
-          alt: "#8b8b8b",
-          alt2: "#29292e",
-          altShade: "#bebebe",
-          altPrimary: primary,
-          altSecondary: secondary,
-          opacity: "#ffffff0a",
-        },
-        whiteBlue: {
-          const: "#eef2f6",
-          vary: "#29292f",
-          varyLight: "#4f4f4f",
-          toDarkGray: "#131318",
-          alt: "#535353",
-          alt2: "#29292e",
-          200: "#5f6162",
-          300: "#8f9194",
-          400: "#bec2c5",
-          500: "#eef2f6",
-        },
-        shadow: {
-          const: "#bec2c5",
-          vary: "#0808087d",
-        },
-        gray: {
-          const: "#8b8b8b",
-          altPrimary: "#59bab1",
-          toWhite: "#eef2f6",
-          toPrimary: primary,
-          200: "#383838",
-          300: "#535353",
-          400: "#6f6f6f",
-          500: "#8b8b8b",
-        },
-        darkGray: {
-          const: "#303031",
-          vary: "#fcfcfd",
-          toWhite: "#eef2f6",
-        },
-        menuBar: {
-          buttonBackground: "#29292f",
-          buttonFont: "#eef2f6",
-          buttonBorder: "#29292f",
-          buttonBorderHover: primary,
-          buttonIcon: primary,
-        },
-        modal: {
-          overlay: "#06070ac7",
-          background: "#19191f",
-          border: "#323232",
-          titleColor: "#e5e7eb",
-          description: "#9ca3af",
-          closeIcon: "#707174",
-          closeIconHover: "#eef2f6",
-          fieldLabel: "#707174",
-          fieldBackground: "#29292f",
-          fieldInputFont: "#9b9b9b",
-          fieldBorder: primary,
-          buttonFont: "#19191f",
-          buttonBackground: primary,
-          buttonBorder: primary,
-          buttonBackgroundHover: "transparent",
-          buttonFontHover: primary,
-        },
-      }),
-});
+          background: string;
+          color: string;
+          border: string;
+          borderRadius: string;
+          fontFamily: string;
+          fontWeight: string;
+          fontSize: string;
+          padding: string;
+          textTransform: string;
+          hover: {
+            background: string;
+            color: string;
+            border: string;
+          };
+        };
+      };
+    };
+  }
+  interface ThemeOptions {
+    custom?: {
+      fonts?: Partial<Theme["custom"]["fonts"]>;
+      grid?: Partial<Theme["custom"]["grid"]>;
+      modal?: Partial<Theme["custom"]["modal"]>;
+      menuBar?: Partial<Theme["custom"]["menuBar"]>;
+      navBar?: Partial<Theme["custom"]["navBar"]>;
+      messages?: Partial<Theme["custom"]["messages"]>;
+      white?: Partial<Theme["custom"]["white"]>;
+      whiteBlue?: Partial<Theme["custom"]["whiteBlue"]>;
+      gray?: Partial<Theme["custom"]["gray"]>;
+      darkGray?: Partial<Theme["custom"]["darkGray"]>;
+      primary?: Partial<Theme["custom"]["primary"]>;
+      secondary?: Partial<Theme["custom"]["secondary"]>;
+      overlay?: Partial<Theme["custom"]["overlay"]>;
+      zoneCard?: Partial<Theme["custom"]["zoneCard"]>;
+      zonePage?: Partial<Theme["custom"]["zonePage"]>;
+      sidePanel?: Partial<Theme["custom"]["sidePanel"]>;
+      seasonIcons?: Partial<Theme["custom"]["seasonIcons"]>;
+      totalGallons?: Partial<Theme["custom"]["totalGallons"]>;
+      buttons?: Partial<Theme["custom"]["buttons"]>;
+    };
+  }
+}
 
-// mui theme settings
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const themeSettings = (mode: any): ThemeOptions => {
-  const colors = tokens(mode);
+// Theme settings with custom properties
+export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
+  const colors =
+    mode === "light"
+      ? {
+          fonts: FONTS,
+          buttons: BUTTONS,
+          grid: {
+            background: "#ced8da",
+            rowBackground: "#eef2f6",
+            text: "#555555",
+            rowHover: "#dae4e4",
+            border: "#ced8da59",
+            columnHighlight: "#dae4e473",
+            columnText: "#555555",
+            buttonColor: "#497487",
+            buttonWarning: {
+              background: "#c23f37",
+              text: "#eff2f5",
+              border: "#7fb5ac00",
+              icon: "#eff2f5",
+            },
+            dataGridBackground: "#ced8da",
+            dataGridRowBackground: "#eef2f6",
+            dataGridText: "#555555",
+            dataGridRowHover: "#dae4e4",
+            dataGridColumnHighlight: "#dae4e473",
+            dataGridColumnText: "#555555",
+            buttonWarningBackground: "#c23f37",
+            buttonWarningText: "#eff2f5",
+            buttonWarningBorder: "#7fb5ac00",
+            buttonWarningIcon: "#eff2f5",
+          },
+          modal: {
+            overlay: "#002c38a8",
+            background: "#eef2f6",
+            border: "#eef2f6",
+            titleColor: black,
+            description: black,
+            closeIcon: "#707174",
+            closeIconHover: "#323232",
+            fieldLabel: "#707174",
+            fieldBackground: "#d9e1e9",
+            fieldInputFont: "#707174",
+            fieldBorder: callToActionPrimary,
+            buttonFont: "#eef2f6",
+            buttonBackground: callToActionPrimary,
+            buttonBorder: callToActionPrimary,
+            buttonBackgroundHover: "transparent",
+            buttonFontHover: callToActionPrimary,
+          },
+          menuBar: {
+            background: white,
+            color: primaryLight,
+            title: black,
+            subtitle: black,
+            buttonBackground: "#2f87ad",
+            buttonBackgroundImage: white,
+            buttonFont: white,
+            buttonBorder: "#eef2f6",
+            buttonBorderHover: callToActionSecondary,
+            chipBackground: "#c9d5d7",
+            gallonsIcon: callToActionPrimary,
+          },
+          navBar: {
+            background: primaryLight,
+            color: "#eef2f6",
+            borderBottom: "#0000001f",
+          },
+          sidePanel: {
+            backgroundColor: primaryLight,
+            iconColor: "#eff2f5",
+            dividerColor: "#ffffff52",
+          },
+          seasonIcons: {
+            inactiveBackground: "#b6c2c5",
+          },
+          totalGallons: {
+            toggleContainer: {
+              background: "#f3f4f6",
+            },
+            toggleButton: {
+              selected: {
+                background: "white",
+                color: "#606162",
+                boxShadow:
+                  "rgb(50 50 93 / 4%) 0px 2px 5px -1px, rgb(0 0 0 / 19%) 0px 1px 3px -1px",
+              },
+              unselected: {
+                background: "transparent",
+                color: "#7f8287",
+              },
+            },
+            valueDisplay: {
+              color: "#606162",
+            },
+            valueLabel: {
+              color: "#606162",
+            },
+            mobileHint: {
+              iconColor: "silver",
+              textColor: "silver",
+            },
+          },
+          messages: {
+            info: {
+              background: "#e3f2fd",
+              text: "#0d47a1",
+              border: "#2196f3",
+              icon: "#2196f3",
+            },
+            warning: {
+              background: "#fff3e0",
+              text: "#e65100",
+              border: "#e69700",
+              icon: "#e69700",
+            },
+            error: {
+              background: "#ffebee",
+              text: "#c62828",
+              border: "#f44336",
+              icon: "#f44336",
+            },
+            success: {
+              background: "#e8f5e8",
+              text: "#2e7d32",
+              border: "#4caf50",
+              icon: "#4caf50",
+            },
+            toast: {
+              background: "#f5f5f5",
+              text: "#333333",
+              border: "#e0e0e0",
+            },
+          },
+          white: {
+            const: "#fcfcfd",
+            vary: "#dae4e4",
+            toLightGray: "#fcfcfd",
+            toDarkGray: "#fcfcfd",
+            alt: "#fcfcfd",
+            alt2: "#fcfcfd",
+            altShade: "#fcfcfd",
+            altPrimary: "#fcfcfd",
+            altSecondary: "#fcfcfd",
+            opacity: "#00000017",
+          },
+          whiteBlue: {
+            const: "#eef2f6",
+            vary: "#eef2f6",
+            varyLight: "#eef2f6",
+            toDarkGray: "#cbd7d9",
+            alt: "#0e2a4714",
+            alt2: "#eef2f6",
+            200: "#bec2c5",
+            300: "#8f9194",
+            400: "#5f6162",
+            500: "#303031",
+          },
+          gray: {
+            const: "#8b8b8b",
+            altPrimary: "#8b8b8b",
+            toWhite: "#8b8b8b",
+            toPrimary: black,
+            200: "#6f6f6f",
+            300: "#535353",
+            400: "#383838",
+            500: "#1c1c1c",
+          },
+          darkGray: {
+            const: "#8b8b8b",
+            vary: "#8b8b8b",
+            toWhite: "#8b8b8b",
+          },
+          primary: {
+            const: callToActionPrimary,
+            toDarkGray: callToActionPrimary,
+            alt: callToActionPrimary,
+            shadowGlow: "#5252527c",
+            opacity: "#59bab114",
+          },
+          secondary: {
+            const: callToActionSecondary,
+            vary: callToActionSecondary,
+            alt: callToActionSecondary,
+          },
+          overlay: {
+            modal: "#002c38a8",
+            image: "#64c9bf7a",
+          },
+          zoneCard: {
+            headerBackground: "#edf1f1",
+            headerText: black,
+            contentBackground: "#ffffff",
+            text: black,
+            imageBackground: "#dce4e4",
+            // buttonBackground: "#f9d114",
+            buttonBackground: "#497487",
+            // buttonText: black,
+            buttonText: "#ffffff",
+            buttonHoverBackground: "#005972",
+            buttonHoverText: "#f0f2f5",
+            border: "#e0e0e0",
+            shadow: "0 2px 4px rgba(0,0,0,0.1)",
+          },
+          zonePage: {
+            gridBackground: "#ced8da",
+            gridBorderRadius: "8px",
+            gridMinHeight: "calc(100vh - 200px)", // Adjust based on navBar height
+            containerBackground: "#eef2f6",
+          },
+        }
+      : {
+          fonts: FONTS,
+          buttons: BUTTONS,
+          grid: {
+            background: "#1f2a41",
+            rowBackground: "#1f2a41",
+            text: softWhite,
+            rowHover: "#141b2d",
+            border: "#ffffff1f",
+            columnHighlight: "#141b2d69",
+            columnText: softWhite,
+            buttonColor: "#eef2f6",
+            buttonWarning: {
+              background: "#c23f37",
+              text: "#eff2f5",
+              border: "#7fb5ac00",
+              icon: "#eff2f5",
+            },
+            dataGridBackground: "#1f2a41",
+            dataGridRowBackground: "#1f2a41",
+            dataGridText: softWhite,
+            dataGridRowHover: "#141b2d",
+            dataGridColumnHighlight: "#141b2d69",
+            dataGridColumnText: softWhite,
+            buttonWarningBackground: "#c23f37",
+            buttonWarningText: "#eff2f5",
+            buttonWarningBorder: "#7fb5ac00",
+            buttonWarningIcon: "#eff2f5",
+          },
+          modal: {
+            overlay: "#0b0f19e3",
+            background: "#141b2d",
+            border: "#1f2a41",
+            titleColor: "#e5e7eb",
+            description: "#9ca3af",
+            closeIcon: "#9ca3af",
+            closeIconHover: "#eef2f6",
+            fieldLabel: "#9ca3af",
+            fieldBackground: "#1f2a41",
+            fieldInputFont: "#9ca3af",
+            fieldBorder: callToActionPrimary,
+            buttonFont: "#19191f",
+            buttonBackground: callToActionPrimary,
+            buttonBorder: callToActionPrimary,
+            buttonBackgroundHover: "transparent",
+            buttonFontHover: callToActionPrimary,
+          },
+          menuBar: {
+            background: primaryDark,
+            color: softWhite,
+            title: softWhite,
+            subtitle: softWhite,
+            buttonBackground: "#1f2a41",
+            buttonBackgroundImage: "linear-gradient(#292934, #292934)",
+            buttonFont: softWhite,
+            buttonBorder: "#1f2a41",
+            buttonBorderHover: callToActionPrimary,
+            chipBackground: "#1f2a41",
+            gallonsIcon: callToActionPrimary,
+          },
+          navBar: {
+            background: primaryDark,
+            color: white,
+            borderBottom: "#ffffff1f",
+          },
+          sidePanel: {
+            backgroundColor: primaryDark,
+            iconColor: "#eff2f5",
+            dividerColor: "#ffffff29",
+          },
+          seasonIcons: {
+            inactiveBackground: "#475a82",
+          },
+          totalGallons: {
+            toggleContainer: {
+              background: "#1f2a41",
+            },
+            toggleButton: {
+              selected: {
+                background: "#141b2d",
+                color: "#e0e0e0",
+                boxShadow:
+                  "rgb(0 0 0 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px",
+              },
+              unselected: {
+                background: "transparent",
+                color: "#9ca3af",
+              },
+            },
+            valueDisplay: {
+              color: "#e0e0e0",
+            },
+            valueLabel: {
+              color: "#e0e0e0",
+            },
+            mobileHint: {
+              iconColor: "#9ca3af",
+              textColor: "#9ca3af",
+            },
+          },
+          messages: {
+            info: {
+              background: "#1a237e",
+              text: "#90caf9",
+              border: "#2196f3",
+              icon: "#2196f3",
+            },
+            warning: {
+              background: "#3e2723",
+              text: "#ffcc02",
+              border: "#e69700",
+              icon: "#e69700",
+            },
+            error: {
+              background: "#3e2723",
+              text: "#ef5350",
+              border: "#f44336",
+              icon: "#f44336",
+            },
+            success: {
+              background: "#1b5e20",
+              text: "#81c784",
+              border: "#4caf50",
+              icon: "#4caf50",
+            },
+            toast: {
+              background: "#2d3748",
+              text: "#e2e8f0",
+              border: "#4a5568",
+            },
+          },
+          white: {
+            const: "#fcfcfd",
+            vary: primaryDark,
+            toLightGray: "#29292f",
+            toDarkGray: "#1e1e1e",
+            alt: "#8b8b8b",
+            alt2: "#29292e",
+            altShade: "#bebebe",
+            altPrimary: callToActionPrimary,
+            altSecondary: callToActionSecondary,
+            opacity: "#ffffff0a",
+          },
+          whiteBlue: {
+            const: "#eef2f6",
+            vary: "#29292f",
+            varyLight: "#4f4f4f",
+            toDarkGray: "#0e0e12",
+            alt: "#535353",
+            alt2: "#29292e",
+            200: "#5f6162",
+            300: "#8f9194",
+            400: "#bec2c5",
+            500: "#eef2f6",
+          },
+          gray: {
+            const: "#8b8b8b",
+            altPrimary: "#59bab1",
+            toWhite: "#eef2f6",
+            toPrimary: callToActionPrimary,
+            200: "#383838",
+            300: "#535353",
+            400: "#6f6f6f",
+            500: "#8b8b8b",
+          },
+          darkGray: {
+            const: "#303031",
+            vary: "#fcfcfd",
+            toWhite: "#eef2f6",
+          },
+          primary: {
+            const: callToActionPrimary,
+            toDarkGray: "#222228",
+            alt: "#202028",
+            shadowGlow: "#59bab17c",
+            opacity: "#59bab114",
+          },
+          secondary: {
+            const: callToActionSecondary,
+            vary: "#2d2d2d",
+            alt: "#202028",
+          },
+          overlay: {
+            modal: "#06070ac7",
+            image: "#0f5e568a",
+          },
+          zoneCard: {
+            headerBackground: "#1f2a41",
+            headerText: "#e0e0e0",
+            contentBackground: "#141b2d",
+            text: "#e0e0e0",
+            buttonBackground: "#64cdbd",
+            buttonText: "#19191f",
+            buttonHoverBackground: "#005972",
+            buttonHoverText: "#eef2f6",
+            border: "#2a3441",
+            shadow: "0 2px 4px rgba(0,0,0,0.3)",
+          },
+          zonePage: {
+            gridBackground: "#1f2a41",
+            gridBorderRadius: "8px",
+            gridMinHeight: "calc(100vh - 200px)", // Adjust based on navBar height
+            containerBackground: "#141b2d",
+          },
+        };
 
   return {
     palette: {
-      mode: mode,
-      ...(mode === "dark"
-        ? {
-            primary: {
-              main: colors.primary.const,
-            },
-            secondary: {
-              main: colors.secondary.const,
-            },
-            tertiary: {
-              main: colors.tertiary.vary,
-            },
-            neutral: {
-              dark: colors.gray[500],
-              main: colors.gray[500],
-              light: colors.gray.const,
-            },
-            background: {
-              default: colors.white.vary,
-            },
-          }
-        : {
-            primary: {
-              main: colors.primary.const,
-            },
-            secondary: {
-              main: colors.secondary.const,
-            },
-            tertiary: {
-              nav: colors.tertiary.vary,
-            },
-            neutral: {
-              dark: colors.gray[500],
-              main: colors.gray[500],
-              light: colors.gray.const,
-            },
-            background: {
-              default: colors.white.vary,
-            },
-          }),
+      mode,
+      primary: { main: callToActionPrimary },
+      secondary: { main: callToActionSecondary },
+      background: { default: colors.white.vary },
     },
-    // typography: {
-    //   fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-    //   fontSize: 12,
-    //   h1: {
-    //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-    //     fontSize: 40,
-    //   },
-    //   h2: {
-    //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-    //     fontSize: 32,
-    //   },
-    //   h3: {
-    //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-    //     fontSize: 24,
-    //   },
-    //   h4: {
-    //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-    //     fontSize: 20,
-    //   },
-    //   h5: {
-    //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-    //     fontSize: 16,
-    //   },
-    //   h6: {
-    //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-    //     fontSize: 14,
-    //   },
-    // },
+    typography: {
+      fontFamily: FONTS.content.fontFamily,
+      h1: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h2: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h3: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h4: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h5: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      h6: {
+        fontFamily: FONTS.headers.fontFamily,
+        letterSpacing: FONTS.headers.letterSpacing,
+      },
+      body1: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
+      body2: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
+      button: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
+      caption: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
+      overline: {
+        fontFamily: FONTS.content.fontFamily,
+        letterSpacing: FONTS.content.letterSpacing,
+      },
+    },
+    custom: colors,
   };
 };
 
-const toggleColorMode: () => void = () => {};
-
-// context for color mode
+// Context for color mode
 export const ColorModeContext = createContext({
-  toggleColorMode,
+  toggleColorMode: () => {},
 });
 
 export const useMode = () => {
-  const [mode, setMode] = useState<string>("dark");
+  // Get initial mode from localStorage, system preference, or default to 'dark'
+  const getInitialMode = (): "light" | "dark" => {
+    try {
+      // First check localStorage
+      const savedMode = localStorage.getItem("theme-mode");
+      if (savedMode === "light" || savedMode === "dark") {
+        return savedMode;
+      }
+
+      // Fall back to system preference
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: light)").matches
+      ) {
+        return "light";
+      }
+
+      return "dark";
+    } catch {
+      return "dark";
+    }
+  };
+
+  const [mode, setMode] = useState<"light" | "dark">(getInitialMode);
+
   const colorMode = useMemo(
     () => ({
-      toggleColorMode: () =>
-        setMode((prev) => (prev === "light" ? "dark" : "light")),
+      toggleColorMode: () => {
+        setMode((prev) => {
+          const newMode = prev === "light" ? "dark" : "light";
+          // Save to localStorage
+          try {
+            localStorage.setItem("theme-mode", newMode);
+          } catch (error) {
+            console.warn("Failed to save theme mode to localStorage:", error);
+          }
+          return newMode;
+        });
+      },
     }),
     []
   );
 
-  const theme: Theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
   return [theme, colorMode] as const;
+};
+
+// Keep the old tokens function for backward compatibility during migration
+export const tokens = (mode: string) => {
+  const theme = createTheme(themeSettings(mode as "light" | "dark"));
+  return theme.custom;
 };

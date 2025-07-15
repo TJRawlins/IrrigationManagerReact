@@ -180,10 +180,6 @@
   font-size: 1rem !important;
 }
 
-.MuiPaper-rounded {
-  border-radius: 12px !important;
-}
-
 .data-set-title-container .accordion-icon-wrapper {
   display: flex;
   background: rgba(114, 184, 177, 0.21);
