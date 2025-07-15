@@ -36,7 +36,7 @@ const BUTTON_BASE = {
   fontWeight: "600",
   fontSize: "0.85rem",
   textWrap: "nowrap",
-  padding: "0.4rem 0.75rem",
+  padding: "0.5rem 0.75rem",
   textTransform: "capitalize",
   color: white,
 };
