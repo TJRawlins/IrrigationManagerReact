@@ -8,6 +8,7 @@ import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import AddIcon from "@mui/icons-material/Add";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -28,6 +29,7 @@ export default function ZoneBar({
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
   const { menuBar } = useAppTheme();
   const [isAddZoneModalOpen, setIsAddZoneModalOpen] = useState(false);
+  const isLargeScreen = useMediaQuery("(min-width:1024px)");
 
   // Filter zones for the current season
   const zonesForSeason = Array.isArray(zoneList)
@@ -83,7 +85,7 @@ export default function ZoneBar({
             onClick={handleOpenAddZoneModal}
             disabled={isLoadingZones}
             sx={menuBar.buttons}
-            startIcon={<AddIcon />}
+            startIcon={isLargeScreen ? undefined : <AddIcon />}
           >
             <ButtonText>Add Zone</ButtonText>
           </StyledButton>
