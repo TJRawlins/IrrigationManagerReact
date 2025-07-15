@@ -2,7 +2,6 @@ import { Typography, Box, Button, styled } from "@mui/material";
 import { LuDroplets } from "react-icons/lu";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { useState, useEffect } from "react";
-import { shouldForwardProp } from "@mui/system";
 
 type TotalGallonsProps = {
   totalGalPerWeek: number;
