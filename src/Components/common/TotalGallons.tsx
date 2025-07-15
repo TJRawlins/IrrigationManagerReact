@@ -2,6 +2,7 @@ import { Typography, Box, Button, styled } from "@mui/material";
 import { LuDroplets } from "react-icons/lu";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { useState, useEffect } from "react";
+import { shouldForwardProp } from "@mui/system";
 
 type TotalGallonsProps = {
   totalGalPerWeek: number;
@@ -107,46 +108,46 @@ const ToggleContainer = styled(Box)(({ theme }) => ({
   minHeight: "45.25px", // Ensure minimum height
 }));
 
-const ToggleButton = styled(Button)<{ isSelected: boolean }>(
-  ({ isSelected, theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "0.5rem 0.75rem",
-    borderRadius: "10px",
-    fontSize: "0.875rem",
-    fontWeight: 600,
-    border: "none",
-    cursor: "pointer",
-    transition: "none !important",
+const ToggleButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "isSelected",
+})<{ isSelected: boolean }>(({ isSelected, theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "0.5rem 0.75rem",
+  borderRadius: "10px",
+  fontSize: "0.875rem",
+  fontWeight: 600,
+  border: "none",
+  cursor: "pointer",
+  transition: "none !important",
+  backgroundColor: isSelected
+    ? theme.custom.totalGallons.toggleButton.selected.background
+    : theme.custom.totalGallons.toggleButton.unselected.background,
+  color: isSelected
+    ? theme.custom.totalGallons.toggleButton.selected.color
+    : theme.custom.totalGallons.toggleButton.unselected.color,
+  boxShadow: isSelected
+    ? theme.custom.totalGallons.toggleButton.selected.boxShadow
+    : "none",
+  textTransform: "none",
+  height: "37.25px", // Fixed height (45.25px - 8px padding)
+  minHeight: "37.25px", // Ensure minimum height
+  lineHeight: "1", // Prevent line height from affecting button height
+  "&:hover": {
     backgroundColor: isSelected
       ? theme.custom.totalGallons.toggleButton.selected.background
       : theme.custom.totalGallons.toggleButton.unselected.background,
-    color: isSelected
-      ? theme.custom.totalGallons.toggleButton.selected.color
-      : theme.custom.totalGallons.toggleButton.unselected.color,
-    boxShadow: isSelected
-      ? theme.custom.totalGallons.toggleButton.selected.boxShadow
-      : "none",
-    textTransform: "none",
-    height: "37.25px", // Fixed height (45.25px - 8px padding)
-    minHeight: "37.25px", // Ensure minimum height
-    lineHeight: "1", // Prevent line height from affecting button height
-    "&:hover": {
-      backgroundColor: isSelected
-        ? theme.custom.totalGallons.toggleButton.selected.background
-        : theme.custom.totalGallons.toggleButton.unselected.background,
-    },
-    // Medium screens
-    "@media (min-width: 768px) and (max-width: 1023px)": {
-      minWidth: "auto",
-    },
-    // Large screens
-    "@media (min-width: 1024px)": {
-      padding: "6.4px 12px",
-    },
-  })
-);
+  },
+  // Medium screens
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    minWidth: "auto",
+  },
+  // Large screens
+  "@media (min-width: 1024px)": {
+    padding: "6.4px 12px",
+  },
+}));
 
 const ButtonText = styled("span")({
   marginLeft: "6px",

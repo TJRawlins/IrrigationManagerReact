@@ -107,7 +107,12 @@ const StyledSeasonIconsContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-const StyledIconButton = styled(IconButton)<{
+const StyledIconButton = styled(IconButton, {
+  shouldForwardProp: (prop) =>
+    prop !== "isActive" &&
+    prop !== "seasonData" &&
+    prop !== "inactiveBackground",
+})<{
   isActive: boolean;
   seasonData: any;
   inactiveBackground: string;
