@@ -2,9 +2,18 @@ import { useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { MdOutlineBrandingWatermark as ZonesIcon } from "react-icons/md";
+import MuiDrawer from "@mui/material/Drawer";
+import Typography from "@mui/material/Typography";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Box from "@mui/material/Box";
+import { styled, Theme, CSSObject } from "@mui/material/styles";
 
 import {
   Speed as DashboardIcon,
@@ -13,6 +22,9 @@ import {
   AccountCircleOutlined as AccountIcon,
   SettingsSuggestOutlined as SettingsIcon,
   Logout as LogoutIcon,
+  LightModeOutlined,
+  DarkModeOutlined,
+  Notifications as NotificationsIcon,
 } from "@mui/icons-material";
 
 import logoIcon from "../../assets/irrigation logo icon.png";
@@ -20,11 +32,14 @@ import { useDrawer } from "./DrawerContext";
 import { Link } from "react-router-dom";
 import List from "@mui/material/List";
 import { useAppTheme } from "../../theme/useAppTheme";
+import { useContext } from "react";
+import { ColorModeContext } from "../../theme/theme";
 
 export default function Navbar() {
   const theme = useTheme();
   const { open, setOpen } = useDrawer();
   const { sidePanel } = useAppTheme();
+  const colorMode = useContext(ColorModeContext);
 
   // Navigation menu items for the top section
   const topMenuItems = [
@@ -135,22 +150,50 @@ export default function Navbar() {
             </StyledListItem>
           ))}
         </List>
-        {/* Removed dark/light mode, notifications, and profile buttons - moved to MenuBar */}
+        {/* Mobile-only controls */}
+        <StyledMobileControlsSection>
+          <StyledListItem disablePadding>
+            <StyledListItemButton
+              open={open}
+              onClick={colorMode.toggleColorMode}
+            >
+              <StyledListItemIcon open={open}>
+                {theme.palette.mode === "dark" ? (
+                  <DarkModeOutlined style={{ color: sidePanel.iconColor }} />
+                ) : (
+                  <LightModeOutlined style={{ color: sidePanel.iconColor }} />
+                )}
+              </StyledListItemIcon>
+              <StyledListItemText primary="Toggle Theme" open={open} />
+            </StyledListItemButton>
+          </StyledListItem>
+
+          <StyledListItem disablePadding>
+            <StyledListItemButton open={open}>
+              <StyledListItemIcon open={open}>
+                <Badge badgeContent={17} color="error">
+                  <NotificationsIcon style={{ color: sidePanel.iconColor }} />
+                </Badge>
+              </StyledListItemIcon>
+              <StyledListItemText primary="Notifications" open={open} />
+            </StyledListItemButton>
+          </StyledListItem>
+
+          <StyledListItem disablePadding>
+            <StyledListItemButton open={open}>
+              <StyledListItemIcon open={open}>
+                <AccountIcon style={{ color: sidePanel.iconColor }} />
+              </StyledListItemIcon>
+              <StyledListItemText primary="Profile" open={open} />
+            </StyledListItemButton>
+          </StyledListItem>
+        </StyledMobileControlsSection>
       </Drawer>
     </>
   );
 }
 
-// ===================== STYLED COMPONENTS =====================
-import MuiDrawer from "@mui/material/Drawer";
-import Typography from "@mui/material/Typography";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Box from "@mui/material/Box";
-import { styled, Theme, CSSObject } from "@mui/material/styles";
-
+// Styled components
 const drawerWidth = 275;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -291,6 +334,12 @@ const StyledListItemText = styled(ListItemText, {
   opacity: open ? 1 : 0,
 }));
 
-const BottomList = styled(List)`
-  margin-top: auto;
-`;
+const StyledMobileControlsSection = styled(Box)({
+  display: "none",
+  "@media (min-width: 320px) and (max-width: 1023px)": {
+    display: "block",
+  },
+  "@media (min-width: 1024px)": {
+    display: "none",
+  },
+});

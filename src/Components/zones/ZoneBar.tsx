@@ -7,6 +7,7 @@ import MenuBar from "../common/MenuBar";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import AddIcon from "@mui/icons-material/Add";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -82,8 +83,9 @@ export default function ZoneBar({
             onClick={handleOpenAddZoneModal}
             disabled={isLoadingZones}
             sx={menuBar.buttons}
+            startIcon={<AddIcon />}
           >
-            Add Zone
+            <ButtonText>Add Zone</ButtonText>
           </StyledButton>
         )}
         <StyledButton
@@ -92,7 +94,7 @@ export default function ZoneBar({
           sx={menuBar.buttons}
           startIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         >
-          {expanded ? "Collapse" : "Expand"}
+          <ButtonText>{expanded ? "Collapse" : "Expand"}</ButtonText>
         </StyledButton>
         <AddZoneModal
           open={isAddZoneModalOpen}
@@ -105,30 +107,50 @@ export default function ZoneBar({
 }
 
 // Styled components
-const StyledButtonContainer = styled(Box)(({ theme }) => ({
+const StyledButtonContainer = styled(Box)({
   display: "flex",
   margin: "0 15px",
   gap: "0.5rem",
-  // Responsive design
-  [theme.breakpoints.down("sm")]: {
+  // Medium screens
+  "@media (min-width: 768px) and (max-width: 1023px)": {
     margin: "0 10px",
     gap: "0.25rem",
   },
-  [theme.breakpoints.up("md")]: {
+  // Large screens
+  "@media (min-width: 1024px)": {
     margin: "0 15px",
     gap: "0.5rem",
   },
-}));
+});
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  // Responsive design for button text
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "0.8rem",
-    padding: "0.25rem 0.5rem",
-    minWidth: "auto",
+const StyledButton = styled(Button)({
+  // Medium screens
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    minWidth: "45px",
+    "& .MuiButton-startIcon": {
+      margin: 0,
+      marginLeft: 0,
+      marginRight: 0,
+    },
   },
-  [theme.breakpoints.up("md")]: {
+  // Large screens
+  "@media (min-width: 1024px)": {
     fontSize: "0.85rem",
-    padding: "0.4rem 0.75rem",
+    minWidth: "auto",
+    width: "auto",
+    "& .MuiButton-startIcon": {
+      marginRight: "8px",
+    },
   },
-}));
+});
+
+const ButtonText = styled("span")({
+  // Show text only on small (600-767px) and large (1024px+) screens
+  display: "none",
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    display: "inline",
+  },
+  "@media (min-width: 1024px)": {
+    display: "inline",
+  },
+});

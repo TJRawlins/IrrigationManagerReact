@@ -1,4 +1,4 @@
-import { Box, IconButton, Tooltip } from "@mui/material";
+import { Box, IconButton, Tooltip, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
@@ -77,46 +77,69 @@ export default function SeasonIcons({
   ];
 
   return (
-    <Box
-      sx={{ display: "flex", gap: 1, alignItems: "center", margin: "0 1rem" }}
-    >
+    <StyledSeasonIconsContainer>
       {seasons.map((s) => (
         <Tooltip key={s.name} title={s.name} arrow>
-          <IconButton
+          <StyledIconButton
             onClick={() => handleSeasonClick(s.name)}
-            sx={{
-              color: seasonName === s.name ? s.color : "#eef1f1",
-              backgroundColor:
-                seasonName === s.name
-                  ? s.background
-                  : seasonIcons.inactiveBackground,
-              opacity: seasonName === s.name ? 1 : 0.4,
-              borderRadius: "4px",
-              position: "relative",
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                top: "50%",
-                left: "27%",
-                background: "#00000015",
-                width: "20px",
-                height: "40px",
-                borderRadius: "4px",
-                transform: "translate(50%, -50%)",
-              },
-              "&:hover, &:focus, &:active": {
-                color: s.color,
-                backgroundColor: s.background,
-                opacity: 1,
-              },
-              padding: "8px",
-              transition: "opacity 0.2s ease-in-out",
-            }}
+            isActive={seasonName === s.name}
+            seasonData={s}
+            inactiveBackground={seasonIcons.inactiveBackground}
           >
             {getSeasonIcon(s.name)}
-          </IconButton>
+          </StyledIconButton>
         </Tooltip>
       ))}
-    </Box>
+    </StyledSeasonIconsContainer>
   );
 }
+
+// Styled components
+const StyledSeasonIconsContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: theme.spacing(1),
+  alignItems: "center",
+  margin: "0 1rem",
+  // Responsive design using industry standards
+  [theme.breakpoints.up("md")]: {
+    gap: theme.spacing(1),
+    margin: "0 1rem",
+  },
+}));
+
+const StyledIconButton = styled(IconButton)<{
+  isActive: boolean;
+  seasonData: any;
+  inactiveBackground: string;
+}>(({ theme, isActive, seasonData, inactiveBackground }) => ({
+  color: isActive ? seasonData.color : "#eef1f1",
+  backgroundColor: isActive ? seasonData.background : inactiveBackground,
+  opacity: isActive ? 1 : 0.4,
+  borderRadius: "4px",
+  position: "relative",
+  padding: "8px",
+  transition: "opacity 0.2s ease-in-out",
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    top: "50%",
+    left: "27%",
+    background: "#00000015",
+    width: "20px",
+    height: "40px",
+    borderRadius: "4px",
+    transform: "translate(50%, -50%)",
+  },
+  "&:hover, &:focus, &:active": {
+    color: seasonData.color,
+    backgroundColor: seasonData.background,
+    opacity: 1,
+  },
+  [theme.breakpoints.up("md")]: {
+    padding: "8px",
+    "&::after": {
+      width: "20px",
+      height: "40px",
+    },
+  },
+}));

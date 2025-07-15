@@ -56,10 +56,10 @@ export default function MenuBar({
               </StyledSubtitle>
             )}
           </StyledTitleContainer>
+          <StyledDivider orientation="vertical" flexItem />
           <StyledActionContainer>
             {isSeasonRelated && seasonFunctions && (
               <>
-                <StyledDivider orientation="vertical" flexItem />
                 <SeasonIcons
                   fetchZones={seasonFunctions.fetchZones}
                   updateLocalStorageSeason={
@@ -72,10 +72,13 @@ export default function MenuBar({
             )}
           </StyledActionContainer>
         </StyledLeftSection>
+        <StyledDivider orientation="vertical" flexItem />
         <StyledRightSection>
           {children}
           <StyledDivider orientation="vertical" flexItem />
-          <UserControls />
+          <StyledUserControlsWrapper>
+            <UserControls />
+          </StyledUserControlsWrapper>
         </StyledRightSection>
       </StyledMenuBarWrapper>
     </>
@@ -83,28 +86,23 @@ export default function MenuBar({
 }
 
 // Styled components using MUI styled system
-const StyledMenuBarWrapper = styled(Box)(({ theme }) => ({
+const StyledMenuBarWrapper = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   position: "sticky",
   top: 0,
   width: "100%",
-  height: "64px",
+  minHeight: "64px",
   padding: "0 1.3rem",
   boxShadow: "none",
   zIndex: 1,
   flexShrink: 0,
-  // Responsive design
-  [theme.breakpoints.down("sm")]: {
-    height: "56px",
-    padding: "0 1rem",
-  },
-  [theme.breakpoints.up("md")]: {
-    height: "64px",
+  "@media (min-width: 1024px)": {
+    minHeight: "64px",
     padding: "0 1.3rem",
   },
-}));
+});
 
 const StyledLeftSection = styled(Box)({
   display: "flex",
@@ -126,7 +124,7 @@ const StyledTitleContainer = styled(Box)({
   marginRight: "1rem",
 });
 
-const StyledTitle = styled(Typography)(({ theme }) => ({
+const StyledTitle = styled(Typography)({
   fontSize: "1.75rem",
   textWrap: "nowrap",
   marginRight: "1rem",
@@ -134,24 +132,25 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
   fontWeight: "800",
   letterSpacing: "-0.04em",
   lineHeight: 1,
-  // Responsive design
-  [theme.breakpoints.down("sm")]: {
+  // Medium screens
+  "@media (min-width: 768px) and (max-width: 1023px)": {
     fontSize: "1.5rem",
     marginRight: "0.75rem",
   },
-}));
+});
 
-const StyledSubtitle = styled(Typography)(({ theme }) => ({
+const StyledSubtitle = styled(Typography)({
   fontSize: "0.9rem",
   fontWeight: "400",
   textWrap: "nowrap",
   letterSpacing: "0.01em",
   lineHeight: 1,
-  // Responsive design
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "0.8rem",
+  // Show on medium and large screens
+  "@media (min-width: 768px)": {
+    display: "block",
+    fontSize: "0.9rem",
   },
-}));
+});
 
 const StyledActionContainer = styled(Box)({
   display: "flex",
@@ -160,12 +159,18 @@ const StyledActionContainer = styled(Box)({
   height: "100%",
 });
 
-const StyledDivider = styled(Divider)(({ theme }) => ({
+const StyledDivider = styled(Divider)({
   height: "60%",
   margin: "0.75rem",
-  // Responsive design
-  [theme.breakpoints.down("sm")]: {
-    height: "50%",
-    margin: "0.5rem",
+});
+
+const StyledUserControlsWrapper = styled("div")({
+  // Hide on mobile, small, and medium screens
+  "@media (min-width: 320px) and (max-width: 1023px)": {
+    display: "none",
   },
-}));
+  // Show on large screens
+  "@media (min-width: 1024px)": {
+    display: "flex",
+  },
+});
