@@ -101,6 +101,7 @@ const ToggleContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   backgroundColor: theme.custom.totalGallons.toggleContainer.background,
+  border: `1px solid ${theme.custom.totalGallons.toggleContainer.border}`,
   borderRadius: "14px",
   padding: "4px",
   height: "45.25px", // Fixed height to match with text
@@ -184,7 +185,7 @@ const ValueDisplay = styled(Typography)(({ theme }) => ({
 
 const ValueLabel = styled(Typography)(({ theme }) => ({
   fontSize: "0.75rem",
-  lineHeight: "1.2rem",
+  lineHeight: ".75rem",
   color: theme.custom.totalGallons.valueLabel.color,
   // Medium screens
   "@media (min-width: 768px) and (max-width: 1023px)": {

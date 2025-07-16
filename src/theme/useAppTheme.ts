@@ -241,6 +241,7 @@ export const useAppTheme = () => {
     totalGallons: {
       toggleContainer: {
         backgroundColor: theme.custom.totalGallons.toggleContainer.background,
+        border: theme.custom.totalGallons.toggleContainer.border,
       },
       toggleButton: {
         selected: {

@@ -260,6 +260,7 @@ declare module "@mui/material/styles" {
       totalGallons: {
         toggleContainer: {
           background: string;
+          border: string;
         };
         toggleButton: {
           selected: {
@@ -424,6 +425,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           totalGallons: {
             toggleContainer: {
               background: "#f3f4f6",
+              border: "#E0E0E0",
             },
             toggleButton: {
               selected: {
@@ -632,6 +634,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           totalGallons: {
             toggleContainer: {
               background: "#1f2a41",
+              border: "#1f2a41",
             },
             toggleButton: {
               selected: {

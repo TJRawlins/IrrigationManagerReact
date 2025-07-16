@@ -1,9 +1,11 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link, useNavigate } from "react-router-dom";
 import AddPlantModal from "./AddPlantModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import "../../styles/plants/PlantBar.css";
 import { useEffect, useState } from "react";
 import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
@@ -22,6 +24,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const appTheme = useAppTheme();
   const navigate = useNavigate();
   const [isAddPlantModalOpen, setIsAddPlantModalOpen] = useState(false);
+  const isLargeScreen = useMediaQuery("(min-width:1024px)");
 
   const subtitle = `${zone.name}, ${zone.totalPlants} plant${
     zone.totalPlants !== 1 ? "s" : ""
@@ -68,25 +71,76 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
         updateLocalStorageSeason,
       }}
     >
-      <Box sx={{ display: "flex", margin: "0 15px", gap: "0.5rem" }}>
-        <Button
-          className="bar-btn action"
+      <StyledButtonContainer>
+        <StyledButton
           onClick={handleOpenAddPlantModal}
           sx={appTheme.menuBar.buttons}
+          startIcon={isLargeScreen ? undefined : <AddIcon />}
         >
-          Add Plant
-        </Button>
+          <ButtonText>Add Plant</ButtonText>
+        </StyledButton>
         <Link to="/zones">
-          <Button sx={appTheme.menuBar.buttons} onClick={backToSeason}>
-            Go Back
-          </Button>
+          <StyledButton
+            sx={appTheme.menuBar.buttons}
+            onClick={backToSeason}
+            startIcon={isLargeScreen ? undefined : <ArrowBackIosNewIcon />}
+          >
+            <ButtonText>Go Back</ButtonText>
+          </StyledButton>
         </Link>
         <AddPlantModal
           open={isAddPlantModalOpen}
           onClose={handleCloseAddPlantModal}
           fetchPlants={fetchPlants}
         />
-      </Box>
+      </StyledButtonContainer>
     </MenuBar>
   );
 }
+
+// Styled components
+const StyledButtonContainer = styled(Box)({
+  display: "flex",
+  margin: "0 15px",
+  gap: "0.5rem",
+  // Medium screens
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    margin: "0 10px",
+    gap: "0.25rem",
+  },
+  // Large screens
+  "@media (min-width: 1024px)": {
+    margin: "0 15px",
+    gap: "0.5rem",
+  },
+});
+const StyledButton = styled(Button)({
+  // Medium screens
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    minWidth: "45px",
+    "& .MuiButton-startIcon": {
+      margin: 0,
+      marginLeft: 0,
+      marginRight: 0,
+    },
+  },
+  // Large screens
+  "@media (min-width: 1024px)": {
+    fontSize: "0.85rem",
+    minWidth: "auto",
+    width: "auto",
+    "& .MuiButton-startIcon": {
+      marginRight: "8px",
+    },
+  },
+});
+const ButtonText = styled("span")({
+  // Show text only on small (600-767px) and large (1024px+) screens
+  display: "none",
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    display: "inline",
+  },
+  "@media (min-width: 1024px)": {
+    display: "inline",
+  },
+});
