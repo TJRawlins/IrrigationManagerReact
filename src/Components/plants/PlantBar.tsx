@@ -11,6 +11,7 @@ import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
 import { useAppTheme } from "../../theme/useAppTheme";
 import MenuBar from "../common/MenuBar";
+import FloatingActionButton from "../common/FloatingActionButton";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -25,6 +26,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const navigate = useNavigate();
   const [isAddPlantModalOpen, setIsAddPlantModalOpen] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width:1024px)");
+  const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
 
   const subtitle = `${zone.name}, ${zone.totalPlants} plant${
     zone.totalPlants !== 1 ? "s" : ""
@@ -45,6 +47,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
 
   const backToSeason = () => {
     updateLocalStorageSeason(season.id);
+    navigate("/zones");
   };
 
   const handleOpenAddPlantModal = () => setIsAddPlantModalOpen(true);
@@ -55,46 +58,60 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   }, [plant, zone, season]);
 
   return (
-    <MenuBar
-      title="Plants"
-      subtitle={subtitle}
-      mainBarStyles={appTheme.menuBar.mainBar}
-      totalGallonsProps={{
-        totalGalPerWeek: zone.totalGalPerWeek,
-        totalGalPerMonth: zone.totalGalPerMonth,
-        totalGalPerYear: zone.totalGalPerYear,
-        buttonStyles: appTheme.menuBar.buttons,
-      }}
-      isSeasonRelated={true}
-      seasonFunctions={{
-        fetchZones: handleSeasonChange,
-        updateLocalStorageSeason,
-      }}
-    >
-      <StyledButtonContainer>
-        <StyledButton
-          onClick={handleOpenAddPlantModal}
-          sx={appTheme.menuBar.buttons}
-          startIcon={isLargeScreen ? undefined : <AddIcon />}
-        >
-          <ButtonText>Add Plant</ButtonText>
-        </StyledButton>
-        <Link to="/zones">
-          <StyledButton
-            sx={appTheme.menuBar.buttons}
-            onClick={backToSeason}
-            startIcon={isLargeScreen ? undefined : <ArrowBackIosNewIcon />}
-          >
-            <ButtonText>Go Back</ButtonText>
-          </StyledButton>
-        </Link>
+    <>
+      <MenuBar
+        title="Plants"
+        subtitle={subtitle}
+        mainBarStyles={appTheme.menuBar.mainBar}
+        totalGallonsProps={{
+          totalGalPerWeek: zone.totalGalPerWeek,
+          totalGalPerMonth: zone.totalGalPerMonth,
+          totalGalPerYear: zone.totalGalPerYear,
+          buttonStyles: appTheme.menuBar.buttons,
+        }}
+        isSeasonRelated={true}
+        seasonFunctions={{
+          fetchZones: handleSeasonChange,
+          updateLocalStorageSeason,
+        }}
+      >
+        {isLargeScreen && (
+          <StyledButtonContainer>
+            <StyledButton
+              onClick={handleOpenAddPlantModal}
+              sx={appTheme.menuBar.buttons}
+              startIcon={<AddIcon />}
+            >
+              <ButtonText>Add Plant</ButtonText>
+            </StyledButton>
+            <Link to="/zones">
+              <StyledButton
+                sx={appTheme.menuBar.buttons}
+                onClick={backToSeason}
+                startIcon={<ArrowBackIosNewIcon />}
+              >
+                <ButtonText>Go Back</ButtonText>
+              </StyledButton>
+            </Link>
+          </StyledButtonContainer>
+        )}
         <AddPlantModal
           open={isAddPlantModalOpen}
           onClose={handleCloseAddPlantModal}
           fetchPlants={fetchPlants}
         />
-      </StyledButtonContainer>
-    </MenuBar>
+      </MenuBar>
+      {isSmallOrMobile && (
+        <FloatingActionButton
+          onAdd={handleOpenAddPlantModal}
+          showAdd={true}
+          addLabel="Add Plant"
+          onBack={backToSeason}
+          showBack={true}
+          backLabel="Go Back"
+        />
+      )}
+    </>
   );
 }
 

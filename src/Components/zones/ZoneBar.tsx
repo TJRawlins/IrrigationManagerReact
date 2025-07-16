@@ -9,6 +9,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import AddIcon from "@mui/icons-material/Add";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import FloatingActionButton from "../common/FloatingActionButton";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -30,6 +31,7 @@ export default function ZoneBar({
   const { menuBar } = useAppTheme();
   const [isAddZoneModalOpen, setIsAddZoneModalOpen] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width:1024px)");
+  const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
 
   // Filter zones for the current season
   const zonesForSeason = Array.isArray(zoneList)
@@ -63,48 +65,63 @@ export default function ZoneBar({
   };
 
   return (
-    <MenuBar
-      title="Zones"
-      subtitle={subtitle}
-      mainBarStyles={menuBar.mainBar}
-      totalGallonsProps={{
-        totalGalPerWeek: season.totalGalPerWeek,
-        totalGalPerMonth: season.totalGalPerMonth,
-        totalGalPerYear: season.totalGalPerYear,
-        buttonStyles: menuBar.buttons,
-      }}
-      isSeasonRelated={true}
-      seasonFunctions={{
-        fetchZones,
-        updateLocalStorageSeason,
-      }}
-    >
-      <StyledButtonContainer>
-        {isZonesStoredLocally() && (
-          <StyledButton
-            onClick={handleOpenAddZoneModal}
-            disabled={isLoadingZones}
-            sx={menuBar.buttons}
-            startIcon={isLargeScreen ? undefined : <AddIcon />}
-          >
-            <ButtonText>Add Zone</ButtonText>
-          </StyledButton>
+    <>
+      <MenuBar
+        title="Zones"
+        subtitle={subtitle}
+        mainBarStyles={menuBar.mainBar}
+        totalGallonsProps={{
+          totalGalPerWeek: season.totalGalPerWeek,
+          totalGalPerMonth: season.totalGalPerMonth,
+          totalGalPerYear: season.totalGalPerYear,
+          buttonStyles: menuBar.buttons,
+        }}
+        isSeasonRelated={true}
+        seasonFunctions={{
+          fetchZones,
+          updateLocalStorageSeason,
+        }}
+      >
+        {isLargeScreen && (
+          <StyledButtonContainer>
+            {isZonesStoredLocally() && (
+              <StyledButton
+                onClick={handleOpenAddZoneModal}
+                disabled={isLoadingZones}
+                sx={menuBar.buttons}
+                startIcon={<AddIcon />}
+              >
+                <ButtonText>Add Zone</ButtonText>
+              </StyledButton>
+            )}
+            <StyledButton
+              onClick={handleToggleExpanded}
+              disabled={isLoadingZones}
+              sx={menuBar.buttons}
+              startIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            >
+              <ButtonText>{expanded ? "Collapse" : "Expand"}</ButtonText>
+            </StyledButton>
+          </StyledButtonContainer>
         )}
-        <StyledButton
-          onClick={handleToggleExpanded}
-          disabled={isLoadingZones}
-          sx={menuBar.buttons}
-          startIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        >
-          <ButtonText>{expanded ? "Collapse" : "Expand"}</ButtonText>
-        </StyledButton>
         <AddZoneModal
           open={isAddZoneModalOpen}
           onClose={handleCloseAddZoneModal}
           fetchZones={fetchZones}
         />
-      </StyledButtonContainer>
-    </MenuBar>
+      </MenuBar>
+      {isSmallOrMobile && (
+        <FloatingActionButton
+          onAdd={handleOpenAddZoneModal}
+          showAdd={!!isZonesStoredLocally()}
+          onExpand={handleToggleExpanded}
+          showExpand={true}
+          expanded={expanded}
+          addLabel="Add Zone"
+          expandLabel={expanded ? "Collapse" : "Expand"}
+        />
+      )}
+    </>
   );
 }
 
