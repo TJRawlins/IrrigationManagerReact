@@ -46,29 +46,33 @@ export default function MenuBar({
         }}
       >
         <StyledLeftSection>
-          <StyledTitleContainer>
-            <StyledTitle sx={{ ...fonts.headers, ...menuBar.title }}>
-              {title}
-            </StyledTitle>
-            {subtitle && (
-              <StyledSubtitle sx={{ ...menuBar.subtitle }}>
-                {subtitle}
-              </StyledSubtitle>
-            )}
-          </StyledTitleContainer>
-          <StyledDivider orientation="vertical" flexItem />
-          <StyledActionContainer>
+          <StyledFlexRow>
+            <StyledTitleContainer>
+              <StyledTitle sx={{ ...fonts.headers, ...menuBar.title }}>
+                {title}
+              </StyledTitle>
+              {subtitle && (
+                <StyledSubtitle sx={{ ...menuBar.subtitle }}>
+                  {subtitle}
+                </StyledSubtitle>
+              )}
+            </StyledTitleContainer>
             {isSeasonRelated && seasonFunctions && (
               <>
+                <StyledDivider orientation="vertical" flexItem />
                 <SeasonIcons
                   fetchZones={seasonFunctions.fetchZones}
                   updateLocalStorageSeason={
                     seasonFunctions.updateLocalStorageSeason
                   }
                 />
-                <StyledDivider orientation="vertical" flexItem />
-                <TotalGallons {...totalGallonsProps} />
               </>
+            )}
+          </StyledFlexRow>
+          <StyledDivider orientation="vertical" flexItem />
+          <StyledActionContainer>
+            {isSeasonRelated && seasonFunctions && (
+              <TotalGallons {...totalGallonsProps} />
             )}
           </StyledActionContainer>
         </StyledLeftSection>
@@ -103,6 +107,12 @@ const StyledMenuBarWrapper = styled(Box)({
   },
 });
 
+const StyledFlexRow = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  height: "100%",
+});
+
 const StyledLeftSection = styled(Box)({
   display: "flex",
   justifyContent: "left",
@@ -120,6 +130,7 @@ const StyledRightSection = styled(Box)({
 const StyledTitleContainer = styled(Box)({
   display: "flex",
   flexDirection: "column",
+  justifyContent: "center",
   marginRight: "1rem",
 });
 
