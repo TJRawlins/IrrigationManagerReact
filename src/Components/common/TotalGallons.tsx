@@ -90,6 +90,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
   alignItems: "center",
   gap: theme.spacing(3),
   margin: theme.spacing(0, 2),
+  // Small and mobile screens (320px-767px)
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    margin: "0",
+  },
   // Medium screens
   "@media (min-width: 768px) and (max-width: 1023px)": {
     gap: theme.spacing(2),
@@ -139,6 +143,11 @@ const ToggleButton = styled(Button, {
       ? theme.custom.totalGallons.toggleButton.selected.background
       : theme.custom.totalGallons.toggleButton.unselected.background,
   },
+  // Small and mobile screens (320px-767px)
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    padding: "0.5rem 0.75rem",
+    minWidth: "45px",
+  },
   // Medium screens
   "@media (min-width: 768px) and (max-width: 1023px)": {
     minWidth: "auto",
@@ -151,9 +160,10 @@ const ToggleButton = styled(Button, {
 
 const ButtonText = styled("span")({
   marginLeft: "6px",
-  display: "inline",
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    display: "none",
+  display: "none",
+  // Large screens
+  "@media (min-width: 1024px)": {
+    display: "inline",
   },
 });
 

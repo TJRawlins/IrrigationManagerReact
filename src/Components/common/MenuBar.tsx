@@ -119,6 +119,13 @@ const StyledLeftSection = styled(Box)({
   height: "100%",
   alignItems: "center",
   flex: 1,
+  // Small and mobile screens (320px-767px)
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "0.75rem",
+    padding: "0.75rem 0",
+  },
 });
 
 const StyledRightSection = styled(Box)({
@@ -167,6 +174,10 @@ const StyledActionContainer = styled(Box)({
 const StyledDivider = styled(Divider)({
   height: "60%",
   margin: "0.75rem",
+  // Hide on small and mobile screens (320px-767px)
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    display: "none",
+  },
 });
 
 const StyledUserControlsWrapper = styled("div")({
