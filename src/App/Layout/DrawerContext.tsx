@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Create context for drawer state
 interface DrawerContextType {
@@ -22,6 +29,13 @@ interface DrawerProviderProps {
 
 export const DrawerProvider = ({ children }: DrawerProviderProps) => {
   const [open, setOpen] = useState(false);
+  const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
+
+  useEffect(() => {
+    if (isSmallOrMobile) {
+      setOpen(false);
+    }
+  }, [isSmallOrMobile]);
 
   return (
     <DrawerContext.Provider value={{ open, setOpen }}>

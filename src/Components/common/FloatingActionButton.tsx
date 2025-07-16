@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useAppTheme } from "../../theme/useAppTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -19,6 +20,9 @@ interface FloatingActionButtonProps {
   onBack?: () => void;
   showBack?: boolean;
   backLabel?: string;
+  onOpenNavbar?: () => void;
+  showOpenNavbar?: boolean;
+  openNavbarLabel?: string;
 }
 
 const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
@@ -32,6 +36,9 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   onBack,
   showBack = false,
   backLabel = "Go Back",
+  onOpenNavbar,
+  showOpenNavbar = false,
+  openNavbarLabel = "Open navigation menu",
 }) => {
   const { menuBar } = useAppTheme();
   // Only show on small and mobile screens (max-width: 1023px)
@@ -51,20 +58,49 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
         gap: 2,
       }}
     >
+      {/* Open Navbar button always at the top */}
+      {showOpenNavbar && onOpenNavbar && (
+        <Fab
+          color="primary"
+          aria-label={openNavbarLabel}
+          onClick={onOpenNavbar}
+          sx={{
+            backgroundColor: menuBar.buttons.background,
+            color: menuBar.buttons.color,
+            boxShadow: 3,
+            "&:hover": {
+              backgroundColor:
+                menuBar.buttons["&:hover"]?.backgroundColor ||
+                menuBar.buttons.hover?.background ||
+                menuBar.buttons.background,
+              color:
+                menuBar.buttons["&:hover"]?.color ||
+                menuBar.buttons.hover?.color ||
+                menuBar.buttons.color,
+            },
+          }}
+        >
+          <ChevronRightIcon />
+        </Fab>
+      )}
       {showBack && onBack && (
         <Fab
           color="primary"
           aria-label={backLabel}
           onClick={onBack}
           sx={{
-            mb: 1,
-            backgroundColor: menuBar.buttons,
+            backgroundColor: menuBar.buttons.background,
             color: menuBar.buttons.color,
             boxShadow: 3,
             "&:hover": {
               backgroundColor:
-                menuBar.buttons["&:hover"]?.backgroundColor || menuBar.buttons,
-              color: menuBar.buttons["&:hover"]?.color || menuBar.buttons.color,
+                menuBar.buttons["&:hover"]?.backgroundColor ||
+                menuBar.buttons.hover?.background ||
+                menuBar.buttons.background,
+              color:
+                menuBar.buttons["&:hover"]?.color ||
+                menuBar.buttons.hover?.color ||
+                menuBar.buttons.color,
             },
           }}
         >
@@ -77,14 +113,18 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           aria-label={expandLabel}
           onClick={onExpand}
           sx={{
-            mb: 1,
-            backgroundColor: menuBar.buttons,
+            backgroundColor: menuBar.buttons.background,
             color: menuBar.buttons.color,
             boxShadow: 3,
             "&:hover": {
               backgroundColor:
-                menuBar.buttons["&:hover"]?.backgroundColor || menuBar.buttons,
-              color: menuBar.buttons["&:hover"]?.color || menuBar.buttons.color,
+                menuBar.buttons["&:hover"]?.backgroundColor ||
+                menuBar.buttons.hover?.background ||
+                menuBar.buttons.background,
+              color:
+                menuBar.buttons["&:hover"]?.color ||
+                menuBar.buttons.hover?.color ||
+                menuBar.buttons.color,
             },
           }}
         >
@@ -97,13 +137,18 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           aria-label={addLabel}
           onClick={onAdd}
           sx={{
-            backgroundColor: menuBar.buttons,
+            backgroundColor: menuBar.buttons.background,
             color: menuBar.buttons.color,
             boxShadow: 3,
             "&:hover": {
               backgroundColor:
-                menuBar.buttons["&:hover"]?.backgroundColor || menuBar.buttons,
-              color: menuBar.buttons["&:hover"]?.color || menuBar.buttons.color,
+                menuBar.buttons["&:hover"]?.backgroundColor ||
+                menuBar.buttons.hover?.background ||
+                menuBar.buttons.background,
+              color:
+                menuBar.buttons["&:hover"]?.color ||
+                menuBar.buttons.hover?.color ||
+                menuBar.buttons.color,
             },
           }}
         >

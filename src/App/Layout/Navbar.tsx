@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { MdOutlineBrandingWatermark as ZonesIcon } from "react-icons/md";
 import MuiDrawer from "@mui/material/Drawer";
 import Typography from "@mui/material/Typography";
@@ -34,12 +35,35 @@ import List from "@mui/material/List";
 import { useAppTheme } from "../../theme/useAppTheme";
 import { useContext } from "react";
 import { ColorModeContext } from "../../theme/theme";
+import React from "react";
 
 export default function Navbar() {
   const theme = useTheme();
   const { open, setOpen } = useDrawer();
   const { sidePanel } = useAppTheme();
   const colorMode = useContext(ColorModeContext);
+  const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
+
+  // Hide Drawer on small/mobile screens by default
+  React.useEffect(() => {
+    if (isSmallOrMobile && open) {
+      setOpen(false);
+    }
+  }, [isSmallOrMobile]);
+
+  // Handler for chevron left (close)
+  const handleDrawerClose = () => {
+    if (isSmallOrMobile) {
+      setOpen(false);
+    } else {
+      setOpen(false);
+    }
+  };
+
+  // Handler for floating action button (open)
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
   // Navigation menu items for the top section
   const topMenuItems = [
@@ -87,8 +111,13 @@ export default function Navbar() {
   return (
     <>
       <CssBaseline />
-      {/* Remove AppBar and Toolbar, move logo/title to DrawerHeader */}
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant="permanent"
+        open={open && (!isSmallOrMobile || (isSmallOrMobile && open))}
+        sx={{
+          display: isSmallOrMobile && !open ? "none" : "block",
+        }}
+      >
         <DrawerHeader
           sx={{ justifyContent: open ? "space-between" : "center", px: 2 }}
         >
@@ -104,7 +133,7 @@ export default function Navbar() {
                   droplet
                 </StyledLogoText>
               </LogoContainer>
-              <IconButton onClick={() => setOpen(false)}>
+              <IconButton onClick={handleDrawerClose}>
                 {theme.direction === "rtl" ? (
                   <ChevronRightIcon style={{ color: sidePanel.iconColor }} />
                 ) : (
@@ -117,7 +146,7 @@ export default function Navbar() {
               src={logoIcon}
               alt="logo"
               style={{ cursor: "pointer" }}
-              onClick={() => setOpen(true)}
+              onClick={handleDrawerOpen}
             />
           )}
         </DrawerHeader>

@@ -12,6 +12,7 @@ import { updateCurrentSeason } from "../../redux/seasonSlice";
 import { useAppTheme } from "../../theme/useAppTheme";
 import MenuBar from "../common/MenuBar";
 import FloatingActionButton from "../common/FloatingActionButton";
+import { useDrawer } from "../../App/Layout/DrawerContext";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -27,6 +28,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const [isAddPlantModalOpen, setIsAddPlantModalOpen] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width:1024px)");
   const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
+  const { open, setOpen } = useDrawer();
 
   const subtitle = `${zone.name}, ${zone.totalPlants} plant${
     zone.totalPlants !== 1 ? "s" : ""
@@ -109,6 +111,8 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
           onBack={backToSeason}
           showBack={true}
           backLabel="Go Back"
+          showOpenNavbar={isSmallOrMobile && !open}
+          onOpenNavbar={() => setOpen(true)}
         />
       )}
     </>
