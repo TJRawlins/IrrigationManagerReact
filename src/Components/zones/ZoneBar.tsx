@@ -71,6 +71,7 @@ export default function ZoneBar({
       <MenuBar
         title="Zones"
         subtitle={subtitle}
+        mobileSubtitle={subtitle}
         mainBarStyles={menuBar.mainBar}
         totalGallonsProps={{
           totalGalPerWeek: season.totalGalPerWeek,

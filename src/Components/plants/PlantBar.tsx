@@ -18,6 +18,11 @@ type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
 };
 
+// Helper function to truncate text
+const truncateText = (text: string, maxLength: number = 16): string => {
+  return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+};
+
 export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { plant } = useSelector((state: RootState) => state.plant);
@@ -30,9 +35,22 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
   const { open, setOpen } = useDrawer();
 
-  const subtitle = `${zone.name}, ${zone.totalPlants} plant${
-    zone.totalPlants !== 1 ? "s" : ""
-  }`;
+  // const subtitle = `${zone.name}, ${zone.totalPlants} plant${
+  //   zone.totalPlants !== 1 ? "s" : ""
+  // }`;
+
+  // Helper function to truncate text
+  const truncateText = (text: string, maxLength: number = 16): string => {
+    return text.length > maxLength
+      ? `${text.substring(0, maxLength)}...`
+      : text;
+  };
+
+  // In your PlantBar component
+  const mobileSubtitle = truncateText(zone.name);
+  const desktopSubtitle = `${truncateText(zone.name)}, ${
+    zone.totalPlants
+  } plant${zone.totalPlants !== 1 ? "s" : ""}`;
 
   const updateLocalStorageSeason = (seasonId: number) => {
     agent.Seasons.details(seasonId).then((season) => {
@@ -63,7 +81,8 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
     <>
       <MenuBar
         title="Plants"
-        subtitle={subtitle}
+        subtitle={desktopSubtitle}
+        mobileSubtitle={mobileSubtitle}
         mainBarStyles={appTheme.menuBar.mainBar}
         totalGallonsProps={{
           totalGalPerWeek: zone.totalGalPerWeek,

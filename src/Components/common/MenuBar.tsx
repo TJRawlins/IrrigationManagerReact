@@ -16,6 +16,7 @@ type MenuBarProps = {
     buttonStyles: any;
   };
   subtitle?: string | ReactNode;
+  mobileSubtitle?: string;
   isSeasonRelated?: boolean;
   seasonFunctions?: {
     fetchZones: (args: number) => Promise<void>;
@@ -29,6 +30,7 @@ export default function MenuBar({
   children,
   totalGallonsProps,
   subtitle,
+  mobileSubtitle,
   isSeasonRelated = false,
   seasonFunctions,
 }: MenuBarProps) {
@@ -52,9 +54,26 @@ export default function MenuBar({
                 {title}
               </StyledTitle>
               {subtitle && (
-                <StyledSubtitle sx={{ ...menuBar.subtitle }}>
-                  {subtitle}
-                </StyledSubtitle>
+                <>
+                  {/* Desktop subtitle */}
+                  <StyledSubtitle
+                    sx={{
+                      ...menuBar.subtitle,
+                      display: { xs: "none", sm: "block" },
+                    }}
+                  >
+                    {subtitle}
+                  </StyledSubtitle>
+                  {/* Mobile subtitle */}
+                  <StyledSubtitle
+                    sx={{
+                      ...menuBar.subtitle,
+                      display: { xs: "block", sm: "none" },
+                    }}
+                  >
+                    {mobileSubtitle}
+                  </StyledSubtitle>
+                </>
               )}
             </StyledTitleContainer>
             {isSeasonRelated && seasonFunctions && (
