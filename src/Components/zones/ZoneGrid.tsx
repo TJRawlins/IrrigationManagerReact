@@ -1,4 +1,4 @@
-import { Box, Container, CssBaseline, Grid, styled } from "@mui/material";
+import { Container, CssBaseline, Grid, styled } from "@mui/material";
 import ZoneCard from "./zoneCard/ZoneCard";
 import EditZone from "./EditZone";
 import { useState } from "react";
@@ -28,63 +28,74 @@ export default function ZoneGrid({
     <>
       <CssBaseline />
       <StyledZoneGridContainer>
-        <Box sx={{ flexGrow: 1, height: "100%" }}>
-          <Grid
-            container
-            spacing={{ xs: "1rem" }}
-            columns={{ xs: 4, sm: 6, md: 9 }}
-            padding={".75rem"}
-            justifyContent={{ xs: "center", sm: "center", md: "left" }}
-            sx={{ height: "auto" }}
-          >
-            {isLoadingZones ? (
-              <ZoneCardSkeleton />
-            ) : (
-              zoneList.map((zone) => (
-                <Grid
-                  item
-                  key={zone.id}
-                  sx={{
-                    paddingTop: "1.5rem !important",
-                    paddingLeft: "1.5rem !important",
-                  }}
-                >
-                  <ZoneCard
-                    zone={zone}
-                    fetchZones={fetchZones}
-                    setIsShowEdit={setIsShowEdit}
-                    updateLocalStorageSeason={updateLocalStorageSeason}
-                    expanded={expanded}
-                    onExpandedChange={onExpandedChange}
-                  />
-                </Grid>
-              ))
-            )}
-            <Grid>
-              <EditZone
+        <Grid
+          container
+          spacing={{ xs: "1rem" }}
+          columns={{ xs: 4, sm: 6, md: 9 }}
+          padding={".75rem"}
+          justifyContent={{ xs: "center", sm: "center", md: "left" }}
+          sx={{
+            height: "auto",
+
+            gap: "1rem",
+            padding: "2rem",
+          }}
+        >
+          {isLoadingZones ? (
+            <ZoneCardSkeleton />
+          ) : (
+            zoneList.map((zone) => (
+              <ZoneCard
+                zone={zone}
                 fetchZones={fetchZones}
-                updateLocalStorageSeason={updateLocalStorageSeason}
                 setIsShowEdit={setIsShowEdit}
-                isShowEdit={isShowEdit}
+                updateLocalStorageSeason={updateLocalStorageSeason}
+                expanded={expanded}
+                onExpandedChange={onExpandedChange}
               />
-            </Grid>
+            ))
+          )}
+          <Grid>
+            <EditZone
+              fetchZones={fetchZones}
+              updateLocalStorageSeason={updateLocalStorageSeason}
+              setIsShowEdit={setIsShowEdit}
+              isShowEdit={isShowEdit}
+            />
           </Grid>
-        </Box>
+        </Grid>
       </StyledZoneGridContainer>
     </>
   );
 }
 
-// Styled container with background styling
+// Styled container with improved layout and responsive design
 const StyledZoneGridContainer = styled(Container)(({ theme }) => ({
   maxWidth: "100% !important",
   padding: "0 !important",
   margin: "0 !important",
-  height: "100% !important",
+  height: "100%",
   backgroundColor: theme.custom.zonePage.gridBackground,
-  borderRadius: theme.custom.zonePage.gridBorderRadius,
-  minHeight: theme.custom.zonePage.gridMinHeight,
   flexGrow: 1,
   display: "flex",
   flexDirection: "column",
+  overflow: "auto",
+
+  // Responsive breakpoints following industry standards
+  // Large screens (1024px+)
+  "@media (min-width: 1024px)": {
+    minHeight: "calc(100vh - 128px)", // Account for navbar (64px) + menubar (64px)
+  },
+  // Medium screens (768px-1023px)
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    minHeight: "calc(100vh - 120px)", // Slightly smaller menubar on medium screens
+  },
+  // Small screens (600px-767px)
+  "@media (min-width: 600px) and (max-width: 767px)": {
+    minHeight: "calc(100vh - 140px)", // Account for larger mobile menubar
+  },
+  // Mobile (320px-599px)
+  "@media (min-width: 320px) and (max-width: 599px)": {
+    minHeight: "calc(100vh - 160px)", // Account for mobile layout adjustments
+  },
 }));

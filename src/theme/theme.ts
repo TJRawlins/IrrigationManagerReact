@@ -245,8 +245,6 @@ declare module "@mui/material/styles" {
       };
       zonePage: {
         gridBackground: string;
-        gridBorderRadius: string;
-        gridMinHeight: string;
         containerBackground: string;
       };
       sidePanel: {
@@ -537,7 +535,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             image: "#64c9bf7a",
           },
           zoneCard: {
-            headerBackground: "#edf1f1",
+            headerBackground: "#e3e7e7",
             headerText: black,
             contentBackground: "#ffffff",
             text: black,
@@ -552,9 +550,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             shadow: "0 2px 4px rgba(0,0,0,0.1)",
           },
           zonePage: {
-            gridBackground: "#ced8da",
-            gridBorderRadius: "8px",
-            gridMinHeight: "calc(100vh - 200px)", // Adjust based on navBar height
+            gridBackground: "#f3f4f6",
             containerBackground: "#eef2f6",
           },
         }
@@ -759,8 +755,6 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           zonePage: {
             gridBackground: "#1f2a41",
-            gridBorderRadius: "8px",
-            gridMinHeight: "calc(100vh - 200px)", // Adjust based on navBar height
             containerBackground: "#141b2d",
           },
         };

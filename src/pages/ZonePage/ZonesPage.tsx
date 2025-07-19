@@ -130,8 +130,7 @@ export default ZonesPage;
 const ZonePageContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  minHeight: "100vh",
-  height: "100%",
+  height: "100vh", // Use viewport height instead of minHeight
   backgroundColor: theme.custom.zonePage.containerBackground,
   // Accessibility: Ensure proper focus management
   outline: "none",
@@ -139,10 +138,22 @@ const ZonePageContainer = styled(Box)(({ theme }) => ({
     outline: `2px solid ${theme.palette.primary.main}`,
     outlineOffset: "2px",
   },
-  [theme.breakpoints.down("sm")]: {
-    minHeight: "100vh",
+
+  // Responsive breakpoints following industry standards
+  // Large screens (1024px+)
+  "@media (min-width: 1024px)": {
+    height: "100vh",
   },
-  [theme.breakpoints.up("md")]: {
-    minHeight: "calc(100vh - 64px)", // Account for navbar height
+  // Medium screens (768px-1023px)
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    height: "100vh",
+  },
+  // Small screens (600px-767px)
+  "@media (min-width: 600px) and (max-width: 767px)": {
+    height: "100vh",
+  },
+  // Mobile (320px-599px)
+  "@media (min-width: 320px) and (max-width: 599px)": {
+    height: "100vh",
   },
 }));

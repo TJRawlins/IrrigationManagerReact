@@ -298,6 +298,7 @@ const StyledCard = styled(Card)`
   flex-direction: column;
   width: 370px !important;
   box-shadow: none !important;
+  height: fit-content;
 `;
 
 const StyledZoneCardHeader = styled(Box)`

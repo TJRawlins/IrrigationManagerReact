@@ -1,22 +1,12 @@
-import { Card, CardContent, CardHeader, Skeleton, Stack } from "@mui/material";
+import { Card, CardContent, CardHeader, Skeleton, Grid } from "@mui/material";
 
 function ZoneCardSkeleton() {
   return (
     <>
-      <Stack
-        spacing={1}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          marginTop: "16px",
-          marginLeft: "16px",
-        }}
-      >
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
         <Card
           sx={{
-            width: "300px",
+            width: "100%",
             height: "194px",
             borderRadius: "10px",
             boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important",
@@ -54,21 +44,11 @@ function ZoneCardSkeleton() {
             }}
           ></CardContent>
         </Card>
-      </Stack>
-      <Stack
-        spacing={1}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          marginTop: "16px",
-          marginLeft: "16px",
-        }}
-      >
+      </Grid>
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
         <Card
           sx={{
-            width: "300px",
+            width: "100%",
             height: "194px",
             borderRadius: "10px",
             boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important",
@@ -106,21 +86,11 @@ function ZoneCardSkeleton() {
             }}
           ></CardContent>
         </Card>
-      </Stack>
-      <Stack
-        spacing={1}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          marginTop: "16px",
-          marginLeft: "16px",
-        }}
-      >
+      </Grid>
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
         <Card
           sx={{
-            width: "300px",
+            width: "100%",
             height: "194px",
             borderRadius: "10px",
             boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important",
@@ -158,8 +128,9 @@ function ZoneCardSkeleton() {
             }}
           ></CardContent>
         </Card>
-      </Stack>
+      </Grid>
     </>
   );
 }
+
 export default ZoneCardSkeleton;
