@@ -18,11 +18,6 @@ type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
 };
 
-// Helper function to truncate text
-const truncateText = (text: string, maxLength: number = 16): string => {
-  return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
-};
-
 export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const { zone } = useSelector((state: RootState) => state.zone);
   const { plant } = useSelector((state: RootState) => state.plant);
