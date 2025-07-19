@@ -290,14 +290,11 @@ const StyledLogo = styled("img")`
   margin-right: 0.5rem;
 `;
 
-const StyledLogoText = styled(Typography)(({ theme }) => ({
+const StyledLogoText = styled(Typography)({
   fontFamily: "MuseoModerno, sans-serif",
   fontSize: "2.25rem",
   letterSpacing: "-0.1rem",
-  [theme.breakpoints.down("sm")]: {
-    display: "none",
-  },
-}));
+});
 
 const StyledLink = styled(Link)`
   text-decoration: none;
