@@ -324,10 +324,7 @@ function EditZone({
       <Modal
         id="modal-overlay"
         open={isShowEdit}
-        onClose={(reason) => {
-          if (reason === "backdropClick" || reason === "escapeKeyDown") return;
-          handleClose();
-        }}
+        onClose={() => {}}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         slotProps={{
@@ -508,7 +505,7 @@ function EditZone({
                         },
                         "& .MuiSelect-select": {
                           color: colors.modal.fieldInputFont,
-                        }
+                        },
                       }}
                     >
                       <MenuItem value="Summer">Summer</MenuItem>
@@ -596,9 +593,10 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   "& .MuiSelect-select": {
     padding: "5px 12px !important",
   },
-  "& .MuiInputBase-input:focus, & .MuiInputBase-input:hover, & .MuiSelect-select:focus, & .MuiSelect-select:hover": {
-    border: `1px solid ${theme.custom.modal.fieldBorder}`,
-  }
+  "& .MuiInputBase-input:focus, & .MuiInputBase-input:hover, & .MuiSelect-select:focus, & .MuiSelect-select:hover":
+    {
+      border: `1px solid ${theme.custom.modal.fieldBorder}`,
+    },
 }));
 
 export default EditZone;
