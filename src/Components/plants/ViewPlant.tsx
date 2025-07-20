@@ -55,36 +55,36 @@ function ViewPlant({
         opacity: 0.5,
       },
       plantCard: {
-        backgroundColor: appTheme.colors.white.vary,
+        // backgroundColor: appTheme.colors.white.vary,
         border: "1px solid " + appTheme.colors.primary.const + " !important",
         boxShadow: "1px -1px 20px 3px " + appTheme.colors.primary.shadowGlow,
       },
       plantCardIconWrapper: {
-        backgroundColor: appTheme.colors.whiteBlue.vary,
+        // backgroundColor: appTheme.colors.whiteBlue.vary,
       },
       plantCardTitle: {
-        color: appTheme.colors.gray.toWhite,
+        // color: appTheme.colors.gray.toWhite,
       },
       plantContents: {
-        backgroundColor: appTheme.colors.whiteBlue.alt2 + " !important",
-        color: appTheme.colors.gray.toWhite,
-        "& .MuiTypography-root": { color: appTheme.colors.gray.toWhite },
+        // backgroundColor: appTheme.colors.whiteBlue.alt2 + " !important",
+        // color: appTheme.colors.gray.toWhite,
+        // "& .MuiTypography-root": { color: appTheme.colors.gray.toWhite },
         "& .card-item-icon": { color: appTheme.colors.primary.const },
-        "& .icon-wrapper": { background: appTheme.colors.white.vary },
+        // "& .icon-wrapper": { background: appTheme.colors.white.vary },
         "& .data-set.amounts, & .card-data-group, & .zone-runtime-wrapper": {
-          background: appTheme.colors.white.toDarkGray,
+          // background: appTheme.colors.white.toDarkGray,
         },
-        "& #accordion-zone-name": { color: appTheme.colors.white.const },
+        // "& #accordion-zone-name": { color: appTheme.colors.white.const },
         "& .MuiGauge-valueText > text > tspan": {
-          fill: appTheme.colors.gray.toWhite + " !important",
+          // fill: appTheme.colors.gray.toWhite + " !important",
         },
       },
       plantCardChip: {
         backgroundColor: appTheme.colors.primary.toDarkGray + " !important",
-        color: appTheme.colors.white.const,
+        // color: appTheme.colors.white.const,
         ".iconStyle.seasonChipIcon": {
           fill: appTheme.colors.primary.const + " !important",
-          background: appTheme.colors.white.toLightGray + "!important",
+          // background: appTheme.colors.white.toLightGray + "!important",
         },
       },
       plantCardMedia: {
@@ -96,12 +96,12 @@ function ViewPlant({
         display: { xs: "flex", sm: "flex", md: "flex" },
         background: `linear-gradient(45deg, ${appTheme.colors.secondary.alt}, ${appTheme.colors.primary.alt})`,
         ".gallons-chip:nth-of-type(2)": {
-          borderRight: `1px solid ${appTheme.colors.white.alt2} !important`,
-          borderLeft: `1px solid ${appTheme.colors.white.alt2} !important`,
+          // borderRight: `1px solid ${appTheme.colors.white.alt2} !important`,
+          // borderLeft: `1px solid ${appTheme.colors.white.alt2} !important`,
         },
         ".gallons-chip-avatar": {
-          color: appTheme.colors.white.altPrimary + " !important",
-          backgroundColor: appTheme.colors.white.opacity + " !important",
+          // color: appTheme.colors.white.altPrimary + " !important",
+          // backgroundColor: appTheme.colors.white.opacity + " !important",
         },
         "& .gallons-chip-plant-card": { background: "none" },
       },

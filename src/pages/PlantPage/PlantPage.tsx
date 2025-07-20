@@ -28,7 +28,7 @@ const PlantPage = () => {
   const plantPageColorTheme = () => {
     return {
       grid: {
-        backgroundColor: appTheme.colors.whiteBlue.toDarkGray,
+        backgroundColor: appTheme.grid.sx.backgroundColor,
       },
     };
   };

@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { backdropClasses, useTheme } from "@mui/material";
 
 /**
  * Simple hook that provides access to all theme colors and styles
@@ -66,6 +66,7 @@ export const useAppTheme = () => {
     modal: {
       overlay: {
         backgroundColor: theme.custom.modal.overlay,
+        backdropFilter: "blur(4px)",
       },
       card: {
         backgroundColor: theme.custom.modal.background,
@@ -262,10 +263,6 @@ export const useAppTheme = () => {
       },
       valueLabel: {
         color: theme.custom.totalGallons.valueLabel.color,
-      },
-      mobileHint: {
-        iconColor: theme.custom.totalGallons.mobileHint.iconColor,
-        textColor: theme.custom.totalGallons.mobileHint.textColor,
       },
     },
 
