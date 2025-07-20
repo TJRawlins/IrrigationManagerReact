@@ -2,7 +2,8 @@ import { createContext, useState, useMemo } from "react";
 import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 // Color constants
-const callToActionPrimary = "#5fb5c5 ";
+// --- Primary & Secondary ---
+const callToActionPrimary = "#5fb5c5";
 const callToActionSecondary = "#2f87ad";
 const primaryLight = "#173e5b";
 const primaryDark = "#141b2d";
@@ -11,6 +12,158 @@ const buttonSecondary = "#497487";
 const white = "#ffffff";
 const softWhite = "#e0e0e0";
 const black = "#606162";
+
+// --- Status & Alerts ---
+const warningRed = "#c23f37";
+const warningText = "#eff2f5";
+const warningBorder = "#7fb5ac00";
+const infoBlue = "#2196f3";
+const errorRed = "#f44336";
+const successGreen = "#4caf50";
+const hoverBlue = "#005972";
+const hoverBlueDark = "#3a5a6a";
+
+// --- Overlay & Shadows ---
+const overlayModalLight = "#173e5ba8";
+const overlayModalDark = "#0b0f194a";
+const overlayImageLight = "#64c9bf7a";
+const overlayImageDark = "#0f5e568a";
+const shadowGlowLight = "#5252527c";
+const shadowGlowDark = "#59bab17c";
+const shadowZoneLight = "0 2px 4px rgba(0,0,0,0.1)";
+const shadowZoneDark = "0 2px 4px rgba(0,0,0,0.3)";
+
+// --- Miscellaneous ---
+const transparent = "transparent";
+const dividerWhite52 = "#ffffff52";
+const dividerWhite29 = "#ffffff29";
+const opacityPrimary14 = "#59bab114";
+const borderBottomLight = "#0000001f";
+const borderBottomDark = "#ffffff1f";
+const borderZoneLight = "#e0e0e0";
+const borderZoneDark = "#2a3441";
+const fieldLabelGray = "#707174";
+const fieldBackgroundLight = "#d9e1e9";
+const fieldBackgroundDark = "#1f2a41";
+const closeIconGray = "#707174";
+const closeIconHoverGray = "#323232";
+const closeIconDark = "#9ca3af";
+const closeIconHoverDark = "#eef2f6";
+const inactiveSeasonLight = "#b6c2c5";
+const inactiveSeasonDark = "#475a82";
+const chipBackgroundLight = "#c9d5d7";
+const chipBackgroundDark = "#1f2a41";
+
+// --- Menu/Nav ---
+const menuButtonBackgroundDark = "#1f2a41";
+const menuButtonBackgroundImageDark = "linear-gradient(#292934, #292934)";
+const menuButtonBorderLight = "#eef2f6";
+const menuButtonBorderDark = "#1f2a41";
+const menuButtonBorderHoverLight = callToActionSecondary;
+const menuButtonBorderHoverDark = callToActionPrimary;
+const menuButtonFontLight = white;
+const menuButtonFontDark = softWhite;
+const menuTitleLight = black;
+const menuTitleDark = softWhite;
+const menuSubtitleLight = black;
+const menuSubtitleDark = softWhite;
+const menuBackgroundLight = white;
+const menuBackgroundDark = primaryDark;
+const navBarBackgroundLight = primaryLight;
+const navBarBackgroundDark = primaryDark;
+const navBarColorLight = "#eef2f6";
+const navBarColorDark = white;
+const sidePanelBackgroundLight = primaryLight;
+const sidePanelBackgroundDark = primaryDark;
+const sidePanelIconColor = "#eff2f5";
+
+// --- Grid ---
+const gridBackgroundLight = "#ced8da";
+const gridBackgroundDark = "#1f2a41";
+const gridRowBackgroundLight = "#eef2f6";
+const gridRowBackgroundDark = "#1f2a41";
+const gridTextLight = "#555555";
+const gridTextDark = softWhite;
+const gridRowHoverLight = "#dae4e4";
+const gridRowHoverDark = primaryDark;
+const gridBorderLight = "#ced8da59";
+const gridBorderDark = borderBottomDark;
+const gridColumnHighlightLight = "#dae4e473";
+const gridColumnHighlightDark = "#141b2d69";
+const gridColumnTextLight = gridTextLight;
+const gridColumnTextDark = softWhite;
+const gridButtonColorLight = buttonSecondary;
+const gridButtonColorDark = "#eef2f6";
+const dataGridBackgroundLight = gridBackgroundLight;
+const dataGridBackgroundDark = gridBackgroundDark;
+const dataGridRowBackgroundLight = gridRowBackgroundLight;
+const dataGridRowBackgroundDark = gridRowBackgroundDark;
+const dataGridTextLight = gridTextLight;
+const dataGridTextDark = softWhite;
+const dataGridRowHoverLight = gridRowHoverLight;
+const dataGridRowHoverDark = gridRowHoverDark;
+const dataGridColumnHighlightLight = gridColumnHighlightLight;
+const dataGridColumnHighlightDark = gridColumnHighlightDark;
+const dataGridColumnTextLight = gridColumnTextLight;
+const dataGridColumnTextDark = gridColumnTextDark;
+const buttonWarningBackground = warningRed;
+const buttonWarningText = warningText;
+const buttonWarningBorder = warningBorder;
+const buttonWarningIcon = warningText;
+
+// --- Modal ---
+const modalBackgroundLight = "#eef2f6";
+const modalBackgroundDark = primaryDark;
+const modalBorderLight = modalBackgroundLight;
+const modalBorderDark = gridBackgroundDark;
+const modalTitleColorLight = black;
+const modalTitleColorDark = "#e5e7eb";
+const modalDescriptionLight = black;
+const modalDescriptionDark = closeIconDark;
+const modalFieldLabelLight = fieldLabelGray;
+const modalFieldLabelDark = closeIconDark;
+const modalFieldBackgroundLight = fieldBackgroundLight;
+const modalFieldBackgroundDark = fieldBackgroundDark;
+const modalFieldInputFontLight = fieldLabelGray;
+const modalFieldInputFontDark = closeIconDark;
+const modalFieldBorderLight = callToActionPrimary;
+const modalFieldBorderDark = callToActionPrimary;
+const modalButtonFontLight = modalBackgroundLight;
+const modalButtonFontDark = "#19191f";
+const modalButtonBackgroundLight = callToActionPrimary;
+const modalButtonBackgroundDark = callToActionPrimary;
+const modalButtonBorderLight = callToActionPrimary;
+const modalButtonBorderDark = callToActionPrimary;
+const modalButtonBackgroundHoverLight = transparent;
+const modalButtonBackgroundHoverDark = transparent;
+const modalButtonFontHoverLight = callToActionPrimary;
+const modalButtonFontHoverDark = callToActionPrimary;
+
+// --- Zone Card/Page ---
+const zoneCardHeaderBackgroundLight = "#e3e7e7";
+const zoneCardHeaderBackgroundDark = primaryDark;
+const zoneCardHeaderTextLight = black;
+const zoneCardHeaderTextDark = softWhite;
+const zoneCardContentBackgroundLight = white;
+const zoneCardContentBackgroundDark = primaryDark;
+const zoneCardTextLight = black;
+const zoneCardTextDark = softWhite;
+const zoneCardImageBackgroundLight = "#dce4e4";
+const zoneCardButtonBackgroundLight = buttonSecondary;
+const zoneCardButtonBackgroundDark = callToActionPrimary;
+const zoneCardButtonTextLight = white;
+const zoneCardButtonTextDark = "#19191f";
+const zoneCardButtonHoverBackground = hoverBlue;
+const zoneCardButtonHoverTextLight = "#f0f2f5";
+const zoneCardButtonHoverTextDark = "#eef2f6";
+const zoneCardBorderLight = borderZoneLight;
+const zoneCardBorderDark = borderZoneDark;
+const zoneCardShadowLight = shadowZoneLight;
+const zoneCardShadowDark = shadowZoneDark;
+const zonePageGridBackgroundLight = "#f3f4f6";
+const zonePageGridBackgroundDark = gridBackgroundDark;
+const zonePageContainerBackgroundLight = modalBackgroundLight;
+const zonePageContainerBackgroundDark = modalBackgroundDark;
 
 // Font constants
 const FONTS = {
@@ -47,9 +200,9 @@ const BUTTONS = {
     background: buttonPrimary,
     border: buttonPrimary,
     hover: {
-      background: "#005972",
+      background: hoverBlue,
       color: white,
-      border: "#005972",
+      border: hoverBlue,
     },
   },
   secondary: {
@@ -57,9 +210,9 @@ const BUTTONS = {
     background: buttonSecondary,
     border: buttonSecondary,
     hover: {
-      background: "#3a5a6a",
+      background: hoverBlueDark,
       color: white,
-      border: "#3a5a6a",
+      border: hoverBlueDark,
     },
   },
 };
@@ -175,45 +328,6 @@ declare module "@mui/material/styles" {
           border: string;
         };
       };
-      white: {
-        const: string;
-        vary: string;
-        toLightGray: string;
-        toDarkGray: string;
-        alt: string;
-        alt2: string;
-        altShade: string;
-        altPrimary: string;
-        altSecondary: string;
-        opacity: string;
-      };
-      whiteBlue: {
-        const: string;
-        vary: string;
-        varyLight: string;
-        toDarkGray: string;
-        alt: string;
-        alt2: string;
-        200: string;
-        300: string;
-        400: string;
-        500: string;
-      };
-      gray: {
-        const: string;
-        altPrimary: string;
-        toWhite: string;
-        toPrimary: string;
-        200: string;
-        300: string;
-        400: string;
-        500: string;
-      };
-      darkGray: {
-        const: string;
-        vary: string;
-        toWhite: string;
-      };
       primary: {
         const: string;
         toDarkGray: string;
@@ -277,10 +391,6 @@ declare module "@mui/material/styles" {
         valueLabel: {
           color: string;
         };
-        mobileHint: {
-          iconColor: string;
-          textColor: string;
-        };
       };
       buttons: {
         primary: {
@@ -326,10 +436,6 @@ declare module "@mui/material/styles" {
       menuBar?: Partial<Theme["custom"]["menuBar"]>;
       navBar?: Partial<Theme["custom"]["navBar"]>;
       messages?: Partial<Theme["custom"]["messages"]>;
-      white?: Partial<Theme["custom"]["white"]>;
-      whiteBlue?: Partial<Theme["custom"]["whiteBlue"]>;
-      gray?: Partial<Theme["custom"]["gray"]>;
-      darkGray?: Partial<Theme["custom"]["darkGray"]>;
       primary?: Partial<Theme["custom"]["primary"]>;
       secondary?: Partial<Theme["custom"]["secondary"]>;
       overlay?: Partial<Theme["custom"]["overlay"]>;
@@ -351,74 +457,74 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           fonts: FONTS,
           buttons: BUTTONS,
           grid: {
-            background: "#ced8da",
-            rowBackground: "#eef2f6",
-            text: "#555555",
-            rowHover: "#dae4e4",
-            border: "#ced8da59",
-            columnHighlight: "#dae4e473",
-            columnText: "#555555",
-            buttonColor: "#497487",
+            background: gridBackgroundLight,
+            rowBackground: gridRowBackgroundLight,
+            text: gridTextLight,
+            rowHover: gridRowHoverLight,
+            border: gridBorderLight,
+            columnHighlight: gridColumnHighlightLight,
+            columnText: gridColumnTextLight,
+            buttonColor: gridButtonColorLight,
             buttonWarning: {
-              background: "#c23f37",
-              text: "#eff2f5",
-              border: "#7fb5ac00",
-              icon: "#eff2f5",
+              background: warningRed,
+              text: warningText,
+              border: warningBorder,
+              icon: warningText,
             },
-            dataGridBackground: "#ced8da",
-            dataGridRowBackground: "#eef2f6",
-            dataGridText: "#555555",
-            dataGridRowHover: "#dae4e4",
-            dataGridColumnHighlight: "#dae4e473",
-            dataGridColumnText: "#555555",
-            buttonWarningBackground: "#c23f37",
-            buttonWarningText: "#eff2f5",
-            buttonWarningBorder: "#7fb5ac00",
-            buttonWarningIcon: "#eff2f5",
+            dataGridBackground: dataGridBackgroundLight,
+            dataGridRowBackground: dataGridRowBackgroundLight,
+            dataGridText: dataGridTextLight,
+            dataGridRowHover: dataGridRowHoverLight,
+            dataGridColumnHighlight: dataGridColumnHighlightLight,
+            dataGridColumnText: dataGridColumnTextLight,
+            buttonWarningBackground: buttonWarningBackground,
+            buttonWarningText: buttonWarningText,
+            buttonWarningBorder: buttonWarningBorder,
+            buttonWarningIcon: buttonWarningIcon,
           },
           modal: {
-            overlay: "#002c38a8",
-            background: "#eef2f6",
-            border: "#eef2f6",
-            titleColor: black,
-            description: black,
-            closeIcon: "#707174",
-            closeIconHover: "#323232",
-            fieldLabel: "#707174",
-            fieldBackground: "#d9e1e9",
-            fieldInputFont: "#707174",
-            fieldBorder: callToActionPrimary,
-            buttonFont: "#eef2f6",
-            buttonBackground: callToActionPrimary,
-            buttonBorder: callToActionPrimary,
-            buttonBackgroundHover: "transparent",
-            buttonFontHover: callToActionPrimary,
+            overlay: overlayModalLight,
+            background: modalBackgroundLight,
+            border: modalBorderLight,
+            titleColor: modalTitleColorLight,
+            description: modalDescriptionLight,
+            closeIcon: closeIconGray,
+            closeIconHover: closeIconHoverGray,
+            fieldLabel: modalFieldLabelLight,
+            fieldBackground: modalFieldBackgroundLight,
+            fieldInputFont: modalFieldInputFontLight,
+            fieldBorder: modalFieldBorderLight,
+            buttonFont: modalButtonFontLight,
+            buttonBackground: modalButtonBackgroundLight,
+            buttonBorder: modalButtonBorderLight,
+            buttonBackgroundHover: modalButtonBackgroundHoverLight,
+            buttonFontHover: modalButtonFontHoverLight,
           },
           menuBar: {
-            background: white,
+            background: menuBackgroundLight,
             color: primaryLight,
-            title: black,
-            subtitle: black,
-            buttonBackground: "#2f87ad",
+            title: menuTitleLight,
+            subtitle: menuSubtitleLight,
+            buttonBackground: callToActionSecondary,
             buttonBackgroundImage: white,
-            buttonFont: white,
-            buttonBorder: "#eef2f6",
-            buttonBorderHover: callToActionSecondary,
-            chipBackground: "#c9d5d7",
+            buttonFont: menuButtonFontLight,
+            buttonBorder: menuButtonBorderLight,
+            buttonBorderHover: menuButtonBorderHoverLight,
+            chipBackground: chipBackgroundLight,
             gallonsIcon: callToActionPrimary,
           },
           navBar: {
-            background: primaryLight,
-            color: "#eef2f6",
-            borderBottom: "#0000001f",
+            background: navBarBackgroundLight,
+            color: navBarColorLight,
+            borderBottom: borderBottomLight,
           },
           sidePanel: {
-            backgroundColor: primaryLight,
-            iconColor: "#eff2f5",
-            dividerColor: "#ffffff52",
+            backgroundColor: sidePanelBackgroundLight,
+            iconColor: sidePanelIconColor,
+            dividerColor: dividerWhite52,
           },
           seasonIcons: {
-            inactiveBackground: "#b6c2c5",
+            inactiveBackground: inactiveSeasonLight,
           },
           totalGallons: {
             toggleContainer: {
@@ -443,17 +549,13 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             valueLabel: {
               color: "#606162",
             },
-            mobileHint: {
-              iconColor: "silver",
-              textColor: "silver",
-            },
           },
           messages: {
             info: {
               background: "#e3f2fd",
               text: "#0d47a1",
-              border: "#2196f3",
-              icon: "#2196f3",
+              border: infoBlue,
+              icon: infoBlue,
             },
             warning: {
               background: "#fff3e0",
@@ -464,14 +566,14 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             error: {
               background: "#ffebee",
               text: "#c62828",
-              border: "#f44336",
-              icon: "#f44336",
+              border: errorRed,
+              icon: errorRed,
             },
             success: {
               background: "#e8f5e8",
               text: "#2e7d32",
-              border: "#4caf50",
-              icon: "#4caf50",
+              border: successGreen,
+              icon: successGreen,
             },
             toast: {
               background: "#f5f5f5",
@@ -479,51 +581,12 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               border: "#e0e0e0",
             },
           },
-          white: {
-            const: "#fcfcfd",
-            vary: "#dae4e4",
-            toLightGray: "#fcfcfd",
-            toDarkGray: "#fcfcfd",
-            alt: "#fcfcfd",
-            alt2: "#fcfcfd",
-            altShade: "#fcfcfd",
-            altPrimary: "#fcfcfd",
-            altSecondary: "#fcfcfd",
-            opacity: "#00000017",
-          },
-          whiteBlue: {
-            const: "#eef2f6",
-            vary: "#eef2f6",
-            varyLight: "#eef2f6",
-            toDarkGray: "#cbd7d9",
-            alt: "#0e2a4714",
-            alt2: "#eef2f6",
-            200: "#bec2c5",
-            300: "#8f9194",
-            400: "#5f6162",
-            500: "#303031",
-          },
-          gray: {
-            const: "#8b8b8b",
-            altPrimary: "#8b8b8b",
-            toWhite: "#8b8b8b",
-            toPrimary: black,
-            200: "#6f6f6f",
-            300: "#535353",
-            400: "#383838",
-            500: "#1c1c1c",
-          },
-          darkGray: {
-            const: "#8b8b8b",
-            vary: "#8b8b8b",
-            toWhite: "#8b8b8b",
-          },
           primary: {
             const: callToActionPrimary,
             toDarkGray: callToActionPrimary,
             alt: callToActionPrimary,
-            shadowGlow: "#5252527c",
-            opacity: "#59bab114",
+            shadowGlow: shadowGlowLight,
+            opacity: opacityPrimary14,
           },
           secondary: {
             const: callToActionSecondary,
@@ -531,101 +594,99 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             alt: callToActionSecondary,
           },
           overlay: {
-            modal: "#002c38a8",
-            image: "#64c9bf7a",
+            modal: overlayModalLight,
+            image: overlayImageLight,
           },
           zoneCard: {
-            headerBackground: "#e3e7e7",
-            headerText: black,
-            contentBackground: "#ffffff",
-            text: black,
-            imageBackground: "#dce4e4",
-            // buttonBackground: "#f9d114",
-            buttonBackground: "#497487",
-            // buttonText: black,
-            buttonText: "#ffffff",
-            buttonHoverBackground: "#005972",
-            buttonHoverText: "#f0f2f5",
-            border: "#e0e0e0",
-            shadow: "0 2px 4px rgba(0,0,0,0.1)",
+            headerBackground: zoneCardHeaderBackgroundLight,
+            headerText: zoneCardHeaderTextLight,
+            contentBackground: zoneCardContentBackgroundLight,
+            text: zoneCardTextLight,
+            imageBackground: zoneCardImageBackgroundLight,
+            buttonBackground: zoneCardButtonBackgroundLight,
+            buttonText: zoneCardButtonTextLight,
+            buttonHoverBackground: zoneCardButtonHoverBackground,
+            buttonHoverText: zoneCardButtonHoverTextLight,
+            border: zoneCardBorderLight,
+            shadow: zoneCardShadowLight,
           },
           zonePage: {
-            gridBackground: "#f3f4f6",
-            containerBackground: "#eef2f6",
+            gridBackground: zonePageGridBackgroundLight,
+            containerBackground: zonePageContainerBackgroundLight,
           },
         }
       : {
           fonts: FONTS,
           buttons: BUTTONS,
           grid: {
-            background: "#1f2a41",
-            rowBackground: "#1f2a41",
-            text: softWhite,
-            rowHover: "#141b2d",
-            border: "#ffffff1f",
-            columnHighlight: "#141b2d69",
-            columnText: softWhite,
-            buttonColor: "#eef2f6",
+            background: gridBackgroundDark,
+            rowBackground: gridRowBackgroundDark,
+            text: gridTextDark,
+            rowHover: gridRowHoverDark,
+            border: gridBorderDark,
+            columnHighlight: gridColumnHighlightDark,
+            columnText: gridColumnTextDark,
+            buttonColor: gridButtonColorDark,
             buttonWarning: {
-              background: "#c23f37",
-              text: "#eff2f5",
-              border: "#7fb5ac00",
-              icon: "#eff2f5",
+              background: warningRed,
+              text: warningText,
+              border: warningBorder,
+              icon: warningText,
             },
-            dataGridBackground: "#1f2a41",
-            dataGridRowBackground: "#1f2a41",
-            dataGridText: softWhite,
-            dataGridRowHover: "#141b2d",
-            dataGridColumnHighlight: "#141b2d69",
-            dataGridColumnText: softWhite,
-            buttonWarningBackground: "#c23f37",
-            buttonWarningText: "#eff2f5",
-            buttonWarningBorder: "#7fb5ac00",
-            buttonWarningIcon: "#eff2f5",
+            dataGridBackground: dataGridBackgroundDark,
+            dataGridRowBackground: dataGridRowBackgroundDark,
+            dataGridText: dataGridTextDark,
+            dataGridRowHover: dataGridRowHoverDark,
+            dataGridColumnHighlight: dataGridColumnHighlightDark,
+            dataGridColumnText: dataGridColumnTextDark,
+            buttonWarningBackground: buttonWarningBackground,
+            buttonWarningText: buttonWarningText,
+            buttonWarningBorder: buttonWarningBorder,
+            buttonWarningIcon: buttonWarningIcon,
           },
           modal: {
-            overlay: "#0b0f19e3",
-            background: "#141b2d",
-            border: "#1f2a41",
-            titleColor: "#e5e7eb",
-            description: "#9ca3af",
-            closeIcon: "#9ca3af",
-            closeIconHover: "#eef2f6",
-            fieldLabel: "#9ca3af",
-            fieldBackground: "#1f2a41",
-            fieldInputFont: "#9ca3af",
-            fieldBorder: callToActionPrimary,
-            buttonFont: "#19191f",
-            buttonBackground: callToActionPrimary,
-            buttonBorder: callToActionPrimary,
-            buttonBackgroundHover: "transparent",
-            buttonFontHover: callToActionPrimary,
+            overlay: overlayModalDark,
+            background: modalBackgroundDark,
+            border: modalBorderDark,
+            titleColor: modalTitleColorDark,
+            description: modalDescriptionDark,
+            closeIcon: closeIconDark,
+            closeIconHover: closeIconHoverDark,
+            fieldLabel: modalFieldLabelDark,
+            fieldBackground: modalFieldBackgroundDark,
+            fieldInputFont: modalFieldInputFontDark,
+            fieldBorder: modalFieldBorderDark,
+            buttonFont: modalButtonFontDark,
+            buttonBackground: modalButtonBackgroundDark,
+            buttonBorder: modalButtonBorderDark,
+            buttonBackgroundHover: modalButtonBackgroundHoverDark,
+            buttonFontHover: modalButtonFontHoverDark,
           },
           menuBar: {
-            background: primaryDark,
-            color: softWhite,
-            title: softWhite,
-            subtitle: softWhite,
-            buttonBackground: "#1f2a41",
-            buttonBackgroundImage: "linear-gradient(#292934, #292934)",
-            buttonFont: softWhite,
-            buttonBorder: "#1f2a41",
-            buttonBorderHover: callToActionPrimary,
-            chipBackground: "#1f2a41",
+            background: menuBackgroundDark,
+            color: navBarColorDark,
+            title: menuTitleDark,
+            subtitle: menuSubtitleDark,
+            buttonBackground: menuButtonBackgroundDark,
+            buttonBackgroundImage: menuButtonBackgroundImageDark,
+            buttonFont: menuButtonFontDark,
+            buttonBorder: menuButtonBorderDark,
+            buttonBorderHover: menuButtonBorderHoverDark,
+            chipBackground: chipBackgroundDark,
             gallonsIcon: callToActionPrimary,
           },
           navBar: {
-            background: primaryDark,
-            color: white,
-            borderBottom: "#ffffff1f",
+            background: navBarBackgroundDark,
+            color: navBarColorDark,
+            borderBottom: borderBottomDark,
           },
           sidePanel: {
-            backgroundColor: primaryDark,
-            iconColor: "#eff2f5",
-            dividerColor: "#ffffff29",
+            backgroundColor: sidePanelBackgroundDark,
+            iconColor: sidePanelIconColor,
+            dividerColor: dividerWhite29,
           },
           seasonIcons: {
-            inactiveBackground: "#475a82",
+            inactiveBackground: inactiveSeasonDark,
           },
           totalGallons: {
             toggleContainer: {
@@ -650,17 +711,13 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             valueLabel: {
               color: "#e0e0e0",
             },
-            mobileHint: {
-              iconColor: "#9ca3af",
-              textColor: "#9ca3af",
-            },
           },
           messages: {
             info: {
               background: "#1a237e",
               text: "#90caf9",
-              border: "#2196f3",
-              icon: "#2196f3",
+              border: infoBlue,
+              icon: infoBlue,
             },
             warning: {
               background: "#3e2723",
@@ -671,14 +728,14 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             error: {
               background: "#3e2723",
               text: "#ef5350",
-              border: "#f44336",
-              icon: "#f44336",
+              border: errorRed,
+              icon: errorRed,
             },
             success: {
               background: "#1b5e20",
               text: "#81c784",
-              border: "#4caf50",
-              icon: "#4caf50",
+              border: successGreen,
+              icon: successGreen,
             },
             toast: {
               background: "#2d3748",
@@ -686,51 +743,12 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               border: "#4a5568",
             },
           },
-          white: {
-            const: "#fcfcfd",
-            vary: primaryDark,
-            toLightGray: "#29292f",
-            toDarkGray: "#1e1e1e",
-            alt: "#8b8b8b",
-            alt2: "#29292e",
-            altShade: "#bebebe",
-            altPrimary: callToActionPrimary,
-            altSecondary: callToActionSecondary,
-            opacity: "#ffffff0a",
-          },
-          whiteBlue: {
-            const: "#eef2f6",
-            vary: "#29292f",
-            varyLight: "#4f4f4f",
-            toDarkGray: "#0e0e12",
-            alt: "#535353",
-            alt2: "#29292e",
-            200: "#5f6162",
-            300: "#8f9194",
-            400: "#bec2c5",
-            500: "#eef2f6",
-          },
-          gray: {
-            const: "#8b8b8b",
-            altPrimary: "#59bab1",
-            toWhite: "#eef2f6",
-            toPrimary: callToActionPrimary,
-            200: "#383838",
-            300: "#535353",
-            400: "#6f6f6f",
-            500: "#8b8b8b",
-          },
-          darkGray: {
-            const: "#303031",
-            vary: "#fcfcfd",
-            toWhite: "#eef2f6",
-          },
           primary: {
             const: callToActionPrimary,
             toDarkGray: "#222228",
             alt: "#202028",
-            shadowGlow: "#59bab17c",
-            opacity: "#59bab114",
+            shadowGlow: shadowGlowDark,
+            opacity: opacityPrimary14,
           },
           secondary: {
             const: callToActionSecondary,
@@ -739,23 +757,24 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           overlay: {
             modal: "#06070ac7",
-            image: "#0f5e568a",
+            image: overlayImageDark,
           },
           zoneCard: {
-            headerBackground: primaryDark,
-            headerText: "#e0e0e0",
+            headerBackground: zoneCardHeaderBackgroundDark,
+            headerText: softWhite,
             contentBackground: primaryDark,
-            text: "#e0e0e0",
-            buttonBackground: "#5fb5c5",
+            text: softWhite,
+            imageBackground: zoneCardImageBackgroundLight,
+            buttonBackground: callToActionPrimary,
             buttonText: "#19191f",
-            buttonHoverBackground: "#005972",
+            buttonHoverBackground: hoverBlue,
             buttonHoverText: "#eef2f6",
-            border: "#2a3441",
-            shadow: "0 2px 4px rgba(0,0,0,0.3)",
+            border: borderZoneDark,
+            shadow: shadowZoneDark,
           },
           zonePage: {
-            gridBackground: "#1f2a41",
-            containerBackground: "#141b2d",
+            gridBackground: gridBackgroundDark,
+            containerBackground: modalBackgroundDark,
           },
         };
 
@@ -764,7 +783,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
       mode,
       primary: { main: callToActionPrimary },
       secondary: { main: callToActionSecondary },
-      background: { default: colors.white.vary },
+      background: { default: white },
     },
     typography: {
       fontFamily: FONTS.content.fontFamily,
