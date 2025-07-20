@@ -1,136 +1,296 @@
-import { Card, CardContent, CardHeader, Skeleton, Grid } from "@mui/material";
+import { Box, Card, Skeleton, Stack } from "@mui/material";
+import styled from "styled-components";
 
 function ZoneCardSkeleton() {
   return (
     <>
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Card
-          sx={{
-            width: "100%",
-            height: "194px",
-            borderRadius: "10px",
-            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important",
-          }}
-        >
-          <CardHeader
-            avatar={
-              <Skeleton
-                animation="wave"
-                variant="circular"
-                width={24}
-                height={24}
-              />
-            }
-            action={null}
-            title={
-              <Skeleton
-                animation="wave"
-                height={25}
-                width="35%"
-                style={{ marginBottom: 6 }}
-              />
-            }
-          />
-          <Skeleton
-            sx={{ height: 94 }}
-            animation="wave"
-            variant="rectangular"
-          />
-          <CardContent
-            style={{
+      <StyledCard>
+        <StyledZoneCardHeader>
+          {/* Header with title and menu button */}
+          <Box
+            sx={{
               display: "flex",
-              flexDirection: "column",
-              height: 158,
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              width: "100%",
             }}
-          ></CardContent>
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Card
-          sx={{
-            width: "100%",
-            height: "194px",
-            borderRadius: "10px",
-            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important",
-          }}
-        >
-          <CardHeader
-            avatar={
+          >
+            <Box sx={{ flex: 1 }}>
               <Skeleton
                 animation="wave"
-                variant="circular"
-                width={24}
-                height={24}
+                height={28}
+                width="60%"
+                style={{ marginBottom: 8 }}
               />
-            }
-            action={null}
-            title={
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{ flexWrap: "wrap", gap: 1 }}
+              >
+                <Skeleton animation="wave" height={16} width="80px" />
+                <Skeleton animation="wave" height={16} width="70px" />
+                <Skeleton animation="wave" height={16} width="60px" />
+                <Skeleton animation="wave" height={16} width="50px" />
+              </Stack>
+            </Box>
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={32}
+              height={32}
+            />
+          </Box>
+        </StyledZoneCardHeader>
+
+        <ZoneCardContentWrapper>
+          {/* Content row with image and details */}
+          <ZoneCardContentRow>
+            <Box>
               <Skeleton
                 animation="wave"
-                height={25}
-                width="35%"
-                style={{ marginBottom: 6 }}
+                variant="rectangular"
+                width={90}
+                height={90}
+                sx={{ borderRadius: 1 }}
               />
-            }
-          />
-          <Skeleton
-            sx={{ height: 94 }}
-            animation="wave"
-            variant="rectangular"
-          />
-          <CardContent
-            style={{
+            </Box>
+            <ZoneCardDetailsBox>
+              <Stack spacing={1}>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="60px" />
+                  <Skeleton animation="wave" height={14} width="50px" />
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="55px" />
+                  <Skeleton animation="wave" height={14} width="50px" />
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="70px" />
+                  <Skeleton animation="wave" height={14} width="60px" />
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="75px" />
+                  <Skeleton animation="wave" height={14} width="60px" />
+                </Box>
+              </Stack>
+            </ZoneCardDetailsBox>
+          </ZoneCardContentRow>
+
+          {/* Plants button */}
+          <Box sx={{ padding: ".5rem 0" }}>
+            <Skeleton
+              animation="wave"
+              variant="rectangular"
+              height={36}
+              sx={{ borderRadius: 1 }}
+            />
+          </Box>
+        </ZoneCardContentWrapper>
+      </StyledCard>
+
+      <StyledCard>
+        <StyledZoneCardHeader>
+          {/* Header with title and menu button */}
+          <Box
+            sx={{
               display: "flex",
-              flexDirection: "column",
-              height: 158,
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              width: "100%",
             }}
-          ></CardContent>
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Card
-          sx={{
-            width: "100%",
-            height: "194px",
-            borderRadius: "10px",
-            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important",
-          }}
-        >
-          <CardHeader
-            avatar={
+          >
+            <Box sx={{ flex: 1 }}>
               <Skeleton
                 animation="wave"
-                variant="circular"
-                width={24}
-                height={24}
+                height={28}
+                width="60%"
+                style={{ marginBottom: 8 }}
               />
-            }
-            action={null}
-            title={
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{ flexWrap: "wrap", gap: 1 }}
+              >
+                <Skeleton animation="wave" height={16} width="80px" />
+                <Skeleton animation="wave" height={16} width="70px" />
+                <Skeleton animation="wave" height={16} width="60px" />
+                <Skeleton animation="wave" height={16} width="50px" />
+              </Stack>
+            </Box>
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={32}
+              height={32}
+            />
+          </Box>
+        </StyledZoneCardHeader>
+
+        <ZoneCardContentWrapper>
+          {/* Content row with image and details */}
+          <ZoneCardContentRow>
+            <Box>
               <Skeleton
                 animation="wave"
-                height={25}
-                width="35%"
-                style={{ marginBottom: 6 }}
+                variant="rectangular"
+                width={90}
+                height={90}
+                sx={{ borderRadius: 1 }}
               />
-            }
-          />
-          <Skeleton
-            sx={{ height: 94 }}
-            animation="wave"
-            variant="rectangular"
-          />
-          <CardContent
-            style={{
+            </Box>
+            <ZoneCardDetailsBox>
+              <Stack spacing={1}>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="60px" />
+                  <Skeleton animation="wave" height={14} width="50px" />
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="55px" />
+                  <Skeleton animation="wave" height={14} width="50px" />
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="70px" />
+                  <Skeleton animation="wave" height={14} width="60px" />
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="75px" />
+                  <Skeleton animation="wave" height={14} width="60px" />
+                </Box>
+              </Stack>
+            </ZoneCardDetailsBox>
+          </ZoneCardContentRow>
+
+          {/* Plants button */}
+          <Box sx={{ padding: ".5rem 0" }}>
+            <Skeleton
+              animation="wave"
+              variant="rectangular"
+              height={36}
+              sx={{ borderRadius: 1 }}
+            />
+          </Box>
+        </ZoneCardContentWrapper>
+      </StyledCard>
+
+      <StyledCard>
+        <StyledZoneCardHeader>
+          {/* Header with title and menu button */}
+          <Box
+            sx={{
               display: "flex",
-              flexDirection: "column",
-              height: 158,
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              width: "100%",
             }}
-          ></CardContent>
-        </Card>
-      </Grid>
+          >
+            <Box sx={{ flex: 1 }}>
+              <Skeleton
+                animation="wave"
+                height={28}
+                width="60%"
+                style={{ marginBottom: 8 }}
+              />
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{ flexWrap: "wrap", gap: 1 }}
+              >
+                <Skeleton animation="wave" height={16} width="80px" />
+                <Skeleton animation="wave" height={16} width="70px" />
+                <Skeleton animation="wave" height={16} width="60px" />
+                <Skeleton animation="wave" height={16} width="50px" />
+              </Stack>
+            </Box>
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={32}
+              height={32}
+            />
+          </Box>
+        </StyledZoneCardHeader>
+
+        <ZoneCardContentWrapper>
+          {/* Content row with image and details */}
+          <ZoneCardContentRow>
+            <Box>
+              <Skeleton
+                animation="wave"
+                variant="rectangular"
+                width={90}
+                height={90}
+                sx={{ borderRadius: 1 }}
+              />
+            </Box>
+            <ZoneCardDetailsBox>
+              <Stack spacing={1}>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="60px" />
+                  <Skeleton animation="wave" height={14} width="50px" />
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="55px" />
+                  <Skeleton animation="wave" height={14} width="50px" />
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="70px" />
+                  <Skeleton animation="wave" height={14} width="60px" />
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Skeleton animation="wave" height={14} width="75px" />
+                  <Skeleton animation="wave" height={14} width="60px" />
+                </Box>
+              </Stack>
+            </ZoneCardDetailsBox>
+          </ZoneCardContentRow>
+
+          {/* Plants button */}
+          <Box sx={{ padding: ".5rem 0" }}>
+            <Skeleton
+              animation="wave"
+              variant="rectangular"
+              height={36}
+              sx={{ borderRadius: 1 }}
+            />
+          </Box>
+        </ZoneCardContentWrapper>
+      </StyledCard>
     </>
   );
 }
+
+// Styled-components matching the actual ZoneCard
+const StyledCard = styled(Card)`
+  margin: 0.05 !important;
+  display: flex;
+  flex-direction: column;
+  width: 370px !important;
+  height: 296.05px !important;
+  box-shadow: none !important;
+  background-image: none;
+`;
+
+const StyledZoneCardHeader = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem 1.75rem;
+`;
+
+const ZoneCardContentWrapper = styled(Box)`
+  padding: 0 1.75rem;
+`;
+
+const ZoneCardContentRow = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  padding: 1rem 0;
+`;
+
+const ZoneCardDetailsBox = styled(Box)`
+  font-size: 0.75rem;
+  width: 100%;
+`;
 
 export default ZoneCardSkeleton;
