@@ -47,6 +47,7 @@ export default function ZoneGrid({
             zoneList.map((zone) => (
               <ZoneCard
                 zone={zone}
+                key={zone.id}
                 fetchZones={fetchZones}
                 setIsShowEdit={setIsShowEdit}
                 updateLocalStorageSeason={updateLocalStorageSeason}

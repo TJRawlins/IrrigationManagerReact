@@ -299,7 +299,7 @@ const StyledCard = styled(Card)`
   width: 370px !important;
   box-shadow: none !important;
   height: fit-content;
-  background-image: none;
+  background-image: none !important;
 `;
 
 const StyledZoneCardHeader = styled(Box)`
