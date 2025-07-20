@@ -105,6 +105,7 @@ const ZonesPage = () => {
         component="main"
         role="main"
         aria-label="Zones Management Page"
+        overflow="hidden"
       >
         <ZoneBar
           fetchZones={fetchZones}

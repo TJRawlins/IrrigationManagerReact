@@ -173,6 +173,7 @@ export const useAppTheme = () => {
       header: {
         backgroundColor: theme.custom.zoneCard.headerBackground,
         color: theme.custom.zoneCard.headerText,
+        borderBottom: `1px solid ${theme.custom.zoneCard.border}`,
       },
       text: {
         color: theme.custom.zoneCard.text,

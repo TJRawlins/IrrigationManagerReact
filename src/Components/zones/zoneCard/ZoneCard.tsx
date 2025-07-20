@@ -260,7 +260,7 @@ export default function ZoneCard({
                 imagePath={zone.imagePath}
                 name={zone.name}
                 customSize={"90px"}
-                overlayOpacity={0.4}
+                overlayOpacity={0.2}
               />
             </Stack>
           </Box>
@@ -299,6 +299,7 @@ const StyledCard = styled(Card)`
   width: 370px !important;
   box-shadow: none !important;
   height: fit-content;
+  background-image: none;
 `;
 
 const StyledZoneCardHeader = styled(Box)`

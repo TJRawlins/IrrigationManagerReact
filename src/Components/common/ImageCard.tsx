@@ -17,7 +17,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
   name,
   size = "medium",
   customSize,
-  overlayOpacity = 0.5,
+  overlayOpacity = 0.4, // 0.4 is the default opacity
   onClick,
   text,
 }) => {
@@ -96,7 +96,8 @@ const Overlay = styled.div<{ $overlayOpacity: number }>`
   border-radius: 7px;
   pointer-events: none;
   background: ${({ $overlayOpacity }) =>
-    `linear-gradient(rgba(127,181,172,${$overlayOpacity}), rgba(36,88,111,${$overlayOpacity}))`};
+    `linear-gradient(rgba(117 179 195/${$overlayOpacity}), rgba(117 179 195/${$overlayOpacity}))`};
+  filter: contrast(1.25);
 `;
 
 const TextOverlay = styled.div`

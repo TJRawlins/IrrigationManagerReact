@@ -2,7 +2,7 @@ import { createContext, useState, useMemo } from "react";
 import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 // Color constants
-const callToActionPrimary = "#64cdbd";
+const callToActionPrimary = "#5fb5c5 ";
 const callToActionSecondary = "#2f87ad";
 const primaryLight = "#173e5b";
 const primaryDark = "#141b2d";
@@ -742,11 +742,11 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             image: "#0f5e568a",
           },
           zoneCard: {
-            headerBackground: "#1f2a41",
+            headerBackground: primaryDark,
             headerText: "#e0e0e0",
-            contentBackground: "#141b2d",
+            contentBackground: primaryDark,
             text: "#e0e0e0",
-            buttonBackground: "#64cdbd",
+            buttonBackground: "#5fb5c5",
             buttonText: "#19191f",
             buttonHoverBackground: "#005972",
             buttonHoverText: "#eef2f6",
