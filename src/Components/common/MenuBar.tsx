@@ -117,7 +117,7 @@ const StyledMenuBarWrapper = styled(Box)({
   width: "100%",
   minHeight: "64px",
   padding: "0 1.3rem",
-  boxShadow: "none",
+  boxShadow: "rgb(50 50 93 / 9%) 0px 2px 5px -1px, rgb(0 0 0 / 6%) 0px 1px 3px -1px",
   zIndex: 1,
   flexShrink: 0,
   "@media (min-width: 1024px)": {

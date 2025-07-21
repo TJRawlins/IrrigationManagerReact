@@ -297,7 +297,8 @@ const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   width: 370px !important;
-  box-shadow: none !important;
+  box-shadow: rgb(50 50 93 / 7%) 0px 2px 5px -1px,
+    rgb(0 0 0 / 10%) 0px 1px 3px -1px !important;
   height: fit-content;
   background-image: none !important;
 `;
