@@ -132,7 +132,7 @@ const StyledIconButton = styled(IconButton, {
     background: "#00000015",
     width: "20px",
     height: "40px",
-    borderRadius: "4px",
+    borderRadius: "0px 4px 4px 0px",
     transform: "translate(50%, -50%)",
   },
   "&:hover, &:focus, &:active": {
