@@ -5,10 +5,10 @@ import { createTheme, ThemeOptions } from "@mui/material/styles";
 // --- Primary & Secondary ---
 const callToActionPrimary = "#5fb5c5";
 const callToActionSecondary = "#2f87ad";
-const primaryLight = "#173e5b";
+const primaryLight = "#234a6b";
 const primaryDark = "#141b2d";
 const buttonPrimary = "#2f87ad";
-const buttonSecondary = "#497487";
+const buttonSecondary = "#5fb5c5";
 const white = "#ffffff";
 const softWhite = "#e0e0e0";
 const black = "#606162";
@@ -25,7 +25,7 @@ const hoverBlueDark = "#3a5a6a";
 
 // --- Overlay & Shadows ---
 const overlayModalLight = "#173e5ba8";
-const overlayModalDark = "#0b0f194a";
+const overlayModalDark = "#212a3f96";
 const overlayImageLight = "#64c9bf7a";
 const overlayImageDark = "#0f5e568a";
 const shadowGlowLight = "#5252527c";
@@ -41,7 +41,7 @@ const opacityPrimary14 = "#59bab114";
 const borderBottomLight = "#0000001f";
 const borderBottomDark = "#ffffff1f";
 const borderZoneLight = "#e0e0e0";
-const borderZoneDark = "#2a3441";
+const borderZoneDark = "#1f2a41";
 const fieldLabelGray = "#707174";
 const fieldBackgroundLight = "#d9e1e9";
 const fieldBackgroundDark = "#1f2a41";
