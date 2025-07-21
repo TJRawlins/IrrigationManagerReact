@@ -30,6 +30,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { useAppTheme } from "../../theme/useAppTheme";
 import { IoClose } from "react-icons/io5";
+import { useTheme } from "@mui/material/styles";
 
 type AddZoneModalProps = {
   open: boolean;
@@ -39,6 +40,10 @@ type AddZoneModalProps = {
 
 function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
   const { modal, colors } = useAppTheme();
+  const theme = useTheme();
+  // fallback values for close icon colors
+  const closeIconColor = theme.custom?.modal?.closeIcon || "#707174";
+  const closeIconHoverColor = theme.custom?.modal?.closeIconHover || "#323232";
   const { season } = useSelector((state: RootState) => state.season);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -190,9 +195,13 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
         },
       }}
     >
-      <Box className="modal-box" sx={modal.card}>
-        <IoClose className="close-icon" onClick={handleClose} />
-        <div className="modal-title-container">
+      <ModalBox sx={modal.card}>
+        <CloseIcon
+          onClick={handleClose}
+          $color={closeIconColor}
+          $hover={closeIconHoverColor}
+        />
+        <ModalTitleContainer>
           {isLoading && (
             <Modal
               open={open}
@@ -204,38 +213,18 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                 },
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                  height: "100%",
-                  position: "absolute",
-                  top: "0",
-                  left: "0",
-                }}
-              >
+              <LoadingOverlay>
                 <CircularProgress sx={{ color: "#0069b2" }} />
-              </Box>
+              </LoadingOverlay>
             </Modal>
           )}
-          <Typography
-            className="modal-title"
-            id="modal-modal-title"
-            component="h2"
-            sx={modal.title}
-          >
+          <ModalTitle id="modal-modal-title" as="h2" sx={modal.title}>
             Add Zone
-          </Typography>
-          <Typography
-            className="modal-description"
-            component="p"
-            sx={modal.description}
-          >
+          </ModalTitle>
+          <ModalDescription as="p" sx={modal.description}>
             Add a new zone to {season.name}
-          </Typography>
-        </div>
+          </ModalDescription>
+        </ModalTitleContainer>
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
@@ -243,8 +232,8 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
         >
           {({ errors, touched }) => (
             <Form style={{ width: "100%", padding: "0 24px 24px" }}>
-              <div className="split-container">
-                <Box className="input">
+              <SplitContainer>
+                <InputBox>
                   <Field
                     as={TextField}
                     required
@@ -257,13 +246,13 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                     variant="standard"
                     error={touched.name && Boolean(errors.name)}
                   />
-                  <FormHelperText error={touched.name && Boolean(errors.name)}>
+                  <ErrorHelperText error={touched.name && Boolean(errors.name)}>
                     {touched.name && errors.name ? errors.name : ""}
-                  </FormHelperText>
-                </Box>
-              </div>
-              <div className="split-container">
-                <Box className="input">
+                  </ErrorHelperText>
+                </InputBox>
+              </SplitContainer>
+              <SplitContainer>
+                <InputBox>
                   <Field
                     as={TextField}
                     required
@@ -277,15 +266,15 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                     InputProps={{ inputProps: { min: 0, max: 24 } }}
                     error={touched.runtimeHours && Boolean(errors.runtimeHours)}
                   />
-                  <FormHelperText
+                  <ErrorHelperText
                     error={touched.runtimeHours && Boolean(errors.runtimeHours)}
                   >
                     {touched.runtimeHours && errors.runtimeHours
                       ? errors.runtimeHours
                       : ""}
-                  </FormHelperText>
-                </Box>
-                <Box className="input">
+                  </ErrorHelperText>
+                </InputBox>
+                <InputBox>
                   <Field
                     as={TextField}
                     required
@@ -301,7 +290,7 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                       touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
                     }
                   />
-                  <FormHelperText
+                  <ErrorHelperText
                     error={
                       touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
                     }
@@ -309,11 +298,11 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                     {touched.runtimeMinutes && errors.runtimeMinutes
                       ? errors.runtimeMinutes
                       : ""}
-                  </FormHelperText>
-                </Box>
-              </div>
-              <div className="split-container">
-                <Box className="input">
+                  </ErrorHelperText>
+                </InputBox>
+              </SplitContainer>
+              <SplitContainer>
+                <InputBox>
                   <Field
                     as={TextField}
                     required
@@ -329,7 +318,7 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                       touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
                     }
                   />
-                  <FormHelperText
+                  <ErrorHelperText
                     error={
                       touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
                     }
@@ -337,8 +326,8 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                     {touched.runtimePerWeek && errors.runtimePerWeek
                       ? errors.runtimePerWeek
                       : ""}
-                  </FormHelperText>
-                </Box>
+                  </ErrorHelperText>
+                </InputBox>
                 <Field
                   as={StyledTextField}
                   disabled
@@ -354,8 +343,8 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                     },
                   }}
                 />
-              </div>
-              <div className="split-container upload">
+              </SplitContainer>
+              <SplitContainer upload>
                 <label htmlFor="" className="img-upload-filename-label">
                   Image file name
                 </label>
@@ -397,7 +386,7 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                     multiple
                   />
                 </Button>
-              </div>
+              </SplitContainer>
               <Box className="btn-wrapper">
                 <Button className="card-btn submit-btn" type="submit">
                   Add Zone
@@ -413,7 +402,7 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
             </Form>
           )}
         </Formik>
-      </Box>
+      </ModalBox>
     </Modal>
   );
 }
@@ -439,5 +428,104 @@ const VisuallyHiddenInput = styled("input")({
   whiteSpace: "nowrap",
   width: 1,
 });
+
+// Add styled component for modal-box
+const ModalBox = styled(Box)({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "500px",
+  borderRadius: "7px",
+  boxShadow: "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
+  // mobile screens (320px-599px)
+  "@media (min-width: 320px) and (max-width: 599px)": {
+    width: "400px"
+  },
+});
+
+// Add styled component for close-icon
+const CloseIcon = styled(IoClose)<{ $color: string; $hover: string }>`
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 250ms;
+  color: ${(props) => props.$color};
+  &:hover {
+    color: ${(props) => props.$hover};
+  }
+`;
+
+// Add styled component for modal-title-container
+const ModalTitleContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #666666;
+  gap: 0.5rem;
+  border-image-source: linear-gradient(to right, #18d4c2, #82a628);
+  border-bottom: 10px solid;
+  border-image-slice: 1;
+  border-width: 1px;
+  margin: 0 0 20px;
+  padding: 16px 24px;
+`;
+
+// Add styled component for modal-title
+const ModalTitle = styled(Typography)`
+  font-size: 1.125rem !important;
+  font-weight: 100 !important;
+  font-family: "Outfit", sans-serif !important;
+  margin: 0;
+`;
+
+// Add styled component for modal-description
+const ModalDescription = styled(Typography)`
+  font-size: 0.875rem !important;
+  font-weight: 100 !important;
+  margin: 0;
+`;
+
+// Update SplitContainer to accept an 'upload' prop
+const SplitContainer = styled("div")<{ upload?: boolean }>`
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  ${(props) =>
+    props.upload &&
+    `
+      justify-content: right;
+      position: relative;
+      margin-top: 12px;
+    `}
+`;
+
+// Add styled component for the loading overlay Box
+const LoadingOverlay = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+// Update InputBox to always be position: relative
+const InputBox = styled(Box)`
+  width: 100% !important;
+  position: relative;
+`;
+
+// Add styled component for error helper text
+const ErrorHelperText = styled(FormHelperText)`
+  position: absolute !important;
+  top: 22px;
+  left: 13px;
+  pointer-events: none;
+`;
 
 export default AddZoneModal;
