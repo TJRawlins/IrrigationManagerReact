@@ -1,4 +1,4 @@
-import { backdropClasses, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 
 /**
  * Simple hook that provides access to all theme colors and styles
