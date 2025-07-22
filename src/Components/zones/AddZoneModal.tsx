@@ -5,7 +5,6 @@ import {
   Modal,
   styled,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -30,7 +29,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { useAppTheme } from "../../theme/useAppTheme";
 import { IoClose } from "react-icons/io5";
-import { useTheme, Theme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 
 type AddZoneModalProps = {
   open: boolean;
@@ -572,9 +571,7 @@ const ImgUploadFilename = styled(Typography)(({ theme }) => ({
   overflow: "hidden",
   whiteSpace: "nowrap",
 }));
-const ImgUploadFilenameError = styled(ImgUploadFilename)({
-  color: "#f44336",
-});
+
 const ImgUploadBtn = styled(Button)(({ theme }) => ({
   flex: 1,
   minWidth: 0,

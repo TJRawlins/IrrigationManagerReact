@@ -2,15 +2,11 @@
 import {
   Box,
   FormHelperText,
-  MenuItem,
-  Modal,
   styled,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -33,7 +29,6 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { Zone } from "../../App/models/Zone";
 import { useAppTheme } from "../../theme/useAppTheme";
-import { IoClose } from "react-icons/io5";
 import FormModal from "../common/FormModal";
 
 type ZoneEditProps = {
@@ -42,158 +37,6 @@ type ZoneEditProps = {
   setIsShowEdit(args: boolean): void;
   isShowEdit: boolean;
 };
-
-// Add all styled components from AddZoneModal for modal structure and fields
-const ModalBox = styled(Box)({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "500px",
-  borderRadius: "7px",
-  boxShadow:
-    "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
-  "@media (min-width: 320px) and (max-width: 599px)": {
-    width: "400px",
-  },
-});
-const CloseIcon = styled(IoClose)`
-  position: absolute;
-  top: 17px;
-  right: 17px;
-  font-size: 1.25rem;
-  cursor: pointer;
-  transition: all 250ms;
-`;
-const ModalTitleContainer = styled("div")`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: #666666;
-  gap: 0.5rem;
-  border-image-source: linear-gradient(to right, #18d4c2, #82a628);
-  border-bottom: 10px solid;
-  border-image-slice: 1;
-  border-width: 1px;
-  margin: 0 0 20px;
-  padding: 16px 24px;
-`;
-const ModalTitle = styled(Typography)`
-  font-size: 1.125rem !important;
-  font-weight: 100 !important;
-  font-family: "Outfit", sans-serif !important;
-  margin: 0;
-`;
-const ModalDescription = styled(Typography)`
-  font-size: 0.875rem !important;
-  font-weight: 100 !important;
-  margin: 0;
-`;
-const SplitContainer = styled("div")<{ upload?: boolean }>`
-  display: flex;
-  gap: 1rem;
-  padding-top: 0.5rem;
-  ${(props) =>
-    props.upload &&
-    `
-      justify-content: right;
-      position: relative;
-      padding-top:1.5rem
-    `}
-`;
-const LoadingOverlay = styled(Box)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-const InputBox = styled(Box)`
-  width: 100% !important;
-  position: relative;
-`;
-const ErrorHelperText = styled(FormHelperText)`
-  position: absolute !important;
-  top: 22px;
-  left: 13px;
-  pointer-events: none;
-`;
-// Add VisuallyHiddenInput styled component
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-// Add styled components from AddZoneModal for image upload row
-const ImgUploadFilenameLabel = styled("span")(({ theme }) => ({
-  fontSize: "0.875rem",
-  fontWeight: 400,
-  transform: "translate(0, -4.5px)",
-  position: "absolute",
-  left: 0,
-  top: 6,
-  color: theme.custom.modal.fieldLabel,
-}));
-const ImgUploadFilename = styled(Typography)(({ theme }) => ({
-  flex: 1,
-  minWidth: 0,
-  height: "38px",
-  padding: "5px 12px",
-  borderRadius: 5,
-  boxSizing: "border-box",
-  fontSize: "0.875rem",
-  fontWeight: 400,
-  fontFamily: "inherit",
-  display: "flex",
-  alignItems: "center",
-  backgroundColor: theme.custom.modal.fieldBackground,
-  color: theme.custom.modal.fieldInputFont,
-  border: "1.5px solid transparent",
-  margin: 0,
-  textOverflow: "ellipsis",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-}));
-const ImgUploadFilenameError = styled(ImgUploadFilename)({
-  color: "#f44336",
-});
-const ImgUploadBtn = styled(Button)(({ theme }) => ({
-  flex: 1,
-  minWidth: 0,
-  height: "38px",
-  padding: "5px 12px",
-  borderRadius: 5,
-  boxSizing: "border-box",
-  fontSize: "0.875rem",
-  fontWeight: 400,
-  fontFamily: "inherit",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  margin: 0,
-  backgroundColor: theme.custom.modal.buttonBackground,
-  color: theme.custom.modal.buttonFont,
-  border: `2px solid ${theme.custom.modal.buttonBorder}`,
-  boxShadow: "none",
-  textTransform: "none",
-  cursor: "pointer",
-  transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1)",
-  "&:hover": {
-    backgroundColor: theme.custom.modal.buttonBackgroundHover,
-    color: theme.custom.modal.buttonFontHover,
-    border: `2px solid ${theme.custom.modal.buttonBorder}`,
-    boxShadow: "none",
-  },
-}));
 
 function EditZone({
   fetchZones,
@@ -684,6 +527,101 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
   "& p.Mui-error, & + p.Mui-error": {
     pointerEvents: "none",
+  },
+}));
+
+const SplitContainer = styled("div")<{ upload?: boolean }>`
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  ${(props) =>
+    props.upload &&
+    `
+      justify-content: right;
+      position: relative;
+      padding-top:1.5rem
+    `}
+`;
+
+const InputBox = styled(Box)`
+  width: 100% !important;
+  position: relative;
+`;
+const ErrorHelperText = styled(FormHelperText)`
+  position: absolute !important;
+  top: 22px;
+  left: 13px;
+  pointer-events: none;
+`;
+// Add VisuallyHiddenInput styled component
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+// Add styled components from AddZoneModal for image upload row
+const ImgUploadFilenameLabel = styled("span")(({ theme }) => ({
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  transform: "translate(0, -4.5px)",
+  position: "absolute",
+  left: 0,
+  top: 6,
+  color: theme.custom.modal.fieldLabel,
+}));
+const ImgUploadFilename = styled(Typography)(({ theme }) => ({
+  flex: 1,
+  minWidth: 0,
+  height: "38px",
+  padding: "5px 12px",
+  borderRadius: 5,
+  boxSizing: "border-box",
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  fontFamily: "inherit",
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: theme.custom.modal.fieldBackground,
+  color: theme.custom.modal.fieldInputFont,
+  border: "1.5px solid transparent",
+  margin: 0,
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+}));
+
+const ImgUploadBtn = styled(Button)(({ theme }) => ({
+  flex: 1,
+  minWidth: 0,
+  height: "38px",
+  padding: "5px 12px",
+  borderRadius: 5,
+  boxSizing: "border-box",
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  fontFamily: "inherit",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  margin: 0,
+  backgroundColor: theme.custom.modal.buttonBackground,
+  color: theme.custom.modal.buttonFont,
+  border: `2px solid ${theme.custom.modal.buttonBorder}`,
+  boxShadow: "none",
+  textTransform: "none",
+  cursor: "pointer",
+  transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1)",
+  "&:hover": {
+    backgroundColor: theme.custom.modal.buttonBackgroundHover,
+    color: theme.custom.modal.buttonFontHover,
+    border: `2px solid ${theme.custom.modal.buttonBorder}`,
+    boxShadow: "none",
   },
 }));
 
