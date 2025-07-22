@@ -24,12 +24,11 @@ import {
   StorageReference,
   FirebaseStorage,
 } from "firebase/storage";
-import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import Compressor from "compressorjs";
 import { useAppTheme } from "../../theme/useAppTheme";
 import { IoClose } from "react-icons/io5";
 import { useTheme } from "@mui/material/styles";
+import { useImageUpload } from "../../hooks/useImageUpload";
 
 type AddZoneModalProps = {
   open: boolean;
@@ -47,16 +46,20 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Firebase Storage Variables
-  const [error, setError] = useState<string>("");
-  const [imageUpload, setImageUpload] = useState<File>();
-  const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
+  const username = "tjrawlins"; // Replace with actual username from context/store if available
+  const {
+    error,
+    imageUpload,
+    imagePathAndFileName,
+    handleImageValidation,
+    clearImage,
+  } = useImageUpload({ username, folder: "zones" });
   const storage: FirebaseStorage = getStorage(app);
   const imageRef: StorageReference = ref(storage, imagePathAndFileName);
-
+  
   const handleClose = () => {
     onClose();
-    setError("");
-    setImageUpload(undefined);
+    clearImage();
   };
 
   // Form submission
@@ -105,63 +108,9 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
           }
         })
         .then(() => addZone(values, props));
-      setImageUpload(undefined);
+      // setImageUpload(undefined);
+      clearImage();
     });
-  };
-
-  // Onchange event for "Select Image" button
-  const handleImageValidation = async (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setImageUpload(undefined);
-    if (!event.target.files?.[0]) {
-      return;
-    }
-    const file = event.target.files[0];
-    if (!file.type.startsWith("image/")) {
-      setError("Invalid image file.");
-      return;
-    }
-    // 5MB limit
-    if (file.size > 5 * 1024 * 1024) {
-      setError("File size exceeds 5MB.");
-      return;
-    }
-    try {
-      const compressedFile: File = await compressImage(file);
-      // If compression made it larger, use the original file
-      const fileToUse = compressedFile.size < file.size ? compressedFile : file;
-      setError(""); // Always clear error if file is valid and accepted
-      generateImageFileName(fileToUse);
-    } catch (error) {
-      setError("Compression Error");
-      console.error("Compression Error:", error);
-    }
-  };
-
-  const compressImage = async (file: File): Promise<File> => {
-    return new Promise((resolve, reject) => {
-      new Compressor(file, {
-        quality: 0.6,
-        width: 500,
-        mimeType: file.type, // keep original type
-        convertSize: 5000000, // don't convert PNG < 5MB to JPEG
-        success(result) {
-          resolve(result as File);
-        },
-        error(err) {
-          reject(err);
-        },
-      });
-    });
-  };
-
-  // TODO: Need to replace "tjrawlins" with the username
-  const generateImageFileName = (compressedFile: File) => {
-    setImageUpload(compressedFile);
-    setImagePathAndFileName(
-      `users/tjrawlins/images/zones/${compressedFile.name.toString()}${v4()}`
-    );
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
