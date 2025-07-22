@@ -34,6 +34,7 @@ import Compressor from "compressorjs";
 import { Zone } from "../../App/models/Zone";
 import { useAppTheme } from "../../theme/useAppTheme";
 import { IoClose } from "react-icons/io5";
+import FormModal from "../common/FormModal";
 
 type ZoneEditProps = {
   fetchZones(args: number): Promise<void>;
@@ -97,7 +98,7 @@ const SplitContainer = styled("div")<{ upload?: boolean }>`
     `
       justify-content: right;
       position: relative;
-      margin-top: 12px;
+      padding-top:1.5rem
     `}
 `;
 const LoadingOverlay = styled(Box)`
@@ -132,6 +133,67 @@ const VisuallyHiddenInput = styled("input")({
   whiteSpace: "nowrap",
   width: 1,
 });
+// Add styled components from AddZoneModal for image upload row
+const ImgUploadFilenameLabel = styled("span")(({ theme }) => ({
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  transform: "translate(0, -4.5px)",
+  position: "absolute",
+  left: 0,
+  top: 6,
+  color: theme.custom.modal.fieldLabel,
+}));
+const ImgUploadFilename = styled(Typography)(({ theme }) => ({
+  flex: 1,
+  minWidth: 0,
+  height: "38px",
+  padding: "5px 12px",
+  borderRadius: 5,
+  boxSizing: "border-box",
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  fontFamily: "inherit",
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: theme.custom.modal.fieldBackground,
+  color: theme.custom.modal.fieldInputFont,
+  border: "1.5px solid transparent",
+  margin: 0,
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+}));
+const ImgUploadFilenameError = styled(ImgUploadFilename)({
+  color: "#f44336",
+});
+const ImgUploadBtn = styled(Button)(({ theme }) => ({
+  flex: 1,
+  minWidth: 0,
+  height: "38px",
+  padding: "5px 12px",
+  borderRadius: 5,
+  boxSizing: "border-box",
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  fontFamily: "inherit",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  margin: 0,
+  backgroundColor: theme.custom.modal.buttonBackground,
+  color: theme.custom.modal.buttonFont,
+  border: `2px solid ${theme.custom.modal.buttonBorder}`,
+  boxShadow: "none",
+  textTransform: "none",
+  cursor: "pointer",
+  transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1)",
+  "&:hover": {
+    backgroundColor: theme.custom.modal.buttonBackgroundHover,
+    color: theme.custom.modal.buttonFontHover,
+    border: `2px solid ${theme.custom.modal.buttonBorder}`,
+    boxShadow: "none",
+  },
+}));
 
 function EditZone({
   fetchZones,
@@ -148,6 +210,7 @@ function EditZone({
     setIsShowEdit(false);
     setImageUpload(undefined);
     setIsNewImage(false);
+    setError("");
   };
 
   // Firebase Storage Variables
@@ -400,247 +463,177 @@ function EditZone({
 
   return (
     <div>
-      <Modal
-        id="modal-overlay"
+      <FormModal
         open={isShowEdit}
-        onClose={() => {}}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        slotProps={{
-          backdrop: {
-            style: modal.overlay,
-          },
-        }}
+        onClose={handleClose}
+        title="Edit Zone"
+        description={`Edit zone ${zone.name} for ${season.name}`}
+        loading={isLoading}
+        modalStyle={modal.card}
+        titleStyle={modal.title}
+        descriptionStyle={modal.description}
       >
-        <ModalBox sx={modal.card}>
-          <CloseIcon onClick={handleClose} />
-          <ModalTitleContainer>
-            {isLoading && (
-              <Modal
-                open={true}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                slotProps={{
-                  backdrop: {
-                    style: { backgroundColor: "transparent" },
-                  },
-                }}
-              >
-                <LoadingOverlay>
-                  <CircularProgress sx={{ color: "#0069b2" }} />
-                </LoadingOverlay>
-              </Modal>
-            )}
-            <ModalTitle as="h2" id="modal-modal-title" sx={modal.title}>
-              Edit Zone
-            </ModalTitle>
-            <ModalDescription as="p" sx={modal.description}>
-              Edit zone {zone.name} for {season.name}
-            </ModalDescription>
-          </ModalTitleContainer>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}
-          >
-            {({ errors, touched }) => (
-              <Form style={{ width: "100%", padding: "0 24px 24px" }}>
-                <SplitContainer>
-                  <InputBox>
-                    <Field
-                      as={StyledTextField}
-                      required
-                      className="input input-override"
-                      id="zone-name-input"
-                      name="name"
-                      label="Zone name"
-                      type="text"
-                      autoComplete=""
-                      variant="standard"
-                      error={touched.name && Boolean(errors.name)}
-                    />
-                    <ErrorHelperText
-                      error={touched.name && Boolean(errors.name)}
-                    >
-                      {touched.name && errors.name ? errors.name : ""}
-                    </ErrorHelperText>
-                  </InputBox>
-                </SplitContainer>
-                <SplitContainer>
-                  <InputBox>
-                    <Field
-                      as={StyledTextField}
-                      required
-                      className="input input-override"
-                      id="runtime-hours-input"
-                      name="runtimeHours"
-                      label="Runtime hours"
-                      type="number"
-                      autoComplete=""
-                      variant="standard"
-                      InputProps={{ inputProps: { min: 0, max: 24 } }}
-                      error={
-                        touched.runtimeHours && Boolean(errors.runtimeHours)
-                      }
-                    />
-                    <ErrorHelperText
-                      error={
-                        touched.runtimeHours && Boolean(errors.runtimeHours)
-                      }
-                    >
-                      {touched.runtimeHours && errors.runtimeHours
-                        ? errors.runtimeHours
-                        : ""}
-                    </ErrorHelperText>
-                  </InputBox>
-                  <InputBox>
-                    <Field
-                      as={StyledTextField}
-                      required
-                      className="input input-override"
-                      id="runtime-minutes-input"
-                      name="runtimeMinutes"
-                      label="Runtime minutes"
-                      type="number"
-                      autoComplete=""
-                      variant="standard"
-                      InputProps={{ inputProps: { min: 0, max: 59 } }}
-                      error={
-                        touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
-                      }
-                    />
-                    <ErrorHelperText
-                      error={
-                        touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
-                      }
-                    >
-                      {touched.runtimeMinutes && errors.runtimeMinutes
-                        ? errors.runtimeMinutes
-                        : ""}
-                    </ErrorHelperText>
-                  </InputBox>
-                </SplitContainer>
-                <SplitContainer>
-                  <InputBox>
-                    <Field
-                      as={StyledTextField}
-                      required
-                      className="input input-override"
-                      id="per-week-input"
-                      label="Times per week"
-                      name="runtimePerWeek"
-                      type="number"
-                      autoComplete=""
-                      variant="standard"
-                      InputProps={{ inputProps: { min: 0, max: 25 } }}
-                      error={
-                        touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
-                      }
-                    />
-                    <ErrorHelperText
-                      error={
-                        touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
-                      }
-                    >
-                      {touched.runtimePerWeek && errors.runtimePerWeek
-                        ? errors.runtimePerWeek
-                        : ""}
-                    </ErrorHelperText>
-                  </InputBox>
-                  <InputBox>
-                    <Field
-                      as={StyledTextField}
-                      className="input input-override"
-                      id="season-input"
-                      name="season"
-                      label="Season"
-                      type="text"
-                      autoComplete=""
-                      variant="standard"
-                      select
-                      sx={{
-                        "& .MuiInputBase-input": {
-                          color: colors.modal.fieldInputFont,
-                        },
-                        "& .MuiSelect-select": {
-                          color: colors.modal.fieldInputFont,
-                        },
-                      }}
-                    >
-                      <MenuItem value="Summer">Summer</MenuItem>
-                      <MenuItem value="Fall">Fall</MenuItem>
-                      <MenuItem value="Winter">Winter</MenuItem>
-                      <MenuItem value="Spring">Spring</MenuItem>
-                    </Field>
-                  </InputBox>
-                </SplitContainer>
-                <SplitContainer upload>
-                  <label htmlFor="" className="img-upload-filename-label">
-                    Image file name
-                  </label>
-                  {(imageUpload && !error) || zone.imagePath ? (
-                    <Tooltip
-                      title={
-                        imageUpload
-                          ? imageUpload.name.toString()
-                          : zone.imagePath
-                      }
-                      arrow
-                    >
-                      <Typography
-                        className="img-upload-filename"
-                        component={"div"}
-                      >
-                        {imageUpload
-                          ? imageUpload?.name.toString()
-                          : zone.imagePath}
-                      </Typography>
-                    </Tooltip>
-                  ) : (
-                    <Typography
-                      className="img-upload-filename error"
-                      component={"div"}
-                    >
-                      {error}
-                    </Typography>
-                  )}
-                  <Button
-                    className="img-upload-btn"
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validationSchema={validationSchema}
+        >
+          {({ errors, touched }) => (
+            <Form style={{ width: "100%", padding: "0 24px 24px" }}>
+              <SplitContainer>
+                <InputBox>
+                  <Field
+                    as={StyledTextField}
+                    required
+                    id="zone-name-input"
+                    name="name"
+                    label="Zone name"
+                    type="text"
+                    autoComplete=""
+                    variant="standard"
+                    error={touched.name && Boolean(errors.name)}
+                  />
+                  <ErrorHelperText error={touched.name && Boolean(errors.name)}>
+                    {touched.name && errors.name ? errors.name : ""}
+                  </ErrorHelperText>
+                </InputBox>
+              </SplitContainer>
+              <SplitContainer>
+                <InputBox>
+                  <Field
+                    as={StyledTextField}
+                    required
+                    id="runtime-hours-input"
+                    name="runtimeHours"
+                    label="Runtime hours"
+                    type="number"
+                    autoComplete=""
+                    variant="standard"
+                    InputProps={{ inputProps: { min: 0, max: 24 } }}
+                    error={touched.runtimeHours && Boolean(errors.runtimeHours)}
+                  />
+                  <ErrorHelperText
+                    error={touched.runtimeHours && Boolean(errors.runtimeHours)}
                   >
-                    Select Image
-                    <VisuallyHiddenInput
-                      type="file"
-                      accept="image/*"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleImageValidation(event)
-                      }
-                      multiple
-                    />
-                  </Button>
-                </SplitContainer>
-                <Box className="btn-wrapper">
-                  <Button className="card-btn submit-btn" type="submit">
-                    Submit
-                  </Button>
-                  <Button
-                    sx={{ p: 2 }}
-                    className="card-btn cancel-btn"
-                    type="button"
-                    onClick={handleClose}
+                    {touched.runtimeHours && errors.runtimeHours
+                      ? errors.runtimeHours
+                      : ""}
+                  </ErrorHelperText>
+                </InputBox>
+                <InputBox>
+                  <Field
+                    as={StyledTextField}
+                    required
+                    id="runtime-minutes-input"
+                    name="runtimeMinutes"
+                    label="Runtime minutes"
+                    type="number"
+                    autoComplete=""
+                    variant="standard"
+                    InputProps={{ inputProps: { min: 0, max: 59 } }}
+                    error={
+                      touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
+                    }
+                  />
+                  <ErrorHelperText
+                    error={
+                      touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
+                    }
                   >
-                    Cancel
-                  </Button>
-                </Box>
-              </Form>
-            )}
-          </Formik>
-        </ModalBox>
-      </Modal>
+                    {touched.runtimeMinutes && errors.runtimeMinutes
+                      ? errors.runtimeMinutes
+                      : ""}
+                  </ErrorHelperText>
+                </InputBox>
+              </SplitContainer>
+              <SplitContainer>
+                <InputBox>
+                  <Field
+                    as={StyledTextField}
+                    required
+                    id="per-week-input"
+                    label="Times per week"
+                    name="runtimePerWeek"
+                    type="number"
+                    autoComplete=""
+                    variant="standard"
+                    InputProps={{ inputProps: { min: 0, max: 25 } }}
+                    error={
+                      touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
+                    }
+                  />
+                  <ErrorHelperText
+                    error={
+                      touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
+                    }
+                  >
+                    {touched.runtimePerWeek && errors.runtimePerWeek
+                      ? errors.runtimePerWeek
+                      : ""}
+                  </ErrorHelperText>
+                </InputBox>
+                <Field
+                  as={StyledTextField}
+                  disabled
+                  id="standard-disabled"
+                  name={season.name}
+                  label="Season"
+                  defaultValue={season.name}
+                  variant="standard"
+                  sx={{
+                    "& .MuiInputBase-input": {
+                      color: colors.modal.fieldInputFont,
+                    },
+                  }}
+                />
+              </SplitContainer>
+              <SplitContainer upload>
+                <ImgUploadFilenameLabel as="span">
+                  Image file name
+                </ImgUploadFilenameLabel>
+                <ImgUploadFilename
+                  as="div"
+                  id="image-filename-field"
+                  style={error ? { color: "#f44336" } : {}}
+                >
+                  {error
+                    ? error
+                    : imageUpload
+                    ? imageUpload.name.toString()
+                    : zone.imagePath
+                    ? zone.imagePath
+                    : ""}
+                </ImgUploadFilename>
+                <ImgUploadBtn as="label" variant="contained" tabIndex={-1}>
+                  <CloudUploadIcon sx={{ mr: 1 }} />
+                  Select Image
+                  <VisuallyHiddenInput
+                    type="file"
+                    accept="image/*"
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                      handleImageValidation(event)
+                    }
+                    multiple
+                  />
+                </ImgUploadBtn>
+              </SplitContainer>
+              <Box className="btn-wrapper">
+                <Button className="card-btn submit-btn" type="submit">
+                  Submit
+                </Button>
+                <Button
+                  sx={{ p: 2 }}
+                  className="card-btn cancel-btn"
+                  type="button"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      </FormModal>
     </div>
   );
 }

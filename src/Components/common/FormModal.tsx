@@ -1,0 +1,147 @@
+import React from "react";
+import { Modal, Box, Typography, styled } from "@mui/material";
+import { IoClose } from "react-icons/io5";
+
+// Types for the modal
+interface FormModalProps {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  description?: string;
+  loading?: boolean;
+  children: React.ReactNode;
+  modalStyle?: object; // Optional override for modal card style
+  titleStyle?: object; // Optional override for title style
+  descriptionStyle?: object; // Optional override for description style
+  closeIconColor?: string;
+  closeIconHoverColor?: string;
+}
+
+const FormModal: React.FC<FormModalProps> = ({
+  open,
+  onClose,
+  title,
+  description,
+  loading,
+  children,
+  modalStyle = {},
+  titleStyle = {},
+  descriptionStyle = {},
+  closeIconColor = "#707174",
+  closeIconHoverColor = "#323232",
+}) => {
+  return (
+    <Modal
+      open={open}
+      onClose={() => {}}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <ModalBox sx={modalStyle}>
+        <CloseIcon
+          onClick={onClose}
+          $color={closeIconColor}
+          $hover={closeIconHoverColor}
+        />
+        <ModalTitleContainer>
+          {loading && (
+            <Modal
+              open={open}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+              slotProps={{
+                backdrop: { style: { backgroundColor: "transparent" } },
+              }}
+            >
+              <LoadingOverlay>
+                <Box sx={{ color: "#0069b2" }}>
+                  <span className="visually-hidden">Loading...</span>
+                  {/* You can replace with <CircularProgress /> if you want, but keep this generic */}
+                </Box>
+              </LoadingOverlay>
+            </Modal>
+          )}
+          <ModalTitle as="h2" id="modal-modal-title" sx={titleStyle}>
+            {title}
+          </ModalTitle>
+          {description && (
+            <ModalDescription as="p" sx={descriptionStyle}>
+              {description}
+            </ModalDescription>
+          )}
+        </ModalTitleContainer>
+        {children}
+      </ModalBox>
+    </Modal>
+  );
+};
+
+export default FormModal;
+
+// --- Styled Components (always at the bottom) ---
+const ModalBox = styled(Box)({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "500px",
+  borderRadius: "7px",
+  boxShadow:
+    "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
+  "@media (min-width: 320px) and (max-width: 599px)": {
+    width: "400px",
+  },
+});
+
+const CloseIcon = styled(IoClose, {
+  shouldForwardProp: (prop) => prop !== "$color" && prop !== "$hover",
+})<{ $color: string; $hover: string }>`
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 250ms;
+  color: ${(props) => props.$color};
+  &:hover {
+    color: ${(props) => props.$hover};
+  }
+`;
+
+const ModalTitleContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #666666;
+  gap: 0.5rem;
+  border-image-source: linear-gradient(to right, #18d4c2, #82a628);
+  border-bottom: 10px solid;
+  border-image-slice: 1;
+  border-width: 1px;
+  margin: 0 0 20px;
+  padding: 16px 24px;
+`;
+
+const ModalTitle = styled(Typography)`
+  font-size: 1.125rem !important;
+  font-weight: 100 !important;
+  font-family: "Outfit", sans-serif !important;
+  margin: 0;
+`;
+
+const ModalDescription = styled(Typography)`
+  font-size: 0.875rem !important;
+  font-weight: 100 !important;
+  margin: 0;
+`;
+
+const LoadingOverlay = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;

@@ -343,20 +343,17 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                 <ImgUploadFilenameLabel as="span">
                   Image file name
                 </ImgUploadFilenameLabel>
-                {imageUpload && !error ? (
-                  <Tooltip
-                    title={imageUpload ? imageUpload.name.toString() : ""}
-                    arrow
-                  >
-                    <ImgUploadFilename as="div" id="image-filename-field">
-                      {imageUpload ? imageUpload.name.toString() : ""}
-                    </ImgUploadFilename>
-                  </Tooltip>
-                ) : (
-                  <ImgUploadFilenameError as="div" id="image-filename-field">
-                    {error}
-                  </ImgUploadFilenameError>
-                )}
+                <ImgUploadFilename
+                  as="div"
+                  id="image-filename-field"
+                  style={error ? { color: "#f44336" } : {}}
+                >
+                  {error
+                    ? error
+                    : imageUpload
+                    ? imageUpload.name.toString()
+                    : ""}
+                </ImgUploadFilename>
                 <ImgUploadBtn as="label" variant="contained" tabIndex={-1}>
                   <CloudUploadIcon sx={{ mr: 1 }} />
                   Select Image
