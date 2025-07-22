@@ -238,29 +238,26 @@ function EditZone({
     if (!event.target.files?.[0]) {
       return;
     }
-    if (!event.target.files?.[0].type.startsWith("image/")) {
+    const file = event.target.files[0];
+    if (!file.type.startsWith("image/")) {
       setError("Invalid image file.");
       return;
     }
     // 5MB limit
-    if (event.target.files?.[0].size > 5 * 1024 * 1024) {
+    if (file.size > 5 * 1024 * 1024) {
       setError("File size exceeds 5MB.");
       return;
     }
-    if (event.target.files?.[0]) {
-      try {
-        const compressedFile: File = await compressImage(
-          event.target.files?.[0]
-        );
-        if (compressedFile.size < event.target.files?.[0].size) {
-          generateImageFileName(compressedFile);
-          setError("");
-          setIsNewImage(true);
-        }
-      } catch (error) {
-        setError("Compression Error");
-        console.error("Compression Error:", error);
-      }
+    try {
+      const compressedFile: File = await compressImage(file);
+      // If compression made it larger, use the original file
+      const fileToUse = compressedFile.size < file.size ? compressedFile : file;
+      setError(""); // Always clear error if file is valid and accepted
+      generateImageFileName(fileToUse);
+      setIsNewImage(true);
+    } catch (error) {
+      setError("Compression Error");
+      console.error("Compression Error:", error);
     }
   };
 
@@ -269,6 +266,8 @@ function EditZone({
       new Compressor(file, {
         quality: 0.6,
         width: 500,
+        mimeType: file.type, // keep original type
+        convertSize: 5000000, // don't convert PNG < 5MB to JPEG
         success(result) {
           resolve(result as File);
         },
