@@ -452,7 +452,6 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-// Add styled component for modal-box
 const ModalBox = styled(Box)({
   position: "absolute",
   top: "50%",
@@ -468,7 +467,6 @@ const ModalBox = styled(Box)({
   },
 });
 
-// Add styled component for close-icon
 const CloseIcon = styled(IoClose, {
   shouldForwardProp: (prop) => prop !== "$color" && prop !== "$hover",
 })<{ $color: string; $hover: string }>`
@@ -484,7 +482,6 @@ const CloseIcon = styled(IoClose, {
   }
 `;
 
-// Add styled component for modal-title-container
 const ModalTitleContainer = styled("div")`
   display: flex;
   flex-direction: column;
@@ -499,7 +496,6 @@ const ModalTitleContainer = styled("div")`
   padding: 16px 24px;
 `;
 
-// Add styled component for modal-title
 const ModalTitle = styled(Typography)`
   font-size: 1.125rem !important;
   font-weight: 100 !important;
@@ -507,14 +503,12 @@ const ModalTitle = styled(Typography)`
   margin: 0;
 `;
 
-// Add styled component for modal-description
 const ModalDescription = styled(Typography)`
   font-size: 0.875rem !important;
   font-weight: 100 !important;
   margin: 0;
 `;
 
-// Update SplitContainer to accept an 'upload' prop
 const SplitContainer = styled("div")<{ upload?: boolean }>`
   display: flex;
   gap: 1rem;
@@ -528,7 +522,6 @@ const SplitContainer = styled("div")<{ upload?: boolean }>`
     `}
 `;
 
-// Add styled component for the loading overlay Box
 const LoadingOverlay = styled(Box)`
   display: flex;
   justify-content: center;
@@ -540,13 +533,11 @@ const LoadingOverlay = styled(Box)`
   left: 0;
 `;
 
-// Update InputBox to always be position: relative
 const InputBox = styled(Box)`
   width: 100% !important;
   position: relative;
 `;
 
-// Add styled component for error helper text
 const ErrorHelperText = styled(FormHelperText)`
   position: absolute !important;
   top: 22px;
