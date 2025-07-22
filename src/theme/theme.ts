@@ -761,7 +761,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           zoneCard: {
             headerBackground: zoneCardHeaderBackgroundDark,
-            headerText: softWhite,
+            headerText: zoneCardHeaderTextDark,
             contentBackground: primaryDark,
             text: softWhite,
             imageBackground: zoneCardImageBackgroundLight,

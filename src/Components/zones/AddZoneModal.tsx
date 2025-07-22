@@ -30,7 +30,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Compressor from "compressorjs";
 import { useAppTheme } from "../../theme/useAppTheme";
 import { IoClose } from "react-icons/io5";
-import { useTheme } from "@mui/material/styles";
+import { useTheme, Theme } from "@mui/material/styles";
 
 type AddZoneModalProps = {
   open: boolean;
@@ -235,9 +235,8 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
               <SplitContainer>
                 <InputBox>
                   <Field
-                    as={TextField}
+                    as={StyledTextField}
                     required
-                    className="input input-override"
                     id="zone-name-input"
                     name="name"
                     label="Zone name"
@@ -254,9 +253,8 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
               <SplitContainer>
                 <InputBox>
                   <Field
-                    as={TextField}
+                    as={StyledTextField}
                     required
-                    className="input input-override"
                     id="runtime-hours-input"
                     name="runtimeHours"
                     label="Runtime hours"
@@ -276,9 +274,8 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                 </InputBox>
                 <InputBox>
                   <Field
-                    as={TextField}
+                    as={StyledTextField}
                     required
-                    className="input input-override"
                     id="runtime-minutes-input"
                     name="runtimeMinutes"
                     label="Runtime minutes"
@@ -304,9 +301,8 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
               <SplitContainer>
                 <InputBox>
                   <Field
-                    as={TextField}
+                    as={StyledTextField}
                     required
-                    className="input input-override"
                     id="per-week-input"
                     label="Times per week"
                     name="runtimePerWeek"
@@ -331,7 +327,6 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                 <Field
                   as={StyledTextField}
                   disabled
-                  className="input input-override"
                   id="standard-disabled"
                   name={season.name}
                   label="Season"
@@ -345,37 +340,25 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                 />
               </SplitContainer>
               <SplitContainer upload>
-                <label htmlFor="" className="img-upload-filename-label">
+                <ImgUploadFilenameLabel as="span">
                   Image file name
-                </label>
+                </ImgUploadFilenameLabel>
                 {imageUpload && !error ? (
                   <Tooltip
                     title={imageUpload ? imageUpload.name.toString() : ""}
                     arrow
                   >
-                    <Typography
-                      className="img-upload-filename"
-                      component={"div"}
-                    >
+                    <ImgUploadFilename as="div" id="image-filename-field">
                       {imageUpload ? imageUpload.name.toString() : ""}
-                    </Typography>
+                    </ImgUploadFilename>
                   </Tooltip>
                 ) : (
-                  <Typography
-                    className="img-upload-filename error"
-                    component={"div"}
-                  >
+                  <ImgUploadFilenameError as="div" id="image-filename-field">
                     {error}
-                  </Typography>
+                  </ImgUploadFilenameError>
                 )}
-                <Button
-                  className="img-upload-btn"
-                  component="label"
-                  role={undefined}
-                  variant="contained"
-                  tabIndex={-1}
-                  startIcon={<CloudUploadIcon />}
-                >
+                <ImgUploadBtn as="label" variant="contained" tabIndex={-1}>
+                  <CloudUploadIcon sx={{ mr: 1 }} />
                   Select Image
                   <VisuallyHiddenInput
                     type="file"
@@ -385,7 +368,7 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                     }
                     multiple
                   />
-                </Button>
+                </ImgUploadBtn>
               </SplitContainer>
               <Box className="btn-wrapper">
                 <Button className="card-btn submit-btn" type="submit">
@@ -409,11 +392,51 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
 
 // Styled components
 const StyledTextField = styled(TextField)(({ theme }) => ({
+  width: "100%",
+  "& .MuiInputBase-root, & .MuiInputBase-input": {
+    backgroundColor: theme.custom.modal.fieldBackground,
+  },
   "& .MuiInputBase-input": {
     padding: "5px 12px !important",
+    borderRadius: "5px",
+    width: "100%",
+    height: "38px",
+    boxSizing: "border-box",
   },
-  "& .MuiInputBase-input:focus, & .MuiInputBase-input:hover": {
-    border: `1px solid ${theme.custom.modal.fieldBorder}`,
+  "& .MuiInputLabel-root, & .img-upload-filename-label": {
+    color: theme.custom.modal.fieldLabel,
+    fontSize: "0.875rem !important",
+    fontWeight: 400,
+    transform: "translate(0, -4.5px)",
+  },
+  "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-root.Mui-error": {
+    color: theme.custom.modal.fieldLabel,
+  },
+  "& .MuiInputLabel-root.notes": {
+    transform: "translate(0, -22px)",
+  },
+  "& .MuiInputLabel-asterisk": {
+    color: "#f44336",
+    fontWeight: 800,
+  },
+  // Remove default underline
+  "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+    borderBottom: "none !important",
+  },
+  // Custom border for the input container
+  "& .MuiInputBase-root": {
+    border: `1.5px solid transparent`, // always same width
+    borderRadius: "5px",
+    background: "inherit",
+    transition: "border-color 0.2s",
+  },
+  // Blue border on focus/hover (only color changes)
+  "& .MuiInputBase-root.Mui-focused, & .MuiInputBase-root:hover": {
+    border: `1.5px solid ${theme.custom.modal.fieldBorder}`,
+    background: "inherit",
+  },
+  "& p.Mui-error, & + p.Mui-error": {
+    pointerEvents: "none",
   },
 }));
 
@@ -437,15 +460,18 @@ const ModalBox = styled(Box)({
   transform: "translate(-50%, -50%)",
   width: "500px",
   borderRadius: "7px",
-  boxShadow: "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
+  boxShadow:
+    "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
   // mobile screens (320px-599px)
   "@media (min-width: 320px) and (max-width: 599px)": {
-    width: "400px"
+    width: "400px",
   },
 });
 
 // Add styled component for close-icon
-const CloseIcon = styled(IoClose)<{ $color: string; $hover: string }>`
+const CloseIcon = styled(IoClose, {
+  shouldForwardProp: (prop) => prop !== "$color" && prop !== "$hover",
+})<{ $color: string; $hover: string }>`
   position: absolute;
   top: 17px;
   right: 17px;
@@ -498,7 +524,7 @@ const SplitContainer = styled("div")<{ upload?: boolean }>`
     `
       justify-content: right;
       position: relative;
-      margin-top: 12px;
+      padding-top:1.5rem
     `}
 `;
 
@@ -527,5 +553,67 @@ const ErrorHelperText = styled(FormHelperText)`
   left: 13px;
   pointer-events: none;
 `;
+
+const ImgUploadFilenameLabel = styled("span")(({ theme }) => ({
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  transform: "translate(0, -4.5px)",
+  position: "absolute",
+  left: 0,
+  top: 6,
+  color: theme.custom.modal.fieldLabel,
+}));
+
+const ImgUploadFilename = styled(Typography)(({ theme }) => ({
+  flex: 1,
+  minWidth: 0,
+  height: "38px",
+  padding: "5px 12px",
+  borderRadius: 5,
+  boxSizing: "border-box",
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  fontFamily: "inherit",
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: theme.custom.modal.fieldBackground,
+  color: theme.custom.modal.fieldInputFont,
+  border: "1.5px solid transparent",
+  margin: 0,
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+}));
+const ImgUploadFilenameError = styled(ImgUploadFilename)({
+  color: "#f44336",
+});
+const ImgUploadBtn = styled(Button)(({ theme }) => ({
+  flex: 1,
+  minWidth: 0,
+  height: "38px",
+  padding: "5px 12px",
+  borderRadius: 5,
+  boxSizing: "border-box",
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  fontFamily: "inherit",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  margin: 0,
+  backgroundColor: theme.custom.modal.buttonBackground,
+  color: theme.custom.modal.buttonFont,
+  border: `2px solid ${theme.custom.modal.buttonBorder}`,
+  boxShadow: "none",
+  textTransform: "none",
+  cursor: "pointer",
+  transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1)",
+  "&:hover": {
+    backgroundColor: theme.custom.modal.buttonBackgroundHover,
+    color: theme.custom.modal.buttonFontHover,
+    border: `2px solid ${theme.custom.modal.buttonBorder}`,
+    boxShadow: "none",
+  },
+}));
 
 export default AddZoneModal;

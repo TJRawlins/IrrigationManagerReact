@@ -42,6 +42,85 @@ type ZoneEditProps = {
   isShowEdit: boolean;
 };
 
+// Add all styled components from AddZoneModal for modal structure and fields
+const ModalBox = styled(Box)({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "500px",
+  borderRadius: "7px",
+  boxShadow:
+    "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
+  "@media (min-width: 320px) and (max-width: 599px)": {
+    width: "400px",
+  },
+});
+const CloseIcon = styled(IoClose)`
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 250ms;
+`;
+const ModalTitleContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #666666;
+  gap: 0.5rem;
+  border-image-source: linear-gradient(to right, #18d4c2, #82a628);
+  border-bottom: 10px solid;
+  border-image-slice: 1;
+  border-width: 1px;
+  margin: 0 0 20px;
+  padding: 16px 24px;
+`;
+const ModalTitle = styled(Typography)`
+  font-size: 1.125rem !important;
+  font-weight: 100 !important;
+  font-family: "Outfit", sans-serif !important;
+  margin: 0;
+`;
+const ModalDescription = styled(Typography)`
+  font-size: 0.875rem !important;
+  font-weight: 100 !important;
+  margin: 0;
+`;
+const SplitContainer = styled("div")<{ upload?: boolean }>`
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  ${(props) =>
+    props.upload &&
+    `
+      justify-content: right;
+      position: relative;
+      margin-top: 12px;
+    `}
+`;
+const LoadingOverlay = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+const InputBox = styled(Box)`
+  width: 100% !important;
+  position: relative;
+`;
+const ErrorHelperText = styled(FormHelperText)`
+  position: absolute !important;
+  top: 22px;
+  left: 13px;
+  pointer-events: none;
+`;
+// Add VisuallyHiddenInput styled component
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -333,9 +412,9 @@ function EditZone({
           },
         }}
       >
-        <Box className="modal-box" sx={modal.card}>
-          <IoClose className="close-icon" onClick={handleClose} />
-          <div className="modal-title-container">
+        <ModalBox sx={modal.card}>
+          <CloseIcon onClick={handleClose} />
+          <ModalTitleContainer>
             {isLoading && (
               <Modal
                 open={true}
@@ -347,38 +426,18 @@ function EditZone({
                   },
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                    height: "100%",
-                    position: "absolute",
-                    top: "0",
-                    left: "0",
-                  }}
-                >
+                <LoadingOverlay>
                   <CircularProgress sx={{ color: "#0069b2" }} />
-                </Box>
+                </LoadingOverlay>
               </Modal>
             )}
-            <Typography
-              className="modal-title"
-              id="modal-modal-title"
-              component="h2"
-              sx={modal.title}
-            >
+            <ModalTitle as="h2" id="modal-modal-title" sx={modal.title}>
               Edit Zone
-            </Typography>
-            <Typography
-              className="modal-description"
-              component="p"
-              sx={modal.description}
-            >
+            </ModalTitle>
+            <ModalDescription as="p" sx={modal.description}>
               Edit zone {zone.name} for {season.name}
-            </Typography>
-          </div>
+            </ModalDescription>
+          </ModalTitleContainer>
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
@@ -386,10 +445,10 @@ function EditZone({
           >
             {({ errors, touched }) => (
               <Form style={{ width: "100%", padding: "0 24px 24px" }}>
-                <div className="split-container">
-                  <Box className="input">
+                <SplitContainer>
+                  <InputBox>
                     <Field
-                      as={TextField}
+                      as={StyledTextField}
                       required
                       className="input input-override"
                       id="zone-name-input"
@@ -400,17 +459,17 @@ function EditZone({
                       variant="standard"
                       error={touched.name && Boolean(errors.name)}
                     />
-                    <FormHelperText
+                    <ErrorHelperText
                       error={touched.name && Boolean(errors.name)}
                     >
                       {touched.name && errors.name ? errors.name : ""}
-                    </FormHelperText>
-                  </Box>
-                </div>
-                <div className="split-container">
-                  <Box className="input">
+                    </ErrorHelperText>
+                  </InputBox>
+                </SplitContainer>
+                <SplitContainer>
+                  <InputBox>
                     <Field
-                      as={TextField}
+                      as={StyledTextField}
                       required
                       className="input input-override"
                       id="runtime-hours-input"
@@ -424,7 +483,7 @@ function EditZone({
                         touched.runtimeHours && Boolean(errors.runtimeHours)
                       }
                     />
-                    <FormHelperText
+                    <ErrorHelperText
                       error={
                         touched.runtimeHours && Boolean(errors.runtimeHours)
                       }
@@ -432,11 +491,11 @@ function EditZone({
                       {touched.runtimeHours && errors.runtimeHours
                         ? errors.runtimeHours
                         : ""}
-                    </FormHelperText>
-                  </Box>
-                  <Box className="input">
+                    </ErrorHelperText>
+                  </InputBox>
+                  <InputBox>
                     <Field
-                      as={TextField}
+                      as={StyledTextField}
                       required
                       className="input input-override"
                       id="runtime-minutes-input"
@@ -450,7 +509,7 @@ function EditZone({
                         touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
                       }
                     />
-                    <FormHelperText
+                    <ErrorHelperText
                       error={
                         touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
                       }
@@ -458,13 +517,13 @@ function EditZone({
                       {touched.runtimeMinutes && errors.runtimeMinutes
                         ? errors.runtimeMinutes
                         : ""}
-                    </FormHelperText>
-                  </Box>
-                </div>
-                <div className="split-container">
-                  <Box className="input">
+                    </ErrorHelperText>
+                  </InputBox>
+                </SplitContainer>
+                <SplitContainer>
+                  <InputBox>
                     <Field
-                      as={TextField}
+                      as={StyledTextField}
                       required
                       className="input input-override"
                       id="per-week-input"
@@ -478,7 +537,7 @@ function EditZone({
                         touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
                       }
                     />
-                    <FormHelperText
+                    <ErrorHelperText
                       error={
                         touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
                       }
@@ -486,9 +545,9 @@ function EditZone({
                       {touched.runtimePerWeek && errors.runtimePerWeek
                         ? errors.runtimePerWeek
                         : ""}
-                    </FormHelperText>
-                  </Box>
-                  <Box className="input">
+                    </ErrorHelperText>
+                  </InputBox>
+                  <InputBox>
                     <Field
                       as={StyledTextField}
                       className="input input-override"
@@ -513,9 +572,9 @@ function EditZone({
                       <MenuItem value="Winter">Winter</MenuItem>
                       <MenuItem value="Spring">Spring</MenuItem>
                     </Field>
-                  </Box>
-                </div>
-                <div className="split-container upload">
+                  </InputBox>
+                </SplitContainer>
+                <SplitContainer upload>
                   <label htmlFor="" className="img-upload-filename-label">
                     Image file name
                   </label>
@@ -563,7 +622,7 @@ function EditZone({
                       multiple
                     />
                   </Button>
-                </div>
+                </SplitContainer>
                 <Box className="btn-wrapper">
                   <Button className="card-btn submit-btn" type="submit">
                     Submit
@@ -580,23 +639,59 @@ function EditZone({
               </Form>
             )}
           </Formik>
-        </Box>
+        </ModalBox>
       </Modal>
     </div>
   );
 }
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
+  width: "100%",
+  "& .MuiInputBase-root, & .MuiInputBase-input": {
+    backgroundColor: theme.custom.modal.fieldBackground,
+  },
   "& .MuiInputBase-input": {
     padding: "5px 12px !important",
+    borderRadius: "5px",
+    width: "100%",
+    height: "38px",
+    boxSizing: "border-box",
   },
-  "& .MuiSelect-select": {
-    padding: "5px 12px !important",
+  "& .MuiInputLabel-root, & .img-upload-filename-label": {
+    color: theme.custom.modal.fieldLabel,
+    fontSize: "0.875rem !important",
+    fontWeight: 400,
+    transform: "translate(0, -4.5px)",
   },
-  "& .MuiInputBase-input:focus, & .MuiInputBase-input:hover, & .MuiSelect-select:focus, & .MuiSelect-select:hover":
-    {
-      border: `1px solid ${theme.custom.modal.fieldBorder}`,
-    },
+  "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-root.Mui-error": {
+    color: theme.custom.modal.fieldLabel,
+  },
+  "& .MuiInputLabel-root.notes": {
+    transform: "translate(0, -22px)",
+  },
+  "& .MuiInputLabel-asterisk": {
+    color: "#f44336",
+    fontWeight: 800,
+  },
+  // Remove default underline
+  "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+    borderBottom: "none !important",
+  },
+  // Custom border for the input container
+  "& .MuiInputBase-root": {
+    border: `1.5px solid transparent`,
+    borderRadius: "5px",
+    background: "inherit",
+    transition: "border-color 0.2s",
+  },
+  // Blue border on focus/hover (only color changes)
+  "& .MuiInputBase-root.Mui-focused, & .MuiInputBase-root:hover": {
+    border: `1.5px solid ${theme.custom.modal.fieldBorder}`,
+    background: "inherit",
+  },
+  "& p.Mui-error, & + p.Mui-error": {
+    pointerEvents: "none",
+  },
 }));
 
 export default EditZone;
