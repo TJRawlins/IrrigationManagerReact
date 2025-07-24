@@ -3,15 +3,28 @@ import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 // Color constants
 // --- Primary & Secondary ---
-const callToActionPrimary = "#5fb5c5";
+const callToActionPrimary = "#318cc2";
 const callToActionSecondary = "#2f87ad";
-const primaryLight = "#234a6b";
+const primaryLight = "#103e65";
 const primaryDark = "#141b2d";
-const buttonPrimary = "#2f87ad";
-const buttonSecondary = "#5fb5c5";
 const white = "#ffffff";
 const softWhite = "#e0e0e0";
 const black = "#606162";
+
+// --- Light Theme Colors ---
+// const LightThemeLight = "#e2e7ec";
+// const LightThemeLighter = "#f3f4f6";
+// const LightThemeLightest = "#ffffff";
+// const LightThemeDark = "#103e65";
+// const LightThemeBorder = "#e0e0e0";
+// const LightThemeText = "#606162";
+
+// --- Dark Theme Colors ---
+const darkThemeLight = "#28273f";
+const darkThemeLighter = "#333047";
+const darkThemeDark = "#1f1c30";
+const darkThemeBorder = "#47536d";
+const darkThemeText = "#b1b1b6";
 
 // --- Status & Alerts ---
 const warningRed = "#c23f37";
@@ -20,7 +33,7 @@ const warningBorder = "#7fb5ac00";
 const infoBlue = "#2196f3";
 const errorRed = "#f44336";
 const successGreen = "#4caf50";
-const hoverBlue = "#005972";
+// const hoverBlue = "#005972";
 const hoverBlueDark = "#3a5a6a";
 
 // --- Overlay & Shadows ---
@@ -41,7 +54,7 @@ const opacityPrimary14 = "#59bab114";
 const borderBottomLight = "#0000001f";
 const borderBottomDark = "#ffffff1f";
 const borderZoneLight = "#e0e0e0";
-const borderZoneDark = "#1f2a41";
+// const borderZoneDark = "#1f2a41";
 const fieldLabelGray = "#707174";
 const fieldBackgroundLight = "#d9e1e9";
 const fieldBackgroundDark = "#1f2a41";
@@ -55,27 +68,29 @@ const chipBackgroundLight = "#c9d5d7";
 const chipBackgroundDark = "#1f2a41";
 
 // --- Menu/Nav ---
-const menuButtonBackgroundDark = "#1f2a41";
+// const menuButtonBackgroundLight = LightThemeButtons;
+// const menuButtonBackgroundDark = darkThemeButtons;
 const menuButtonBackgroundImageDark = "linear-gradient(#292934, #292934)";
 const menuButtonBorderLight = "#eef2f6";
 const menuButtonBorderDark = "#1f2a41";
-const menuButtonBorderHoverLight = callToActionSecondary;
+const menuButtonBorderHoverLight = callToActionPrimary;
 const menuButtonBorderHoverDark = callToActionPrimary;
 const menuButtonFontLight = white;
 const menuButtonFontDark = softWhite;
 const menuTitleLight = black;
-const menuTitleDark = softWhite;
+const menuTitleDark = darkThemeText;
 const menuSubtitleLight = black;
-const menuSubtitleDark = softWhite;
+const menuSubtitleDark = darkThemeText;
 const menuBackgroundLight = white;
-const menuBackgroundDark = primaryDark;
+const menuBackgroundDark = darkThemeLight;
 const navBarBackgroundLight = primaryLight;
-const navBarBackgroundDark = primaryDark;
+const navBarBackgroundDark = darkThemeLight;
 const navBarColorLight = "#eef2f6";
 const navBarColorDark = white;
 const sidePanelBackgroundLight = primaryLight;
-const sidePanelBackgroundDark = primaryDark;
-const sidePanelIconColor = "#eff2f5";
+const sidePanelBackgroundDark = darkThemeLight;
+const sidePanelIconColorLight = softWhite;
+const sidePanelIconColorDark = darkThemeText;
 
 // --- Grid ---
 const gridBackgroundLight = "#ced8da";
@@ -92,7 +107,7 @@ const gridColumnHighlightLight = "#dae4e473";
 const gridColumnHighlightDark = "#141b2d69";
 const gridColumnTextLight = gridTextLight;
 const gridColumnTextDark = softWhite;
-const gridButtonColorLight = buttonSecondary;
+// const gridButtonColorLight = buttonSecondary;
 const gridButtonColorDark = "#eef2f6";
 const dataGridBackgroundLight = gridBackgroundLight;
 const dataGridBackgroundDark = gridBackgroundDark;
@@ -140,28 +155,22 @@ const modalButtonFontHoverLight = callToActionPrimary;
 const modalButtonFontHoverDark = callToActionPrimary;
 
 // --- Zone Card/Page ---
-const zoneCardHeaderBackgroundLight = "#e3e7e7";
-const zoneCardHeaderBackgroundDark = primaryDark;
+const zoneCardHeaderBackgroundLight = "#e2e7ec";
+const zoneCardHeaderBackgroundDark = darkThemeLight;
 const zoneCardHeaderTextLight = black;
-const zoneCardHeaderTextDark = softWhite;
+const zoneCardHeaderTextDark = darkThemeText;
 const zoneCardContentBackgroundLight = white;
-const zoneCardContentBackgroundDark = primaryDark;
+const zoneCardContentBackgroundDark = darkThemeLight;
 const zoneCardTextLight = black;
-const zoneCardTextDark = softWhite;
+const zoneCardTextDark = darkThemeText;
 const zoneCardImageBackgroundLight = "#dce4e4";
-const zoneCardButtonBackgroundLight = buttonSecondary;
-const zoneCardButtonBackgroundDark = callToActionPrimary;
-const zoneCardButtonTextLight = white;
-const zoneCardButtonTextDark = "#19191f";
-const zoneCardButtonHoverBackground = hoverBlue;
-const zoneCardButtonHoverTextLight = "#f0f2f5";
-const zoneCardButtonHoverTextDark = "#eef2f6";
+const zoneCardImageBackgroundDark = darkThemeLighter;
 const zoneCardBorderLight = borderZoneLight;
-const zoneCardBorderDark = borderZoneDark;
+const zoneCardBorderDark = darkThemeBorder;
 const zoneCardShadowLight = shadowZoneLight;
 const zoneCardShadowDark = shadowZoneDark;
 const zonePageGridBackgroundLight = "#f3f4f6";
-const zonePageGridBackgroundDark = gridBackgroundDark;
+const zonePageGridBackgroundDark = darkThemeDark;
 const zonePageContainerBackgroundLight = modalBackgroundLight;
 const zonePageContainerBackgroundDark = modalBackgroundDark;
 
@@ -188,31 +197,56 @@ const BUTTON_BASE = {
     '"Open Sans","Source Sans Pro",Helvetica,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
   fontWeight: "600",
   fontSize: "0.85rem",
-  textWrap: "nowrap",
+  whiteSpace: "nowrap",
   padding: "0.5rem 0.75rem",
   textTransform: "capitalize",
-  color: white,
+  transition:
+    "background-color 250ms ease-in-out, color 250ms ease-in-out, border-color 250ms ease-in-out !important",
 };
 
 const BUTTONS = {
   primary: {
     ...BUTTON_BASE,
-    background: buttonPrimary,
-    border: buttonPrimary,
+    background: "#318cc2",
+    border: "#318cc2",
+    color: "#ffffff",
     hover: {
-      background: hoverBlue,
-      color: white,
-      border: hoverBlue,
+      background: "#2974a0",
+      color: "#ffffff",
+      border: "#2974a0",
     },
   },
   secondary: {
     ...BUTTON_BASE,
-    background: buttonSecondary,
-    border: buttonSecondary,
+    background: "transparent",
+    border: "#318cc2",
+    color: "#ffffff",
     hover: {
       background: hoverBlueDark,
       color: white,
       border: hoverBlueDark,
+    },
+  },
+  cardPrimary: {
+    ...BUTTON_BASE,
+    background: "#318cc2",
+    border: "2px solid #318cc2",
+    color: "#ffffff",
+    hover: {
+      background: "transparent",
+      color: "#318cc2",
+      border: "2px solid #318cc2",
+    },
+  },
+  cardSecondary: {
+    ...BUTTON_BASE,
+    background: "#transparent",
+    border: "2px solid #318cc2",
+    color: "#318cc2",
+    hover: {
+      background: "#318cc2",
+      color: "#ffffff",
+      border: "2px solid #318cc2",
     },
   },
 };
@@ -425,6 +459,38 @@ declare module "@mui/material/styles" {
             border: string;
           };
         };
+        cardPrimary: {
+          background: string;
+          color: string;
+          border: string;
+          borderRadius: string;
+          fontFamily: string;
+          fontWeight: string;
+          fontSize: string;
+          padding: string;
+          textTransform: string;
+          hover: {
+            background: string;
+            color: string;
+            border: string;
+          };
+        };
+        cardSecondary: {
+          background: string;
+          color: string;
+          border: string;
+          borderRadius: string;
+          fontFamily: string;
+          fontWeight: string;
+          fontSize: string;
+          padding: string;
+          textTransform: string;
+          hover: {
+            background: string;
+            color: string;
+            border: string;
+          };
+        };
       };
     };
   }
@@ -464,7 +530,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             border: gridBorderLight,
             columnHighlight: gridColumnHighlightLight,
             columnText: gridColumnTextLight,
-            buttonColor: gridButtonColorLight,
+            // buttonColor: gridButtonColorLight,
             buttonWarning: {
               background: warningRed,
               text: warningText,
@@ -505,7 +571,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             color: primaryLight,
             title: menuTitleLight,
             subtitle: menuSubtitleLight,
-            buttonBackground: callToActionSecondary,
+            // buttonBackground: menuButtonBackgroundLight,
             buttonBackgroundImage: white,
             buttonFont: menuButtonFontLight,
             buttonBorder: menuButtonBorderLight,
@@ -520,7 +586,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           sidePanel: {
             backgroundColor: sidePanelBackgroundLight,
-            iconColor: sidePanelIconColor,
+            iconColor: sidePanelIconColorLight,
             dividerColor: dividerWhite52,
           },
           seasonIcons: {
@@ -600,13 +666,10 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           zoneCard: {
             headerBackground: zoneCardHeaderBackgroundLight,
             headerText: zoneCardHeaderTextLight,
+            headerBorder: zoneCardBorderLight,
             contentBackground: zoneCardContentBackgroundLight,
             text: zoneCardTextLight,
             imageBackground: zoneCardImageBackgroundLight,
-            buttonBackground: zoneCardButtonBackgroundLight,
-            buttonText: zoneCardButtonTextLight,
-            buttonHoverBackground: zoneCardButtonHoverBackground,
-            buttonHoverText: zoneCardButtonHoverTextLight,
             border: zoneCardBorderLight,
             shadow: zoneCardShadowLight,
           },
@@ -667,7 +730,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             color: navBarColorDark,
             title: menuTitleDark,
             subtitle: menuSubtitleDark,
-            buttonBackground: menuButtonBackgroundDark,
+            // buttonBackground: menuButtonBackgroundDark,
             buttonBackgroundImage: menuButtonBackgroundImageDark,
             buttonFont: menuButtonFontDark,
             buttonBorder: menuButtonBorderDark,
@@ -682,7 +745,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           sidePanel: {
             backgroundColor: sidePanelBackgroundDark,
-            iconColor: sidePanelIconColor,
+            iconColor: sidePanelIconColorDark,
             dividerColor: dividerWhite29,
           },
           seasonIcons: {
@@ -690,12 +753,12 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           totalGallons: {
             toggleContainer: {
-              background: "#1f2a41",
+              background: darkThemeDark,
               border: "#1f2a41",
             },
             toggleButton: {
               selected: {
-                background: "#141b2d",
+                background: darkThemeLight,
                 color: "#e0e0e0",
                 boxShadow:
                   "rgb(0 0 0 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px",
@@ -762,19 +825,16 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           zoneCard: {
             headerBackground: zoneCardHeaderBackgroundDark,
             headerText: zoneCardHeaderTextDark,
-            contentBackground: primaryDark,
-            text: softWhite,
-            imageBackground: zoneCardImageBackgroundLight,
-            buttonBackground: callToActionPrimary,
-            buttonText: "#19191f",
-            buttonHoverBackground: hoverBlue,
-            buttonHoverText: "#eef2f6",
-            border: borderZoneDark,
-            shadow: shadowZoneDark,
+            headerBorder: zoneCardBorderDark,
+            contentBackground: zoneCardContentBackgroundDark,
+            text: zoneCardTextDark,
+            imageBackground: zoneCardImageBackgroundDark,
+            border: zoneCardBorderDark,
+            shadow: zoneCardShadowDark,
           },
           zonePage: {
-            gridBackground: gridBackgroundDark,
-            containerBackground: modalBackgroundDark,
+            gridBackground: zonePageGridBackgroundDark,
+            containerBackground: zonePageContainerBackgroundDark,
           },
         };
 
