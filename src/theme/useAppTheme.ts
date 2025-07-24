@@ -77,24 +77,6 @@ export const useAppTheme = () => {
         "& .close-icon:hover": {
           color: theme.custom.modal.closeIconHover,
         },
-        "& .cancel-btn, & .submit-btn, & .img-upload-btn": {
-          border: `2px solid ${theme.custom.modal.buttonBorder}`,
-        },
-        "& .submit-btn, & .img-upload-btn": {
-          backgroundColor: theme.custom.modal.buttonBackground,
-          color: theme.custom.modal.buttonFont,
-        },
-        "& .submit-btn:hover, & .img-upload-btn:hover": {
-          backgroundColor: theme.custom.modal.buttonBackgroundHover,
-          color: theme.custom.modal.buttonFontHover,
-        },
-        "& .cancel-btn": {
-          color: theme.custom.modal.buttonFontHover,
-        },
-        "& .cancel-btn:hover": {
-          backgroundColor: theme.custom.modal.buttonBackground,
-          color: theme.custom.modal.buttonFont,
-        },
         "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
           {
             color: theme.custom.modal.fieldLabel,
@@ -180,11 +162,9 @@ export const useAppTheme = () => {
         color: theme.custom.zoneCard.text,
       },
       button: {
-        backgroundColor: theme.custom.zoneCard.buttonBackground,
-        color: theme.custom.zoneCard.buttonText,
+        ...theme.custom.buttons.primary,
         "&:hover": {
-          backgroundColor: theme.custom.zoneCard.buttonHoverBackground,
-          color: theme.custom.zoneCard.buttonHoverText,
+          ...theme.custom.buttons.primary.hover,
         },
       },
       image: {
