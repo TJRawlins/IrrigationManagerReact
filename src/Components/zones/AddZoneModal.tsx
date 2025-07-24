@@ -56,7 +56,7 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
   } = useImageUpload({ username, folder: "zones" });
   const storage: FirebaseStorage = getStorage(app);
   const imageRef: StorageReference = ref(storage, imagePathAndFileName);
-  
+
   const handleClose = () => {
     onClose();
     clearImage();
@@ -131,7 +131,6 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
 
   return (
     <Modal
-      className="modal-overlay"
       open={open}
       onClose={() => {}} // Prevent closing on backdrop click or escape key
       aria-labelledby="modal-modal-title"
@@ -314,18 +313,12 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                   />
                 </ImgUploadBtn>
               </SplitContainer>
-              <Box className="btn-wrapper">
-                <Button className="card-btn submit-btn" type="submit">
-                  Add Zone
-                </Button>
-                <Button
-                  className="card-btn cancel-btn"
-                  type="button"
-                  onClick={handleClose}
-                >
+              <ButtonWrapper>
+                <AddButton type="submit">Add Zone</AddButton>
+                <CancelButton type="button" onClick={handleClose}>
                   Cancel
-                </Button>
-              </Box>
+                </CancelButton>
+              </ButtonWrapper>
             </Form>
           )}
         </Formik>
@@ -521,31 +514,51 @@ const ImgUploadFilename = styled(Typography)(({ theme }) => ({
 }));
 
 const ImgUploadBtn = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardPrimary,
   flex: 1,
-  minWidth: 0,
   height: "38px",
-  padding: "5px 12px",
-  borderRadius: 5,
-  boxSizing: "border-box",
-  fontSize: "0.875rem",
-  fontWeight: 400,
-  fontFamily: "inherit",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  margin: 0,
-  backgroundColor: theme.custom.modal.buttonBackground,
-  color: theme.custom.modal.buttonFont,
-  border: `2px solid ${theme.custom.modal.buttonBorder}`,
-  boxShadow: "none",
   textTransform: "none",
   cursor: "pointer",
-  transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1)",
   "&:hover": {
-    backgroundColor: theme.custom.modal.buttonBackgroundHover,
-    color: theme.custom.modal.buttonFontHover,
-    border: `2px solid ${theme.custom.modal.buttonBorder}`,
-    boxShadow: "none",
+    ...theme.custom.buttons.cardPrimary.hover,
+  },
+}));
+
+const ButtonWrapper = styled(Box)({
+  display: "flex",
+  gap: ".75rem",
+  marginTop: "1.5rem",
+  width: "48%",
+});
+
+const AddButton = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardPrimary,
+  width: "100%",
+  height: "38px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  textTransform: "none",
+  cursor: "pointer",
+  "&:hover": {
+    ...theme.custom.buttons.cardPrimary.hover,
+  },
+}));
+
+const CancelButton = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardSecondary,
+  width: "100%",
+  height: "38px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  textTransform: "none",
+  cursor: "pointer",
+  "&:hover": {
+    ...theme.custom.buttons.cardSecondary.hover,
   },
 }));
 
