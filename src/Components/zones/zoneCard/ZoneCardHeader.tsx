@@ -1,19 +1,13 @@
 import React from "react";
-import {
-  CardHeader,
-  IconButton,
-  Menu,
-  MenuItem,
-  Popover,
-  Button,
-} from "@mui/material";
+import { CardHeader, IconButton, Menu, MenuItem } from "@mui/material";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { BsCalendar4Week } from "react-icons/bs";
 import { RiTimerLine } from "react-icons/ri";
-import { PiPlant, PiWarningFill } from "react-icons/pi";
+import { PiPlant } from "react-icons/pi";
 import { getSeasonIcon } from "./zoneCardUtils";
 import { useAppTheme } from "../../../theme/useAppTheme";
 import { styled } from "@mui/material/styles";
+import ConfirmationPopover from "../../common/ConfirmationPopover";
 
 interface Zone {
   name: string;
@@ -54,7 +48,7 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
     handleDeleteClose,
     deleteZone,
   } = props;
-  const { zoneCard, messages, fonts } = useAppTheme();
+  const { zoneCard, fonts } = useAppTheme();
 
   return (
     <StyledCardHeader
@@ -135,44 +129,20 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
               </MenuItem>
             ))}
           </Menu>
-          <Popover
+          <ConfirmationPopover
             id={id}
             open={Boolean(anchorEl) && !!anchorEl}
             anchorEl={anchorEl}
             onClose={handleDeleteClose}
+            onConfirm={deleteZone}
+            title="Confirmation"
+            message={[
+              "Are you sure you want to delete this zone and all associated plants?",
+            ]}
+            confirmText="Confirm"
+            cancelText="Cancel"
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            slotProps={{
-              paper: {
-                sx: {
-                  backgroundColor: zoneCard.card.backgroundColor,
-                  color: zoneCard.header.color,
-                  boxShadow: 3,
-                  borderRadius: 2,
-                  minWidth: 220,
-                  p: "1.5rem 1.5rem 1rem 1.5rem",
-                },
-              },
-            }}
-          >
-            <span
-              style={{
-                display: "flex",
-                marginBottom: "1rem",
-                alignItems: "center",
-                ...fonts.content,
-              }}
-            >
-              <PiWarningFill
-                className="message-icon"
-                style={messages.warning.icon}
-              />{" "}
-              This will delete all associated plants.
-            </span>
-            <PopoverActions>
-              <ConfirmButton onClick={deleteZone}>Confirm</ConfirmButton>
-              <CancelButton onClick={handleDeleteClose}>Cancel</CancelButton>
-            </PopoverActions>
-          </Popover>
+          />
         </>
       }
     />
@@ -208,27 +178,6 @@ const CardSubheaderItem = styled("div")(() => ({
   alignItems: "center",
   gap: "5px",
   fontSize: "0.75rem",
-}));
-
-const PopoverActions = styled("div")(() => ({
-  display: "flex",
-  gap: "0.5rem",
-}));
-
-const ConfirmButton = styled(Button)(({ theme }) => ({
-  ...theme.custom.buttons.cardPrimary,
-  textTransform: "capitalize",
-  "&:hover": {
-    ...theme.custom.buttons.cardPrimary.hover,
-  },
-}));
-
-const CancelButton = styled(Button)(({ theme }) => ({
-  ...theme.custom.buttons.cardSecondary,
-  textTransform: "capitalize",
-  "&:hover": {
-    ...theme.custom.buttons.cardSecondary.hover,
-  },
 }));
 
 export default ZoneCardHeader;

@@ -1,13 +1,6 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Popover,
-  Tooltip,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, ButtonGroup, Tooltip, useTheme } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -19,7 +12,6 @@ import {
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
-import { TiWarning } from "react-icons/ti";
 import { useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
@@ -37,6 +29,7 @@ import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Plant } from "../../App/models/Plant";
 import EditPlantSkeleton from "./EditPlantSkeleton";
 import { useAppTheme } from "../../theme/useAppTheme";
+import ConfirmationPopover from "../common/ConfirmationPopover";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -70,7 +63,7 @@ PlantListProps) {
   // color theme
   const theme = useTheme();
   const appTheme = useAppTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));  
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
 
   const isImageBeingUsedRef = useRef<boolean>(false);
 
@@ -318,27 +311,21 @@ PlantListProps) {
                 <FaTrashAlt className="action-btn-icon" />
               </Button>
             </Tooltip>
-            <Popover
+            <ConfirmationPopover
               id={id}
               open={open}
               anchorEl={anchorEl}
               onClose={handleDeleteClose}
+              onConfirm={deletePlant}
+              title="Delete Plant"
+              message="Are you sure you want to delete this plant?"
+              confirmText="Confirm"
+              cancelText="Cancel"
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "left",
               }}
-            >
-                              <Button
-                  className="grid-btn action"
-                  sx={appTheme.grid.buttonWarning}
-                  onClick={deletePlant}
-                >
-                <div className="btn-content-container">
-                  <TiWarning className="btn-icon" />
-                  <span className="btn-text">Confirm</span>
-                </div>
-              </Button>
-            </Popover>
+            />
           </ButtonGroup>
         );
       },
@@ -383,7 +370,7 @@ PlantListProps) {
               noRowsVariant: "skeleton",
             },
           }}
-                      sx={{...appTheme.grid.sx, border: "none"}}
+          sx={{ ...appTheme.grid.sx, border: "none" }}
           initialState={{
             columns: {
               columnVisibilityModel: {

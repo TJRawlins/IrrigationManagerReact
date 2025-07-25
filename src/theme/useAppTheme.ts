@@ -191,11 +191,7 @@ export const useAppTheme = () => {
         backgroundColor: theme.custom.messages.warning.background,
         color: theme.custom.messages.warning.text,
         border: `1px solid ${theme.custom.messages.warning.border}`,
-        icon: {
-          color: theme.custom.messages.warning.icon,
-          marginRight: "0.5rem",
-          fontSize: "1.2rem",
-        },
+        icon: theme.custom.messages.warning.icon,
       },
       error: {
         backgroundColor: theme.custom.messages.error.background,
