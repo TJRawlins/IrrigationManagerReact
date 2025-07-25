@@ -13,7 +13,7 @@ import { RiTimerLine } from "react-icons/ri";
 import { PiPlant, PiWarningFill } from "react-icons/pi";
 import { getSeasonIcon } from "./zoneCardUtils";
 import { useAppTheme } from "../../../theme/useAppTheme";
-import styled from "styled-components";
+import { styled } from "@mui/material/styles";
 
 interface Zone {
   name: string;
@@ -40,19 +40,20 @@ interface ZoneCardHeaderProps {
   deleteZone: () => void;
 }
 
-const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
-  zone,
-  openCardMenu,
-  anchorElCardMenu,
-  handleCardMenuClick,
-  handleCardMenuClose,
-  handleCardMenuSelect,
-  options,
-  id,
-  anchorEl,
-  handleDeleteClose,
-  deleteZone,
-}) => {
+function ZoneCardHeader(props: ZoneCardHeaderProps) {
+  const {
+    zone,
+    openCardMenu,
+    anchorElCardMenu,
+    handleCardMenuClick,
+    handleCardMenuClose,
+    handleCardMenuSelect,
+    options,
+    id,
+    anchorEl,
+    handleDeleteClose,
+    deleteZone,
+  } = props;
   const { zoneCard, messages, fonts } = useAppTheme();
 
   return (
@@ -168,89 +169,66 @@ const ZoneCardHeader: React.FC<ZoneCardHeaderProps> = ({
               This will delete all associated plants.
             </span>
             <PopoverActions>
-              <StyledButton
-                sx={{
-                  backgroundColor: zoneCard.button.backgroundColor,
-                  color: zoneCard.button.color,
-                  ...fonts.content,
-                  "&:hover": {
-                    backgroundColor: zoneCard.button["&:hover"].backgroundColor,
-                    color: zoneCard.button["&:hover"].color,
-                  },
-                }}
-                onClick={deleteZone}
-              >
-                Confirm
-              </StyledButton>
-              <StyledButton
-                sx={{
-                  backgroundColor: zoneCard.button.backgroundColor,
-                  color: zoneCard.button.color,
-                  ...fonts.content,
-                  "&:hover": {
-                    backgroundColor: zoneCard.button["&:hover"].backgroundColor,
-                    color: zoneCard.button["&:hover"].color,
-                  },
-                }}
-                onClick={handleDeleteClose}
-              >
-                Cancel
-              </StyledButton>
+              <ConfirmButton onClick={deleteZone}>Confirm</ConfirmButton>
+              <CancelButton onClick={handleDeleteClose}>Cancel</CancelButton>
             </PopoverActions>
           </Popover>
         </>
       }
     />
   );
-};
-
-export default ZoneCardHeader;
+}
 
 // Styled Components
-const StyledCardHeader = styled(CardHeader)`
-  padding: 0 !important;
-`;
+const StyledCardHeader = styled(CardHeader)(() => ({
+  padding: 0,
+}));
 
-const ZoneTitle = styled.span`
-  text-transform: capitalize;
-  font-weight: 800 !important;
-  font-size: 1.2rem !important;
-  line-height: 1.334;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
+const ZoneTitle = styled("span")(() => ({
+  textTransform: "capitalize",
+  fontWeight: 800,
+  fontSize: "1.2rem",
+  lineHeight: 1.334,
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+}));
 
-const CardSubheader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  font-size: 0.85rem;
-  white-space: nowrap;
-  border-radius: 5px;
-  margin: 0.25rem 0px 0rem 0 !important;
-`;
+const CardSubheader = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "1.25rem",
+  fontSize: "0.85rem",
+  whiteSpace: "nowrap",
+  borderRadius: "5px",
+  margin: "0.25rem 0px 0rem 0",
+}));
 
-const CardSubheaderItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.75rem;
-`;
+const CardSubheaderItem = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "5px",
+  fontSize: "0.75rem",
+}));
 
-const PopoverActions = styled.div`
-  display: flex;
-  gap: 0.5rem;
-`;
+const PopoverActions = styled("div")(() => ({
+  display: "flex",
+  gap: "0.5rem",
+}));
 
-const StyledButton = styled(Button)`
-  font-size: 0.85rem;
-  padding: 0.45rem 0.75rem;
-  height: fit-content;
-  white-space: nowrap;
-  border-radius: 5px;
-  text-transform: capitalize;
-  transition: background-color 0s ease-in-out;
-  font-weight: 600;
-  border: none;
-  box-shadow: none;
-`;
+const ConfirmButton = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardPrimary,
+  textTransform: "capitalize",
+  "&:hover": {
+    ...theme.custom.buttons.cardPrimary.hover,
+  },
+}));
+
+const CancelButton = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardSecondary,
+  textTransform: "capitalize",
+  "&:hover": {
+    ...theme.custom.buttons.cardSecondary.hover,
+  },
+}));
+
+export default ZoneCardHeader;
