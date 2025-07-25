@@ -107,11 +107,11 @@ const WarningIcon = styled(PiWarningFill)(({ theme }) => ({
   color: theme.custom.messages.warning.icon,
 }));
 
-const TextContainer = styled(Box)<{ showWarningIcon: boolean }>(
-  ({ showWarningIcon }) => ({
-    marginLeft: showWarningIcon ? "1.25rem" : 0,
-  })
-);
+const TextContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "showWarningIcon",
+})<{ showWarningIcon: boolean }>(({ showWarningIcon }) => ({
+  marginLeft: showWarningIcon ? "1.25rem" : 0,
+}));
 
 const Title = styled(Typography)(() => ({
   fontSize: "1.5rem",
