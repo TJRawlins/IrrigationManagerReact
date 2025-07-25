@@ -137,7 +137,7 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
             onConfirm={deleteZone}
             title="Confirmation"
             message={[
-              "Are you sure you want to delete this zone and all associated plants?",
+              `Are you sure you want to delete "${zone.name}" and all associated plants?`,
             ]}
             confirmText="Confirm"
             cancelText="Cancel"
