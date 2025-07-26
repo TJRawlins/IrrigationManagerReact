@@ -27,7 +27,7 @@ import "../../styles/baseStyles/BaseCard.css";
 import "../../styles/plants/ViewPlant.css";
 import { useState } from "react";
 import EditPlant from "./EditPlant";
-import { useAppTheme } from "../../theme/useAppTheme";
+// import { useAppTheme } from "../../theme/useAppTheme";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -46,17 +46,16 @@ function ViewPlant({
   const handleClose = () => setIsShowView(false);
   const [isShowEdit, setIsShowEdit] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const appTheme = useAppTheme();
+  // const appTheme = useAppTheme();
   const viewPlantColorTheme = () => {
     return {
       plantCardModal: {
-        backgroundColor: appTheme.colors.overlay.modal,
+        // backgroundColor: appTheme.colors.overlay.modal,
         opacity: 0.5,
       },
       plantCard: {
-        // backgroundColor: appTheme.colors.white.vary,
-        border: "1px solid " + appTheme.colors.primary.const + " !important",
-        boxShadow: "1px -1px 20px 3px " + appTheme.colors.primary.shadowGlow,
+        // border: "1px solid " + appTheme.colors.primary.const + " !important",
+        // boxShadow: "1px -1px 20px 3px " + appTheme.colors.primary.shadowGlow,
       },
       plantCardIconWrapper: {
         // backgroundColor: appTheme.colors.whiteBlue.vary,
@@ -68,7 +67,7 @@ function ViewPlant({
         // backgroundColor: appTheme.colors.whiteBlue.alt2 + " !important",
         // color: appTheme.colors.gray.toWhite,
         // "& .MuiTypography-root": { color: appTheme.colors.gray.toWhite },
-        "& .card-item-icon": { color: appTheme.colors.primary.const },
+        // "& .card-item-icon": { color: appTheme.colors.primary.const },
         // "& .icon-wrapper": { background: appTheme.colors.white.vary },
         "& .data-set.amounts, & .card-data-group, & .zone-runtime-wrapper": {
           // background: appTheme.colors.white.toDarkGray,
@@ -79,21 +78,21 @@ function ViewPlant({
         },
       },
       plantCardChip: {
-        backgroundColor: appTheme.colors.primary.toDarkGray + " !important",
+        // backgroundColor: appTheme.colors.primary.toDarkGray + " !important",
         // color: appTheme.colors.white.const,
         ".iconStyle.seasonChipIcon": {
-          fill: appTheme.colors.primary.const + " !important",
+          // fill: appTheme.colors.primary.const + " !important",
           // background: appTheme.colors.white.toLightGray + "!important",
         },
       },
       plantCardMedia: {
         "& #card-img-overlay": {
-          backgroundColor: appTheme.colors.overlay.image,
+          // backgroundColor: appTheme.colors.overlay.image,
         },
       },
       plantCardGallons: {
         display: { xs: "flex", sm: "flex", md: "flex" },
-        background: `linear-gradient(45deg, ${appTheme.colors.secondary.alt}, ${appTheme.colors.primary.alt})`,
+        // background: `linear-gradient(45deg, ${appTheme.colors.secondary.alt}, ${appTheme.colors.primary.alt})`,
         ".gallons-chip:nth-of-type(2)": {
           // borderRight: `1px solid ${appTheme.colors.white.alt2} !important`,
           // borderLeft: `1px solid ${appTheme.colors.white.alt2} !important`,
