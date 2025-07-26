@@ -3,23 +3,19 @@ import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 // ============ COLOR PALETTE ============
 
-// Color constants
 // --- Primary & Secondary ---
 const callToActionPrimary = "#318cc2";
-const callToActionSecondary = "#2f87ad";
-const primaryLight = "#103e65";
 const primaryDark = "#141b2d";
-const white = "#ffffff";
-const softWhite = "#e0e0e0";
-const black = "#606162";
+const transparent = "transparent";
 
 // --- Light Theme Colors ---
-// const lightThemeLight = "#e2e7ec";
+const lightThemeLight = "#e2e7ec";
 const lightThemeLighter = "#f3f4f6";
-// const lightThemeLightest = "#ffffff";
-// const lightThemeDark = "#103e65";
-// const lightThemeBorder = "#e0e0e0";
-// const lightThemeText = "#606162";
+const lightThemeLightest = "#ffffff";
+const lightThemeDark = "#103e65";
+const lightThemeBorder = "#e0e0e0";
+const lightThemeText = "#606162";
+const lightThemeLightOpacity = "#ffffff52";
 
 // --- Dark Theme Colors ---
 const darkThemeLight = "#28273f";
@@ -27,6 +23,7 @@ const darkThemeLighter = "#333047";
 const darkThemeDark = "#1f1c30";
 const darkThemeBorder = "#47536d";
 const darkThemeText = "#b1b1b6";
+const darkThemeLightOpacity = "#ffffff29";
 
 // --- Status & Alerts ---
 const warningRed = "#c23f37";
@@ -35,28 +32,18 @@ const warningBorder = "#7fb5ac00";
 const infoBlue = "#2196f3";
 const errorRed = "#f44336";
 const successGreen = "#4caf50";
-// const hoverBlue = "#005972";
-const hoverBlueDark = "#3a5a6a";
 
 // --- Overlay & Shadows ---
 const overlayModalLight = "#173e5ba8";
 const overlayModalDark = "#212a3f96";
 const overlayImageLight = "#64c9bf7a";
 const overlayImageDark = "#0f5e568a";
-const shadowGlowLight = "#5252527c";
-const shadowGlowDark = "#59bab17c";
 const shadowZoneLight = "0 2px 4px rgba(0,0,0,0.1)";
 const shadowZoneDark = "0 2px 4px rgba(0,0,0,0.3)";
 
 // --- Miscellaneous ---
-const transparent = "transparent";
-const dividerWhite52 = "#ffffff52";
-const dividerWhite29 = "#ffffff29";
-const opacityPrimary14 = "#59bab114";
 const borderBottomLight = "#0000001f";
 const borderBottomDark = "#ffffff1f";
-const borderZoneLight = "#e0e0e0";
-// const borderZoneDark = "#1f2a41";
 const fieldLabelGray = "#707174";
 const fieldBackgroundLight = "#d9e1e9";
 const fieldBackgroundDark = "#1f2a41";
@@ -69,114 +56,7 @@ const inactiveSeasonDark = "#475a82";
 const chipBackgroundLight = "#c9d5d7";
 const chipBackgroundDark = "#1f2a41";
 
-// ============ COMPONENTS ============
-
-// --- Menu/Nav ---
-// const menuButtonBackgroundLight = LightThemeButtons;
-// const menuButtonBackgroundDark = darkThemeButtons;
-const menuButtonBackgroundImageDark = "linear-gradient(#292934, #292934)";
-const menuButtonBorderLight = "#eef2f6";
-const menuButtonBorderDark = "#1f2a41";
-const menuButtonBorderHoverLight = callToActionPrimary;
-const menuButtonBorderHoverDark = callToActionPrimary;
-const menuButtonFontLight = white;
-const menuButtonFontDark = softWhite;
-const menuTitleLight = black;
-const menuTitleDark = darkThemeText;
-const menuSubtitleLight = black;
-const menuSubtitleDark = darkThemeText;
-const menuBackgroundLight = white;
-const menuBackgroundDark = darkThemeLight;
-const navBarBackgroundLight = primaryLight;
-const navBarBackgroundDark = darkThemeLight;
-const navBarColorLight = "#eef2f6";
-const navBarColorDark = white;
-const sidePanelBackgroundLight = primaryLight;
-const sidePanelBackgroundDark = darkThemeLight;
-const sidePanelIconColorLight = softWhite;
-const sidePanelIconColorDark = darkThemeText;
-
-// --- Grid ---
-const gridBackgroundLight = "#ced8da";
-const gridBackgroundDark = "#1f2a41";
-const gridRowBackgroundLight = "#eef2f6";
-const gridRowBackgroundDark = "#1f2a41";
-const gridTextLight = "#555555";
-const gridTextDark = softWhite;
-const gridRowHoverLight = "#dae4e4";
-const gridRowHoverDark = primaryDark;
-const gridBorderLight = "#ced8da59";
-const gridBorderDark = borderBottomDark;
-const gridColumnHighlightLight = "#dae4e473";
-const gridColumnHighlightDark = "#141b2d69";
-const gridColumnTextLight = gridTextLight;
-const gridColumnTextDark = softWhite;
-// const gridButtonColorLight = buttonSecondary;
-const gridButtonColorDark = "#eef2f6";
-const dataGridBackgroundLight = gridBackgroundLight;
-const dataGridBackgroundDark = gridBackgroundDark;
-const dataGridRowBackgroundLight = gridRowBackgroundLight;
-const dataGridRowBackgroundDark = gridRowBackgroundDark;
-const dataGridTextLight = gridTextLight;
-const dataGridTextDark = softWhite;
-const dataGridRowHoverLight = gridRowHoverLight;
-const dataGridRowHoverDark = gridRowHoverDark;
-const dataGridColumnHighlightLight = gridColumnHighlightLight;
-const dataGridColumnHighlightDark = gridColumnHighlightDark;
-const dataGridColumnTextLight = gridColumnTextLight;
-const dataGridColumnTextDark = gridColumnTextDark;
-const buttonWarningBackground = warningRed;
-const buttonWarningText = warningText;
-const buttonWarningBorder = warningBorder;
-const buttonWarningIcon = warningText;
-
-// --- Modal ---
-const modalBackgroundLight = "#eef2f6";
-const modalBackgroundDark = primaryDark;
-const modalBorderLight = modalBackgroundLight;
-const modalBorderDark = gridBackgroundDark;
-const modalTitleColorLight = black;
-const modalTitleColorDark = "#e5e7eb";
-const modalDescriptionLight = black;
-const modalDescriptionDark = closeIconDark;
-const modalFieldLabelLight = fieldLabelGray;
-const modalFieldLabelDark = closeIconDark;
-const modalFieldBackgroundLight = fieldBackgroundLight;
-const modalFieldBackgroundDark = fieldBackgroundDark;
-const modalFieldInputFontLight = fieldLabelGray;
-const modalFieldInputFontDark = closeIconDark;
-const modalFieldBorderLight = callToActionPrimary;
-const modalFieldBorderDark = callToActionPrimary;
-const modalButtonFontLight = modalBackgroundLight;
-const modalButtonFontDark = "#19191f";
-const modalButtonBackgroundLight = callToActionPrimary;
-const modalButtonBackgroundDark = callToActionPrimary;
-const modalButtonBorderLight = callToActionPrimary;
-const modalButtonBorderDark = callToActionPrimary;
-const modalButtonBackgroundHoverLight = transparent;
-const modalButtonBackgroundHoverDark = transparent;
-const modalButtonFontHoverLight = callToActionPrimary;
-const modalButtonFontHoverDark = callToActionPrimary;
-
-// --- Zone Card/Page ---
-const zoneCardHeaderBackgroundLight = "#e2e7ec";
-const zoneCardHeaderBackgroundDark = darkThemeLight;
-const zoneCardHeaderTextLight = black;
-const zoneCardHeaderTextDark = darkThemeText;
-const zoneCardContentBackgroundLight = white;
-const zoneCardContentBackgroundDark = darkThemeLight;
-const zoneCardTextLight = black;
-const zoneCardTextDark = darkThemeText;
-const zoneCardImageBackgroundLight = "#dce4e4";
-const zoneCardImageBackgroundDark = darkThemeBorder;
-const zoneCardBorderLight = borderZoneLight;
-const zoneCardBorderDark = darkThemeBorder;
-const zoneCardShadowLight = shadowZoneLight;
-const zoneCardShadowDark = shadowZoneDark;
-const zonePageGridBackgroundLight = "#f3f4f6";
-const zonePageGridBackgroundDark = darkThemeDark;
-const zonePageContainerBackgroundLight = modalBackgroundLight;
-const zonePageContainerBackgroundDark = modalBackgroundDark;
+// ============ FONTS & BUTTONS ============
 
 // Font constants
 const FONTS = {
@@ -222,34 +102,34 @@ const BUTTONS = {
   },
   secondary: {
     ...BUTTON_BASE,
-    background: "transparent",
-    border: "#318cc2",
-    color: "#ffffff",
+    background: "",
+    border: "",
+    color: "",
     hover: {
-      background: hoverBlueDark,
-      color: white,
-      border: hoverBlueDark,
+      background: "",
+      color: "",
+      border: "",
     },
   },
   cardPrimary: {
     ...BUTTON_BASE,
     background: "#318cc2",
     border: "2px solid #318cc2",
-    color: "#ffffff",
+    color: lightThemeLightest,
     hover: {
-      background: "transparent",
+      background: transparent,
       color: "#318cc2",
       border: "2px solid #318cc2",
     },
   },
   cardSecondary: {
     ...BUTTON_BASE,
-    background: "#transparent",
+    background: transparent,
     border: "2px solid #318cc2",
     color: "#318cc2",
     hover: {
       background: "#318cc2",
-      color: "#ffffff",
+      color: lightThemeLightest,
       border: "2px solid #318cc2",
     },
   },
@@ -533,100 +413,95 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           fonts: FONTS,
           buttons: BUTTONS,
           grid: {
-            background: gridBackgroundLight,
-            rowBackground: gridRowBackgroundLight,
-            text: gridTextLight,
-            rowHover: gridRowHoverLight,
-            border: gridBorderLight,
-            columnHighlight: gridColumnHighlightLight,
-            columnText: gridColumnTextLight,
-            // buttonColor: gridButtonColorLight,
+            background: "#ced8da",
+            rowBackground: "#eef2f6",
+            text: "#555555",
+            rowHover: "#dae4e4",
+            border: "#ced8da59",
+            columnHighlight: "#dae4e473",
+            columnText: "#555555",
             buttonWarning: {
               background: warningRed,
               text: warningText,
               border: warningBorder,
               icon: warningText,
             },
-            dataGridBackground: dataGridBackgroundLight,
-            dataGridRowBackground: dataGridRowBackgroundLight,
-            dataGridText: dataGridTextLight,
-            dataGridRowHover: dataGridRowHoverLight,
-            dataGridColumnHighlight: dataGridColumnHighlightLight,
-            dataGridColumnText: dataGridColumnTextLight,
-            buttonWarningBackground: buttonWarningBackground,
-            buttonWarningText: buttonWarningText,
-            buttonWarningBorder: buttonWarningBorder,
-            buttonWarningIcon: buttonWarningIcon,
+            dataGridBackground: "#ced8da",
+            dataGridRowBackground: "#eef2f6",
+            dataGridText: "#555555",
+            dataGridRowHover: "#dae4e4",
+            dataGridColumnHighlight: "#dae4e473",
+            dataGridColumnText: "#555555",
+            buttonWarningBackground: warningRed,
+            buttonWarningText: warningText,
+            buttonWarningBorder: warningBorder,
+            buttonWarningIcon: warningText,
           },
           table: {
             background: lightThemeLighter,
           },
           modal: {
             overlay: overlayModalLight,
-            background: modalBackgroundLight,
-            border: modalBorderLight,
-            titleColor: modalTitleColorLight,
-            description: modalDescriptionLight,
+            background: "#eef2f6",
+            border: "#eef2f6",
+            titleColor: lightThemeText,
+            description: lightThemeText,
             closeIcon: closeIconGray,
             closeIconHover: closeIconHoverGray,
-            fieldLabel: modalFieldLabelLight,
-            fieldBackground: modalFieldBackgroundLight,
-            fieldInputFont: modalFieldInputFontLight,
-            fieldBorder: modalFieldBorderLight,
-            buttonFont: modalButtonFontLight,
-            buttonBackground: modalButtonBackgroundLight,
-            buttonBorder: modalButtonBorderLight,
-            buttonBackgroundHover: modalButtonBackgroundHoverLight,
-            buttonFontHover: modalButtonFontHoverLight,
+            fieldLabel: fieldLabelGray,
+            fieldBackground: fieldBackgroundLight,
+            fieldInputFont: fieldLabelGray,
+            fieldBorder: callToActionPrimary,
+            buttonFont: "#eef2f6",
+            buttonBackground: callToActionPrimary,
+            buttonBorder: callToActionPrimary,
+            buttonBackgroundHover: transparent,
+            buttonFontHover: callToActionPrimary,
           },
           menuBar: {
-            background: menuBackgroundLight,
-            color: primaryLight,
-            title: menuTitleLight,
-            subtitle: menuSubtitleLight,
-            // buttonBackground: menuButtonBackgroundLight,
-            buttonBackgroundImage: white,
-            buttonFont: menuButtonFontLight,
-            buttonBorder: menuButtonBorderLight,
-            buttonBorderHover: menuButtonBorderHoverLight,
+            background: lightThemeLightest,
+            color: lightThemeDark,
+            title: lightThemeText,
+            subtitle: lightThemeText,
+            buttonBorderHover: callToActionPrimary,
             chipBackground: chipBackgroundLight,
             gallonsIcon: callToActionPrimary,
           },
           navBar: {
-            background: navBarBackgroundLight,
-            color: navBarColorLight,
+            background: lightThemeLightest,
+            color: lightThemeBorder,
             borderBottom: borderBottomLight,
           },
           sidePanel: {
-            backgroundColor: sidePanelBackgroundLight,
-            iconColor: sidePanelIconColorLight,
-            dividerColor: dividerWhite52,
+            backgroundColor: lightThemeDark,
+            iconColor: lightThemeBorder,
+            dividerColor: lightThemeLightOpacity,
           },
           seasonIcons: {
             inactiveBackground: inactiveSeasonLight,
           },
           totalGallons: {
             toggleContainer: {
-              background: "#f3f4f6",
-              border: "#E0E0E0",
+              background: lightThemeLighter,
+              border: lightThemeBorder,
             },
             toggleButton: {
               selected: {
                 background: "white",
-                color: "#606162",
+                color: lightThemeText,
                 boxShadow:
                   "rgb(50 50 93 / 4%) 0px 2px 5px -1px, rgb(0 0 0 / 19%) 0px 1px 3px -1px",
               },
               unselected: {
-                background: "transparent",
+                background: transparent,
                 color: "#7f8287",
               },
             },
             valueDisplay: {
-              color: "#606162",
+              color: lightThemeText,
             },
             valueLabel: {
-              color: "#606162",
+              color: lightThemeText,
             },
           },
           messages: {
@@ -657,112 +532,97 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             toast: {
               background: "#f5f5f5",
               text: "#333333",
-              border: "#e0e0e0",
+              border: lightThemeBorder,
             },
-          },
-          primary: {
-            const: callToActionPrimary,
-            toDarkGray: callToActionPrimary,
-            alt: callToActionPrimary,
-            shadowGlow: shadowGlowLight,
-            opacity: opacityPrimary14,
-          },
-          secondary: {
-            const: callToActionSecondary,
-            vary: callToActionSecondary,
-            alt: callToActionSecondary,
           },
           overlay: {
             modal: overlayModalLight,
             image: overlayImageLight,
           },
           zoneCard: {
-            headerBackground: zoneCardHeaderBackgroundLight,
-            headerText: zoneCardHeaderTextLight,
-            headerBorder: zoneCardBorderLight,
-            contentBackground: zoneCardContentBackgroundLight,
-            text: zoneCardTextLight,
-            imageBackground: zoneCardImageBackgroundLight,
-            border: zoneCardBorderLight,
-            shadow: zoneCardShadowLight,
+            headerBackground: lightThemeLight,
+            headerText: lightThemeText,
+            headerBorder: lightThemeBorder,
+            contentBackground: lightThemeLightest,
+            text: lightThemeText,
+            imageBackground: "#dce4e4",
+            border: lightThemeBorder,
+            shadow: shadowZoneLight,
           },
           zonePage: {
-            gridBackground: zonePageGridBackgroundLight,
-            containerBackground: zonePageContainerBackgroundLight,
+            gridBackground: lightThemeLighter,
+            containerBackground: "#eef2f6",
           },
         }
       : {
           fonts: FONTS,
           buttons: BUTTONS,
           grid: {
-            background: gridBackgroundDark,
-            rowBackground: gridRowBackgroundDark,
-            text: gridTextDark,
-            rowHover: gridRowHoverDark,
-            border: gridBorderDark,
-            columnHighlight: gridColumnHighlightDark,
-            columnText: gridColumnTextDark,
-            buttonColor: gridButtonColorDark,
+            background: "#1f2a41",
+            rowBackground: "#1f2a41",
+            text: lightThemeBorder,
+            rowHover: primaryDark,
+            border: borderBottomDark,
+            columnHighlight: "#141b2d69",
+            columnText: lightThemeBorder,
+            buttonColor: "#eef2f6",
             buttonWarning: {
               background: warningRed,
               text: warningText,
               border: warningBorder,
               icon: warningText,
             },
-            dataGridBackground: dataGridBackgroundDark,
-            dataGridRowBackground: dataGridRowBackgroundDark,
-            dataGridText: dataGridTextDark,
-            dataGridRowHover: dataGridRowHoverDark,
-            dataGridColumnHighlight: dataGridColumnHighlightDark,
-            dataGridColumnText: dataGridColumnTextDark,
-            buttonWarningBackground: buttonWarningBackground,
-            buttonWarningText: buttonWarningText,
-            buttonWarningBorder: buttonWarningBorder,
-            buttonWarningIcon: buttonWarningIcon,
+            dataGridBackground: "#1f2a41",
+            dataGridRowBackground: "#1f2a41",
+            dataGridText: lightThemeBorder,
+            dataGridRowHover: primaryDark,
+            dataGridColumnHighlight: "#141b2d69",
+            dataGridColumnText: lightThemeBorder,
+            buttonWarningBackground: warningRed,
+            buttonWarningText: warningText,
+            buttonWarningBorder: warningBorder,
+            buttonWarningIcon: warningText,
           },
           table: {
             background: darkThemeLighter,
           },
           modal: {
             overlay: overlayModalDark,
-            background: modalBackgroundDark,
-            border: modalBorderDark,
-            titleColor: modalTitleColorDark,
-            description: modalDescriptionDark,
+            background: primaryDark,
+            border: "#1f2a41",
+            titleColor: "#e5e7eb",
+            description: closeIconDark,
             closeIcon: closeIconDark,
             closeIconHover: closeIconHoverDark,
-            fieldLabel: modalFieldLabelDark,
-            fieldBackground: modalFieldBackgroundDark,
-            fieldInputFont: modalFieldInputFontDark,
-            fieldBorder: modalFieldBorderDark,
-            buttonFont: modalButtonFontDark,
-            buttonBackground: modalButtonBackgroundDark,
-            buttonBorder: modalButtonBorderDark,
-            buttonBackgroundHover: modalButtonBackgroundHoverDark,
-            buttonFontHover: modalButtonFontHoverDark,
+            fieldLabel: closeIconDark,
+            fieldBackground: fieldBackgroundDark,
+            fieldInputFont: closeIconDark,
+            fieldBorder: callToActionPrimary,
+            buttonFont: "#19191f",
+            buttonBackground: callToActionPrimary,
+            buttonBorder: callToActionPrimary,
+            buttonBackgroundHover: transparent,
+            buttonFontHover: callToActionPrimary,
           },
           menuBar: {
-            background: menuBackgroundDark,
-            color: navBarColorDark,
-            title: menuTitleDark,
-            subtitle: menuSubtitleDark,
-            // buttonBackground: menuButtonBackgroundDark,
-            buttonBackgroundImage: menuButtonBackgroundImageDark,
-            buttonFont: menuButtonFontDark,
-            buttonBorder: menuButtonBorderDark,
-            buttonBorderHover: menuButtonBorderHoverDark,
+            background: darkThemeLight,
+            color: lightThemeLightest,
+            title: darkThemeText,
+            subtitle: darkThemeText,
+            buttonBorder: "#1f2a41",
+            buttonBorderHover: callToActionPrimary,
             chipBackground: chipBackgroundDark,
             gallonsIcon: callToActionPrimary,
           },
           navBar: {
-            background: navBarBackgroundDark,
-            color: navBarColorDark,
+            background: darkThemeLight,
+            color: lightThemeLightest,
             borderBottom: borderBottomDark,
           },
           sidePanel: {
-            backgroundColor: sidePanelBackgroundDark,
-            iconColor: sidePanelIconColorDark,
-            dividerColor: dividerWhite29,
+            backgroundColor: darkThemeLight,
+            iconColor: darkThemeText,
+            dividerColor: darkThemeLightOpacity,
           },
           seasonIcons: {
             inactiveBackground: inactiveSeasonDark,
@@ -775,20 +635,20 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             toggleButton: {
               selected: {
                 background: darkThemeLight,
-                color: "#e0e0e0",
+                color: lightThemeBorder,
                 boxShadow:
                   "rgb(0 0 0 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px",
               },
               unselected: {
-                background: "transparent",
+                background: transparent,
                 color: "#9ca3af",
               },
             },
             valueDisplay: {
-              color: "#e0e0e0",
+              color: lightThemeBorder,
             },
             valueLabel: {
-              color: "#e0e0e0",
+              color: lightThemeBorder,
             },
           },
           messages: {
@@ -822,35 +682,23 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               border: "#4a5568",
             },
           },
-          primary: {
-            const: callToActionPrimary,
-            toDarkGray: "#222228",
-            alt: "#202028",
-            shadowGlow: shadowGlowDark,
-            opacity: opacityPrimary14,
-          },
-          secondary: {
-            const: callToActionSecondary,
-            vary: "#2d2d2d",
-            alt: "#202028",
-          },
           overlay: {
             modal: "#06070ac7",
             image: overlayImageDark,
           },
           zoneCard: {
-            headerBackground: zoneCardHeaderBackgroundDark,
-            headerText: zoneCardHeaderTextDark,
-            headerBorder: zoneCardBorderDark,
-            contentBackground: zoneCardContentBackgroundDark,
-            text: zoneCardTextDark,
-            imageBackground: zoneCardImageBackgroundDark,
-            border: zoneCardBorderDark,
-            shadow: zoneCardShadowDark,
+            headerBackground: darkThemeLight,
+            headerText: darkThemeText,
+            headerBorder: darkThemeBorder,
+            contentBackground: darkThemeLight,
+            text: darkThemeText,
+            imageBackground: darkThemeBorder,
+            border: darkThemeBorder,
+            shadow: shadowZoneDark,
           },
           zonePage: {
-            gridBackground: zonePageGridBackgroundDark,
-            containerBackground: zonePageContainerBackgroundDark,
+            gridBackground: darkThemeDark,
+            containerBackground: primaryDark,
           },
         };
 
@@ -858,8 +706,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
     palette: {
       mode,
       primary: { main: callToActionPrimary },
-      secondary: { main: callToActionSecondary },
-      background: { default: white },
+      background: { default: lightThemeLightest },
     },
     typography: {
       fontFamily: FONTS.content.fontFamily,
