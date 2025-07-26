@@ -1,6 +1,8 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme, ThemeOptions } from "@mui/material/styles";
 
+// ============ COLOR PALETTE ============
+
 // Color constants
 // --- Primary & Secondary ---
 const callToActionPrimary = "#318cc2";
@@ -12,12 +14,12 @@ const softWhite = "#e0e0e0";
 const black = "#606162";
 
 // --- Light Theme Colors ---
-// const LightThemeLight = "#e2e7ec";
-// const LightThemeLighter = "#f3f4f6";
-// const LightThemeLightest = "#ffffff";
-// const LightThemeDark = "#103e65";
-// const LightThemeBorder = "#e0e0e0";
-// const LightThemeText = "#606162";
+// const lightThemeLight = "#e2e7ec";
+const lightThemeLighter = "#f3f4f6";
+// const lightThemeLightest = "#ffffff";
+// const lightThemeDark = "#103e65";
+// const lightThemeBorder = "#e0e0e0";
+// const lightThemeText = "#606162";
 
 // --- Dark Theme Colors ---
 const darkThemeLight = "#28273f";
@@ -66,6 +68,8 @@ const inactiveSeasonLight = "#b6c2c5";
 const inactiveSeasonDark = "#475a82";
 const chipBackgroundLight = "#c9d5d7";
 const chipBackgroundDark = "#1f2a41";
+
+// ============ COMPONENTS ============
 
 // --- Menu/Nav ---
 // const menuButtonBackgroundLight = LightThemeButtons;
@@ -164,7 +168,7 @@ const zoneCardContentBackgroundDark = darkThemeLight;
 const zoneCardTextLight = black;
 const zoneCardTextDark = darkThemeText;
 const zoneCardImageBackgroundLight = "#dce4e4";
-const zoneCardImageBackgroundDark = darkThemeLighter;
+const zoneCardImageBackgroundDark = darkThemeBorder;
 const zoneCardBorderLight = borderZoneLight;
 const zoneCardBorderDark = darkThemeBorder;
 const zoneCardShadowLight = shadowZoneLight;
@@ -250,6 +254,8 @@ const BUTTONS = {
     },
   },
 };
+
+// ============ LIGHT / DARK ============
 
 // Extend MUI theme interface
 declare module "@mui/material/styles" {
@@ -492,12 +498,16 @@ declare module "@mui/material/styles" {
           };
         };
       };
+      table: {
+        background: string;
+      };
     };
   }
   interface ThemeOptions {
     custom?: {
       fonts?: Partial<Theme["custom"]["fonts"]>;
       grid?: Partial<Theme["custom"]["grid"]>;
+      table?: Partial<Theme["custom"]["table"]>;
       modal?: Partial<Theme["custom"]["modal"]>;
       menuBar?: Partial<Theme["custom"]["menuBar"]>;
       navBar?: Partial<Theme["custom"]["navBar"]>;
@@ -547,6 +557,9 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             buttonWarningText: buttonWarningText,
             buttonWarningBorder: buttonWarningBorder,
             buttonWarningIcon: buttonWarningIcon,
+          },
+          table: {
+            background: lightThemeLighter,
           },
           modal: {
             overlay: overlayModalLight,
@@ -706,6 +719,9 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             buttonWarningText: buttonWarningText,
             buttonWarningBorder: buttonWarningBorder,
             buttonWarningIcon: buttonWarningIcon,
+          },
+          table: {
+            background: darkThemeLighter,
           },
           modal: {
             overlay: overlayModalDark,

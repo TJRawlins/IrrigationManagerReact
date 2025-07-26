@@ -12,10 +12,10 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  styled,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useAppTheme } from "../../../theme/useAppTheme";
-import styled from "styled-components";
 
 interface ZoneData {
   totalGalPerWeek: number;
@@ -137,9 +137,7 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRowEven
-                      sx={{ backgroundColor: zoneCard.header.backgroundColor }}
-                    >
+                    <TableRowEven>
                       <TablePanelCell sx={{ color: zoneCard.text.color }}>
                         Week
                       </TablePanelCell>
@@ -173,9 +171,7 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
                         ${(zone.totalGalPerMonth * 0.01).toFixed(2)}
                       </TablePanelCell>
                     </TableRowOdd>
-                    <TableRowEven
-                      sx={{ backgroundColor: zoneCard.header.backgroundColor }}
-                    >
+                    <TableRowEven>
                       <TablePanelCell sx={{ color: zoneCard.text.color }}>
                         Year
                       </TablePanelCell>
@@ -260,11 +256,13 @@ const TablePanelCell = styled(TableCell)`
   padding: 4px 0px !important;
 `;
 
-const TableRowEven = styled(TableRow)``;
+const TableRowEven = styled(TableRow)(({ theme }) => ({
+  background: theme.custom.table.background,
+}));
 
-const TableRowOdd = styled(TableRow)`
-  border: none;
-`;
+const TableRowOdd = styled(TableRow)(() => ({
+  border: "none",
+}));
 
 const ZoneTable = styled(Table)`
   & .MuiTableBody-root tr td {
