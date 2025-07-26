@@ -16,30 +16,26 @@ const lightThemeDark = "#103e65";
 const lightThemeBorder = "#e0e0e0";
 const lightThemeText = "#606162";
 const lightThemeLightOpacity = "#ffffff52";
+const lightThemeOverlayModal = "#173e5ba8";
 
 // --- Dark Theme Colors ---
 const darkThemeLight = "#28273f";
 const darkThemeLighter = "#333047";
 const darkThemeDark = "#1f1c30";
-const darkThemeBorder = "#47536d";
+const darkThemeBorder = "#ffffff1f";
 const darkThemeText = "#b1b1b6";
 const darkThemeLightOpacity = "#ffffff29";
+const darkThemeOverlayModal = "#212a3f96";
 
 // --- Status & Alerts ---
-const warningRed = "#c23f37";
-const warningText = "#eff2f5";
-const warningBorder = "#7fb5ac00";
+const warningOrange = "#e69700";
 const infoBlue = "#2196f3";
 const errorRed = "#f44336";
 const successGreen = "#4caf50";
 
 // --- Overlay & Shadows ---
-const overlayModalLight = "#173e5ba8";
-const overlayModalDark = "#212a3f96";
-const overlayImageLight = "#64c9bf7a";
-const overlayImageDark = "#0f5e568a";
-const shadowZoneLight = "0 2px 4px rgba(0,0,0,0.1)";
-const shadowZoneDark = "0 2px 4px rgba(0,0,0,0.3)";
+const cardShadowLight =
+  "rgb(50 50 93 / 7%) 0px 2px 5px -1px, rgb(0 0 0 / 10%) 0px 1px 3px -1px";
 
 // --- Miscellaneous ---
 const borderBottomLight = "#0000001f";
@@ -50,7 +46,6 @@ const fieldBackgroundDark = "#1f2a41";
 const closeIconGray = "#707174";
 const closeIconHoverGray = "#323232";
 const closeIconDark = "#9ca3af";
-const closeIconHoverDark = "#eef2f6";
 const inactiveSeasonLight = "#b6c2c5";
 const inactiveSeasonDark = "#475a82";
 const chipBackgroundLight = "#c9d5d7";
@@ -166,9 +161,6 @@ declare module "@mui/material/styles" {
         buttonColor: string;
         buttonWarning: {
           background: string;
-          text: string;
-          border: string;
-          icon: string;
         };
         dataGridBackground: string;
         dataGridRowBackground: string;
@@ -177,9 +169,6 @@ declare module "@mui/material/styles" {
         dataGridColumnHighlight: string;
         dataGridColumnText: string;
         buttonWarningBackground: string;
-        buttonWarningText: string;
-        buttonWarningBorder: string;
-        buttonWarningIcon: string;
       };
       modal: {
         overlay: string;
@@ -219,26 +208,18 @@ declare module "@mui/material/styles" {
       };
       messages: {
         info: {
-          background: string;
-          text: string;
           border: string;
           icon: string;
         };
         warning: {
-          background: string;
-          text: string;
           border: string;
           icon: string;
         };
         error: {
-          background: string;
-          text: string;
           border: string;
           icon: string;
         };
         success: {
-          background: string;
-          text: string;
           border: string;
           icon: string;
         };
@@ -259,10 +240,6 @@ declare module "@mui/material/styles" {
         const: string;
         vary: string;
         alt: string;
-      };
-      overlay: {
-        modal: string;
-        image: string;
       };
       zoneCard: {
         headerBackground: string;
@@ -394,7 +371,6 @@ declare module "@mui/material/styles" {
       messages?: Partial<Theme["custom"]["messages"]>;
       primary?: Partial<Theme["custom"]["primary"]>;
       secondary?: Partial<Theme["custom"]["secondary"]>;
-      overlay?: Partial<Theme["custom"]["overlay"]>;
       zoneCard?: Partial<Theme["custom"]["zoneCard"]>;
       zonePage?: Partial<Theme["custom"]["zonePage"]>;
       sidePanel?: Partial<Theme["custom"]["sidePanel"]>;
@@ -414,36 +390,30 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           buttons: BUTTONS,
           grid: {
             background: "#ced8da",
-            rowBackground: "#eef2f6",
+            rowBackground: lightThemeLighter,
             text: "#555555",
             rowHover: "#dae4e4",
             border: "#ced8da59",
             columnHighlight: "#dae4e473",
             columnText: "#555555",
             buttonWarning: {
-              background: warningRed,
-              text: warningText,
-              border: warningBorder,
-              icon: warningText,
+              background: warningOrange,
             },
             dataGridBackground: "#ced8da",
-            dataGridRowBackground: "#eef2f6",
+            dataGridRowBackground: lightThemeLighter,
             dataGridText: "#555555",
             dataGridRowHover: "#dae4e4",
             dataGridColumnHighlight: "#dae4e473",
             dataGridColumnText: "#555555",
-            buttonWarningBackground: warningRed,
-            buttonWarningText: warningText,
-            buttonWarningBorder: warningBorder,
-            buttonWarningIcon: warningText,
+            buttonWarningBackground: warningOrange,
           },
           table: {
             background: lightThemeLighter,
           },
           modal: {
-            overlay: overlayModalLight,
-            background: "#eef2f6",
-            border: "#eef2f6",
+            overlay: lightThemeOverlayModal,
+            background: lightThemeLighter,
+            border: lightThemeBorder,
             titleColor: lightThemeText,
             description: lightThemeText,
             closeIcon: closeIconGray,
@@ -452,7 +422,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             fieldBackground: fieldBackgroundLight,
             fieldInputFont: fieldLabelGray,
             fieldBorder: callToActionPrimary,
-            buttonFont: "#eef2f6",
+            buttonFont: lightThemeText,
             buttonBackground: callToActionPrimary,
             buttonBorder: callToActionPrimary,
             buttonBackgroundHover: transparent,
@@ -506,26 +476,18 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           messages: {
             info: {
-              background: "#e3f2fd",
-              text: "#0d47a1",
               border: infoBlue,
               icon: infoBlue,
             },
             warning: {
-              background: "#fff3e0",
-              text: "#e65100",
-              border: "#e69700",
-              icon: "#e69700",
+              border: warningOrange,
+              icon: warningOrange,
             },
             error: {
-              background: "#ffebee",
-              text: "#c62828",
               border: errorRed,
               icon: errorRed,
             },
             success: {
-              background: "#e8f5e8",
-              text: "#2e7d32",
               border: successGreen,
               icon: successGreen,
             },
@@ -535,10 +497,6 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               border: lightThemeBorder,
             },
           },
-          overlay: {
-            modal: overlayModalLight,
-            image: overlayImageLight,
-          },
           zoneCard: {
             headerBackground: lightThemeLight,
             headerText: lightThemeText,
@@ -547,11 +505,11 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             text: lightThemeText,
             imageBackground: "#dce4e4",
             border: lightThemeBorder,
-            shadow: shadowZoneLight,
+            shadow: cardShadowLight,
           },
           zonePage: {
             gridBackground: lightThemeLighter,
-            containerBackground: "#eef2f6",
+            containerBackground: lightThemeLighter,
           },
         }
       : {
@@ -565,12 +523,9 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             border: borderBottomDark,
             columnHighlight: "#141b2d69",
             columnText: lightThemeBorder,
-            buttonColor: "#eef2f6",
+            buttonColor: lightThemeText,
             buttonWarning: {
-              background: warningRed,
-              text: warningText,
-              border: warningBorder,
-              icon: warningText,
+              background: warningOrange,
             },
             dataGridBackground: "#1f2a41",
             dataGridRowBackground: "#1f2a41",
@@ -578,22 +533,19 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             dataGridRowHover: primaryDark,
             dataGridColumnHighlight: "#141b2d69",
             dataGridColumnText: lightThemeBorder,
-            buttonWarningBackground: warningRed,
-            buttonWarningText: warningText,
-            buttonWarningBorder: warningBorder,
-            buttonWarningIcon: warningText,
+            buttonWarningBackground: warningOrange,
           },
           table: {
             background: darkThemeLighter,
           },
           modal: {
-            overlay: overlayModalDark,
+            overlay: darkThemeOverlayModal,
             background: primaryDark,
             border: "#1f2a41",
             titleColor: "#e5e7eb",
             description: closeIconDark,
             closeIcon: closeIconDark,
-            closeIconHover: closeIconHoverDark,
+            closeIconHover: lightThemeLighter,
             fieldLabel: closeIconDark,
             fieldBackground: fieldBackgroundDark,
             fieldInputFont: closeIconDark,
@@ -682,10 +634,6 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               border: "#4a5568",
             },
           },
-          overlay: {
-            modal: "#06070ac7",
-            image: overlayImageDark,
-          },
           zoneCard: {
             headerBackground: darkThemeLight,
             headerText: darkThemeText,
@@ -694,7 +642,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             text: darkThemeText,
             imageBackground: darkThemeBorder,
             border: darkThemeBorder,
-            shadow: shadowZoneDark,
+            shadow: cardShadowLight,
           },
           zonePage: {
             gridBackground: darkThemeDark,

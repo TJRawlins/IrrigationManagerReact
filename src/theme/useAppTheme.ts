@@ -52,14 +52,6 @@ export const useAppTheme = () => {
           background: theme.custom.grid.rowBackground,
         },
       },
-      buttonWarning: {
-        backgroundColor: theme.custom.grid.buttonWarning.background,
-        color: theme.custom.grid.buttonWarning.text,
-        border: `1px solid ${theme.custom.grid.buttonWarning.border}`,
-        "& .btn-icon": {
-          color: theme.custom.grid.buttonWarning.icon,
-        },
-      },
     },
 
     // Modal styles
@@ -182,26 +174,18 @@ export const useAppTheme = () => {
     // Message styles
     messages: {
       info: {
-        backgroundColor: theme.custom.messages.info.background,
-        color: theme.custom.messages.info.text,
         border: `1px solid ${theme.custom.messages.info.border}`,
         icon: theme.custom.messages.info.icon,
       },
       warning: {
-        backgroundColor: theme.custom.messages.warning.background,
-        color: theme.custom.messages.warning.text,
         border: `1px solid ${theme.custom.messages.warning.border}`,
         icon: theme.custom.messages.warning.icon,
       },
       error: {
-        backgroundColor: theme.custom.messages.error.background,
-        color: theme.custom.messages.error.text,
         border: `1px solid ${theme.custom.messages.error.border}`,
         icon: theme.custom.messages.error.icon,
       },
       success: {
-        backgroundColor: theme.custom.messages.success.background,
-        color: theme.custom.messages.success.text,
         border: `1px solid ${theme.custom.messages.success.border}`,
         icon: theme.custom.messages.success.icon,
       },
