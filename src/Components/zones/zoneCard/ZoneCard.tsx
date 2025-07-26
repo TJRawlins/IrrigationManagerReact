@@ -1,5 +1,5 @@
 /* eslint-disable no-debugger */
-import { Box, Button, Card, Stack } from "@mui/material";
+import { Box, Button, Card, Stack, styled } from "@mui/material";
 import { Zone } from "../../../App/models/Zone";
 import { useRef, useState } from "react";
 import agent from "../../../App/api/agent";
@@ -20,7 +20,6 @@ import ZoneCardHeader from "./ZoneCardHeader";
 import ImageCard from "../../common/ImageCard";
 import ZoneCardDetails from "./ZoneCardDetails";
 import ZoneCardTabs from "./ZoneCardTabs";
-import styled from "styled-components";
 
 type ZoneCardProps = {
   fetchZones(args: number): void;
@@ -292,16 +291,15 @@ export default function ZoneCard({
 }
 
 // Styled-components
-const StyledCard = styled(Card)`
-  margin: 0.05 !important;
-  display: flex;
-  flex-direction: column;
-  width: 370px !important;
-  box-shadow: rgb(50 50 93 / 7%) 0px 2px 5px -1px,
-    rgb(0 0 0 / 10%) 0px 1px 3px -1px !important;
-  height: fit-content;
-  background-image: none !important;
-`;
+const StyledCard = styled(Card)(({ theme }) => ({
+  margin: "0.05 !important",
+  display: "flex",
+  flexDirection: "column",
+  width: "370px !important",
+  boxShadow: theme.custom.zoneCard.shadow,
+  height: "fit-content",
+  backgroundImage: "none !important",
+}));
 
 const StyledZoneCardHeader = styled(Box)`
   display: flex;
