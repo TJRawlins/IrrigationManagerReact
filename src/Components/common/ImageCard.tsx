@@ -67,14 +67,18 @@ const ImageCard: React.FC<ImageCardProps> = ({
 export default ImageCard;
 
 // Styled Components
-const Wrapper = styled.div`
+interface WrapperProps {
+  onClick?: () => void;
+}
+
+const Wrapper = styled.div<WrapperProps>`
   position: relative;
   padding: 0.35rem;
   border-radius: 10px;
   overflow: hidden;
   transition: transform 0.2s ease-in-out;
   &:hover {
-    transform: ${(props: any) => (props.onClick ? "scale(1.05)" : "none")};
+    transform: ${(props) => (props.onClick ? "scale(1.05)" : "none")};
   }
 `;
 
