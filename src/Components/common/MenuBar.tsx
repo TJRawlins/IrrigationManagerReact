@@ -7,13 +7,13 @@ import { useAppTheme } from "../../theme/useAppTheme";
 
 type MenuBarProps = {
   title: string;
-  mainBarStyles: any;
+  mainBarStyles: React.CSSProperties;
   children: ReactNode;
   totalGallonsProps: {
     totalGalPerWeek: number;
     totalGalPerMonth: number;
     totalGalPerYear: number;
-    buttonStyles: any;
+    buttonStyles: React.CSSProperties;
   };
   subtitle?: string | ReactNode;
   mobileSubtitle?: string;
