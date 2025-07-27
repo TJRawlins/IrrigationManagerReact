@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Box, Typography, styled } from "@mui/material";
 import { IoClose } from "react-icons/io5";
+import { useAppTheme } from "../../theme/useAppTheme";
 
 // Types for the modal
 interface FormModalProps {
@@ -30,12 +31,19 @@ const FormModal: React.FC<FormModalProps> = ({
   closeIconColor = "#707174",
   closeIconHoverColor = "#323232",
 }) => {
+  const { modal } = useAppTheme();
+
   return (
     <Modal
       open={open}
       onClose={() => {}}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      slotProps={{
+        backdrop: {
+          style: modal.overlay,
+        },
+      }}
     >
       <ModalBox sx={modalStyle}>
         <CloseIcon
