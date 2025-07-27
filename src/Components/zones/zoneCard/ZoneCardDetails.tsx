@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const ZoneCardDetails: React.FC = () => {
   const { zoneCard } = useAppTheme();
-  
+
   return (
     <Stack color={zoneCard.text.color} gap="7px" direction="column">
       <CardText variant="body2">
@@ -40,9 +40,9 @@ const CardText = styled(Typography)`
 `;
 
 const ZoneDataTitle = styled.span`
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 const ZoneDataValue = styled.span`
-  font-weight: 100 ;
+  font-weight: 100;
 `;
