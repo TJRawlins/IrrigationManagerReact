@@ -1,7 +1,15 @@
 import React from "react";
-import { Modal, Box, Typography, styled } from "@mui/material";
+import {
+  Modal,
+  Box,
+  Typography,
+  styled,
+  CircularProgress,
+} from "@mui/material";
 import { IoClose } from "react-icons/io5";
 import { useAppTheme } from "../../theme/useAppTheme";
+import { useTheme } from '@mui/material/styles';
+
 
 // Types for the modal
 interface FormModalProps {
@@ -32,6 +40,7 @@ const FormModal: React.FC<FormModalProps> = ({
   closeIconHoverColor = "#323232",
 }) => {
   const { modal } = useAppTheme();
+  const theme = useTheme();
 
   return (
     <Modal
@@ -62,9 +71,8 @@ const FormModal: React.FC<FormModalProps> = ({
               }}
             >
               <LoadingOverlay>
-                <Box sx={{ color: "#0069b2" }}>
-                  <span className="visually-hidden">Loading...</span>
-                  {/* You can replace with <CircularProgress /> if you want, but keep this generic */}
+                <Box sx={{ color: theme.palette.primary.main }}>
+                  <CircularProgress />
                 </Box>
               </LoadingOverlay>
             </Modal>

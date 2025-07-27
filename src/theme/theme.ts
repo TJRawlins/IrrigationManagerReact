@@ -651,6 +651,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
         };
 
   return {
+    // MUI theme palette
     palette: {
       mode,
       primary: { main: callToActionPrimary },
