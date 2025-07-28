@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useAppTheme } from "../../theme/useAppTheme";
+import { useTheme } from "@mui/material/styles";
 
 interface ImageCardProps {
   imagePath: string;
@@ -21,7 +21,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
   onClick,
   text,
 }) => {
-  const { zoneCard } = useAppTheme();
+  const theme = useTheme();
 
   const sizeMap = {
     small: "80px",
@@ -48,9 +48,9 @@ const ImageCard: React.FC<ImageCardProps> = ({
   }
 
   return (
-    <Wrapper
+    <ImageWrapper
+      $backgroundColor={theme.custom.zoneCard.imageBackground}
       style={{
-        backgroundColor: zoneCard.image.backgroundColor,
         width: finalWidth,
         height: finalHeight,
         cursor: onClick ? "pointer" : "default",
@@ -60,23 +60,25 @@ const ImageCard: React.FC<ImageCardProps> = ({
       <Overlay $overlayOpacity={overlayOpacity} />
       <StyledImg src={imagePath} alt={name} draggable={false} />
       {text && <TextOverlay>{text}</TextOverlay>}
-    </Wrapper>
+    </ImageWrapper>
   );
 };
 
 export default ImageCard;
 
 // Styled Components
-interface WrapperProps {
+interface ImageWrapperProps {
   onClick?: () => void;
+  $backgroundColor: string;
 }
 
-const Wrapper = styled.div<WrapperProps>`
+const ImageWrapper = styled.div<ImageWrapperProps>`
   position: relative;
   padding: 0.35rem;
   border-radius: 10px;
   overflow: hidden;
   transition: transform 0.2s ease-in-out;
+  background-color: ${({ $backgroundColor }) => $backgroundColor};
   &:hover {
     transform: ${(props) => (props.onClick ? "scale(1.05)" : "none")};
   }

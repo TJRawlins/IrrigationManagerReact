@@ -1,7 +1,6 @@
 import React from "react";
 import { Popover, Box, Typography, Button, useTheme } from "@mui/material";
 import { PiWarningFill } from "react-icons/pi";
-import { useAppTheme } from "../../theme/useAppTheme";
 import { styled } from "@mui/material/styles";
 
 interface ConfirmationPopoverProps {
@@ -38,7 +37,6 @@ const ConfirmationPopover: React.FC<ConfirmationPopoverProps> = ({
   backgroundColor,
   textColor,
 }) => {
-  const { zoneCard } = useAppTheme();
   const theme = useTheme();
 
   // Allow message to be a string or array of strings
@@ -54,8 +52,8 @@ const ConfirmationPopover: React.FC<ConfirmationPopoverProps> = ({
       slotProps={{
         paper: {
           sx: {
-            backgroundColor: backgroundColor || zoneCard.card.backgroundColor,
-            color: textColor || zoneCard.header.color,
+            backgroundColor: backgroundColor || theme.custom.modal.background,
+            color: textColor || theme.custom.modal.titleColor,
             boxShadow: 3,
             backgroundImage: "none",
             borderTop: `8px solid ${theme.custom.messages.warning.icon}`,

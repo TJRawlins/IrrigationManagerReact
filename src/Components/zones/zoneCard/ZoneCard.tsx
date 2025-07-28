@@ -15,7 +15,6 @@ import { Plant } from "../../../App/models/Plant";
 import "../../../styles/baseStyles/BaseCard.css";
 
 import { deleteObject, getStorage, ref } from "firebase/storage";
-import { useAppTheme } from "../../../theme/useAppTheme";
 import ZoneCardHeader from "./ZoneCardHeader";
 import ImageCard from "../../common/ImageCard";
 import ZoneCardDetails from "./ZoneCardDetails";
@@ -38,7 +37,6 @@ export default function ZoneCard({
   expanded,
   onExpandedChange,
 }: ZoneCardProps) {
-  const { zoneCard } = useAppTheme();
   const dispatch = useDispatch();
   const { season } = useSelector((state: RootState) => state.season);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -235,8 +233,8 @@ export default function ZoneCard({
   };
 
   return (
-    <StyledCard sx={zoneCard.card}>
-      <StyledZoneCardHeader sx={zoneCard.header}>
+    <StyledCard>
+      <StyledZoneCardHeader>
         <ZoneCardHeader
           zone={zone}
           openCardMenu={openCardMenu}
@@ -273,7 +271,7 @@ export default function ZoneCard({
             to={`/plants/zone/${zone.id}`}
             onClick={showPlants}
           >
-            <StyledZoneCardBtn sx={zoneCard.button}>Plants</StyledZoneCardBtn>
+            <StyledZoneCardBtn>Plants</StyledZoneCardBtn>
           </Link>
         </Box>
         <ZoneCardTabs
@@ -296,17 +294,22 @@ const StyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   width: "370px !important",
-  boxShadow: theme.custom.zoneCard.shadow,
   height: "fit-content",
   backgroundImage: "none !important",
+  backgroundColor: theme.custom.zoneCard.contentBackground,
+  border: `1px solid ${theme.custom.zoneCard.border}`,
+  boxShadow: theme.custom.zoneCard.shadow,
 }));
 
-const StyledZoneCardHeader = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 1rem 1.75rem;
-`;
+const StyledZoneCardHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  padding: "1rem 1.75rem",
+  backgroundColor: theme.custom.zoneCard.headerBackground,
+  color: theme.custom.zoneCard.headerText,
+  borderBottom: `1px solid ${theme.custom.zoneCard.border}`,
+}));
 
 const ZoneCardContentWrapper = styled(Box)`
   padding: 0 1.75rem;
@@ -324,9 +327,9 @@ const ZoneCardDetailsBox = styled(Box)`
   width: 100%;
 `;
 
-const StyledZoneCardBtn = styled(Button)`
-  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+const StyledZoneCardBtn = styled(Button)(
+  ({ theme }) => `
+  font-family: "Open Sans", "Source Sans Pro", Helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
   font-size: 0.85rem !important;
   padding: 0.45rem 0.75rem !important;
   height: fit-content !important;
@@ -336,4 +339,14 @@ const StyledZoneCardBtn = styled(Button)`
   transition: background-color 0s ease-in-out !important;
   width: 100% !important;
   font-weight: 600 !important;
-`;
+  background-color: ${theme.custom.buttons.primary.background} !important;
+  border: 1px solid ${theme.custom.buttons.primary.border} !important;
+  color: ${theme.custom.buttons.primary.color} !important;
+  
+  &:hover {
+    background-color: ${theme.custom.buttons.primary.hover.background} !important;
+    border-color: ${theme.custom.buttons.primary.hover.border} !important;
+    color: ${theme.custom.buttons.primary.hover.color} !important;
+  }
+`
+);

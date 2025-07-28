@@ -13,9 +13,9 @@ import {
   AccordionSummary,
   AccordionDetails,
   styled,
+  useTheme,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useAppTheme } from "../../../theme/useAppTheme";
 
 interface ZoneData {
   totalGalPerWeek: number;
@@ -47,7 +47,7 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
   CustomTabPanel,
   expanded: externalExpanded,
 }) => {
-  const { zoneCard } = useAppTheme();
+  const theme = useTheme();
   const [chevronExpanded, setChevronExpanded] = useState(false);
 
   // Update chevron state when external state changes (from ZoneBar)
@@ -81,7 +81,9 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
       }}
     >
       <StyledAccordionSummary
-        expandIcon={<ExpandMoreIcon sx={{ color: zoneCard.text.color }} />}
+        expandIcon={
+          <ExpandMoreIcon sx={{ color: theme.custom.zoneCard.text }} />
+        }
         aria-controls="zone-card-tabs-content"
         id="zone-card-tabs-header"
         sx={{
@@ -105,8 +107,10 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
                 onChange={handleChange}
                 aria-label="basic tabs example"
                 sx={{
-                  "&& .MuiTab-root": { color: zoneCard.text.color },
-                  "&& .Mui-selected": { color: zoneCard.header.color },
+                  "&& .MuiTab-root": { color: theme.custom.zoneCard.text },
+                  "&& .Mui-selected": {
+                    color: theme.custom.zoneCard.headerText,
+                  },
                 }}
               >
                 <TabTitle label="Water usage" {...a11yProps(0)} />
@@ -119,18 +123,20 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
                 <ZoneTable size="small" aria-label="water usage table">
                   <TableHead>
                     <TableRow>
-                      <TablePanelHeaderCell sx={{ color: zoneCard.text.color }}>
+                      <TablePanelHeaderCell
+                        sx={{ color: theme.custom.zoneCard.text }}
+                      >
                         Period
                       </TablePanelHeaderCell>
                       <TablePanelHeaderCell
                         align="right"
-                        sx={{ color: zoneCard.text.color }}
+                        sx={{ color: theme.custom.zoneCard.text }}
                       >
                         Usage
                       </TablePanelHeaderCell>
                       <TablePanelHeaderCell
                         align="right"
-                        sx={{ color: zoneCard.text.color }}
+                        sx={{ color: theme.custom.zoneCard.text }}
                       >
                         Cost
                       </TablePanelHeaderCell>
@@ -138,52 +144,58 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
                   </TableHead>
                   <TableBody>
                     <TableRowEven>
-                      <TablePanelCell sx={{ color: zoneCard.text.color }}>
+                      <TablePanelCell
+                        sx={{ color: theme.custom.zoneCard.text }}
+                      >
                         Week
                       </TablePanelCell>
                       <TablePanelCell
                         align="right"
-                        sx={{ color: zoneCard.text.color }}
+                        sx={{ color: theme.custom.zoneCard.text }}
                       >
                         {zone.totalGalPerWeek} gal
                       </TablePanelCell>
                       <TablePanelCell
                         align="right"
-                        sx={{ color: zoneCard.text.color }}
+                        sx={{ color: theme.custom.zoneCard.text }}
                       >
                         ${(zone.totalGalPerWeek * 0.01).toFixed(2)}
                       </TablePanelCell>
                     </TableRowEven>
                     <TableRowOdd>
-                      <TablePanelCell sx={{ color: zoneCard.text.color }}>
+                      <TablePanelCell
+                        sx={{ color: theme.custom.zoneCard.text }}
+                      >
                         Month
                       </TablePanelCell>
                       <TablePanelCell
                         align="right"
-                        sx={{ color: zoneCard.text.color }}
+                        sx={{ color: theme.custom.zoneCard.text }}
                       >
                         {zone.totalGalPerMonth} gal
                       </TablePanelCell>
                       <TablePanelCell
                         align="right"
-                        sx={{ color: zoneCard.text.color }}
+                        sx={{ color: theme.custom.zoneCard.text }}
                       >
                         ${(zone.totalGalPerMonth * 0.01).toFixed(2)}
                       </TablePanelCell>
                     </TableRowOdd>
                     <TableRowEven>
-                      <TablePanelCell sx={{ color: zoneCard.text.color }}>
+                      <TablePanelCell
+                        sx={{ color: theme.custom.zoneCard.text }}
+                      >
                         Year
                       </TablePanelCell>
                       <TablePanelCell
                         align="right"
-                        sx={{ color: zoneCard.text.color }}
+                        sx={{ color: theme.custom.zoneCard.text }}
                       >
                         {zone.totalGalPerYear} gal
                       </TablePanelCell>
                       <TablePanelCell
                         align="right"
-                        sx={{ color: zoneCard.text.color }}
+                        sx={{ color: theme.custom.zoneCard.text }}
                       >
                         ${(zone.totalGalPerYear * 0.01).toFixed(2)}
                       </TablePanelCell>
@@ -195,7 +207,10 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
                 Environment content...
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
-                <Typography fontSize={13} sx={{ color: zoneCard.text.color }}>
+                <Typography
+                  fontSize={13}
+                  sx={{ color: theme.custom.zoneCard.text }}
+                >
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
                   enim sapiente explicabo asperiores magni commodi.
                 </Typography>

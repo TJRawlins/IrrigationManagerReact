@@ -11,7 +11,6 @@ import { BsCalendar4Week } from "react-icons/bs";
 import { RiTimerLine } from "react-icons/ri";
 import { PiPlant } from "react-icons/pi";
 import { getSeasonIcon } from "./zoneCardUtils";
-import { useAppTheme } from "../../../theme/useAppTheme";
 import { styled } from "@mui/material/styles";
 import ConfirmationPopover from "../../common/ConfirmationPopover";
 
@@ -54,12 +53,11 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
     handleDeleteClose,
     deleteZone,
   } = props;
-  const { zoneCard } = useAppTheme();
   const theme = useTheme();
 
   return (
     <StyledCardHeader
-      sx={{ color: zoneCard.text.color }}
+      sx={{ color: theme.custom.zoneCard.text }}
       title={
         <ZoneTitle style={{ ...theme.custom.fonts.headers }}>
           {zone.name.length > 18
@@ -107,8 +105,8 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
             slotProps={{
               paper: {
                 sx: {
-                  backgroundColor: zoneCard.card.backgroundColor,
-                  color: zoneCard.header.color,
+                  backgroundColor: theme.custom.zoneCard.contentBackground,
+                  color: theme.custom.zoneCard.headerText,
                   boxShadow: 3,
                   borderRadius: 2,
                 },
@@ -124,11 +122,11 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
                 key={option}
                 onClick={handleCardMenuSelect(option)}
                 sx={{
-                  color: zoneCard.text.color,
+                  color: theme.custom.zoneCard.text,
                   ...theme.custom.fonts.content,
                   fontSize: "0.95rem",
                   "&:hover": {
-                    color: zoneCard.header.color,
+                    color: theme.custom.zoneCard.headerText,
                   },
                 }}
               >

@@ -37,31 +37,5 @@ export const useAppTheme = () => {
         },
       },
     },
-
-    // Zone card styles
-    zoneCard: {
-      card: {
-        backgroundColor: theme.custom.zoneCard.contentBackground,
-        border: `1px solid ${theme.custom.zoneCard.border}`,
-        boxShadow: theme.custom.zoneCard.shadow,
-      },
-      header: {
-        backgroundColor: theme.custom.zoneCard.headerBackground,
-        color: theme.custom.zoneCard.headerText,
-        borderBottom: `1px solid ${theme.custom.zoneCard.border}`,
-      },
-      text: {
-        color: theme.custom.zoneCard.text,
-      },
-      button: {
-        ...theme.custom.buttons.primary,
-        "&:hover": {
-          ...theme.custom.buttons.primary.hover,
-        },
-      },
-      image: {
-        backgroundColor: theme.custom.zoneCard.imageBackground,
-      },
-    },
   };
 };

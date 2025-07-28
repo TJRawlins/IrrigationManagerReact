@@ -1,13 +1,12 @@
 import React from "react";
-import { Stack, Typography } from "@mui/material";
-import { useAppTheme } from "../../../theme/useAppTheme";
+import { Stack, Typography, useTheme } from "@mui/material";
 import styled from "styled-components";
 
 const ZoneCardDetails: React.FC = () => {
-  const { zoneCard } = useAppTheme();
+  const theme = useTheme();
 
   return (
-    <Stack color={zoneCard.text.color} gap="7px" direction="column">
+    <Stack color={theme.custom.zoneCard.text} gap="7px" direction="column">
       <CardText variant="body2">
         <ZoneDataTitle>Start time:</ZoneDataTitle>
         <ZoneDataValue>8:30 am</ZoneDataValue>
