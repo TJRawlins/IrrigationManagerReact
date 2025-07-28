@@ -5,6 +5,7 @@ import {
   styled,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import agent from "../../App/api/agent";
@@ -43,7 +44,8 @@ function EditZone({
   setIsShowEdit,
   isShowEdit,
 }: ZoneEditProps) {
-  const { modal, colors } = useAppTheme();
+  const { modal } = useAppTheme();
+  const theme = useTheme();
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
   const seasonIdValue = useRef<number>();
@@ -375,7 +377,7 @@ function EditZone({
                   variant="standard"
                   sx={{
                     "& .MuiInputBase-input": {
-                      color: colors.modal.fieldInputFont,
+                      color: theme.custom.modal.fieldInputFont,
                     },
                   }}
                 />

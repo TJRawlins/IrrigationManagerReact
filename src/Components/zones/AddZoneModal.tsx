@@ -35,7 +35,7 @@ type AddZoneModalProps = {
 };
 
 function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
-  const { modal, colors } = useAppTheme();
+  const { modal } = useAppTheme();
   const theme = useTheme();
   // fallback values for close icon colors
   const closeIconColor = theme.custom?.modal?.closeIcon || "#707174";
@@ -249,7 +249,7 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                 variant="standard"
                 sx={{
                   "& .MuiInputBase-input": {
-                    color: colors.modal.fieldInputFont,
+                    color: theme.custom.modal.fieldInputFont,
                   },
                 }}
               />

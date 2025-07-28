@@ -5,7 +5,7 @@ import {
   updateCurrentSeasonName,
   updateIsInitialLoad,
 } from "../../redux/seasonSlice";
-import { useAppTheme } from "../../theme/useAppTheme";
+import { useTheme } from "@mui/material";
 import { getSeasonIcon } from "../zones/zoneCard/zoneCardUtils";
 
 type SeasonIconsProps = {
@@ -19,7 +19,7 @@ export default function SeasonIcons({
 }: SeasonIconsProps) {
   const { seasonName } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
-  const { seasonIcons } = useAppTheme();
+  const theme = useTheme();
 
   const handleSeasonClick = (seasonName: string) => {
     dispatch(updateCurrentSeasonName(seasonName));
@@ -84,7 +84,7 @@ export default function SeasonIcons({
             onClick={() => handleSeasonClick(s.name)}
             isActive={seasonName === s.name}
             seasonData={s}
-            inactiveBackground={seasonIcons.inactiveBackground}
+            inactiveBackground={theme.custom.seasonIcons.inactiveBackground}
           >
             {getSeasonIcon(s.name)}
           </StyledIconButton>
@@ -107,6 +107,13 @@ const StyledSeasonIconsContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
+type SeasonData = {
+  name: string;
+  id: number;
+  color: string;
+  background: string;
+};
+
 const StyledIconButton = styled(IconButton, {
   shouldForwardProp: (prop) =>
     prop !== "isActive" &&
@@ -114,7 +121,7 @@ const StyledIconButton = styled(IconButton, {
     prop !== "inactiveBackground",
 })<{
   isActive: boolean;
-  seasonData: any;
+  seasonData: SeasonData;
   inactiveBackground: string;
 }>(({ theme, isActive, seasonData, inactiveBackground }) => ({
   color: isActive ? seasonData.color : "#eef1f1",

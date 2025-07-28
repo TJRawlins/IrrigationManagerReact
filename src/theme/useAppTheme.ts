@@ -225,10 +225,5 @@ export const useAppTheme = () => {
         color: theme.custom.totalGallons.valueLabel.color,
       },
     },
-
-    // Direct access to colors
-    colors: theme.custom,
-    sidePanel: theme.custom.sidePanel,
-    seasonIcons: theme.custom.seasonIcons,
   };
 };

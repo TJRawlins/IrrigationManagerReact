@@ -32,7 +32,6 @@ import logoIcon from "../../assets/irrigation logo icon.png";
 import { useDrawer } from "./DrawerContext";
 import { Link } from "react-router-dom";
 import List from "@mui/material/List";
-import { useAppTheme } from "../../theme/useAppTheme";
 import { useContext } from "react";
 import { ColorModeContext } from "../../theme/theme";
 import React from "react";
@@ -40,7 +39,6 @@ import React from "react";
 export default function Navbar() {
   const theme = useTheme();
   const { open, setOpen } = useDrawer();
-  const { sidePanel } = useAppTheme();
   const colorMode = useContext(ColorModeContext);
   const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
 
@@ -49,7 +47,7 @@ export default function Navbar() {
     if (isSmallOrMobile && open) {
       setOpen(false);
     }
-  }, [isSmallOrMobile]);
+  }, [isSmallOrMobile, open, setOpen]);
 
   // Handler for chevron left (close)
   const handleDrawerClose = () => {
@@ -69,22 +67,33 @@ export default function Navbar() {
   const topMenuItems = [
     {
       text: "Dashboard",
-      icon: <DashboardIcon style={{ color: sidePanel.iconColor }} />,
+      icon: (
+        <DashboardIcon style={{ color: theme.custom.sidePanel.iconColor }} />
+      ),
       path: "/dashboard",
     },
     {
       text: "Zones",
-      icon: <ZonesIcon size={24} style={{ color: sidePanel.iconColor }} />,
+      icon: (
+        <ZonesIcon
+          size={24}
+          style={{ color: theme.custom.sidePanel.iconColor }}
+        />
+      ),
       path: "/zones",
     },
     {
       text: "Emitter Calculator",
-      icon: <EmitterCalculatorIcon style={{ color: sidePanel.iconColor }} />,
+      icon: (
+        <EmitterCalculatorIcon
+          style={{ color: theme.custom.sidePanel.iconColor }}
+        />
+      ),
       path: "/emitter-calculator",
     },
     {
       text: "About",
-      icon: <AboutIcon style={{ color: sidePanel.iconColor }} />,
+      icon: <AboutIcon style={{ color: theme.custom.sidePanel.iconColor }} />,
       path: "/about",
     },
   ];
@@ -93,17 +102,19 @@ export default function Navbar() {
   const userMenuItems = [
     {
       text: "Account",
-      icon: <AccountIcon style={{ color: sidePanel.iconColor }} />,
+      icon: <AccountIcon style={{ color: theme.custom.sidePanel.iconColor }} />,
       path: "/account",
     },
     {
       text: "Settings",
-      icon: <SettingsIcon style={{ color: sidePanel.iconColor }} />,
+      icon: (
+        <SettingsIcon style={{ color: theme.custom.sidePanel.iconColor }} />
+      ),
       path: "/settings",
     },
     {
       text: "Sign-out",
-      icon: <LogoutIcon style={{ color: sidePanel.iconColor }} />,
+      icon: <LogoutIcon style={{ color: theme.custom.sidePanel.iconColor }} />,
       path: "/signout",
     },
   ];
@@ -135,9 +146,13 @@ export default function Navbar() {
               </LogoContainer>
               <IconButton onClick={handleDrawerClose}>
                 {theme.direction === "rtl" ? (
-                  <ChevronRightIcon style={{ color: sidePanel.iconColor }} />
+                  <ChevronRightIcon
+                    style={{ color: theme.custom.sidePanel.iconColor }}
+                  />
                 ) : (
-                  <ChevronLeftIcon style={{ color: sidePanel.iconColor }} />
+                  <ChevronLeftIcon
+                    style={{ color: theme.custom.sidePanel.iconColor }}
+                  />
                 )}
               </IconButton>
             </>
@@ -164,7 +179,9 @@ export default function Navbar() {
             </StyledListItem>
           ))}
         </List>
-        <Divider sx={{ backgroundColor: sidePanel.dividerColor }} />
+        <Divider
+          sx={{ backgroundColor: theme.custom.sidePanel.dividerColor }}
+        />
         <List>
           {userMenuItems.map((item) => (
             <StyledListItem key={item.text} disablePadding>
@@ -188,9 +205,13 @@ export default function Navbar() {
             >
               <StyledListItemIcon open={open}>
                 {theme.palette.mode === "dark" ? (
-                  <DarkModeOutlined style={{ color: sidePanel.iconColor }} />
+                  <DarkModeOutlined
+                    style={{ color: theme.custom.sidePanel.iconColor }}
+                  />
                 ) : (
-                  <LightModeOutlined style={{ color: sidePanel.iconColor }} />
+                  <LightModeOutlined
+                    style={{ color: theme.custom.sidePanel.iconColor }}
+                  />
                 )}
               </StyledListItemIcon>
               <StyledListItemText primary="Toggle Theme" open={open} />
@@ -201,7 +222,9 @@ export default function Navbar() {
             <StyledListItemButton open={open}>
               <StyledListItemIcon open={open}>
                 <Badge badgeContent={17} color="error">
-                  <NotificationsIcon style={{ color: sidePanel.iconColor }} />
+                  <NotificationsIcon
+                    style={{ color: theme.custom.sidePanel.iconColor }}
+                  />
                 </Badge>
               </StyledListItemIcon>
               <StyledListItemText primary="Notifications" open={open} />
@@ -211,7 +234,9 @@ export default function Navbar() {
           <StyledListItem disablePadding>
             <StyledListItemButton open={open}>
               <StyledListItemIcon open={open}>
-                <AccountIcon style={{ color: sidePanel.iconColor }} />
+                <AccountIcon
+                  style={{ color: theme.custom.sidePanel.iconColor }}
+                />
               </StyledListItemIcon>
               <StyledListItemText primary="Profile" open={open} />
             </StyledListItemButton>
@@ -257,29 +282,28 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => {
-  const { sidePanel } = useAppTheme();
   return {
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
     boxSizing: "border-box",
-    background: sidePanel.backgroundColor,
-    color: sidePanel.iconColor,
+    background: theme.custom.sidePanel.backgroundColor,
+    color: theme.custom.sidePanel.iconColor,
     ...(open
       ? {
           ...openedMixin(theme),
           "& .MuiDrawer-paper": {
             ...openedMixin(theme),
-            background: sidePanel.backgroundColor,
-            color: sidePanel.iconColor,
+            background: theme.custom.sidePanel.backgroundColor,
+            color: theme.custom.sidePanel.iconColor,
           },
         }
       : {
           ...closedMixin(theme),
           "& .MuiDrawer-paper": {
             ...closedMixin(theme),
-            background: sidePanel.backgroundColor,
-            color: sidePanel.iconColor,
+            background: theme.custom.sidePanel.backgroundColor,
+            color: theme.custom.sidePanel.iconColor,
           },
         }),
   };

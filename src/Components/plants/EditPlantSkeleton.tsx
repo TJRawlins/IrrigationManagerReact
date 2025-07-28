@@ -11,19 +11,16 @@ import {
 import "../../styles/baseStyles/BaseCard.css";
 import { useAppTheme } from "../../theme/useAppTheme";
 
-interface EditPlantSkeletonProps {
-  // No props needed anymore - uses useAppTheme directly
-}
-
-function EditPlantSkeleton({}: EditPlantSkeletonProps) {
+function EditPlantSkeleton() {
   const appTheme = useAppTheme();
+  const theme = useTheme();
 
   return (
     <div>
       <style>
         {`.MuiPopover-paper.MuiMenu-paper
           {
-            background-color: ${appTheme.colors.modal.fieldBackground}
+            background-color: ${theme.custom.modal.fieldBackground};
             }`}
       </style>
       <Modal
@@ -51,7 +48,7 @@ function EditPlantSkeleton({}: EditPlantSkeletonProps) {
               height: "433px",
               m: 2,
               borderRadius: "10px",
-              ...appTheme.modal.card
+              ...appTheme.modal.card,
             }}
           >
             <CardHeader
