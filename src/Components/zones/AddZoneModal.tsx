@@ -2,13 +2,11 @@
 import {
   Box,
   FormHelperText,
-  Modal,
   styled,
   TextField,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import { ChangeEvent, useState } from "react";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field } from "formik";
@@ -26,9 +24,9 @@ import {
 } from "firebase/storage";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useAppTheme } from "../../theme/useAppTheme";
-import { IoClose } from "react-icons/io5";
 import { useTheme } from "@mui/material/styles";
 import { useImageUpload } from "../../hooks/useImageUpload";
+import FormModal from "../common/FormModal";
 
 type AddZoneModalProps = {
   open: boolean;
@@ -130,200 +128,166 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
   };
 
   return (
-    <Modal
+    <FormModal
       open={open}
-      onClose={() => {}} // Prevent closing on backdrop click or escape key
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      slotProps={{
-        backdrop: {
-          style: modal.overlay,
-        },
-      }}
+      onClose={handleClose}
+      title="Add Zone"
+      description={`Add a new zone to ${season.name}`}
+      loading={isLoading}
+      modalStyle={modal.card}
+      titleStyle={modal.title}
+      descriptionStyle={modal.description}
+      closeIconColor={closeIconColor}
+      closeIconHoverColor={closeIconHoverColor}
     >
-      <ModalBox sx={modal.card}>
-        <CloseIcon
-          onClick={handleClose}
-          $color={closeIconColor}
-          $hover={closeIconHoverColor}
-        />
-        <ModalTitleContainer>
-          {isLoading && (
-            <Modal
-              open={open}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-              slotProps={{
-                backdrop: {
-                  style: { backgroundColor: "transparent" },
-                },
-              }}
-            >
-              <LoadingOverlay>
-                <CircularProgress sx={{ color: "#0069b2" }} />
-              </LoadingOverlay>
-            </Modal>
-          )}
-          <ModalTitle id="modal-modal-title" as="h2" sx={modal.title}>
-            Add Zone
-          </ModalTitle>
-          <ModalDescription as="p" sx={modal.description}>
-            Add a new zone to {season.name}
-          </ModalDescription>
-        </ModalTitleContainer>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
-        >
-          {({ errors, touched }) => (
-            <Form style={{ width: "100%", padding: "0 24px 24px" }}>
-              <SplitContainer>
-                <InputBox>
-                  <Field
-                    as={StyledTextField}
-                    required
-                    id="zone-name-input"
-                    name="name"
-                    label="Zone name"
-                    type="text"
-                    autoComplete=""
-                    variant="standard"
-                    error={touched.name && Boolean(errors.name)}
-                  />
-                  <ErrorHelperText error={touched.name && Boolean(errors.name)}>
-                    {touched.name && errors.name ? errors.name : ""}
-                  </ErrorHelperText>
-                </InputBox>
-              </SplitContainer>
-              <SplitContainer>
-                <InputBox>
-                  <Field
-                    as={StyledTextField}
-                    required
-                    id="runtime-hours-input"
-                    name="runtimeHours"
-                    label="Runtime hours"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 24 } }}
-                    error={touched.runtimeHours && Boolean(errors.runtimeHours)}
-                  />
-                  <ErrorHelperText
-                    error={touched.runtimeHours && Boolean(errors.runtimeHours)}
-                  >
-                    {touched.runtimeHours && errors.runtimeHours
-                      ? errors.runtimeHours
-                      : ""}
-                  </ErrorHelperText>
-                </InputBox>
-                <InputBox>
-                  <Field
-                    as={StyledTextField}
-                    required
-                    id="runtime-minutes-input"
-                    name="runtimeMinutes"
-                    label="Runtime minutes"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 59 } }}
-                    error={
-                      touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
-                    }
-                  />
-                  <ErrorHelperText
-                    error={
-                      touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
-                    }
-                  >
-                    {touched.runtimeMinutes && errors.runtimeMinutes
-                      ? errors.runtimeMinutes
-                      : ""}
-                  </ErrorHelperText>
-                </InputBox>
-              </SplitContainer>
-              <SplitContainer>
-                <InputBox>
-                  <Field
-                    as={StyledTextField}
-                    required
-                    id="per-week-input"
-                    label="Times per week"
-                    name="runtimePerWeek"
-                    type="number"
-                    autoComplete=""
-                    variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 25 } }}
-                    error={
-                      touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
-                    }
-                  />
-                  <ErrorHelperText
-                    error={
-                      touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
-                    }
-                  >
-                    {touched.runtimePerWeek && errors.runtimePerWeek
-                      ? errors.runtimePerWeek
-                      : ""}
-                  </ErrorHelperText>
-                </InputBox>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
+        {({ errors, touched }) => (
+          <Form style={{ width: "100%", padding: "0 24px 24px" }}>
+            <SplitContainer>
+              <InputBox>
                 <Field
                   as={StyledTextField}
-                  disabled
-                  id="standard-disabled"
-                  name={season.name}
-                  label="Season"
-                  defaultValue={season.name}
+                  required
+                  id="zone-name-input"
+                  name="name"
+                  label="Zone name"
+                  type="text"
+                  autoComplete=""
                   variant="standard"
-                  sx={{
-                    "& .MuiInputBase-input": {
-                      color: colors.modal.fieldInputFont,
-                    },
-                  }}
+                  error={touched.name && Boolean(errors.name)}
                 />
-              </SplitContainer>
-              <SplitContainer upload>
-                <ImgUploadFilenameLabel as="span">
-                  Image file name
-                </ImgUploadFilenameLabel>
-                <ImgUploadFilename
-                  as="div"
-                  id="image-filename-field"
-                  style={error ? { color: "#f44336" } : {}}
+                <ErrorHelperText error={touched.name && Boolean(errors.name)}>
+                  {touched.name && errors.name ? errors.name : ""}
+                </ErrorHelperText>
+              </InputBox>
+            </SplitContainer>
+            <SplitContainer>
+              <InputBox>
+                <Field
+                  as={StyledTextField}
+                  required
+                  id="runtime-hours-input"
+                  name="runtimeHours"
+                  label="Runtime hours"
+                  type="number"
+                  autoComplete=""
+                  variant="standard"
+                  InputProps={{ inputProps: { min: 0, max: 24 } }}
+                  error={touched.runtimeHours && Boolean(errors.runtimeHours)}
+                />
+                <ErrorHelperText
+                  error={touched.runtimeHours && Boolean(errors.runtimeHours)}
                 >
-                  {error
-                    ? error
-                    : imageUpload
-                    ? imageUpload.name.toString()
+                  {touched.runtimeHours && errors.runtimeHours
+                    ? errors.runtimeHours
                     : ""}
-                </ImgUploadFilename>
-                <ImgUploadBtn as="label" variant="contained" tabIndex={-1}>
-                  <CloudUploadIcon sx={{ mr: 1 }} />
-                  Select Image
-                  <VisuallyHiddenInput
-                    type="file"
-                    accept="image/*"
-                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                      handleImageValidation(event)
-                    }
-                    multiple
-                  />
-                </ImgUploadBtn>
-              </SplitContainer>
-              <ButtonWrapper>
-                <AddButton type="submit">Add Zone</AddButton>
-                <CancelButton type="button" onClick={handleClose}>
-                  Cancel
-                </CancelButton>
-              </ButtonWrapper>
-            </Form>
-          )}
-        </Formik>
-      </ModalBox>
-    </Modal>
+                </ErrorHelperText>
+              </InputBox>
+              <InputBox>
+                <Field
+                  as={StyledTextField}
+                  required
+                  id="runtime-minutes-input"
+                  name="runtimeMinutes"
+                  label="Runtime minutes"
+                  type="number"
+                  autoComplete=""
+                  variant="standard"
+                  InputProps={{ inputProps: { min: 0, max: 59 } }}
+                  error={
+                    touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
+                  }
+                />
+                <ErrorHelperText
+                  error={
+                    touched.runtimeMinutes && Boolean(errors.runtimeMinutes)
+                  }
+                >
+                  {touched.runtimeMinutes && errors.runtimeMinutes
+                    ? errors.runtimeMinutes
+                    : ""}
+                </ErrorHelperText>
+              </InputBox>
+            </SplitContainer>
+            <SplitContainer>
+              <InputBox>
+                <Field
+                  as={StyledTextField}
+                  required
+                  id="per-week-input"
+                  label="Times per week"
+                  name="runtimePerWeek"
+                  type="number"
+                  autoComplete=""
+                  variant="standard"
+                  InputProps={{ inputProps: { min: 0, max: 25 } }}
+                  error={
+                    touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
+                  }
+                />
+                <ErrorHelperText
+                  error={
+                    touched.runtimePerWeek && Boolean(errors.runtimePerWeek)
+                  }
+                >
+                  {touched.runtimePerWeek && errors.runtimePerWeek
+                    ? errors.runtimePerWeek
+                    : ""}
+                </ErrorHelperText>
+              </InputBox>
+              <Field
+                as={StyledTextField}
+                disabled
+                id="standard-disabled"
+                name={season.name}
+                label="Season"
+                defaultValue={season.name}
+                variant="standard"
+                sx={{
+                  "& .MuiInputBase-input": {
+                    color: colors.modal.fieldInputFont,
+                  },
+                }}
+              />
+            </SplitContainer>
+            <SplitContainer upload>
+              <ImgUploadFilenameLabel as="span">
+                Image file name
+              </ImgUploadFilenameLabel>
+              <ImgUploadFilename
+                as="div"
+                id="image-filename-field"
+                style={error ? { color: "#f44336" } : {}}
+              >
+                {error ? error : imageUpload ? imageUpload.name.toString() : ""}
+              </ImgUploadFilename>
+              <ImgUploadBtn as="label" variant="contained" tabIndex={-1}>
+                <CloudUploadIcon sx={{ mr: 1 }} />
+                Select Image
+                <VisuallyHiddenInput
+                  type="file"
+                  accept="image/*"
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    handleImageValidation(event)
+                  }
+                  multiple
+                />
+              </ImgUploadBtn>
+            </SplitContainer>
+            <ButtonWrapper>
+              <AddButton type="submit">Add Zone</AddButton>
+              <CancelButton type="button" onClick={handleClose}>
+                Cancel
+              </CancelButton>
+            </ButtonWrapper>
+          </Form>
+        )}
+      </Formik>
+    </FormModal>
   );
 }
 
@@ -389,63 +353,6 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const ModalBox = styled(Box)({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "500px",
-  borderRadius: "7px",
-  boxShadow:
-    "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
-  // mobile screens (320px-599px)
-  "@media (min-width: 320px) and (max-width: 599px)": {
-    width: "400px",
-  },
-});
-
-const CloseIcon = styled(IoClose, {
-  shouldForwardProp: (prop) => prop !== "$color" && prop !== "$hover",
-})<{ $color: string; $hover: string }>`
-  position: absolute;
-  top: 17px;
-  right: 17px;
-  font-size: 1.25rem;
-  cursor: pointer;
-  transition: all 250ms;
-  color: ${(props) => props.$color};
-  &:hover {
-    color: ${(props) => props.$hover};
-  }
-`;
-
-const ModalTitleContainer = styled("div")`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: #666666;
-  gap: 0.5rem;
-  border-image-source: linear-gradient(to right, #18d4c2, #82a628);
-  border-bottom: 10px solid;
-  border-image-slice: 1;
-  border-width: 1px;
-  margin: 0 0 20px;
-  padding: 16px 24px;
-`;
-
-const ModalTitle = styled(Typography)`
-  font-size: 1.125rem !important;
-  font-weight: 100 !important;
-  font-family: "Outfit", sans-serif !important;
-  margin: 0;
-`;
-
-const ModalDescription = styled(Typography)`
-  font-size: 0.875rem !important;
-  font-weight: 100 !important;
-  margin: 0;
-`;
-
 const SplitContainer = styled("div")<{ upload?: boolean }>`
   display: flex;
   gap: 1rem;
@@ -457,17 +364,6 @@ const SplitContainer = styled("div")<{ upload?: boolean }>`
       position: relative;
       padding-top:1.5rem
     `}
-`;
-
-const LoadingOverlay = styled(Box)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
 `;
 
 const InputBox = styled(Box)`
