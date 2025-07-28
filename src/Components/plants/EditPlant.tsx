@@ -41,7 +41,7 @@ import Compressor from "compressorjs";
 import { Plant } from "../../App/models/Plant";
 import { IoClose } from "react-icons/io5";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useAppTheme } from "../../theme/useAppTheme";
+import { useTheme } from "@mui/material/styles";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -70,7 +70,7 @@ function EditPlant({
   const { zone } = useSelector((state: RootState) => state.zone);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { modal } = useAppTheme();
+  const theme = useTheme();
   const handleClose = () => {
     setError("");
     setIsShowEdit(false);
@@ -366,7 +366,7 @@ function EditPlant({
       <style>
         {`.MuiPopover-paper.MuiMenu-paper
           {
-            background-color: ${modal.card["& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input"].backgroundColor}
+            background-color: ${theme.custom.modal.fieldBackground};
           }`}
       </style>
       <Modal
@@ -377,11 +377,45 @@ function EditPlant({
         aria-describedby="modal-modal-description"
                           slotProps={{
           backdrop: {
-            style: modal.overlay,
+            style: {
+              backgroundColor: theme.custom.modal.overlay,
+              backdropFilter: "blur(4px)",
+            },
           },
         }}
       >
-       <Box className="modal-box plant" sx={modal.card}>
+       <Box 
+         className="modal-box plant" 
+         sx={{
+           backgroundColor: theme.custom.modal.background,
+           border: `1px solid ${theme.custom.modal.border}`,
+           "& .close-icon": {
+             color: theme.custom.modal.closeIcon,
+           },
+           "& .close-icon:hover": {
+             color: theme.custom.modal.closeIconHover,
+           },
+           "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
+             {
+               color: theme.custom.modal.fieldLabel,
+             },
+           "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
+             {
+               color: theme.custom.modal.fieldInputFont,
+             },
+           "& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input":
+             {
+               backgroundColor: theme.custom.modal.fieldBackground,
+             },
+           "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
+             {
+               border: `1px solid ${theme.custom.modal.fieldBorder}`,
+             },
+           "& .optional-fields-accordion": {
+             color: theme.custom.modal.titleColor,
+           },
+         }}
+       >
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -416,14 +450,14 @@ function EditPlant({
                 id="modal-modal-title"
                                 variant="h6"
                 component="h2"
-                sx={modal.title}
+                sx={{ color: theme.custom.modal.titleColor }}
               >
                 Edit Plant
               </Typography>
                 <Typography
                   className="modal-description"
                   component="p"
-                  sx={modal.description}
+                  sx={{ color: theme.custom.modal.description }}
                 >
               Edit plant for zone {zone.name.toLocaleLowerCase()}
             </Typography>

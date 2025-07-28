@@ -27,7 +27,6 @@ import {
 } from "firebase/storage";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Zone } from "../../App/models/Zone";
-import { useAppTheme } from "../../theme/useAppTheme";
 import FormModal from "../common/FormModal";
 import { useImageUpload } from "../../hooks/useImageUpload";
 
@@ -44,7 +43,6 @@ function EditZone({
   setIsShowEdit,
   isShowEdit,
 }: ZoneEditProps) {
-  const { modal } = useAppTheme();
   const theme = useTheme();
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
@@ -264,9 +262,6 @@ function EditZone({
         title="Edit Zone"
         description={`Edit zone ${zone.name} for ${season.name}`}
         loading={isLoading}
-        modalStyle={modal.card}
-        titleStyle={modal.title}
-        descriptionStyle={modal.description}
       >
         <Formik
           initialValues={initialValues}

@@ -23,7 +23,6 @@ import {
   FirebaseStorage,
 } from "firebase/storage";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { useAppTheme } from "../../theme/useAppTheme";
 import { useTheme } from "@mui/material/styles";
 import { useImageUpload } from "../../hooks/useImageUpload";
 import FormModal from "../common/FormModal";
@@ -35,7 +34,6 @@ type AddZoneModalProps = {
 };
 
 function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
-  const { modal } = useAppTheme();
   const theme = useTheme();
   // fallback values for close icon colors
   const closeIconColor = theme.custom?.modal?.closeIcon || "#707174";
@@ -134,9 +132,6 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
       title="Add Zone"
       description={`Add a new zone to ${season.name}`}
       loading={isLoading}
-      modalStyle={modal.card}
-      titleStyle={modal.title}
-      descriptionStyle={modal.description}
       closeIconColor={closeIconColor}
       closeIconHoverColor={closeIconHoverColor}
     >

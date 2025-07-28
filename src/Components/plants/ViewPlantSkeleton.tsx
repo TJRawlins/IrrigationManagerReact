@@ -8,10 +8,10 @@ import {
   Stack,
 } from "@mui/material";
 import "../../styles/baseStyles/BaseCard.css";
-import { useAppTheme } from "../../theme/useAppTheme";
+import { useTheme } from "@mui/material";
 
 function ViewPlantSkeleton() {
-  const { modal } = useAppTheme();
+  const theme = useTheme();
 
   return (
     <Modal
@@ -19,7 +19,10 @@ function ViewPlantSkeleton() {
       open={true}
       slotProps={{
         backdrop: {
-          style: modal.overlay,
+          style: {
+            backgroundColor: theme.custom.modal.overlay,
+            backdropFilter: "blur(4px)",
+          },
         },
       }}
     >

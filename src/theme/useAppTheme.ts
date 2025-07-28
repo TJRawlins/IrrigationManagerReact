@@ -38,49 +38,6 @@ export const useAppTheme = () => {
       },
     },
 
-    // Modal styles
-    modal: {
-      overlay: {
-        backgroundColor: theme.custom.modal.overlay,
-        backdropFilter: "blur(4px)",
-      },
-      card: {
-        backgroundColor: theme.custom.modal.background,
-        border: `1px solid ${theme.custom.modal.border}`,
-        "& .close-icon": {
-          color: theme.custom.modal.closeIcon,
-        },
-        "& .close-icon:hover": {
-          color: theme.custom.modal.closeIconHover,
-        },
-        "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
-          {
-            color: theme.custom.modal.fieldLabel,
-          },
-        "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
-          {
-            color: theme.custom.modal.fieldInputFont,
-          },
-        "& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input":
-          {
-            backgroundColor: theme.custom.modal.fieldBackground,
-          },
-        "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
-          {
-            border: `1px solid ${theme.custom.modal.fieldBorder}`,
-          },
-        "& .optional-fields-accordion": {
-          color: theme.custom.modal.titleColor,
-        },
-      },
-      title: {
-        color: theme.custom.modal.titleColor,
-      },
-      description: {
-        color: theme.custom.modal.description,
-      },
-    },
-
     // Zone card styles
     zoneCard: {
       card: {

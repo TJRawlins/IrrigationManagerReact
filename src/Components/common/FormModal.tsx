@@ -7,7 +7,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { IoClose } from "react-icons/io5";
-import { useAppTheme } from "../../theme/useAppTheme";
 import { useTheme } from '@mui/material/styles';
 
 
@@ -39,7 +38,6 @@ const FormModal: React.FC<FormModalProps> = ({
   closeIconColor = "#707174",
   closeIconHoverColor = "#323232",
 }) => {
-  const { modal } = useAppTheme();
   const theme = useTheme();
 
   return (
@@ -50,7 +48,10 @@ const FormModal: React.FC<FormModalProps> = ({
       aria-describedby="modal-modal-description"
       slotProps={{
         backdrop: {
-          style: modal.overlay,
+          style: {
+            backgroundColor: theme.custom.modal.overlay,
+            backdropFilter: "blur(4px)",
+          },
         },
       }}
     >
@@ -95,7 +96,7 @@ const FormModal: React.FC<FormModalProps> = ({
 export default FormModal;
 
 // --- Styled Components (always at the bottom) ---
-const ModalBox = styled(Box)({
+const ModalBox = styled(Box)(({ theme }) => ({
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -104,10 +105,38 @@ const ModalBox = styled(Box)({
   borderRadius: "7px",
   boxShadow:
     "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
+  // Default modal styles from theme
+  backgroundColor: theme.custom.modal.background,
+  border: `1px solid ${theme.custom.modal.border}`,
+  "& .close-icon": {
+    color: theme.custom.modal.closeIcon,
+  },
+  "& .close-icon:hover": {
+    color: theme.custom.modal.closeIconHover,
+  },
+  "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
+    {
+      color: theme.custom.modal.fieldLabel,
+    },
+  "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
+    {
+      color: theme.custom.modal.fieldInputFont,
+    },
+  "& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input":
+    {
+      backgroundColor: theme.custom.modal.fieldBackground,
+    },
+  "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
+    {
+      border: `1px solid ${theme.custom.modal.fieldBorder}`,
+    },
+  "& .optional-fields-accordion": {
+    color: theme.custom.modal.titleColor,
+  },
   "@media (min-width: 320px) and (max-width: 599px)": {
     width: "400px",
   },
-});
+}));
 
 const CloseIcon = styled(IoClose, {
   shouldForwardProp: (prop) => prop !== "$color" && prop !== "$hover",
@@ -138,18 +167,20 @@ const ModalTitleContainer = styled("div")`
   padding: 16px 24px;
 `;
 
-const ModalTitle = styled(Typography)`
-  font-size: 1.125rem !important;
-  font-weight: 100 !important;
-  font-family: "Outfit", sans-serif !important;
-  margin: 0;
-`;
+const ModalTitle = styled(Typography)(({ theme }) => ({
+  fontSize: "1.125rem !important",
+  fontWeight: "100 !important",
+  fontFamily: '"Outfit", sans-serif !important',
+  margin: 0,
+  color: theme.custom.modal.titleColor,
+}));
 
-const ModalDescription = styled(Typography)`
-  font-size: 0.875rem !important;
-  font-weight: 100 !important;
-  margin: 0;
-`;
+const ModalDescription = styled(Typography)(({ theme }) => ({
+  fontSize: "0.875rem !important",
+  fontWeight: "100 !important",
+  margin: 0,
+  color: theme.custom.modal.description,
+}));
 
 const LoadingOverlay = styled(Box)`
   display: flex;

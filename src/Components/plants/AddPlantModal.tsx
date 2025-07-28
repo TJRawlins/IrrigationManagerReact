@@ -39,7 +39,6 @@ import Compressor from "compressorjs";
 import "../../styles/baseStyles/BaseCard.css";
 import { IoClose } from "react-icons/io5";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useAppTheme } from "../../theme/useAppTheme";
 
 type AddPlantModalProps = {
   open: boolean;
@@ -64,7 +63,6 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const { zone } = useSelector((state: RootState) => state.zone);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const appTheme = useAppTheme();
 
   // color theme
   const theme = useTheme();
@@ -275,11 +273,20 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
       aria-describedby="modal-modal-description"
       slotProps={{
         backdrop: {
-          style: appTheme.modal.overlay,
+          style: {
+            backgroundColor: theme.custom.modal.overlay,
+            backdropFilter: "blur(4px)",
+          },
         },
       }}
     >
-      <Box className="modal-box" sx={appTheme.modal.card}>
+      <Box 
+        className="modal-box" 
+        sx={{
+          backgroundColor: theme.custom.modal.background,
+          border: `1px solid ${theme.custom.modal.border}`,
+        }}
+      >
         <IoClose className="close-icon" onClick={handleClose} />
         <div className="modal-title-container">
           {isLoading && (
@@ -314,14 +321,18 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
             id="modal-modal-title"
             variant="h6"
             component="h2"
-            sx={appTheme.modal.title}
+            sx={{
+              color: theme.custom.modal.titleColor,
+            }}
           >
             Add Plant
           </Typography>
           <Typography
             className="modal-description"
             component="p"
-            sx={appTheme.modal.description}
+            sx={{
+              color: theme.custom.modal.description,
+            }}
           >
             Add a new plant to the {zone.name.toLocaleLowerCase()} zone
           </Typography>

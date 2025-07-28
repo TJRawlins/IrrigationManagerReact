@@ -9,10 +9,8 @@ import {
   useTheme,
 } from "@mui/material";
 import "../../styles/baseStyles/BaseCard.css";
-import { useAppTheme } from "../../theme/useAppTheme";
 
 function EditPlantSkeleton() {
-  const appTheme = useAppTheme();
   const theme = useTheme();
 
   return (
@@ -28,7 +26,10 @@ function EditPlantSkeleton() {
         open={true}
         slotProps={{
           backdrop: {
-            style: appTheme.modal.overlay,
+            style: {
+              backgroundColor: theme.custom.modal.overlay,
+              backdropFilter: "blur(4px)",
+            },
           },
         }}
       >
@@ -48,7 +49,8 @@ function EditPlantSkeleton() {
               height: "433px",
               m: 2,
               borderRadius: "10px",
-              ...appTheme.modal.card,
+              backgroundColor: theme.custom.modal.background,
+              border: `1px solid ${theme.custom.modal.border}`,
             }}
           >
             <CardHeader
