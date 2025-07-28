@@ -61,11 +61,7 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-function EditPlant({
-  fetchPlants,
-  setIsShowEdit,
-  isShowEdit,
-}: PlantBarProps) {
+function EditPlant({ fetchPlants, setIsShowEdit, isShowEdit }: PlantBarProps) {
   const { plant } = useSelector((state: RootState) => state.plant);
   const { zone } = useSelector((state: RootState) => state.zone);
   const dispatch = useDispatch();
@@ -375,7 +371,7 @@ function EditPlant({
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-                          slotProps={{
+        slotProps={{
           backdrop: {
             style: {
               backgroundColor: theme.custom.modal.overlay,
@@ -384,38 +380,38 @@ function EditPlant({
           },
         }}
       >
-       <Box 
-         className="modal-box plant" 
-         sx={{
-           backgroundColor: theme.custom.modal.background,
-           border: `1px solid ${theme.custom.modal.border}`,
-           "& .close-icon": {
-             color: theme.custom.modal.closeIcon,
-           },
-           "& .close-icon:hover": {
-             color: theme.custom.modal.closeIconHover,
-           },
-           "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
-             {
-               color: theme.custom.modal.fieldLabel,
-             },
-           "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
-             {
-               color: theme.custom.modal.fieldInputFont,
-             },
-           "& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input":
-             {
-               backgroundColor: theme.custom.modal.fieldBackground,
-             },
-           "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
-             {
-               border: `1px solid ${theme.custom.modal.fieldBorder}`,
-             },
-           "& .optional-fields-accordion": {
-             color: theme.custom.modal.titleColor,
-           },
-         }}
-       >
+        <Box
+          className="modal-box plant"
+          sx={{
+            backgroundColor: theme.custom.modal.background,
+            border: `1px solid ${theme.custom.modal.border}`,
+            "& .close-icon": {
+              color: theme.custom.modal.closeIcon,
+            },
+            "& .close-icon:hover": {
+              color: theme.custom.modal.closeIconHover,
+            },
+            "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
+              {
+                color: theme.custom.modal.fieldLabel,
+              },
+            "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
+              {
+                color: theme.custom.modal.fieldInputFont,
+              },
+            "& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input":
+              {
+                backgroundColor: theme.custom.modal.fieldBackground,
+              },
+            "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
+              {
+                border: `1px solid ${theme.custom.modal.fieldBorder}`,
+              },
+            "& .optional-fields-accordion": {
+              color: theme.custom.modal.titleColor,
+            },
+          }}
+        >
           <IoClose className="close-icon" onClick={handleClose} />
           <div className="modal-title-container">
             {isLoading && (
@@ -445,20 +441,20 @@ function EditPlant({
                 </Box>
               </Modal>
             )}
-                          <Typography
-                className="modal-title"
-                id="modal-modal-title"
-                                variant="h6"
-                component="h2"
-                sx={{ color: theme.custom.modal.titleColor }}
-              >
-                Edit Plant
-              </Typography>
-                <Typography
-                  className="modal-description"
-                  component="p"
-                  sx={{ color: theme.custom.modal.description }}
-                >
+            <Typography
+              className="modal-title"
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{ color: theme.custom.modal.titleColor }}
+            >
+              Edit Plant
+            </Typography>
+            <Typography
+              className="modal-description"
+              component="p"
+              sx={{ color: theme.custom.modal.description }}
+            >
               Edit plant for zone {zone.name.toLocaleLowerCase()}
             </Typography>
           </div>

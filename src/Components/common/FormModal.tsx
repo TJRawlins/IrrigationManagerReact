@@ -7,8 +7,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { IoClose } from "react-icons/io5";
-import { useTheme } from '@mui/material/styles';
-
+import { useTheme } from "@mui/material/styles";
 
 // Types for the modal
 interface FormModalProps {

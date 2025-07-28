@@ -280,8 +280,8 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
         },
       }}
     >
-      <Box 
-        className="modal-box" 
+      <Box
+        className="modal-box"
         sx={{
           backgroundColor: theme.custom.modal.background,
           border: `1px solid ${theme.custom.modal.border}`,
