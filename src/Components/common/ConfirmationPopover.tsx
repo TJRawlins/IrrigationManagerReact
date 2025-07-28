@@ -1,5 +1,5 @@
 import React from "react";
-import { Popover, Box, Typography, Button } from "@mui/material";
+import { Popover, Box, Typography, Button, useTheme } from "@mui/material";
 import { PiWarningFill } from "react-icons/pi";
 import { useAppTheme } from "../../theme/useAppTheme";
 import { styled } from "@mui/material/styles";
@@ -38,7 +38,8 @@ const ConfirmationPopover: React.FC<ConfirmationPopoverProps> = ({
   backgroundColor,
   textColor,
 }) => {
-  const { zoneCard, messages } = useAppTheme();
+  const { zoneCard } = useAppTheme();
+  const theme = useTheme();
 
   // Allow message to be a string or array of strings
   const messageLines = Array.isArray(message) ? message : [message];
@@ -57,7 +58,7 @@ const ConfirmationPopover: React.FC<ConfirmationPopoverProps> = ({
             color: textColor || zoneCard.header.color,
             boxShadow: 3,
             backgroundImage: "none",
-            borderTop: `8px solid ${messages.warning.icon}`,
+            borderTop: `8px solid ${theme.custom.messages.warning.icon}`,
             borderRadius: 1,
             minWidth: 350,
             maxWidth: 440,

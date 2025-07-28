@@ -1,5 +1,11 @@
 import React from "react";
-import { CardHeader, IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  CardHeader,
+  IconButton,
+  Menu,
+  MenuItem,
+  useTheme,
+} from "@mui/material";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { BsCalendar4Week } from "react-icons/bs";
 import { RiTimerLine } from "react-icons/ri";
@@ -48,13 +54,14 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
     handleDeleteClose,
     deleteZone,
   } = props;
-  const { zoneCard, fonts } = useAppTheme();
+  const { zoneCard } = useAppTheme();
+  const theme = useTheme();
 
   return (
     <StyledCardHeader
       sx={{ color: zoneCard.text.color }}
       title={
-        <ZoneTitle style={{ ...fonts.headers }}>
+        <ZoneTitle style={{ ...theme.custom.fonts.headers }}>
           {zone.name.length > 18
             ? zone.name.substring(0, 18) + "..."
             : zone.name}
@@ -118,7 +125,7 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
                 onClick={handleCardMenuSelect(option)}
                 sx={{
                   color: zoneCard.text.color,
-                  ...fonts.content,
+                  ...theme.custom.fonts.content,
                   fontSize: "0.95rem",
                   "&:hover": {
                     color: zoneCard.header.color,

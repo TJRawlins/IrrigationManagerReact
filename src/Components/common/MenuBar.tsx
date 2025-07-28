@@ -1,4 +1,11 @@
-import { CssBaseline, Divider, Typography, Box, styled } from "@mui/material";
+import {
+  CssBaseline,
+  Divider,
+  Typography,
+  Box,
+  styled,
+  useTheme,
+} from "@mui/material";
 import { ReactNode } from "react";
 import TotalGallons from "./TotalGallons";
 import UserControls from "./UserControls";
@@ -34,7 +41,8 @@ export default function MenuBar({
   isSeasonRelated = false,
   seasonFunctions,
 }: MenuBarProps) {
-  const { menuBar, fonts, navBar } = useAppTheme();
+  const { menuBar } = useAppTheme();
+  const theme = useTheme();
 
   return (
     <>
@@ -44,13 +52,15 @@ export default function MenuBar({
           ...mainBarStyles,
           backgroundColor: menuBar.mainBar.backgroundColor,
           color: menuBar.mainBar.color,
-          borderBottom: navBar.mainBar.borderBottom,
+          borderBottom: `1px solid ${theme.custom.navBar.borderBottom}`,
         }}
       >
         <StyledLeftSection>
           <StyledFlexRow>
             <StyledTitleContainer>
-              <StyledTitle sx={{ ...fonts.headers, ...menuBar.title }}>
+              <StyledTitle
+                sx={{ ...theme.custom.fonts.headers, ...menuBar.title }}
+              >
                 {title}
               </StyledTitle>
               {subtitle && (
@@ -117,7 +127,8 @@ const StyledMenuBarWrapper = styled(Box)({
   width: "100%",
   minHeight: "64px",
   padding: "0 1.3rem",
-  boxShadow: "rgb(50 50 93 / 9%) 0px 2px 5px -1px, rgb(0 0 0 / 6%) 0px 1px 3px -1px",
+  boxShadow:
+    "rgb(50 50 93 / 9%) 0px 2px 5px -1px, rgb(0 0 0 / 6%) 0px 1px 3px -1px",
   zIndex: 1,
   flexShrink: 0,
   "@media (min-width: 1024px)": {

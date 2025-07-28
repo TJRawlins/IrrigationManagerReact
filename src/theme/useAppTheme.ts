@@ -8,22 +8,6 @@ export const useAppTheme = () => {
   const theme = useTheme();
 
   return {
-    // Font styles
-    fonts: {
-      headers: {
-        fontFamily: theme.custom.fonts.headers.fontFamily,
-        letterSpacing: theme.custom.fonts.headers.letterSpacing,
-      },
-      logo: {
-        fontFamily: theme.custom.fonts.logo.fontFamily,
-        letterSpacing: theme.custom.fonts.logo.letterSpacing,
-      },
-      content: {
-        fontFamily: theme.custom.fonts.content.fontFamily,
-        letterSpacing: theme.custom.fonts.content.letterSpacing,
-      },
-    },
-
     // Grid styles
     grid: {
       sx: {
@@ -129,15 +113,6 @@ export const useAppTheme = () => {
       },
     },
 
-    // Nav bar styles
-    navBar: {
-      mainBar: {
-        backgroundColor: theme.custom.navBar.background,
-        color: theme.custom.navBar.color,
-        borderBottom: `1px solid ${theme.custom.navBar.borderBottom}`,
-      },
-    },
-
     // Zone card styles
     zoneCard: {
       card: {
@@ -161,68 +136,6 @@ export const useAppTheme = () => {
       },
       image: {
         backgroundColor: theme.custom.zoneCard.imageBackground,
-      },
-    },
-
-    // Zone page styles
-    zonePage: {
-      container: {
-        backgroundColor: theme.custom.zonePage.containerBackground,
-      },
-    },
-
-    // Message styles
-    messages: {
-      info: {
-        border: `1px solid ${theme.custom.messages.info.border}`,
-        icon: theme.custom.messages.info.icon,
-      },
-      warning: {
-        border: `1px solid ${theme.custom.messages.warning.border}`,
-        icon: theme.custom.messages.warning.icon,
-      },
-      error: {
-        border: `1px solid ${theme.custom.messages.error.border}`,
-        icon: theme.custom.messages.error.icon,
-      },
-      success: {
-        border: `1px solid ${theme.custom.messages.success.border}`,
-        icon: theme.custom.messages.success.icon,
-      },
-      toast: {
-        backgroundColor: theme.custom.messages.toast.background,
-        color: theme.custom.messages.toast.text,
-        border: `1px solid ${theme.custom.messages.toast.border}`,
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-        borderRadius: "8px",
-        padding: "12px 16px",
-      },
-    },
-
-    // TotalGallons styles
-    totalGallons: {
-      toggleContainer: {
-        backgroundColor: theme.custom.totalGallons.toggleContainer.background,
-        border: theme.custom.totalGallons.toggleContainer.border,
-      },
-      toggleButton: {
-        selected: {
-          backgroundColor:
-            theme.custom.totalGallons.toggleButton.selected.background,
-          color: theme.custom.totalGallons.toggleButton.selected.color,
-          boxShadow: theme.custom.totalGallons.toggleButton.selected.boxShadow,
-        },
-        unselected: {
-          backgroundColor:
-            theme.custom.totalGallons.toggleButton.unselected.background,
-          color: theme.custom.totalGallons.toggleButton.unselected.color,
-        },
-      },
-      valueDisplay: {
-        color: theme.custom.totalGallons.valueDisplay.color,
-      },
-      valueLabel: {
-        color: theme.custom.totalGallons.valueLabel.color,
       },
     },
   };
