@@ -49,7 +49,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
 
   return (
     <ImageWrapper
-      $backgroundColor={theme.custom.zoneCard.imageBackground}
+      $backgroundColor={theme.custom.image.background}
       style={{
         width: finalWidth,
         height: finalHeight,

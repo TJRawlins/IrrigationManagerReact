@@ -241,6 +241,9 @@ declare module "@mui/material/styles" {
         vary: string;
         alt: string;
       };
+      image: {
+        background: string;
+      };
       zoneCard: {
         headerBackground: string;
         headerText: string;
@@ -250,7 +253,6 @@ declare module "@mui/material/styles" {
         buttonText: string;
         buttonHoverBackground: string;
         buttonHoverText: string;
-        imageBackground: string;
         border: string;
         shadow: string;
       };
@@ -497,13 +499,15 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               border: lightThemeBorder,
             },
           },
+          image: {
+            background: "#dce4e4",
+          },
           zoneCard: {
             headerBackground: lightThemeLight,
             headerText: lightThemeText,
             headerBorder: lightThemeBorder,
             contentBackground: lightThemeLightest,
             text: lightThemeText,
-            imageBackground: "#dce4e4",
             border: lightThemeBorder,
             shadow: cardShadowLight,
           },
@@ -634,13 +638,15 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               border: "#4a5568",
             },
           },
+          image: {
+            background: darkThemeBorder,
+          },
           zoneCard: {
             headerBackground: darkThemeLight,
             headerText: darkThemeText,
             headerBorder: darkThemeBorder,
             contentBackground: darkThemeLight,
             text: darkThemeText,
-            imageBackground: darkThemeBorder,
             border: darkThemeBorder,
             shadow: cardShadowLight,
           },
