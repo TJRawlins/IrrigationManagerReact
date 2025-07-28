@@ -81,38 +81,6 @@ export const useAppTheme = () => {
       },
     },
 
-    // Menu bar styles
-    menuBar: {
-      mainBar: {
-        backgroundColor: theme.custom.menuBar.background,
-        color: theme.custom.menuBar.color,
-      },
-      title: {
-        color: theme.custom.menuBar.title,
-      },
-      subtitle: {
-        color: theme.custom.menuBar.subtitle,
-      },
-      buttons: {
-        ...theme.custom.buttons.primary,
-        border: `1px solid ${theme.custom.buttons.primary.border}`,
-        "& .btn-icon": {
-          color: theme.custom.buttons.primary.color,
-        },
-        "&:hover": {
-          backgroundColor: theme.custom.buttons.primary.hover.background,
-          color: theme.custom.buttons.primary.hover.color,
-          border: `1px solid ${theme.custom.buttons.primary.hover.border}`,
-        },
-        "& .bar-gallons-chip-avatar-text": {
-          backgroundColor: theme.custom.buttons.primary.background,
-        },
-        "& .bar-gallons-chip-avatar-icon, & .bar-gallons-chip-avatar-text": {
-          color: theme.custom.menuBar.gallonsIcon,
-        },
-      },
-    },
-
     // Zone card styles
     zoneCard: {
       card: {

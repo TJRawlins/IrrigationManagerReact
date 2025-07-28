@@ -6,7 +6,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useAppTheme } from "../../theme/useAppTheme";
+import { useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface FloatingActionButtonProps {
@@ -40,7 +40,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   showOpenNavbar = false,
   openNavbarLabel = "Open navigation menu",
 }) => {
-  const { menuBar } = useAppTheme();
+  const theme = useTheme();
   // Only show on small and mobile screens (max-width: 1023px)
   const isSmallOrMobile = useMediaQuery("(max-width: 1023px)");
 
@@ -65,18 +65,12 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           aria-label={openNavbarLabel}
           onClick={onOpenNavbar}
           sx={{
-            backgroundColor: menuBar.buttons.background,
-            color: menuBar.buttons.color,
+            backgroundColor: theme.custom.buttons.primary.background,
+            color: theme.custom.buttons.primary.color,
             boxShadow: 3,
             "&:hover": {
-              backgroundColor:
-                menuBar.buttons["&:hover"]?.backgroundColor ||
-                menuBar.buttons.hover?.background ||
-                menuBar.buttons.background,
-              color:
-                menuBar.buttons["&:hover"]?.color ||
-                menuBar.buttons.hover?.color ||
-                menuBar.buttons.color,
+              backgroundColor: theme.custom.buttons.primary.hover.background,
+              color: theme.custom.buttons.primary.hover.color,
             },
           }}
         >
@@ -89,18 +83,12 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           aria-label={backLabel}
           onClick={onBack}
           sx={{
-            backgroundColor: menuBar.buttons.background,
-            color: menuBar.buttons.color,
+            backgroundColor: theme.custom.buttons.primary.background,
+            color: theme.custom.buttons.primary.color,
             boxShadow: 3,
             "&:hover": {
-              backgroundColor:
-                menuBar.buttons["&:hover"]?.backgroundColor ||
-                menuBar.buttons.hover?.background ||
-                menuBar.buttons.background,
-              color:
-                menuBar.buttons["&:hover"]?.color ||
-                menuBar.buttons.hover?.color ||
-                menuBar.buttons.color,
+              backgroundColor: theme.custom.buttons.primary.hover.background,
+              color: theme.custom.buttons.primary.hover.color,
             },
           }}
         >
@@ -113,18 +101,12 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           aria-label={expandLabel}
           onClick={onExpand}
           sx={{
-            backgroundColor: menuBar.buttons.background,
-            color: menuBar.buttons.color,
+            backgroundColor: theme.custom.buttons.primary.background,
+            color: theme.custom.buttons.primary.color,
             boxShadow: 3,
             "&:hover": {
-              backgroundColor:
-                menuBar.buttons["&:hover"]?.backgroundColor ||
-                menuBar.buttons.hover?.background ||
-                menuBar.buttons.background,
-              color:
-                menuBar.buttons["&:hover"]?.color ||
-                menuBar.buttons.hover?.color ||
-                menuBar.buttons.color,
+              backgroundColor: theme.custom.buttons.primary.hover.background,
+              color: theme.custom.buttons.primary.hover.color,
             },
           }}
         >
@@ -137,18 +119,12 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           aria-label={addLabel}
           onClick={onAdd}
           sx={{
-            backgroundColor: menuBar.buttons.background,
-            color: menuBar.buttons.color,
+            backgroundColor: theme.custom.buttons.primary.background,
+            color: theme.custom.buttons.primary.color,
             boxShadow: 3,
             "&:hover": {
-              backgroundColor:
-                menuBar.buttons["&:hover"]?.backgroundColor ||
-                menuBar.buttons.hover?.background ||
-                menuBar.buttons.background,
-              color:
-                menuBar.buttons["&:hover"]?.color ||
-                menuBar.buttons.hover?.color ||
-                menuBar.buttons.color,
+              backgroundColor: theme.custom.buttons.primary.hover.background,
+              color: theme.custom.buttons.primary.hover.color,
             },
           }}
         >

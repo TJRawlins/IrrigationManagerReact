@@ -1,9 +1,8 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import AddZoneModal from "./AddZoneModal";
-import { useAppTheme } from "../../theme/useAppTheme";
-import MenuBar from "../common/MenuBar";
+import MenuBar, { MenuBarButton } from "../common/MenuBar";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -29,7 +28,6 @@ export default function ZoneBar({
 }: ZoneBarProps) {
   const { season } = useSelector((state: RootState) => state.season);
   const { zoneList } = useSelector((state: RootState) => state.zoneList);
-  const { menuBar } = useAppTheme();
   const [isAddZoneModalOpen, setIsAddZoneModalOpen] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width:1024px)");
   const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
@@ -72,12 +70,10 @@ export default function ZoneBar({
         title="Zones"
         subtitle={subtitle}
         mobileSubtitle={subtitle}
-        mainBarStyles={menuBar.mainBar}
         totalGallonsProps={{
           totalGalPerWeek: season.totalGalPerWeek,
           totalGalPerMonth: season.totalGalPerMonth,
           totalGalPerYear: season.totalGalPerYear,
-          buttonStyles: menuBar.buttons,
         }}
         isSeasonRelated={true}
         seasonFunctions={{
@@ -88,23 +84,21 @@ export default function ZoneBar({
         {isLargeScreen && (
           <StyledButtonContainer>
             {isZonesStoredLocally() && (
-              <StyledButton
+              <MenuBarButton
                 onClick={handleOpenAddZoneModal}
                 disabled={isLoadingZones}
-                sx={menuBar.buttons}
                 startIcon={<AddIcon />}
               >
                 <ButtonText>Add Zone</ButtonText>
-              </StyledButton>
+              </MenuBarButton>
             )}
-            <StyledButton
+            <MenuBarButton
               onClick={handleToggleExpanded}
               disabled={isLoadingZones}
-              sx={menuBar.buttons}
               startIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             >
               <ButtonText>{expanded ? "Collapse" : "Expand"}</ButtonText>
-            </StyledButton>
+            </MenuBarButton>
           </StyledButtonContainer>
         )}
         <AddZoneModal
@@ -144,27 +138,6 @@ const StyledButtonContainer = styled(Box)({
   "@media (min-width: 1024px)": {
     margin: "0 15px",
     gap: "0.5rem",
-  },
-});
-
-const StyledButton = styled(Button)({
-  // Medium screens
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    minWidth: "45px",
-    "& .MuiButton-startIcon": {
-      margin: 0,
-      marginLeft: 0,
-      marginRight: 0,
-    },
-  },
-  // Large screens
-  "@media (min-width: 1024px)": {
-    fontSize: "0.85rem",
-    minWidth: "auto",
-    width: "auto",
-    "& .MuiButton-startIcon": {
-      marginRight: "8px",
-    },
   },
 });
 

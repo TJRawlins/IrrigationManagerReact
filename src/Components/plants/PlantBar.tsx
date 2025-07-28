@@ -1,4 +1,4 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -9,8 +9,7 @@ import { RootState } from "../../redux/store";
 import { useEffect, useState } from "react";
 import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
-import { useAppTheme } from "../../theme/useAppTheme";
-import MenuBar from "../common/MenuBar";
+import MenuBar, { MenuBarButton } from "../common/MenuBar";
 import FloatingActionButton from "../common/FloatingActionButton";
 import { useDrawer } from "../../App/Layout/DrawerContext";
 
@@ -23,7 +22,6 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const { plant } = useSelector((state: RootState) => state.plant);
   const { season } = useSelector((state: RootState) => state.season);
   const dispatch = useDispatch();
-  const appTheme = useAppTheme();
   const navigate = useNavigate();
   const [isAddPlantModalOpen, setIsAddPlantModalOpen] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width:1024px)");
@@ -78,12 +76,10 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
         title="Plants"
         subtitle={desktopSubtitle}
         mobileSubtitle={mobileSubtitle}
-        mainBarStyles={appTheme.menuBar.mainBar}
         totalGallonsProps={{
           totalGalPerWeek: zone.totalGalPerWeek,
           totalGalPerMonth: zone.totalGalPerMonth,
           totalGalPerYear: zone.totalGalPerYear,
-          buttonStyles: appTheme.menuBar.buttons,
         }}
         isSeasonRelated={true}
         seasonFunctions={{
@@ -93,21 +89,19 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
       >
         {isLargeScreen && (
           <StyledButtonContainer>
-            <StyledButton
+            <MenuBarButton
               onClick={handleOpenAddPlantModal}
-              sx={appTheme.menuBar.buttons}
               startIcon={<AddIcon />}
             >
               <ButtonText>Add Plant</ButtonText>
-            </StyledButton>
+            </MenuBarButton>
             <Link to="/zones">
-              <StyledButton
-                sx={appTheme.menuBar.buttons}
+              <MenuBarButton
                 onClick={backToSeason}
                 startIcon={<ArrowBackIosNewIcon />}
               >
                 <ButtonText>Go Back</ButtonText>
-              </StyledButton>
+              </MenuBarButton>
             </Link>
           </StyledButtonContainer>
         )}
@@ -149,26 +143,7 @@ const StyledButtonContainer = styled(Box)({
     gap: "0.5rem",
   },
 });
-const StyledButton = styled(Button)({
-  // Medium screens
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    minWidth: "45px",
-    "& .MuiButton-startIcon": {
-      margin: 0,
-      marginLeft: 0,
-      marginRight: 0,
-    },
-  },
-  // Large screens
-  "@media (min-width: 1024px)": {
-    fontSize: "0.85rem",
-    minWidth: "auto",
-    width: "auto",
-    "& .MuiButton-startIcon": {
-      marginRight: "8px",
-    },
-  },
-});
+
 const ButtonText = styled("span")({
   // Show text only on small (600-767px) and large (1024px+) screens
   display: "none",

@@ -10,7 +10,6 @@ type TotalGallonsProps = {
   totalCostPerWeek?: number;
   totalCostPerMonth?: number;
   totalCostPerYear?: number;
-  buttonStyles: any;
 };
 
 export default function TotalGallons({

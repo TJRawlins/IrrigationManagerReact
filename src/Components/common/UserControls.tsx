@@ -9,20 +9,18 @@ import {
   AccountCircleOutlined as AccountIcon,
 } from "@mui/icons-material";
 import { ColorModeContext } from "../../theme/theme";
-import { useAppTheme } from "../../theme/useAppTheme";
 import { styled } from "@mui/material/styles";
 
 export default function UserControls() {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
-  const { menuBar } = useAppTheme();
 
   return (
     <StyledUserControlsContainer>
       <IconButton
         onClick={colorMode.toggleColorMode}
         sx={{
-          color: menuBar.title.color,
+          color: theme.custom.menuBar.title,
           backgroundColor: "transparent",
           "&:hover": {
             backgroundColor: theme.palette.action.hover,
@@ -38,7 +36,7 @@ export default function UserControls() {
 
       <IconButton
         sx={{
-          color: menuBar.title.color,
+          color: theme.custom.menuBar.title,
           backgroundColor: "transparent",
           "&:hover": {
             backgroundColor: theme.palette.action.hover,
@@ -52,7 +50,7 @@ export default function UserControls() {
 
       <IconButton
         sx={{
-          color: menuBar.title.color,
+          color: theme.custom.menuBar.title,
           backgroundColor: "transparent",
           "&:hover": {
             backgroundColor: theme.palette.action.hover,

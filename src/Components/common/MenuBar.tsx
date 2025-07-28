@@ -5,22 +5,20 @@ import {
   Box,
   styled,
   useTheme,
+  Button,
 } from "@mui/material";
 import { ReactNode } from "react";
 import TotalGallons from "./TotalGallons";
 import UserControls from "./UserControls";
 import SeasonIcons from "./SeasonIcons";
-import { useAppTheme } from "../../theme/useAppTheme";
 
 type MenuBarProps = {
   title: string;
-  mainBarStyles: React.CSSProperties;
   children: ReactNode;
   totalGallonsProps: {
     totalGalPerWeek: number;
     totalGalPerMonth: number;
     totalGalPerYear: number;
-    buttonStyles: React.CSSProperties;
   };
   subtitle?: string | ReactNode;
   mobileSubtitle?: string;
@@ -33,7 +31,6 @@ type MenuBarProps = {
 
 export default function MenuBar({
   title,
-  mainBarStyles,
   children,
   totalGallonsProps,
   subtitle,
@@ -41,7 +38,6 @@ export default function MenuBar({
   isSeasonRelated = false,
   seasonFunctions,
 }: MenuBarProps) {
-  const { menuBar } = useAppTheme();
   const theme = useTheme();
 
   return (
@@ -49,9 +45,8 @@ export default function MenuBar({
       <CssBaseline />
       <StyledMenuBarWrapper
         sx={{
-          ...mainBarStyles,
-          backgroundColor: menuBar.mainBar.backgroundColor,
-          color: menuBar.mainBar.color,
+          backgroundColor: theme.custom.menuBar.background,
+          color: theme.custom.menuBar.color,
           borderBottom: `1px solid ${theme.custom.navBar.borderBottom}`,
         }}
       >
@@ -59,7 +54,10 @@ export default function MenuBar({
           <StyledFlexRow>
             <StyledTitleContainer>
               <StyledTitle
-                sx={{ ...theme.custom.fonts.headers, ...menuBar.title }}
+                sx={{
+                  ...theme.custom.fonts.headers,
+                  color: theme.custom.menuBar.title,
+                }}
               >
                 {title}
               </StyledTitle>
@@ -68,7 +66,7 @@ export default function MenuBar({
                   {/* Desktop subtitle */}
                   <StyledSubtitle
                     sx={{
-                      ...menuBar.subtitle,
+                      color: theme.custom.menuBar.subtitle,
                       display: { xs: "none", sm: "block" },
                     }}
                   >
@@ -77,7 +75,7 @@ export default function MenuBar({
                   {/* Mobile subtitle */}
                   <StyledSubtitle
                     sx={{
-                      ...menuBar.subtitle,
+                      color: theme.custom.menuBar.subtitle,
                       display: { xs: "block", sm: "none" },
                     }}
                   >
@@ -220,3 +218,31 @@ const StyledUserControlsWrapper = styled("div")({
     display: "flex",
   },
 });
+
+// Styled button component that other components can use
+export const MenuBarButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.custom.buttons.primary.background,
+  color: theme.custom.buttons.primary.color,
+  border: `1px solid ${theme.custom.buttons.primary.border}`,
+  borderRadius: theme.custom.buttons.primary.borderRadius,
+  fontFamily: theme.custom.buttons.primary.fontFamily,
+  fontWeight: theme.custom.buttons.primary.fontWeight,
+  fontSize: theme.custom.buttons.primary.fontSize,
+  padding: theme.custom.buttons.primary.padding,
+  textTransform: "none" as const,
+  whiteSpace: "nowrap",
+  "& .btn-icon": {
+    color: theme.custom.buttons.primary.color,
+  },
+  "&:hover": {
+    backgroundColor: theme.custom.buttons.primary.hover.background,
+    color: theme.custom.buttons.primary.hover.color,
+    border: `1px solid ${theme.custom.buttons.primary.hover.border}`,
+  },
+  "& .bar-gallons-chip-avatar-text": {
+    backgroundColor: theme.custom.buttons.primary.background,
+  },
+  "& .bar-gallons-chip-avatar-icon, & .bar-gallons-chip-avatar-text": {
+    color: theme.custom.menuBar.gallonsIcon,
+  },
+}));
