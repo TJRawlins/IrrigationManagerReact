@@ -14,7 +14,7 @@ interface FormModalProps {
   open: boolean;
   onClose: () => void;
   title: string;
-  description?: string;
+  description?: string | React.ReactNode;
   loading?: boolean;
   children: React.ReactNode;
   modalStyle?: object; // Optional override for modal card style
@@ -94,7 +94,7 @@ const FormModal: React.FC<FormModalProps> = ({
 
 export default FormModal;
 
-// --- Styled Components (always at the bottom) ---
+// --- Styled Components
 const ModalBox = styled(Box)(({ theme }) => ({
   position: "absolute",
   top: "50%",
@@ -113,19 +113,23 @@ const ModalBox = styled(Box)(({ theme }) => ({
   "& .close-icon:hover": {
     color: theme.custom.modal.closeIconHover,
   },
-  "& .input-override label, & .img-upload-filename-label, & .dropdown-override label":
-    {
-      color: theme.custom.modal.fieldLabel,
-    },
-  "& .input-override div input, & .input-override.notes .MuiInputBase-multiline textarea, & .img-upload-filename":
-    {
-      color: theme.custom.modal.fieldInputFont,
-    },
-  "& .MuiInputBase-formControl, & .MuiInputBase-multiline, & .img-upload-filename, .input-override div input":
-    {
-      backgroundColor: theme.custom.modal.fieldBackground,
-    },
-  "& .input-override div input:focus, .input-override div:hover input, & .dropdown-override .MuiOutlinedInput-root:hover, .input-override.notes .MuiInputBase-multiline textarea:hover, .input-override.notes .MuiInputBase-multiline textarea:focus":
+  // Image upload and dropdown specific styles
+  "& .img-upload-filename-label, & .dropdown-override label": {
+    color: theme.custom.modal.fieldLabel,
+  },
+  "& .img-upload-filename": {
+    color: theme.custom.modal.fieldInputFont,
+    backgroundColor: theme.custom.modal.fieldBackground,
+  },
+  "& .dropdown-override .MuiOutlinedInput-root:hover": {
+    border: `1px solid ${theme.custom.modal.fieldBorder}`,
+  },
+  // Notes field specific styles
+  "& .input-override.notes .MuiInputBase-multiline textarea": {
+    color: theme.custom.modal.fieldInputFont,
+    backgroundColor: theme.custom.modal.fieldBackground,
+  },
+  "& .input-override.notes .MuiInputBase-multiline textarea:hover, & .input-override.notes .MuiInputBase-multiline textarea:focus":
     {
       border: `1px solid ${theme.custom.modal.fieldBorder}`,
     },

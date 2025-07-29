@@ -1,12 +1,5 @@
 /* eslint-disable no-debugger */
-import {
-  Box,
-  FormHelperText,
-  styled,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, FormHelperText, styled, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import agent from "../../App/api/agent";
 import { Formik, Form, Field } from "formik";
@@ -27,7 +20,7 @@ import {
 } from "firebase/storage";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Zone } from "../../App/models/Zone";
-import FormModal from "../common/FormModal";
+import { FormModal, StyledTextField } from "../common";
 import { useImageUpload } from "../../hooks/useImageUpload";
 
 type ZoneEditProps = {
@@ -43,7 +36,6 @@ function EditZone({
   setIsShowEdit,
   isShowEdit,
 }: ZoneEditProps) {
-  const theme = useTheme();
   const { zone } = useSelector((state: RootState) => state.zone);
   const { season } = useSelector((state: RootState) => state.season);
   const seasonIdValue = useRef<number>();
@@ -260,7 +252,11 @@ function EditZone({
         open={isShowEdit}
         onClose={handleClose}
         title="Edit Zone"
-        description={`Edit zone ${zone.name} for ${season.name}`}
+        description={
+          <>
+            Edit zone <ZoneNameSpan>{zone.name}</ZoneNameSpan> for {season.name}
+          </>
+        }
         loading={isLoading}
       >
         <Formik
@@ -370,11 +366,6 @@ function EditZone({
                   label="Season"
                   defaultValue={season.name}
                   variant="standard"
-                  sx={{
-                    "& .MuiInputBase-input": {
-                      color: theme.custom.modal.fieldInputFont,
-                    },
-                  }}
                 />
               </SplitContainer>
               <SplitContainer upload>
@@ -420,55 +411,6 @@ function EditZone({
     </div>
   );
 }
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
-  width: "100%",
-  "& .MuiInputBase-root, & .MuiInputBase-input": {
-    backgroundColor: theme.custom.modal.fieldBackground,
-  },
-  "& .MuiInputBase-input": {
-    padding: "5px 12px !important",
-    borderRadius: "5px",
-    width: "100%",
-    height: "38px",
-    boxSizing: "border-box",
-  },
-  "& .MuiInputLabel-root, & .img-upload-filename-label": {
-    color: theme.custom.modal.fieldLabel,
-    fontSize: "0.875rem !important",
-    fontWeight: 400,
-    transform: "translate(0, -4.5px)",
-  },
-  "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-root.Mui-error": {
-    color: theme.custom.modal.fieldLabel,
-  },
-  "& .MuiInputLabel-root.notes": {
-    transform: "translate(0, -22px)",
-  },
-  "& .MuiInputLabel-asterisk": {
-    color: "#f44336",
-    fontWeight: 800,
-  },
-  // Remove default underline
-  "& .MuiInput-underline:before, & .MuiInput-underline:after": {
-    borderBottom: "none !important",
-  },
-  // Custom border for the input container
-  "& .MuiInputBase-root": {
-    border: `1.5px solid transparent`,
-    borderRadius: "5px",
-    background: "inherit",
-    transition: "border-color 0.2s",
-  },
-  // Blue border on focus/hover (only color changes)
-  "& .MuiInputBase-root.Mui-focused, & .MuiInputBase-root:hover": {
-    border: `1.5px solid ${theme.custom.modal.fieldBorder}`,
-    background: "inherit",
-  },
-  "& p.Mui-error, & + p.Mui-error": {
-    pointerEvents: "none",
-  },
-}));
 
 const SplitContainer = styled("div")<{ upload?: boolean }>`
   display: flex;
@@ -583,6 +525,16 @@ const CancelButton = styled(Button)(({ theme }) => ({
   "&:hover": {
     ...theme.custom.buttons.cardSecondary.hover,
   },
+}));
+
+const ZoneNameSpan = styled("span")(({ theme }) => ({
+  position: "relative",
+  background: theme.custom.modal.fieldBackground,
+  padding: "2px 6px",
+  fontSize: "0.75rem",
+  borderRadius: "2px",
+  boxShadow:
+    "rgb(50 50 93 / 12%) 0px 1px 0px -1px, rgb(0 0 0 / 23%) 0px 1px 2px 0px;",
 }));
 
 export default EditZone;

@@ -13,17 +13,20 @@ const lightThemeLight = "#e2e7ec";
 const lightThemeLighter = "#f3f4f6";
 const lightThemeLightest = "#ffffff";
 const lightThemeDark = "#103e65";
-const lightThemeBorder = "#e0e0e0";
+const lightThemeBorder = "#d9e1e9";
 const lightThemeText = "#606162";
+const lightThemeTextHighlight = "#c7e6fa";
 const lightThemeLightOpacity = "#ffffff52";
 const lightThemeOverlayModal = "#173e5ba8";
 
 // --- Dark Theme Colors ---
 const darkThemeLight = "#28273f";
 const darkThemeLighter = "#333047";
+const darkThemeLightest = "#403d53";
 const darkThemeDark = "#1f1c30";
 const darkThemeBorder = "#ffffff1f";
 const darkThemeText = "#b1b1b6";
+const darkThemeTextHighlight = "#004075";
 const darkThemeLightOpacity = "#ffffff29";
 const darkThemeOverlayModal = "#212a3f96";
 
@@ -40,9 +43,6 @@ const cardShadowLight =
 // --- Miscellaneous ---
 const borderBottomLight = "#0000001f";
 const borderBottomDark = "#ffffff1f";
-const fieldLabelGray = "#707174";
-const fieldBackgroundLight = "#d9e1e9";
-const fieldBackgroundDark = "#1f2a41";
 const closeIconGray = "#707174";
 const closeIconHoverGray = "#323232";
 const closeIconDark = "#9ca3af";
@@ -176,6 +176,7 @@ declare module "@mui/material/styles" {
         border: string;
         titleColor: string;
         description: string;
+        textHighlight: string;
         closeIcon: string;
         closeIconHover: string;
         fieldLabel: string;
@@ -418,11 +419,12 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             border: lightThemeBorder,
             titleColor: lightThemeText,
             description: lightThemeText,
+            textHighlight: lightThemeTextHighlight,
             closeIcon: closeIconGray,
             closeIconHover: closeIconHoverGray,
-            fieldLabel: fieldLabelGray,
-            fieldBackground: fieldBackgroundLight,
-            fieldInputFont: fieldLabelGray,
+            fieldLabel: lightThemeText,
+            fieldBackground: lightThemeBorder,
+            fieldInputFont: lightThemeText,
             fieldBorder: callToActionPrimary,
             buttonFont: lightThemeText,
             buttonBackground: callToActionPrimary,
@@ -500,7 +502,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             },
           },
           image: {
-            background: "#dce4e4",
+            background: lightThemeLight,
           },
           zoneCard: {
             headerBackground: lightThemeLight,
@@ -544,14 +546,15 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           modal: {
             overlay: darkThemeOverlayModal,
-            background: primaryDark,
-            border: "#1f2a41",
-            titleColor: "#e5e7eb",
-            description: closeIconDark,
+            background: darkThemeLight,
+            border: darkThemeBorder,
+            titleColor: darkThemeText,
+            description: darkThemeText,
+            textHighlight: darkThemeTextHighlight,
             closeIcon: closeIconDark,
             closeIconHover: lightThemeLighter,
             fieldLabel: closeIconDark,
-            fieldBackground: fieldBackgroundDark,
+            fieldBackground: darkThemeLightest,
             fieldInputFont: closeIconDark,
             fieldBorder: callToActionPrimary,
             buttonFont: "#19191f",
@@ -609,26 +612,18 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           messages: {
             info: {
-              background: "#1a237e",
-              text: "#90caf9",
               border: infoBlue,
               icon: infoBlue,
             },
             warning: {
-              background: "#3e2723",
-              text: "#ffcc02",
-              border: "#e69700",
-              icon: "#e69700",
+              border: warningOrange,
+              icon: warningOrange,
             },
             error: {
-              background: "#3e2723",
-              text: "#ef5350",
               border: errorRed,
               icon: errorRed,
             },
             success: {
-              background: "#1b5e20",
-              text: "#81c784",
               border: successGreen,
               icon: successGreen,
             },
