@@ -30,7 +30,7 @@ type ZoneEditProps = {
   isShowEdit: boolean;
 };
 
-function EditZone({
+function EditZoneModal({
   fetchZones,
   updateLocalStorageSeason,
   setIsShowEdit,
@@ -537,4 +537,4 @@ const ZoneNameSpan = styled("span")(({ theme }) => ({
     "rgb(50 50 93 / 12%) 0px 1px 0px -1px, rgb(0 0 0 / 23%) 0px 1px 2px 0px;",
 }));
 
-export default EditZone;
+export default EditZoneModal;

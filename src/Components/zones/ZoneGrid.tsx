@@ -1,6 +1,6 @@
 import { Container, CssBaseline, Grid, styled } from "@mui/material";
 import ZoneCard from "./zoneCard/ZoneCard";
-import EditZone from "./EditZone";
+import EditZoneModal from "./EditZoneModal";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -57,7 +57,7 @@ export default function ZoneGrid({
             ))
           )}
           <Grid>
-            <EditZone
+            <EditZoneModal
               fetchZones={fetchZones}
               updateLocalStorageSeason={updateLocalStorageSeason}
               setIsShowEdit={setIsShowEdit}
