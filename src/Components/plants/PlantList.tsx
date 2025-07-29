@@ -12,24 +12,21 @@ import {
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
 import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
 import React from "react";
 import ViewPlant from "./ViewPlant";
-import "./PlantList.css";
+// import "./PlantList.css";
 import EditPlant from "./EditPlant";
-import { updateCurrentPlant } from "../../redux/plantSlice";
 import ViewPlantSkeleton from "./ViewPlantSkeleton";
 import { BiSolidCopyAlt } from "react-icons/bi";
-import { getStorage, ref, deleteObject } from "firebase/storage";
-import { Plant } from "../../App/models/Plant";
 import EditPlantSkeleton from "./EditPlantSkeleton";
 import { useAppTheme } from "../../theme/useAppTheme";
 import ConfirmationPopover from "../common/ConfirmationPopover";
+import { usePlantActions } from "../../hooks/usePlantActions";
 
 interface PlantListProps {
   fetchPlants: (zoneId: number) => Promise<void>;
@@ -42,7 +39,6 @@ export default function PlantList({
   updateLocalStorageZone,
 }: // updateLocalStorageTreflePlant,
 PlantListProps) {
-  const dispatch = useDispatch();
   const { zone } = useSelector((state: RootState) => state.zone);
   const [plantId, setPlantId] = useState<number>();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -51,10 +47,6 @@ PlantListProps) {
   const [isShowEdit, setIsShowEdit] = useState<boolean>(false);
   const [isShowView, setIsShowView] = useState<boolean>(false);
   const [isLoadingGrid, setIsLoadingGrid] = useState<boolean>(false);
-  const [isLoadingEditPlant, setIsLoadingEditPlant] = useState<boolean>(false);
-  const [isLoadingViewPlant, setIsLoadingViewPlant] = useState<boolean>(false);
-  const isEditClicked = useRef<boolean>(false);
-  const isViewClicked = useRef<boolean>(false);
   const [rows, setRows] = useState([]);
   // const isFull = !useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
@@ -65,7 +57,14 @@ PlantListProps) {
   const appTheme = useAppTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
 
-  const isImageBeingUsedRef = useRef<boolean>(false);
+  // Use the new plant actions hook
+  const { handleView, handleEdit, handleCopy, handleDelete, loadingStates } =
+    usePlantActions({
+      fetchPlants,
+      updateLocalStorageZone,
+      zoneId: zone.id,
+      // updateLocalStorageTreflePlant, // For future Trefle integration
+    });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,26 +82,6 @@ PlantListProps) {
     fetchData();
   }, [zone]);
 
-  const updateLocalStoragePlant = async (
-    plantId: number,
-    func: (arg: boolean) => void = () => null
-  ) => {
-    if (isEditClicked.current) setIsLoadingEditPlant(true);
-    if (isViewClicked.current) setIsLoadingViewPlant(true);
-
-    await agent.Plants.details(plantId)
-      .then((plant) => {
-        dispatch(updateCurrentPlant(plant));
-      })
-      .then(() => {
-        func(true);
-        setIsLoadingViewPlant(false);
-        setIsLoadingEditPlant(false);
-        isEditClicked.current = false;
-        isViewClicked.current = false;
-      });
-  };
-
   const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     setPlantId(
@@ -117,65 +96,10 @@ PlantListProps) {
   };
 
   const deletePlant = () => {
-    deleteImage(plantId!).then(() => {
-      agent.Plants.removePlant(plantId!)
-        .catch((error) => alert(error))
-        .then(() => fetchPlants(zone.id))
-        .then(() => updateLocalStorageZone(zone.id));
-      handleDeleteClose();
-      console.log("%cPlantList: Plant Deleted", "color:#1CA1E6");
-    });
-  };
-
-  const deleteImage = async (plantId: number) => {
-    const plants: Array<Plant> = await agent.Plants.list();
-    const storage = getStorage();
-    isImageBeingUsedRef.current = false;
     if (plantId) {
-      await agent.Plants.details(plantId!).then((plant) => {
-        if (
-          plant.imagePath !== "" &&
-          new URL(plant.imagePath).host === "firebasestorage.googleapis.com"
-        ) {
-          plants.forEach((plantItem) => {
-            if (
-              plantItem.imagePath === plant.imagePath &&
-              plantItem.id !== plantId
-            ) {
-              console.log("Image being used by another plant.");
-              isImageBeingUsedRef.current = true;
-            }
-          });
-          if (!isImageBeingUsedRef.current) {
-            const pattern: RegExp = /users%2F\w.*\?/g;
-            const urlSubstring: string | undefined = plant.imagePath
-              .match(pattern)
-              ?.toString();
-            const urlSubstringReplaced = urlSubstring
-              ?.replaceAll("%2F", "/")
-              .replaceAll("%20", " ")
-              .replaceAll("?", "");
-            deleteObject(ref(storage, urlSubstringReplaced))
-              .then(() => {
-                console.log(
-                  "%cSuccess: Image has been deleted from firebase storage - " +
-                    urlSubstringReplaced,
-                  "color:#02c40f"
-                );
-              })
-              .catch((error) => {
-                console.error(
-                  "Error: Something went wrong, unable to delete image:",
-                  error
-                );
-              });
-          }
-        } else {
-          console.log("No firebase image to delete");
-        }
+      handleDelete(plantId).then(() => {
+        handleDeleteClose();
       });
-    } else {
-      console.error("Error: Invalid Plant ID");
     }
   };
 
@@ -185,54 +109,22 @@ PlantListProps) {
     const plantId: number = Number(
       event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
     );
-    await agent.Plants.details(plantId)
-      .catch((error) => alert(error))
-      .then((plant) => {
-        const newPlant = { ...plant };
-        newPlant.id = 0;
-        newPlant.timeStamp = undefined;
-        agent.Plants.createPlant(newPlant);
-      })
-      .catch((error) => alert(error))
-      .then(() => fetchPlants(zone.id))
-      .then(() => updateLocalStorageZone(zone.id));
+    await handleCopy(plantId);
   };
 
   const handleEditPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    isEditClicked.current = true;
-    updateLocalStoragePlant(
-      Number(
-        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
-      )!,
-      () => setIsShowEdit(true)
+    const plantId = Number(
+      event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
     );
-    console.log("%cZoneCard: Edit Clicked", "color:#1CA1E6");
+    handleEdit(plantId, setIsShowEdit);
   };
 
   const handleViewPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    isViewClicked.current = true;
-    setPlantId(
-      Number(
-        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
-      )
+    const plantId = Number(
+      event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
     );
-
-    updateLocalStoragePlant(
-      Number(
-        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
-      )!,
-      () => setIsShowView(true)
-    );
-
-    // agent.Plants.details(
-    //   Number(
-    //     event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
-    //   )!
-    // )
-    //   .catch((error) => alert(error))
-    //   .then((plant) => updateLocalStorageTreflePlant(plant.name));
-
-    console.log("%cPlantList: Plant View Clicked", "color:#1CA1E6");
+    setPlantId(plantId);
+    handleView(plantId, setIsShowView);
   };
 
   const columns: GridColDef<(typeof rows)[number]>[] = [
@@ -396,7 +288,7 @@ PlantListProps) {
           disableRowSelectionOnClick
         />
       </Box>
-      {isLoadingViewPlant ? (
+      {loadingStates.viewPlant ? (
         <ViewPlantSkeleton />
       ) : (
         <ViewPlant
@@ -405,7 +297,7 @@ PlantListProps) {
           isShowView={isShowView}
         />
       )}
-      {isLoadingEditPlant ? (
+      {loadingStates.editPlant ? (
         <EditPlantSkeleton />
       ) : (
         <EditPlant
