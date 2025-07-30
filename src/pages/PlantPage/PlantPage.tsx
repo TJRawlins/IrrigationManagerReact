@@ -1,11 +1,11 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { useEffect } from "react";
-import "./PlantPage.css";
-import PlantList from "../../Components/plants/PlantList";
+// import "./PlantPage.css";
+import PlantGrid from "../../Components/plants/PlantGrid";
 import agent from "../../App/api/agent";
 import PlantBar from "../../Components/plants/PlantBar";
-import { Grid } from "@mui/material";
+// import { Grid } from "@mui/material";
 // import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import {
@@ -15,23 +15,23 @@ import {
 import { updateCurrentZone } from "../../redux/zoneSlice";
 import { Plant } from "../../App/models/Plant";
 import ErrorBoundary from "../../Components/errorBoundary/ErrorBoundary";
-import { useAppTheme } from "../../theme/useAppTheme";
+// import { useAppTheme } from "../../theme/useAppTheme";
 // import { TreflePlant } from "../../App/models/TreflePlant";
 
 const PlantPage = () => {
   // const { zoneId } = useParams();
   // const zoneIdNum: number = Number(zoneId);
   const dispatch = useDispatch();
-  const appTheme = useAppTheme();
+  // const appTheme = useAppTheme();
 
   // color theme - much cleaner now!
-  const plantPageColorTheme = () => {
-    return {
-      grid: {
-        backgroundColor: appTheme.grid.sx.backgroundColor,
-      },
-    };
-  };
+  // const plantPageColorTheme = () => {
+  //   return {
+  //     grid: {
+  //       backgroundColor: appTheme.grid.sx.backgroundColor,
+  //     },
+  //   };
+  // };
 
   const updateLocalStorageZone = (zoneId: number) => {
     agent.Zones.details(zoneId).then((zone) => {
@@ -72,13 +72,14 @@ const PlantPage = () => {
     <>
       <ErrorBoundary fallback="Unable to retrieve data for plants. The server may be down.">
         <PlantBar fetchPlants={fetchPlants} />
-        <Grid className="plant-page-grid" sx={plantPageColorTheme().grid}>
-          <PlantList
-            fetchPlants={fetchPlants}
-            updateLocalStorageZone={updateLocalStorageZone}
-            // updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
-          />
-        </Grid>
+        {/* <Grid className="plant-page-grid" sx={plantPageColorTheme().grid}> */}
+        {/* <Grid > */}
+        <PlantGrid
+          fetchPlants={fetchPlants}
+          updateLocalStorageZone={updateLocalStorageZone}
+          // updateLocalStorageTreflePlant={updateLocalStorageTreflePlant}
+        />
+        {/* </Grid> */}
       </ErrorBoundary>
     </>
   );

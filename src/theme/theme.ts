@@ -358,6 +358,69 @@ declare module "@mui/material/styles" {
           };
         };
       };
+      plantGrid: {
+        dataGrid: {
+          root: {
+            backgroundColor: string;
+            border: string;
+          };
+          header: {
+            backgroundColor: string;
+            color: string;
+          };
+          cell: {
+            color: string;
+            borderColor: string;
+          };
+          row: {
+            backgroundColor: string;
+            hover: {
+              backgroundColor: string;
+            };
+          };
+        };
+        actionButtons: {
+          buttonGroup: {
+            backgroundColor: string;
+            border: string;
+          };
+          button: {
+            backgroundColor: string;
+            color: string;
+            border: string;
+            hover: {
+              backgroundColor: string;
+              color: string;
+            };
+          };
+          icons: {
+            color: string;
+            fontSize: string;
+          };
+        };
+        toolbar: {
+          container: {
+            backgroundColor: string;
+            borderBottom: string;
+          };
+          buttons: {
+            color: string;
+            hover: {
+              backgroundColor: string;
+            };
+          };
+        };
+        confirmationPopover: {
+          paper: {
+            backgroundColor: string;
+            border: string;
+            boxShadow: string;
+          };
+          content: {
+            color: string;
+          };
+        };
+      };
       table: {
         background: string;
       };
@@ -380,6 +443,7 @@ declare module "@mui/material/styles" {
       seasonIcons?: Partial<Theme["custom"]["seasonIcons"]>;
       totalGallons?: Partial<Theme["custom"]["totalGallons"]>;
       buttons?: Partial<Theme["custom"]["buttons"]>;
+      plantGrid?: Partial<Theme["custom"]["plantGrid"]>;
     };
   }
 }
@@ -412,6 +476,69 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           table: {
             background: lightThemeLighter,
+          },
+          plantGrid: {
+            dataGrid: {
+              root: {
+                backgroundColor: "#ced8da",
+                border: "none",
+              },
+              header: {
+                backgroundColor: "#dae4e473",
+                color: "#555555",
+              },
+              cell: {
+                color: "#555555",
+                borderColor: "#ced8da59",
+              },
+              row: {
+                backgroundColor: lightThemeLighter,
+                hover: {
+                  backgroundColor: "#dae4e4",
+                },
+              },
+            },
+            actionButtons: {
+              buttonGroup: {
+                backgroundColor: transparent,
+                border: "none",
+              },
+              button: {
+                backgroundColor: transparent,
+                color: "#555555",
+                border: "1px solid #ced8da",
+                hover: {
+                  backgroundColor: "#dae4e4",
+                  color: "#318cc2",
+                },
+              },
+              icons: {
+                color: "#555555",
+                fontSize: "18px",
+              },
+            },
+            toolbar: {
+              container: {
+                backgroundColor: lightThemeLighter,
+                borderBottom: "1px solid #ced8da59",
+              },
+              buttons: {
+                color: "#555555",
+                hover: {
+                  backgroundColor: "#dae4e4",
+                },
+              },
+            },
+            confirmationPopover: {
+              paper: {
+                backgroundColor: lightThemeLighter,
+                border: `1px solid ${lightThemeBorder}`,
+                boxShadow: cardShadowLight,
+              },
+              content: {
+                color: lightThemeText,
+              },
+            },
           },
           modal: {
             overlay: lightThemeOverlayModal,
@@ -543,6 +670,70 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           table: {
             background: darkThemeLighter,
+          },
+          plantGrid: {
+            dataGrid: {
+              root: {
+                backgroundColor: "#1f2a41",
+                border: "none",
+              },
+              header: {
+                backgroundColor: "#141b2d69",
+                color: lightThemeBorder,
+              },
+              cell: {
+                color: lightThemeBorder,
+                borderColor: borderBottomDark,
+              },
+              row: {
+                backgroundColor: "#1f2a41",
+                hover: {
+                  backgroundColor: primaryDark,
+                },
+              },
+            },
+            actionButtons: {
+              buttonGroup: {
+                backgroundColor: transparent,
+                border: "none",
+              },
+              button: {
+                backgroundColor: transparent,
+                color: lightThemeBorder,
+                border: `1px solid ${borderBottomDark}`,
+                hover: {
+                  backgroundColor: primaryDark,
+                  color: "#318cc2",
+                },
+              },
+              icons: {
+                color: lightThemeBorder,
+                fontSize: "18px",
+              },
+            },
+            toolbar: {
+              container: {
+                backgroundColor: "#141b2d69",
+                borderBottom: `1px solid ${borderBottomDark}`,
+              },
+              buttons: {
+                color: lightThemeBorder,
+                hover: {
+                  backgroundColor: primaryDark,
+                },
+              },
+            },
+            confirmationPopover: {
+              paper: {
+                backgroundColor: darkThemeLight,
+                border: `1px solid ${darkThemeBorder}`,
+                boxShadow:
+                  "rgb(0 0 0 / 20%) 0px 2px 5px -1px, rgb(0 0 0 / 14%) 0px 1px 3px -1px",
+              },
+              content: {
+                color: darkThemeText,
+              },
+            },
           },
           modal: {
             overlay: darkThemeOverlayModal,
