@@ -8,9 +8,24 @@ import Navbar from "./Navbar";
 
 function AppContent() {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        height: "100vh", // Full viewport height
+        overflow: "hidden", // Prevent the outer container from scrolling
+      }}
+    >
       <Navbar />
-      <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 0,
+          overflow: "hidden", // Prevent main container from creating scrollbars
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <RouterComponent />
       </Box>
     </Box>

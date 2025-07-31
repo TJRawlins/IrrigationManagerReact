@@ -4,7 +4,9 @@ import { createTheme, ThemeOptions } from "@mui/material/styles";
 // ============ COLOR PALETTE ============
 
 // --- Primary & Secondary ---
-const callToActionPrimary = "#318cc2";
+// const callToActionPrimary = "#318cc2";
+// const callToActionPrimary = "#0288d1";
+const callToActionPrimary = "#0077b3";
 const primaryDark = "#141b2d";
 const transparent = "transparent";
 
@@ -86,8 +88,8 @@ const BUTTON_BASE = {
 const BUTTONS = {
   primary: {
     ...BUTTON_BASE,
-    background: "#318cc2",
-    border: "#318cc2",
+    background: callToActionPrimary,
+    border: callToActionPrimary,
     color: "#ffffff",
     hover: {
       background: "#2974a0",
@@ -108,24 +110,24 @@ const BUTTONS = {
   },
   cardPrimary: {
     ...BUTTON_BASE,
-    background: "#318cc2",
-    border: "2px solid #318cc2",
+    background: callToActionPrimary,
+    border: `2px solid ${callToActionPrimary}`,
     color: lightThemeLightest,
     hover: {
       background: transparent,
-      color: "#318cc2",
-      border: "2px solid #318cc2",
+      color: callToActionPrimary,
+      border: `2px solid ${callToActionPrimary}`,
     },
   },
   cardSecondary: {
     ...BUTTON_BASE,
     background: transparent,
-    border: "2px solid #318cc2",
-    color: "#318cc2",
+    border: `2px solid ${callToActionPrimary}`,
+    color: callToActionPrimary,
     hover: {
-      background: "#318cc2",
+      background: callToActionPrimary,
       color: lightThemeLightest,
-      border: "2px solid #318cc2",
+      border: `2px solid ${callToActionPrimary}`,
     },
   },
 };
@@ -480,11 +482,11 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           plantGrid: {
             dataGrid: {
               root: {
-                backgroundColor: "#ced8da",
+                backgroundColor: lightThemeLight,
                 border: "none",
               },
               header: {
-                backgroundColor: "#dae4e473",
+                backgroundColor: lightThemeLight,
                 color: "#555555",
               },
               cell: {
@@ -509,7 +511,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
                 border: "1px solid #ced8da",
                 hover: {
                   backgroundColor: "#dae4e4",
-                  color: "#318cc2",
+                  color: callToActionPrimary,
                 },
               },
               icons: {
@@ -519,8 +521,8 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             },
             toolbar: {
               container: {
-                backgroundColor: lightThemeLighter,
-                borderBottom: "1px solid #ced8da59",
+                backgroundColor: lightThemeLightest,
+                borderBottom: `1px solid ${lightThemeBorder}`,
               },
               buttons: {
                 color: "#555555",
@@ -703,7 +705,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
                 border: `1px solid ${borderBottomDark}`,
                 hover: {
                   backgroundColor: primaryDark,
-                  color: "#318cc2",
+                  color: callToActionPrimary,
                 },
               },
               icons: {

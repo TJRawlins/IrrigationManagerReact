@@ -18,4 +18,14 @@ export const PLANT_GRID_CONFIG = {
     exposure: false,
     harvestMonth: false,
   },
+  VIRTUALIZATION: {
+    // Buffer of rows to render outside visible area for smooth scrolling
+    OVERSCAN: 5,
+    // Row height for consistent rendering (matches our minHeight settings)
+    ROW_HEIGHT: 52,
+    ROW_HEIGHT_COMPACT: 42,
+    ROW_HEIGHT_COMFORTABLE: 56,
+    // Enable virtualization when row count exceeds this threshold
+    ENABLE_THRESHOLD: 50,
+  },
 };
