@@ -7,6 +7,7 @@ import { createTheme, ThemeOptions } from "@mui/material/styles";
 // const callToActionPrimary = "#318cc2";
 // const callToActionPrimary = "#0288d1";
 const callToActionPrimary = "#0077b3";
+const callToActionPrimaryHover = "#005f8a";
 const primaryDark = "#141b2d";
 const transparent = "transparent";
 
@@ -92,9 +93,9 @@ const BUTTONS = {
     border: callToActionPrimary,
     color: "#ffffff",
     hover: {
-      background: "#2974a0",
+      background: callToActionPrimaryHover,
       color: "#ffffff",
-      border: "#2974a0",
+      border: callToActionPrimaryHover,
     },
   },
   secondary: {
@@ -367,7 +368,7 @@ declare module "@mui/material/styles" {
             border: string;
           };
           header: {
-            backgroundColor: string;
+            background: string;
             color: string;
           };
           cell: {
@@ -405,12 +406,17 @@ declare module "@mui/material/styles" {
             backgroundColor: string;
             borderBottom: string;
           };
+          textColor: string;
           buttons: {
             color: string;
             hover: {
               backgroundColor: string;
             };
           };
+        };
+        footer: {
+          backgroundColor: string;
+          borderTop: string;
         };
         confirmationPopover: {
           paper: {
@@ -486,17 +492,17 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
                 border: "none",
               },
               header: {
-                backgroundColor: lightThemeLight,
-                color: "#555555",
+                background: lightThemeLightest,
+                color: lightThemeText,
               },
               cell: {
-                color: "#555555",
-                borderColor: "#ced8da59",
+                color: lightThemeText,
+                borderColor: lightThemeBorder,
               },
               row: {
                 backgroundColor: lightThemeLighter,
                 hover: {
-                  backgroundColor: "#dae4e4",
+                  backgroundColor: "",
                 },
               },
             },
@@ -524,12 +530,17 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
                 backgroundColor: lightThemeLightest,
                 borderBottom: `1px solid ${lightThemeBorder}`,
               },
+              textColor: lightThemeText,
               buttons: {
-                color: "#555555",
+                color: lightThemeText,
                 hover: {
                   backgroundColor: "#dae4e4",
                 },
               },
+            },
+            footer: {
+              backgroundColor: lightThemeLightest,
+              borderTop: `1px solid ${lightThemeBorder}`,
             },
             confirmationPopover: {
               paper: {
@@ -676,19 +687,19 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           plantGrid: {
             dataGrid: {
               root: {
-                backgroundColor: "#1f2a41",
+                backgroundColor: darkThemeDark,
                 border: "none",
               },
               header: {
-                backgroundColor: "#141b2d69",
-                color: lightThemeBorder,
+                background: darkThemeLight,
+                color: darkThemeText,
               },
               cell: {
-                color: lightThemeBorder,
+                color: darkThemeText,
                 borderColor: borderBottomDark,
               },
               row: {
-                backgroundColor: "#1f2a41",
+                backgroundColor: darkThemeLighter,
                 hover: {
                   backgroundColor: primaryDark,
                 },
@@ -701,7 +712,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               },
               button: {
                 backgroundColor: transparent,
-                color: lightThemeBorder,
+                color: darkThemeText,
                 border: `1px solid ${borderBottomDark}`,
                 hover: {
                   backgroundColor: primaryDark,
@@ -715,15 +726,20 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             },
             toolbar: {
               container: {
-                backgroundColor: "#141b2d69",
+                backgroundColor: darkThemeLight,
                 borderBottom: `1px solid ${borderBottomDark}`,
               },
+              textColor: darkThemeText,
               buttons: {
                 color: lightThemeBorder,
                 hover: {
                   backgroundColor: primaryDark,
                 },
               },
+            },
+            footer: {
+              backgroundColor: darkThemeLight,
+              borderTop: `1px solid ${darkThemeBorder}`,
             },
             confirmationPopover: {
               paper: {

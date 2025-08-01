@@ -256,6 +256,7 @@ PlantGridProps) {
           loading={isLoadingGrid}
           // Column virtualization for better performance with many columns
           columnBufferPx={150}
+          columnHeaderHeight={45} // Adjust this value to change header height (default is 56)
           slots={{
             toolbar: CustomToolbar,
           }}
@@ -328,6 +329,12 @@ const ImageCellContainer = styled(Box)({
 const StyledToolbarContainer = styled(GridToolbarContainer)(({ theme }) => ({
   ...theme.custom.plantGrid.toolbar.container,
   padding: "0 1.3rem",
+  minHeight: "45px", // Adjust this value to change toolbar height
+  height: "45px", // Set a fixed height for the toolbar
+  color: theme.custom.plantGrid.toolbar.textColor,
+  "& .MuiButton-root, & .MuiInputBase-root, & .MuiSvgIcon-root": {
+    color: theme.custom.plantGrid.toolbar.textColor,
+  },
 }));
 
 const ActionButtonGroup = styled(ButtonGroup)(({ theme }) => ({
@@ -350,6 +357,7 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   ...theme.custom.plantGrid.dataGrid.root,
   width: "100%",
   height: "100%",
+  borderRadius: "0 !important", // Remove border radius from the root DataGrid
   "& .MuiDataGrid-main": {
     overflow: "auto",
   },
@@ -359,8 +367,24 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   "& .MuiDataGrid-virtualScrollerContent": {
     minWidth: "fit-content",
   },
-  "& .MuiDataGrid-columnHeaders": {
-    ...theme.custom.plantGrid.dataGrid.header,
+  "& .MuiDataGrid-columnHeader, & .MuiDataGrid-filler, & .MuiDataGrid-scrollbarFiller, & .MuiDataGrid-scrollbar":
+    {
+      ...theme.custom.plantGrid.dataGrid.header,
+      border: "none !important", // Remove all borders
+      borderBottom: `none !important`, // Specifically target bottom border
+      borderTop: "none !important", // Specifically target top border
+      borderLeft: "none !important", // Remove left border
+      borderRight: "none !important", // Remove right border
+    },
+  "& .MuiDataGrid-columnSeparator": {
+    display: "none !important", // Hide column separators
+  },
+  "& .MuiDataGrid-columnHeaderTitle": {
+    fontWeight: "600 !important", // Target the header title text specifically
+  },
+  "& .MuiDataGrid-footerContainer": {
+    backgroundColor: theme.custom.plantGrid.footer.backgroundColor,
+    borderTop: `1px solid ${theme.custom.plantGrid.footer.borderTop}`,
   },
   "& .MuiDataGrid-cell": {
     ...theme.custom.plantGrid.dataGrid.cell,
