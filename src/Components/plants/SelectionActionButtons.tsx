@@ -1,0 +1,337 @@
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Tooltip,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { FaTrashAlt, FaCopy } from "react-icons/fa";
+import { PiWarningFill } from "react-icons/pi";
+import { BiSolidCopyAlt } from "react-icons/bi";
+import { GridRowSelectionModel } from "@mui/x-data-grid";
+
+interface SelectionActionButtonsProps {
+  selectedRows: GridRowSelectionModel;
+  isDeletingPlant: boolean;
+  isCopyingPlant: boolean;
+  onBulkDelete: (selectedRows: GridRowSelectionModel) => Promise<void>;
+  onBulkCopy: (selectedRows: GridRowSelectionModel) => Promise<void>;
+}
+
+const SelectionActionButtons: React.FC<SelectionActionButtonsProps> = ({
+  selectedRows,
+  isDeletingPlant,
+  isCopyingPlant,
+  onBulkDelete,
+  onBulkCopy,
+}) => {
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState<boolean>(false);
+  const [bulkCopyOpen, setBulkCopyOpen] = useState<boolean>(false);
+
+  // Bulk delete handlers
+  const handleBulkDeleteClick = () => {
+    setBulkDeleteOpen(true);
+  };
+
+  const handleBulkDeleteClose = () => {
+    setBulkDeleteOpen(false);
+  };
+
+  const handleBulkDeleteConfirm = async () => {
+    setBulkDeleteOpen(false);
+    await onBulkDelete(selectedRows);
+  };
+
+  // Bulk copy handlers
+  const handleBulkCopyClick = () => {
+    setBulkCopyOpen(true);
+  };
+
+  const handleBulkCopyClose = () => {
+    setBulkCopyOpen(false);
+  };
+
+  const handleBulkCopyConfirm = async () => {
+    setBulkCopyOpen(false);
+    await onBulkCopy(selectedRows);
+  };
+  if (selectedRows.length === 0 && !isDeletingPlant && !isCopyingPlant) {
+    return null;
+  }
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+        marginLeft: "auto",
+      }}
+    >
+      {/* Copy Button */}
+      <Tooltip
+        title={
+          isCopyingPlant
+            ? "Copying plant..."
+            : `Copy ${selectedRows.length} selected plant${
+                selectedRows.length > 1 ? "s" : ""
+              }`
+        }
+        arrow
+      >
+        <StyledActionButton
+          buttonVariant="Copy"
+          startIcon={
+            isCopyingPlant ? (
+              <CircularProgress size={16} color="inherit" />
+            ) : (
+              <FaCopy size={14} />
+            )
+          }
+          onClick={handleBulkCopyClick}
+          disabled={isCopyingPlant}
+        >
+          {isCopyingPlant ? "Copying..." : `Copy (${selectedRows.length})`}
+        </StyledActionButton>
+      </Tooltip>
+
+      {/* Delete Button */}
+      <Tooltip
+        title={
+          isDeletingPlant
+            ? "Deleting plant..."
+            : `Delete ${selectedRows.length} selected plant${
+                selectedRows.length > 1 ? "s" : ""
+              }`
+        }
+        arrow
+      >
+        <StyledActionButton
+          buttonVariant="Delete"
+          startIcon={
+            isDeletingPlant ? (
+              <CircularProgress size={16} color="inherit" />
+            ) : (
+              <FaTrashAlt size={14} />
+            )
+          }
+          onClick={handleBulkDeleteClick}
+          disabled={isDeletingPlant}
+        >
+          {isDeletingPlant ? "Deleting..." : `Delete (${selectedRows.length})`}
+        </StyledActionButton>
+      </Tooltip>
+
+      {/* Bulk delete confirmation dialog */}
+      <StyledDialog
+        dialogVariant="Delete"
+        open={bulkDeleteOpen}
+        onClose={handleBulkDeleteClose}
+        maxWidth="xs"
+        fullWidth
+      >
+        <StyledDialogContent>
+          <DialogContentContainer>
+            <IconContainer>
+              <WarningIcon />
+            </IconContainer>
+            <TextContainer>
+              <StyledDialogTitle>
+                {selectedRows.length === 1 ? "Delete Plant" : "Delete Plants"}
+              </StyledDialogTitle>
+              <StyledDialogContentText>
+                {selectedRows.length === 1
+                  ? "Are you sure you want to delete this plant?"
+                  : `Bulk delete for ${selectedRows.length} plants is coming soon! Please delete plants individually for now.`}
+              </StyledDialogContentText>
+            </TextContainer>
+          </DialogContentContainer>
+        </StyledDialogContent>
+        <StyledDialogActions>
+          <ConfirmButton onClick={handleBulkDeleteConfirm} autoFocus>
+            {selectedRows.length === 1 ? "Confirm" : "OK"}
+          </ConfirmButton>
+          {selectedRows.length === 1 && (
+            <CancelButton onClick={handleBulkDeleteClose}>Cancel</CancelButton>
+          )}
+        </StyledDialogActions>
+      </StyledDialog>
+
+      {/* Bulk copy confirmation dialog */}
+      <StyledDialog
+        dialogVariant="Copy"
+        open={bulkCopyOpen}
+        onClose={handleBulkCopyClose}
+        maxWidth="xs"
+        fullWidth
+      >
+        <StyledDialogContent>
+          <DialogContentContainer>
+            <IconContainer>
+              <CopyIcon />
+            </IconContainer>
+            <TextContainer>
+              <StyledDialogTitle>
+                {selectedRows.length === 1 ? "Copy Plant" : "Copy Plants"}
+              </StyledDialogTitle>
+              <StyledDialogContentText>
+                {selectedRows.length === 1
+                  ? "Are you sure you want to copy this plant?"
+                  : `Bulk copy for ${selectedRows.length} plants is coming soon! Please copy plants individually for now.`}
+              </StyledDialogContentText>
+            </TextContainer>
+          </DialogContentContainer>
+        </StyledDialogContent>
+        <StyledDialogActions>
+          <ConfirmButton onClick={handleBulkCopyConfirm} autoFocus>
+            {selectedRows.length === 1 ? "Confirm" : "OK"}
+          </ConfirmButton>
+          {selectedRows.length === 1 && (
+            <CancelButton onClick={handleBulkCopyClose}>Cancel</CancelButton>
+          )}
+        </StyledDialogActions>
+      </StyledDialog>
+    </Box>
+  );
+};
+
+// Styled Action Button with variants for Copy and Delete
+const StyledActionButton = styled(Button)<{ buttonVariant: "Copy" | "Delete" }>(
+  ({ theme, buttonVariant }) => ({
+    border: "none",
+    backgroundColor:
+      theme.custom.plantGrid.toolbar.selectionActionButtons.backgroundColor,
+    fontSize: "0.875rem",
+    // fontWeight: 600,
+    padding: "5px 10px",
+    minWidth: "auto",
+    textTransform: "capitalize",
+    "&:hover": {
+      backgroundColor:
+        theme.custom.plantGrid.toolbar.selectionActionButtons.backgroundColor,
+        color:
+      buttonVariant === "Copy"
+        ? theme.custom.messages.info.icon + " !important"
+        : theme.custom.messages.error.icon + " !important",
+      opacity: 0.8,
+      border: "none",
+    },
+    "&:disabled": {
+      backgroundColor:
+        theme.custom.plantGrid.toolbar.selectionActionButtons.backgroundColor,
+      color:
+        buttonVariant === "Copy"
+          ? theme.custom.messages.info.icon
+          : theme.custom.messages.error.icon,
+      opacity: 0.6,
+      border: "none",
+    },
+  })
+);
+
+// Styled Dialog component with variants for Copy and Delete
+const StyledDialog = styled(Dialog)<{ dialogVariant: "Copy" | "Delete" }>(
+  ({ theme, dialogVariant }) => ({
+    "& .MuiDialog-paper": {
+      backgroundColor: theme.custom.modal.background,
+      color: theme.custom.modal.titleColor,
+      boxShadow: 3,
+      backgroundImage: "none",
+      borderTop: `8px solid ${
+        dialogVariant === "Copy"
+          ? theme.custom.messages.info.icon
+          : theme.custom.messages.warning.icon
+      }`,
+      borderRadius: "4px",
+      minWidth: 350,
+      maxWidth: 440,
+      padding: "1.5rem 1.5rem 1rem 1.5rem",
+    },
+    "& .MuiBackdrop-root": {
+      backgroundColor: theme.custom.modal.overlay,
+    },
+  })
+);
+
+const StyledDialogContent = styled(DialogContent)(() => ({
+  padding: "0",
+  paddingBottom: "1.25rem",
+}));
+
+const DialogContentContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  marginBottom: "1.25rem",
+  ...theme.custom.fonts.content,
+}));
+
+const IconContainer = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  alignSelf: "stretch",
+}));
+
+const WarningIcon = styled(PiWarningFill)(({ theme }) => ({
+  fontSize: "3.5rem",
+  margin: "0",
+  color: theme.custom.messages.error.icon,
+}));
+
+const CopyIcon = styled(BiSolidCopyAlt)(({ theme }) => ({
+  fontSize: "3.5rem",
+  margin: "0",
+  color: theme.custom.messages.info.icon,
+}));
+
+const TextContainer = styled(Box)(() => ({
+  marginLeft: "1.25rem",
+}));
+
+const StyledDialogTitle = styled(DialogTitle)(() => ({
+  fontSize: "1.5rem",
+  fontWeight: 600,
+  padding: "0",
+  marginBottom: "0.5rem",
+}));
+
+const StyledDialogContentText = styled(DialogContentText)(() => ({
+  color: "inherit",
+  fontSize: "inherit",
+  lineHeight: 1.5,
+  margin: 0,
+}));
+
+const StyledDialogActions = styled(DialogActions)(() => ({
+  display: "flex",
+  gap: "0.5rem",
+  justifyContent: "flex-end",
+  padding: "0",
+}));
+
+const ConfirmButton = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardPrimary,
+  textTransform: "capitalize",
+  width: "100px",
+  height: "40px",
+  "&:hover": {
+    ...theme.custom.buttons.cardPrimary.hover,
+  },
+}));
+
+const CancelButton = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardSecondary,
+  textTransform: "capitalize",
+  width: "100px",
+  height: "40px",
+  "&:hover": {
+    ...theme.custom.buttons.cardSecondary.hover,
+  },
+}));
+
+export default SelectionActionButtons;

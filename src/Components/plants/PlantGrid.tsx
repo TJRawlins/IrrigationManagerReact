@@ -6,6 +6,7 @@ import {
   DataGrid,
   GridColDef,
   GridRenderCellParams,
+  GridRowSelectionModel,
   GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarDensitySelector,
@@ -13,7 +14,7 @@ import {
   GridToolbarFilterButton,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-import { FaTrashAlt, FaEdit, FaRegEye } from "react-icons/fa";
+import { FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -22,11 +23,11 @@ import React from "react";
 import ViewPlant from "./ViewPlant";
 import EditPlant from "./EditPlant";
 import ViewPlantSkeleton from "./ViewPlantSkeleton";
-import { BiSolidCopyAlt } from "react-icons/bi";
 import EditPlantSkeleton from "./EditPlantSkeleton";
 import ConfirmationPopover from "../common/ConfirmationPopover";
 import { usePlantActions } from "../../hooks/usePlantActions";
 import ImageCard from "../common/ImageCard";
+import SelectionActionButtons from "./SelectionActionButtons";
 import { PLANT_GRID_CONFIG } from "../../constants/plantGrid.constants";
 import { Plant } from "../../App/models/Plant";
 
@@ -50,9 +51,62 @@ PlantGridProps) {
   const [isShowView, setIsShowView] = useState<boolean>(false);
   const [isLoadingGrid, setIsLoadingGrid] = useState<boolean>(false);
   const [rows, setRows] = useState<Plant[]>([]);
+  const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
+  const [isDeletingPlant, setIsDeletingPlant] = useState<boolean>(false);
+  const [isCopyingPlant, setIsCopyingPlant] = useState<boolean>(false);
   // const isFull = !useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  const handleBulkCopy = async (selectedRows: GridRowSelectionModel) => {
+    if (selectedRows.length === 1) {
+      // Store plantId before clearing selection
+      const plantId = Number(selectedRows[0]);
+
+      // Clear selection and show loading state
+      setSelectedRows([]);
+      setIsCopyingPlant(true);
+
+      // Single plant copy - use existing functionality
+      try {
+        await handleCopy(plantId);
+
+        console.log("%cPlantGrid: Single Plant Copied", "color:#1CA1E6");
+      } catch (error) {
+        console.error("Error during plant copy:", error);
+      } finally {
+        setIsCopyingPlant(false);
+      }
+    } else if (selectedRows.length > 1) {
+      // Multiple plants - show coming soon message for now
+      // TODO: Implement bulk copy functionality when backend is ready
+    }
+  };
+
+  const handleBulkDelete = async (selectedRows: GridRowSelectionModel) => {
+    if (selectedRows.length === 1) {
+      // Store plantId before clearing selection
+      const plantId = Number(selectedRows[0]);
+
+      // Clear selection and show loading state
+      setSelectedRows([]);
+      setIsDeletingPlant(true);
+
+      // Single plant deletion - use existing functionality
+      try {
+        await handleDelete(plantId);
+
+        console.log("%cPlantGrid: Single Plant Deleted", "color:#1CA1E6");
+      } catch (error) {
+        console.error("Error during plant deletion:", error);
+      } finally {
+        setIsDeletingPlant(false);
+      }
+    } else if (selectedRows.length > 1) {
+      // Multiple plants - show coming soon message for now
+      // Note: This should not show for now since we're handling it in the dialog
+    }
+  };
 
   // Use the new plant actions hook
   const { handleView, handleEdit, handleCopy, handleDelete, loadingStates } =
@@ -78,16 +132,6 @@ PlantGridProps) {
     };
     fetchData();
   }, [zone]);
-
-  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-    setPlantId(
-      Number(
-        event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
-      )
-    );
-  };
-
   const handleDeleteClose = () => {
     setAnchorEl(null);
   };
@@ -98,15 +142,6 @@ PlantGridProps) {
         handleDeleteClose();
       });
     }
-  };
-
-  const handleCopyPlantClick = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    const plantId: number = Number(
-      event.currentTarget.closest(".MuiDataGrid-row")?.getAttribute("data-id")
-    );
-    await handleCopy(plantId);
   };
 
   const handleEditPlantClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -198,16 +233,6 @@ PlantGridProps) {
                 <FaEdit />
               </ActionButton>
             </Tooltip>
-            <Tooltip title="Copy" arrow>
-              <ActionButton onClick={handleCopyPlantClick}>
-                <BiSolidCopyAlt />
-              </ActionButton>
-            </Tooltip>
-            <Tooltip title="Delete" arrow>
-              <ActionButton aria-describedby={id} onClick={handleDeleteClick}>
-                <FaTrashAlt />
-              </ActionButton>
-            </Tooltip>
             <ConfirmationPopover
               id={id}
               open={open}
@@ -232,17 +257,28 @@ PlantGridProps) {
   function CustomToolbar() {
     return (
       <StyledToolbarContainer>
-        <GridToolbarColumnsButton />
-        <GridToolbarFilterButton />
-        <GridToolbarDensitySelector />
-        <GridToolbarExport
-          excelOptions={{ disableToolbarButton: false }}
-          printOptions={{
-            hideToolbar: true,
-            includeCheckboxes: false,
-          }}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <GridToolbarColumnsButton />
+          <GridToolbarFilterButton />
+          <GridToolbarDensitySelector />
+          <GridToolbarExport
+            excelOptions={{ disableToolbarButton: false }}
+            printOptions={{
+              hideToolbar: true,
+              includeCheckboxes: false,
+            }}
+          />
+          <GridToolbarQuickFilter />
+        </Box>
+
+        {/* Selection-based actions on the right */}
+        <SelectionActionButtons
+          selectedRows={selectedRows}
+          isDeletingPlant={isDeletingPlant}
+          isCopyingPlant={isCopyingPlant}
+          onBulkDelete={handleBulkDelete}
+          onBulkCopy={handleBulkCopy}
         />
-        <GridToolbarQuickFilter />
       </StyledToolbarContainer>
     );
   }
@@ -253,7 +289,7 @@ PlantGridProps) {
         <StyledDataGrid
           columns={columns as GridColDef[]}
           rows={rows}
-          loading={isLoadingGrid}
+          loading={isLoadingGrid || isDeletingPlant || isCopyingPlant}
           // Column virtualization for better performance with many columns
           columnBufferPx={150}
           columnHeaderHeight={45} // Adjust this value to change header height (default is 56)
@@ -281,6 +317,10 @@ PlantGridProps) {
           paginationMode="client"
           checkboxSelection
           disableRowSelectionOnClick
+          rowSelectionModel={selectedRows}
+          onRowSelectionModelChange={(newSelection) =>
+            setSelectedRows(newSelection)
+          }
         />
       </PlantGridContainer>
       {loadingStates.viewPlant ? (
@@ -332,6 +372,9 @@ const StyledToolbarContainer = styled(GridToolbarContainer)(({ theme }) => ({
   minHeight: "45px", // Adjust this value to change toolbar height
   height: "45px", // Set a fixed height for the toolbar
   color: theme.custom.plantGrid.toolbar.textColor,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
   "& .MuiButton-root, & .MuiInputBase-root, & .MuiSvgIcon-root": {
     color: theme.custom.plantGrid.toolbar.textColor,
   },

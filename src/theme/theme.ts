@@ -35,8 +35,8 @@ const darkThemeOverlayModal = "#212a3f96";
 
 // --- Status & Alerts ---
 const warningOrange = "#e69700";
-const infoBlue = "#2196f3";
-const errorRed = "#f44336";
+const infoBlue = "#0186c9";
+const errorRed = "#c23f37";
 const successGreen = "#4caf50";
 
 // --- Overlay & Shadows ---
@@ -413,6 +413,9 @@ declare module "@mui/material/styles" {
               backgroundColor: string;
             };
           };
+          selectionActionButtons: {
+            backgroundColor: string;
+          };
         };
         footer: {
           backgroundColor: string;
@@ -536,6 +539,9 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
                 hover: {
                   backgroundColor: "#dae4e4",
                 },
+              },
+              selectionActionButtons: {
+                backgroundColor: lightThemeLighter,
               },
             },
             footer: {
@@ -735,6 +741,9 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
                 hover: {
                   backgroundColor: primaryDark,
                 },
+              },
+              selectionActionButtons: {
+                backgroundColor: darkThemeLighter,
               },
             },
             footer: {
