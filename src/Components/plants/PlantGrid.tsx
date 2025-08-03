@@ -262,7 +262,6 @@ PlantGridProps) {
           <GridToolbarFilterButton />
           <GridToolbarDensitySelector />
           <GridToolbarExport
-            excelOptions={{ disableToolbarButton: false }}
             printOptions={{
               hideToolbar: true,
               includeCheckboxes: false,
