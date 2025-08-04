@@ -51,7 +51,10 @@ PlantGridProps) {
   const [isShowView, setIsShowView] = useState<boolean>(false);
   const [isLoadingGrid, setIsLoadingGrid] = useState<boolean>(false);
   const [rows, setRows] = useState<Plant[]>([]);
-  const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
+  const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>({
+    type: "include",
+    ids: new Set(),
+  });
   const [isDeletingPlant, setIsDeletingPlant] = useState<boolean>(false);
   const [isCopyingPlant, setIsCopyingPlant] = useState<boolean>(false);
   // const isFull = !useMediaQuery(theme.breakpoints.down("md"));
@@ -59,12 +62,14 @@ PlantGridProps) {
   const id = open ? "simple-popover" : undefined;
 
   const handleBulkCopy = async (selectedRows: GridRowSelectionModel) => {
-    if (selectedRows.length === 1) {
+    const selectedRowIds = Array.from(selectedRows.ids);
+
+    if (selectedRowIds.length === 1) {
       // Store plantId before clearing selection
-      const plantId = Number(selectedRows[0]);
+      const plantId = Number(selectedRowIds[0]);
 
       // Clear selection and show loading state
-      setSelectedRows([]);
+      setSelectedRows({ type: "include", ids: new Set() });
       setIsCopyingPlant(true);
 
       // Single plant copy - use existing functionality
@@ -77,19 +82,21 @@ PlantGridProps) {
       } finally {
         setIsCopyingPlant(false);
       }
-    } else if (selectedRows.length > 1) {
+    } else if (selectedRowIds.length > 1) {
       // Multiple plants - show coming soon message for now
       // TODO: Implement bulk copy functionality when backend is ready
     }
   };
 
   const handleBulkDelete = async (selectedRows: GridRowSelectionModel) => {
-    if (selectedRows.length === 1) {
+    const selectedRowIds = Array.from(selectedRows.ids);
+
+    if (selectedRowIds.length === 1) {
       // Store plantId before clearing selection
-      const plantId = Number(selectedRows[0]);
+      const plantId = Number(selectedRowIds[0]);
 
       // Clear selection and show loading state
-      setSelectedRows([]);
+      setSelectedRows({ type: "include", ids: new Set() });
       setIsDeletingPlant(true);
 
       // Single plant deletion - use existing functionality
@@ -102,7 +109,7 @@ PlantGridProps) {
       } finally {
         setIsDeletingPlant(false);
       }
-    } else if (selectedRows.length > 1) {
+    } else if (selectedRowIds.length > 1) {
       // Multiple plants - show coming soon message for now
       // Note: This should not show for now since we're handling it in the dialog
     }
@@ -289,6 +296,7 @@ PlantGridProps) {
           columns={columns as GridColDef[]}
           rows={rows}
           loading={isLoadingGrid || isDeletingPlant || isCopyingPlant}
+          showToolbar
           // Column virtualization for better performance with many columns
           columnBufferPx={150}
           columnHeaderHeight={45} // Adjust this value to change header height (default is 56)

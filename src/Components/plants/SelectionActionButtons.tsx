@@ -61,7 +61,12 @@ const SelectionActionButtons: React.FC<SelectionActionButtonsProps> = ({
     setBulkCopyOpen(false);
     await onBulkCopy(selectedRows);
   };
-  if (selectedRows.length === 0 && !isDeletingPlant && !isCopyingPlant) {
+
+  // Convert Set to array for length calculations in v8
+  const selectedIds = Array.from(selectedRows.ids);
+  const selectedCount = selectedIds.length;
+
+  if (selectedCount === 0 && !isDeletingPlant && !isCopyingPlant) {
     return null;
   }
 
@@ -79,26 +84,28 @@ const SelectionActionButtons: React.FC<SelectionActionButtonsProps> = ({
         title={
           isCopyingPlant
             ? "Copying plant..."
-            : `Copy ${selectedRows.length} selected plant${
-                selectedRows.length > 1 ? "s" : ""
+            : `Copy ${selectedCount} selected plant${
+                selectedCount > 1 ? "s" : ""
               }`
         }
         arrow
       >
-        <StyledActionButton
-          buttonVariant="Copy"
-          startIcon={
-            isCopyingPlant ? (
-              <CircularProgress size={16} color="inherit" />
-            ) : (
-              <FaCopy size={14} />
-            )
-          }
-          onClick={handleBulkCopyClick}
-          disabled={isCopyingPlant}
-        >
-          {isCopyingPlant ? "Copying..." : `Copy (${selectedRows.length})`}
-        </StyledActionButton>
+        <span>
+          <StyledActionButton
+            buttonVariant="Copy"
+            startIcon={
+              isCopyingPlant ? (
+                <CircularProgress size={16} color="inherit" />
+              ) : (
+                <FaCopy size={14} />
+              )
+            }
+            onClick={handleBulkCopyClick}
+            disabled={isCopyingPlant}
+          >
+            {isCopyingPlant ? "Copying..." : `Copy (${selectedCount})`}
+          </StyledActionButton>
+        </span>
       </Tooltip>
 
       {/* Delete Button */}
@@ -106,26 +113,28 @@ const SelectionActionButtons: React.FC<SelectionActionButtonsProps> = ({
         title={
           isDeletingPlant
             ? "Deleting plant..."
-            : `Delete ${selectedRows.length} selected plant${
-                selectedRows.length > 1 ? "s" : ""
+            : `Delete ${selectedCount} selected plant${
+                selectedCount > 1 ? "s" : ""
               }`
         }
         arrow
       >
-        <StyledActionButton
-          buttonVariant="Delete"
-          startIcon={
-            isDeletingPlant ? (
-              <CircularProgress size={16} color="inherit" />
-            ) : (
-              <FaTrashAlt size={14} />
-            )
-          }
-          onClick={handleBulkDeleteClick}
-          disabled={isDeletingPlant}
-        >
-          {isDeletingPlant ? "Deleting..." : `Delete (${selectedRows.length})`}
-        </StyledActionButton>
+        <span>
+          <StyledActionButton
+            buttonVariant="Delete"
+            startIcon={
+              isDeletingPlant ? (
+                <CircularProgress size={16} color="inherit" />
+              ) : (
+                <FaTrashAlt size={14} />
+              )
+            }
+            onClick={handleBulkDeleteClick}
+            disabled={isDeletingPlant}
+          >
+            {isDeletingPlant ? "Deleting..." : `Delete (${selectedCount})`}
+          </StyledActionButton>
+        </span>
       </Tooltip>
 
       {/* Bulk delete confirmation dialog */}
@@ -146,21 +155,21 @@ const SelectionActionButtons: React.FC<SelectionActionButtonsProps> = ({
             </IconContainer>
             <TextContainer>
               <StyledDialogTitle id="delete-dialog-title">
-                {selectedRows.length === 1 ? "Delete Plant" : "Delete Plants"}
+                {selectedCount === 1 ? "Delete Plant" : "Delete Plants"}
               </StyledDialogTitle>
               <StyledDialogContentText id="delete-dialog-description">
-                {selectedRows.length === 1
+                {selectedCount === 1
                   ? "Are you sure you want to delete this plant?"
-                  : `Bulk delete for ${selectedRows.length} plants is coming soon! Please delete plants individually for now.`}
+                  : `Bulk delete for ${selectedCount} plants is coming soon! Please delete plants individually for now.`}
               </StyledDialogContentText>
             </TextContainer>
           </DialogContentContainer>
         </StyledDialogContent>
         <StyledDialogActions>
           <ConfirmButton onClick={handleBulkDeleteConfirm} autoFocus>
-            {selectedRows.length === 1 ? "Confirm" : "OK"}
+            {selectedCount === 1 ? "Confirm" : "OK"}
           </ConfirmButton>
-          {selectedRows.length === 1 && (
+          {selectedCount === 1 && (
             <CancelButton onClick={handleBulkDeleteClose}>Cancel</CancelButton>
           )}
         </StyledDialogActions>
@@ -184,21 +193,21 @@ const SelectionActionButtons: React.FC<SelectionActionButtonsProps> = ({
             </IconContainer>
             <TextContainer>
               <StyledDialogTitle id="copy-dialog-title">
-                {selectedRows.length === 1 ? "Copy Plant" : "Copy Plants"}
+                {selectedCount === 1 ? "Copy Plant" : "Copy Plants"}
               </StyledDialogTitle>
               <StyledDialogContentText id="copy-dialog-description">
-                {selectedRows.length === 1
+                {selectedCount === 1
                   ? "Are you sure you want to copy this plant?"
-                  : `Bulk copy for ${selectedRows.length} plants is coming soon! Please copy plants individually for now.`}
+                  : `Bulk copy for ${selectedCount} plants is coming soon! Please copy plants individually for now.`}
               </StyledDialogContentText>
             </TextContainer>
           </DialogContentContainer>
         </StyledDialogContent>
         <StyledDialogActions>
           <ConfirmButton onClick={handleBulkCopyConfirm} autoFocus>
-            {selectedRows.length === 1 ? "Confirm" : "OK"}
+            {selectedCount === 1 ? "Confirm" : "OK"}
           </ConfirmButton>
-          {selectedRows.length === 1 && (
+          {selectedCount === 1 && (
             <CancelButton onClick={handleBulkCopyClose}>Cancel</CancelButton>
           )}
         </StyledDialogActions>
