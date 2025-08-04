@@ -7,12 +7,6 @@ import {
   GridColDef,
   GridRenderCellParams,
   GridRowSelectionModel,
-  GridToolbarColumnsButton,
-  GridToolbarContainer,
-  GridToolbarDensitySelector,
-  GridToolbarExport,
-  GridToolbarFilterButton,
-  GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
 import { FaEdit, FaRegEye } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -28,6 +22,7 @@ import ConfirmationPopover from "../common/ConfirmationPopover";
 import { usePlantActions } from "../../hooks/usePlantActions";
 import ImageCard from "../common/ImageCard";
 import SelectionActionButtons from "./SelectionActionButtons";
+import PlantGridToolbar from "./PlantGridToolbar";
 import { PLANT_GRID_CONFIG } from "../../constants/plantGrid.constants";
 import { Plant } from "../../App/models/Plant";
 
@@ -60,6 +55,15 @@ PlantGridProps) {
   // const isFull = !useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  // Dynamic page size options that prevent MUI X console warnings which can cause browser freezes during print export
+  const dynamicPageSizeOptions = React.useMemo(() => {
+    const baseOptions = [...PLANT_GRID_CONFIG.PAGE_SIZE_OPTIONS];
+    // Add larger page sizes only if we have enough data to justify them
+    if (rows.length >= 50) baseOptions.push(50);
+    if (rows.length >= 100) baseOptions.push(100);
+    return baseOptions;
+  }, [rows.length]);
 
   const handleBulkCopy = async (selectedRows: GridRowSelectionModel) => {
     const selectedRowIds = Array.from(selectedRows.ids);
@@ -261,34 +265,6 @@ PlantGridProps) {
     },
   ];
 
-  function CustomToolbar() {
-    return (
-      <StyledToolbarContainer>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <GridToolbarColumnsButton />
-          <GridToolbarFilterButton />
-          <GridToolbarDensitySelector />
-          <GridToolbarExport
-            printOptions={{
-              hideToolbar: true,
-              includeCheckboxes: false,
-            }}
-          />
-          <GridToolbarQuickFilter />
-        </Box>
-
-        {/* Selection-based actions on the right */}
-        <SelectionActionButtons
-          selectedRows={selectedRows}
-          isDeletingPlant={isDeletingPlant}
-          isCopyingPlant={isCopyingPlant}
-          onBulkDelete={handleBulkDelete}
-          onBulkCopy={handleBulkCopy}
-        />
-      </StyledToolbarContainer>
-    );
-  }
-
   return (
     <>
       <PlantGridContainer component="div">
@@ -296,13 +272,14 @@ PlantGridProps) {
           columns={columns as GridColDef[]}
           rows={rows}
           loading={isLoadingGrid || isDeletingPlant || isCopyingPlant}
+          slots={{
+            toolbar: PlantGridToolbar,
+          }}
           showToolbar
+          density="standard" // Set default density, user can change via custom toolbar
           // Column virtualization for better performance with many columns
           columnBufferPx={150}
           columnHeaderHeight={45} // Adjust this value to change header height (default is 56)
-          slots={{
-            toolbar: CustomToolbar,
-          }}
           slotProps={{
             loadingOverlay: {
               variant: "skeleton",
@@ -320,7 +297,7 @@ PlantGridProps) {
               },
             },
           }}
-          pageSizeOptions={[...PLANT_GRID_CONFIG.PAGE_SIZE_OPTIONS, 50, 100]}
+          pageSizeOptions={dynamicPageSizeOptions}
           paginationMode="client"
           checkboxSelection
           disableRowSelectionOnClick
@@ -329,6 +306,19 @@ PlantGridProps) {
             setSelectedRows(newSelection)
           }
         />
+
+        {/* Custom selection actions overlay - positioned outside the grid */}
+        {Array.from(selectedRows.ids).length > 0 && (
+          <SelectionActionsOverlay>
+            <SelectionActionButtons
+              selectedRows={selectedRows}
+              isDeletingPlant={isDeletingPlant}
+              isCopyingPlant={isCopyingPlant}
+              onBulkDelete={handleBulkDelete}
+              onBulkCopy={handleBulkCopy}
+            />
+          </SelectionActionsOverlay>
+        )}
       </PlantGridContainer>
       {loadingStates.viewPlant ? (
         <ViewPlantSkeleton />
@@ -356,9 +346,11 @@ PlantGridProps) {
 const PlantGridContainer = styled(Box)({
   width: "100%",
   height: "100%",
+  minHeight: "400px", // Add minimum height to prevent the 0px height issue
   overflow: "hidden",
   display: "flex",
   flexDirection: "column",
+  position: "relative", // Enable absolute positioning for overlay
 });
 
 const ImageCellContainer = styled(Box)({
@@ -373,18 +365,15 @@ const ImageCellContainer = styled(Box)({
   minHeight: "32px", // Minimum for compact mode
 });
 
-const StyledToolbarContainer = styled(GridToolbarContainer)(({ theme }) => ({
-  ...theme.custom.plantGrid.toolbar.container,
-  padding: "0 1.3rem",
-  minHeight: "45px", // Adjust this value to change toolbar height
-  height: "45px", // Set a fixed height for the toolbar
-  color: theme.custom.plantGrid.toolbar.textColor,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  "& .MuiButton-root, & .MuiInputBase-root, & .MuiSvgIcon-root": {
-    color: theme.custom.plantGrid.toolbar.textColor,
-  },
+const SelectionActionsOverlay = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "8px",
+  right: "16px",
+  zIndex: 1000,
+  backgroundColor: theme.palette.background.paper,
+  borderRadius: "4px",
+  boxShadow: theme.shadows[2],
+  padding: "4px 8px",
 }));
 
 const ActionButtonGroup = styled(ButtonGroup)(({ theme }) => ({
@@ -432,6 +421,12 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   "& .MuiDataGrid-columnHeaderTitle": {
     fontWeight: "600 !important", // Target the header title text specifically
   },
+
+  // Style the DataGrid filler to match header background
+  "& .MuiDataGrid-filler": {
+    backgroundColor: `${theme.custom.plantGrid.dataGrid.header.background} !important`,
+  },
+
   "& .MuiDataGrid-footerContainer": {
     backgroundColor: theme.custom.plantGrid.footer.backgroundColor,
     borderTop: `1px solid ${theme.custom.plantGrid.footer.borderTop}`,
@@ -450,6 +445,11 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   // Specific styling for image column cells
   "& [data-field='imagePath']": {
     padding: "0px",
+  },
+  // Position toolbar buttons to the left instead of right
+  "& .MuiDataGrid-toolbar": {
+    justifyContent: "flex-start",
+    padding: "8px 16px",
   },
   // Adjust row height based on density
   "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
