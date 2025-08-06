@@ -82,7 +82,7 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
     >
       <StyledAccordionSummary
         expandIcon={
-          <ExpandMoreIcon sx={{ color: theme.custom.zoneCard.text }} />
+          <ExpandMoreIcon sx={{ color: theme.custom.colors.themeText }} />
         }
         aria-controls="zone-card-tabs-content"
         id="zone-card-tabs-header"
@@ -107,9 +107,9 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
                 onChange={handleChange}
                 aria-label="basic tabs example"
                 sx={{
-                  "&& .MuiTab-root": { color: theme.custom.zoneCard.text },
+                  "&& .MuiTab-root": { color: theme.custom.colors.themeText },
                   "&& .Mui-selected": {
-                    color: theme.custom.zoneCard.headerText,
+                    color: theme.custom.colors.themeText,
                   },
                 }}
               >
@@ -124,19 +124,19 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
                   <TableHead>
                     <TableRow>
                       <TablePanelHeaderCell
-                        sx={{ color: theme.custom.zoneCard.text }}
+                        sx={{ color: theme.custom.colors.themeText }}
                       >
                         Period
                       </TablePanelHeaderCell>
                       <TablePanelHeaderCell
                         align="right"
-                        sx={{ color: theme.custom.zoneCard.text }}
+                        sx={{ color: theme.custom.colors.themeText }}
                       >
                         Usage
                       </TablePanelHeaderCell>
                       <TablePanelHeaderCell
                         align="right"
-                        sx={{ color: theme.custom.zoneCard.text }}
+                        sx={{ color: theme.custom.colors.themeText }}
                       >
                         Cost
                       </TablePanelHeaderCell>
@@ -144,59 +144,29 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
                   </TableHead>
                   <TableBody>
                     <TableRowEven>
-                      <TablePanelCell
-                        sx={{ color: theme.custom.zoneCard.text }}
-                      >
-                        Week
-                      </TablePanelCell>
-                      <TablePanelCell
-                        align="right"
-                        sx={{ color: theme.custom.zoneCard.text }}
-                      >
+                      <TablePanelCell>Week</TablePanelCell>
+                      <TablePanelCell align="right">
                         {zone.totalGalPerWeek} gal
                       </TablePanelCell>
-                      <TablePanelCell
-                        align="right"
-                        sx={{ color: theme.custom.zoneCard.text }}
-                      >
+                      <TablePanelCell align="right">
                         ${(zone.totalGalPerWeek * 0.01).toFixed(2)}
                       </TablePanelCell>
                     </TableRowEven>
                     <TableRowOdd>
-                      <TablePanelCell
-                        sx={{ color: theme.custom.zoneCard.text }}
-                      >
-                        Month
-                      </TablePanelCell>
-                      <TablePanelCell
-                        align="right"
-                        sx={{ color: theme.custom.zoneCard.text }}
-                      >
+                      <TablePanelCell>Month</TablePanelCell>
+                      <TablePanelCell align="right">
                         {zone.totalGalPerMonth} gal
                       </TablePanelCell>
-                      <TablePanelCell
-                        align="right"
-                        sx={{ color: theme.custom.zoneCard.text }}
-                      >
+                      <TablePanelCell align="right">
                         ${(zone.totalGalPerMonth * 0.01).toFixed(2)}
                       </TablePanelCell>
                     </TableRowOdd>
                     <TableRowEven>
-                      <TablePanelCell
-                        sx={{ color: theme.custom.zoneCard.text }}
-                      >
-                        Year
-                      </TablePanelCell>
-                      <TablePanelCell
-                        align="right"
-                        sx={{ color: theme.custom.zoneCard.text }}
-                      >
+                      <TablePanelCell>Year</TablePanelCell>
+                      <TablePanelCell align="right">
                         {zone.totalGalPerYear} gal
                       </TablePanelCell>
-                      <TablePanelCell
-                        align="right"
-                        sx={{ color: theme.custom.zoneCard.text }}
-                      >
+                      <TablePanelCell align="right">
                         ${(zone.totalGalPerYear * 0.01).toFixed(2)}
                       </TablePanelCell>
                     </TableRowEven>
@@ -209,7 +179,7 @@ const ZoneCardTabs: React.FC<ZoneCardTabsProps> = ({
               <CustomTabPanel value={value} index={2}>
                 <Typography
                   fontSize={13}
-                  sx={{ color: theme.custom.zoneCard.text }}
+                  sx={{ color: theme.custom.colors.themeText }}
                 >
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
                   enim sapiente explicabo asperiores magni commodi.
@@ -265,11 +235,12 @@ const TablePanelHeaderCell = styled(TableCell)`
   font-weight: 600 !important;
 `;
 
-const TablePanelCell = styled(TableCell)`
-  border: none !important;
-  font-size: 0.75rem !important;
-  padding: 4px 0px !important;
-`;
+const TablePanelCell = styled(TableCell)(({ theme }) => ({
+  color: theme.custom.colors.themeText,
+  border: "none !important",
+  fontSize: "0.75rem !important",
+  padding: "4px 0px !important",
+}));
 
 const TableRowEven = styled(TableRow)(({ theme }) => ({
   background: theme.custom.table.background,

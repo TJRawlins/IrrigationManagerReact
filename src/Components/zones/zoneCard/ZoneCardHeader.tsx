@@ -57,7 +57,7 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
 
   return (
     <StyledCardHeader
-      sx={{ color: theme.custom.zoneCard.text }}
+      sx={{ color: theme.custom.colors.themeText }}
       title={
         <ZoneTitle style={{ ...theme.custom.fonts.headers }}>
           {zone.name.length > 18
@@ -105,8 +105,8 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
             slotProps={{
               paper: {
                 sx: {
-                  backgroundColor: theme.custom.zoneCard.contentBackground,
-                  color: theme.custom.zoneCard.headerText,
+                  backgroundColor: theme.custom.colors.themeLightest,
+                  color: theme.custom.colors.themeText,
                   boxShadow: 3,
                   borderRadius: 2,
                 },
@@ -122,11 +122,11 @@ function ZoneCardHeader(props: ZoneCardHeaderProps) {
                 key={option}
                 onClick={handleCardMenuSelect(option)}
                 sx={{
-                  color: theme.custom.zoneCard.text,
+                  color: theme.custom.colors.themeText,
                   ...theme.custom.fonts.content,
                   fontSize: "0.95rem",
                   "&:hover": {
-                    color: theme.custom.zoneCard.headerText,
+                    color: theme.custom.colors.themeText,
                   },
                 }}
               >

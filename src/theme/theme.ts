@@ -274,22 +274,6 @@ declare module "@mui/material/styles" {
       image: {
         background: string;
       };
-      zoneCard: {
-        headerBackground: string;
-        headerText: string;
-        contentBackground: string;
-        text: string;
-        buttonBackground: string;
-        buttonText: string;
-        buttonHoverBackground: string;
-        buttonHoverText: string;
-        border: string;
-        shadow: string;
-      };
-      zonePage: {
-        gridBackground: string;
-        containerBackground: string;
-      };
       sidePanel: {
         backgroundColor: string;
         iconColor: string;
@@ -428,8 +412,6 @@ declare module "@mui/material/styles" {
       navBar?: Partial<Theme["custom"]["navBar"]>;
       primary?: Partial<Theme["custom"]["primary"]>;
       secondary?: Partial<Theme["custom"]["secondary"]>;
-      zoneCard?: Partial<Theme["custom"]["zoneCard"]>;
-      zonePage?: Partial<Theme["custom"]["zonePage"]>;
       sidePanel?: Partial<Theme["custom"]["sidePanel"]>;
       seasonIcons?: Partial<Theme["custom"]["seasonIcons"]>;
       totalGallons?: Partial<Theme["custom"]["totalGallons"]>;
@@ -662,19 +644,6 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           image: {
             background: lightThemeLight,
           },
-          zoneCard: {
-            headerBackground: lightThemeLight,
-            headerText: lightThemeText,
-            headerBorder: lightThemeBorder,
-            contentBackground: lightThemeLightest,
-            text: lightThemeText,
-            border: lightThemeBorder,
-            shadow: cardShadow,
-          },
-          zonePage: {
-            gridBackground: lightThemeLighter,
-            containerBackground: lightThemeLighter,
-          },
         }
       : {
           //* [== KEEP THEME ==]
@@ -899,19 +868,6 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           image: {
             background: darkThemeBorder,
-          },
-          zoneCard: {
-            headerBackground: darkThemeLight,
-            headerText: darkThemeText,
-            headerBorder: darkThemeBorder,
-            contentBackground: darkThemeLight,
-            text: darkThemeText,
-            border: darkThemeBorder,
-            shadow: cardShadow,
-          },
-          zonePage: {
-            gridBackground: darkThemeDark,
-            containerBackground: darkThemeLighter,
           },
         };
 

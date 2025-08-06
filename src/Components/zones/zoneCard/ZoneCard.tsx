@@ -296,9 +296,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
   width: "370px !important",
   height: "fit-content",
   backgroundImage: "none !important",
-  backgroundColor: theme.custom.zoneCard.contentBackground,
-  border: `1px solid ${theme.custom.zoneCard.border}`,
-  boxShadow: theme.custom.zoneCard.shadow,
+  backgroundColor: theme.custom.colors.themeLightest,
+  border: `1px solid ${theme.custom.colors.themeBorder}`,
+  boxShadow: theme.custom.colors.cardShadow,
 }));
 
 const StyledZoneCardHeader = styled(Box)(({ theme }) => ({
@@ -306,9 +306,9 @@ const StyledZoneCardHeader = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   width: "100%",
   padding: "1rem 1.75rem",
-  backgroundColor: theme.custom.zoneCard.headerBackground,
-  color: theme.custom.zoneCard.headerText,
-  borderBottom: `1px solid ${theme.custom.zoneCard.border}`,
+  backgroundColor: theme.custom.colors.themeLight,
+  color: theme.custom.colors.themeText,
+  borderBottom: `1px solid ${theme.custom.colors.themeBorder}`,
 }));
 
 const ZoneCardContentWrapper = styled(Box)`

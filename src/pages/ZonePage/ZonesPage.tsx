@@ -131,8 +131,8 @@ export default ZonesPage;
 const ZonePageContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  height: "100vh", // Use viewport height instead of minHeight
-  backgroundColor: theme.custom.zonePage.containerBackground,
+  height: "100vh",
+  backgroundColor: theme.custom.colors.themeLighter,
   // Accessibility: Ensure proper focus management
   outline: "none",
   "&:focus-visible": {

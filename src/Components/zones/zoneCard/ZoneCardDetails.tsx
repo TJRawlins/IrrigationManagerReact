@@ -6,7 +6,7 @@ const ZoneCardDetails: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Stack color={theme.custom.zoneCard.text} gap="7px" direction="column">
+    <Stack color={theme.custom.colors.themeText} gap="7px" direction="column">
       <CardText variant="body2">
         <ZoneDataTitle>Start time:</ZoneDataTitle>
         <ZoneDataValue>8:30 am</ZoneDataValue>
