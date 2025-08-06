@@ -15,6 +15,15 @@ When reviewing or generating code, Copilot should:
 7. Prioritize **depth and accuracy** over speed or politeness.
 8. Favor clear, maintainable code — avoid clever or non-idiomatic constructs unless explicitly requested.
 
+## Refactor Chat Mode
+
+When user mentions "refactor chatmode" or similar:
+
+- Follow official documentation patterns exactly
+- Avoid hacky or non-standard solutions
+- Validate against authoritative sources
+- Provide reasoning for all suggestions
+
 ---
 
 ### Equivalent Inline Prompt (for quick use in code files)
