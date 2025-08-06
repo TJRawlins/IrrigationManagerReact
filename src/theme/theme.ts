@@ -1,16 +1,18 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme, ThemeOptions } from "@mui/material/styles";
+import type {} from "@mui/x-data-grid/themeAugmentation";
 
 // ============ COLOR PALETTE ============
 
+//* [== KEEP THEME ==]
 // --- Primary & Secondary ---
 // const callToActionPrimary = "#318cc2";
 // const callToActionPrimary = "#0288d1";
 const callToActionPrimary = "#0077b3";
 const callToActionPrimaryHover = "#005f8a";
-const primaryDark = "#141b2d";
 const transparent = "transparent";
 
+//* [== KEEP THEME ==]
 // --- Light Theme Colors ---
 const lightThemeLight = "#e2e7ec";
 const lightThemeLighter = "#f3f4f6";
@@ -22,6 +24,7 @@ const lightThemeTextHighlight = "#c7e6fa";
 const lightThemeLightOpacity = "#ffffff52";
 const lightThemeOverlayModal = "#173e5ba8";
 
+//* [== KEEP THEME ==]
 // --- Dark Theme Colors ---
 const darkThemeLight = "#28273f";
 const darkThemeLighter = "#333047";
@@ -33,29 +36,29 @@ const darkThemeTextHighlight = "#004075";
 const darkThemeLightOpacity = "#ffffff29";
 const darkThemeOverlayModal = "#212a3f96";
 
+//* [== KEEP THEME ==]
 // --- Status & Alerts ---
 const warningOrange = "#e69700";
 const infoBlue = "#0186c9";
 const errorRed = "#c23f37";
 const successGreen = "#4caf50";
 
+//* [== KEEP THEME ==]
 // --- Overlay & Shadows ---
-const cardShadowLight =
+const cardShadow =
   "rgb(50 50 93 / 7%) 0px 2px 5px -1px, rgb(0 0 0 / 10%) 0px 1px 3px -1px";
 
+//* [== KEEP THEME ==]
 // --- Miscellaneous ---
 const borderBottomLight = "#0000001f";
-const borderBottomDark = "#ffffff1f";
 const closeIconGray = "#707174";
 const closeIconHoverGray = "#323232";
-const closeIconDark = "#9ca3af";
 const inactiveSeasonLight = "#b6c2c5";
-const inactiveSeasonDark = "#475a82";
 const chipBackgroundLight = "#c9d5d7";
-const chipBackgroundDark = "#1f2a41";
 
 // ============ FONTS & BUTTONS ============
 
+//* [== KEEP THEME ==]
 // Font constants
 const FONTS = {
   headers: {
@@ -72,6 +75,7 @@ const FONTS = {
   },
 };
 
+//* [== KEEP THEME ==]
 // Button constants
 const BUTTON_BASE = {
   borderRadius: "4px",
@@ -86,6 +90,7 @@ const BUTTON_BASE = {
     "background-color 250ms ease-in-out, color 250ms ease-in-out, border-color 250ms ease-in-out !important",
 };
 
+//* [== KEEP THEME ==]
 const BUTTONS = {
   primary: {
     ...BUTTON_BASE,
@@ -139,20 +144,41 @@ const BUTTONS = {
 declare module "@mui/material/styles" {
   interface Theme {
     custom: {
-      fonts: {
-        headers: {
-          fontFamily: string;
-          letterSpacing: string;
-        };
-        logo: {
-          fontFamily: string;
-          letterSpacing: string;
-        };
-        content: {
-          fontFamily: string;
-          letterSpacing: string;
-        };
+      // fonts: {
+      //   headers: {
+      //     fontFamily: string;
+      //     letterSpacing: string;
+      //   };
+      //   logo: {
+      //     fontFamily: string;
+      //     letterSpacing: string;
+      //   };
+      //   content: {
+      //     fontFamily: string;
+      //     letterSpacing: string;
+      //   };
+      // };
+      //* [== KEEP THEME ==]
+      fonts: typeof FONTS;
+      //* [== KEEP THEME ==]
+      buttons: typeof BUTTONS;
+      //* [== KEEP THEME ==]
+      colors: {
+        callToActionPrimary: string;
+        callToActionPrimaryHover: string;
+        cardShadow: string;
+        transparent: string;
+        themeLight: string;
+        themeLighter: string;
+        themeLightest: string;
+        themeDark: string;
+        themeBorder: string;
+        themeText: string;
+        themeTextHighlight: string;
+        themeLightOpacity: string;
+        themeOverlayModal: string;
       };
+      //! [== DELETE THEME ==]
       grid: {
         background: string;
         rowBackground: string;
@@ -295,72 +321,6 @@ declare module "@mui/material/styles" {
           color: string;
         };
       };
-      buttons: {
-        primary: {
-          background: string;
-          color: string;
-          border: string;
-          borderRadius: string;
-          fontFamily: string;
-          fontWeight: string;
-          fontSize: string;
-          padding: string;
-          textTransform: string;
-          hover: {
-            background: string;
-            color: string;
-            border: string;
-          };
-        };
-        secondary: {
-          background: string;
-          color: string;
-          border: string;
-          borderRadius: string;
-          fontFamily: string;
-          fontWeight: string;
-          fontSize: string;
-          padding: string;
-          textTransform: string;
-          hover: {
-            background: string;
-            color: string;
-            border: string;
-          };
-        };
-        cardPrimary: {
-          background: string;
-          color: string;
-          border: string;
-          borderRadius: string;
-          fontFamily: string;
-          fontWeight: string;
-          fontSize: string;
-          padding: string;
-          textTransform: string;
-          hover: {
-            background: string;
-            color: string;
-            border: string;
-          };
-        };
-        cardSecondary: {
-          background: string;
-          color: string;
-          border: string;
-          borderRadius: string;
-          fontFamily: string;
-          fontWeight: string;
-          fontSize: string;
-          padding: string;
-          textTransform: string;
-          hover: {
-            background: string;
-            color: string;
-            border: string;
-          };
-        };
-      };
       plantGrid: {
         dataGrid: {
           root: {
@@ -416,6 +376,22 @@ declare module "@mui/material/styles" {
           selectionActionButtons: {
             backgroundColor: string;
           };
+          menus: {
+            paper: {
+              backgroundColor: string;
+              border: string;
+              boxShadow: string;
+            };
+            menuItem: {
+              color: string;
+              hover: {
+                backgroundColor: string;
+              };
+            };
+            listItemIcon: {
+              color: string;
+            };
+          };
         };
         footer: {
           backgroundColor: string;
@@ -439,13 +415,17 @@ declare module "@mui/material/styles" {
   }
   interface ThemeOptions {
     custom?: {
+      //* [== KEEP THEME ==]
       fonts?: Partial<Theme["custom"]["fonts"]>;
+      buttons?: Partial<Theme["custom"]["buttons"]>;
+      messages?: Partial<Theme["custom"]["messages"]>;
+      colors?: Partial<Theme["custom"]["colors"]>;
+      //! [== DELETE THEME ==]
       grid?: Partial<Theme["custom"]["grid"]>;
       table?: Partial<Theme["custom"]["table"]>;
       modal?: Partial<Theme["custom"]["modal"]>;
       menuBar?: Partial<Theme["custom"]["menuBar"]>;
       navBar?: Partial<Theme["custom"]["navBar"]>;
-      messages?: Partial<Theme["custom"]["messages"]>;
       primary?: Partial<Theme["custom"]["primary"]>;
       secondary?: Partial<Theme["custom"]["secondary"]>;
       zoneCard?: Partial<Theme["custom"]["zoneCard"]>;
@@ -453,7 +433,6 @@ declare module "@mui/material/styles" {
       sidePanel?: Partial<Theme["custom"]["sidePanel"]>;
       seasonIcons?: Partial<Theme["custom"]["seasonIcons"]>;
       totalGallons?: Partial<Theme["custom"]["totalGallons"]>;
-      buttons?: Partial<Theme["custom"]["buttons"]>;
       plantGrid?: Partial<Theme["custom"]["plantGrid"]>;
     };
   }
@@ -464,8 +443,48 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
   const colors =
     mode === "light"
       ? {
+          //* [== KEEP THEME ==]
           fonts: FONTS,
           buttons: BUTTONS,
+          messages: {
+            info: {
+              border: infoBlue,
+              icon: infoBlue,
+            },
+            warning: {
+              border: warningOrange,
+              icon: warningOrange,
+            },
+            error: {
+              border: errorRed,
+              icon: errorRed,
+            },
+            success: {
+              border: successGreen,
+              icon: successGreen,
+            },
+            toast: {
+              background: "#f5f5f5",
+              text: "#333333",
+              border: lightThemeBorder,
+            },
+          },
+          colors: {
+            callToActionPrimary,
+            callToActionPrimaryHover,
+            cardShadow: cardShadow,
+            transparent,
+            themeLight: lightThemeLight,
+            themeLighter: lightThemeLighter,
+            themeLightest: lightThemeLightest,
+            themeDark: lightThemeDark,
+            themeBorder: lightThemeBorder,
+            themeText: lightThemeText,
+            themeTextHighlight: lightThemeTextHighlight,
+            themeLightOpacity: lightThemeLightOpacity,
+            themeOverlayModal: lightThemeOverlayModal,
+          },
+          //! [== DELETE THEME ==]
           grid: {
             background: "#ced8da",
             rowBackground: lightThemeLighter,
@@ -543,6 +562,22 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               selectionActionButtons: {
                 backgroundColor: lightThemeLighter,
               },
+              menus: {
+                paper: {
+                  backgroundColor: lightThemeLightest,
+                  border: `1px solid ${lightThemeBorder}`,
+                  boxShadow: cardShadow,
+                },
+                menuItem: {
+                  color: lightThemeText,
+                  hover: {
+                    backgroundColor: "#dae4e4",
+                  },
+                },
+                listItemIcon: {
+                  color: lightThemeText,
+                },
+              },
             },
             footer: {
               backgroundColor: lightThemeLightest,
@@ -552,7 +587,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               paper: {
                 backgroundColor: lightThemeLighter,
                 border: `1px solid ${lightThemeBorder}`,
-                boxShadow: cardShadowLight,
+                boxShadow: cardShadow,
               },
               content: {
                 color: lightThemeText,
@@ -624,6 +659,27 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               color: lightThemeText,
             },
           },
+          image: {
+            background: lightThemeLight,
+          },
+          zoneCard: {
+            headerBackground: lightThemeLight,
+            headerText: lightThemeText,
+            headerBorder: lightThemeBorder,
+            contentBackground: lightThemeLightest,
+            text: lightThemeText,
+            border: lightThemeBorder,
+            shadow: cardShadow,
+          },
+          zonePage: {
+            gridBackground: lightThemeLighter,
+            containerBackground: lightThemeLighter,
+          },
+        }
+      : {
+          //* [== KEEP THEME ==]
+          fonts: FONTS,
+          buttons: BUTTONS,
           messages: {
             info: {
               border: infoBlue,
@@ -642,49 +698,45 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               icon: successGreen,
             },
             toast: {
-              background: "#f5f5f5",
-              text: "#333333",
-              border: lightThemeBorder,
+              background: darkThemeLighter,
+              text: darkThemeText,
+              border: darkThemeBorder,
             },
           },
-          image: {
-            background: lightThemeLight,
+          colors: {
+            callToActionPrimary,
+            callToActionPrimaryHover,
+            cardShadow: cardShadow,
+            transparent,
+            themeLight: darkThemeLight,
+            themeLighter: darkThemeLighter,
+            themeLightest: darkThemeLightest,
+            themeDark: darkThemeDark,
+            themeBorder: darkThemeBorder,
+            themeText: darkThemeText,
+            themeTextHighlight: darkThemeTextHighlight,
+            themeLightOpacity: darkThemeLightOpacity,
+            themeOverlayModal: darkThemeOverlayModal,
           },
-          zoneCard: {
-            headerBackground: lightThemeLight,
-            headerText: lightThemeText,
-            headerBorder: lightThemeBorder,
-            contentBackground: lightThemeLightest,
-            text: lightThemeText,
-            border: lightThemeBorder,
-            shadow: cardShadowLight,
-          },
-          zonePage: {
-            gridBackground: lightThemeLighter,
-            containerBackground: lightThemeLighter,
-          },
-        }
-      : {
-          fonts: FONTS,
-          buttons: BUTTONS,
+          //! [== DELETE THEME ==]
           grid: {
-            background: "#1f2a41",
-            rowBackground: "#1f2a41",
-            text: lightThemeBorder,
-            rowHover: primaryDark,
-            border: borderBottomDark,
-            columnHighlight: "#141b2d69",
-            columnText: lightThemeBorder,
-            buttonColor: lightThemeText,
+            background: darkThemeDark,
+            rowBackground: darkThemeDark,
+            text: darkThemeText,
+            rowHover: darkThemeLighter,
+            border: darkThemeBorder,
+            columnHighlight: darkThemeLightOpacity,
+            columnText: darkThemeText,
+            buttonColor: darkThemeText,
             buttonWarning: {
               background: warningOrange,
             },
-            dataGridBackground: "#1f2a41",
-            dataGridRowBackground: "#1f2a41",
-            dataGridText: lightThemeBorder,
-            dataGridRowHover: primaryDark,
-            dataGridColumnHighlight: "#141b2d69",
-            dataGridColumnText: lightThemeBorder,
+            dataGridBackground: darkThemeDark,
+            dataGridRowBackground: darkThemeDark,
+            dataGridText: darkThemeText,
+            dataGridRowHover: darkThemeLighter,
+            dataGridColumnHighlight: darkThemeLightOpacity,
+            dataGridColumnText: darkThemeText,
             buttonWarningBackground: warningOrange,
           },
           table: {
@@ -702,12 +754,12 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               },
               cell: {
                 color: darkThemeText,
-                borderColor: borderBottomDark,
+                borderColor: darkThemeBorder,
               },
               row: {
                 backgroundColor: darkThemeLighter,
                 hover: {
-                  backgroundColor: primaryDark,
+                  backgroundColor: darkThemeLightest,
                 },
               },
             },
@@ -719,31 +771,48 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
               button: {
                 backgroundColor: transparent,
                 color: darkThemeText,
-                border: `1px solid ${borderBottomDark}`,
+                border: `1px solid ${darkThemeBorder}`,
                 hover: {
-                  backgroundColor: primaryDark,
+                  backgroundColor: darkThemeLightest,
                   color: callToActionPrimary,
                 },
               },
               icons: {
-                color: lightThemeBorder,
+                color: darkThemeText,
                 fontSize: "18px",
               },
             },
             toolbar: {
               container: {
                 backgroundColor: darkThemeLight,
-                borderBottom: `1px solid ${borderBottomDark}`,
+                borderBottom: `1px solid ${darkThemeBorder}`,
               },
               textColor: darkThemeText,
               buttons: {
-                color: lightThemeBorder,
+                color: darkThemeText,
                 hover: {
-                  backgroundColor: primaryDark,
+                  backgroundColor: darkThemeLightest,
                 },
               },
               selectionActionButtons: {
                 backgroundColor: darkThemeLighter,
+              },
+              menus: {
+                paper: {
+                  backgroundColor: darkThemeLight,
+                  border: `1px solid ${darkThemeBorder}`,
+                  boxShadow:
+                    "rgb(0 0 0 / 20%) 0px 2px 5px -1px, rgb(0 0 0 / 14%) 0px 1px 3px -1px",
+                },
+                menuItem: {
+                  color: darkThemeText,
+                  hover: {
+                    backgroundColor: darkThemeLightest,
+                  },
+                },
+                listItemIcon: {
+                  color: darkThemeText,
+                },
               },
             },
             footer: {
@@ -769,11 +838,11 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             titleColor: darkThemeText,
             description: darkThemeText,
             textHighlight: darkThemeTextHighlight,
-            closeIcon: closeIconDark,
-            closeIconHover: lightThemeLighter,
-            fieldLabel: closeIconDark,
+            closeIcon: darkThemeText,
+            closeIconHover: darkThemeLighter,
+            fieldLabel: darkThemeText,
             fieldBackground: darkThemeLightest,
-            fieldInputFont: closeIconDark,
+            fieldInputFont: darkThemeText,
             fieldBorder: callToActionPrimary,
             buttonFont: "#19191f",
             buttonBackground: callToActionPrimary,
@@ -783,18 +852,18 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
           },
           menuBar: {
             background: darkThemeLight,
-            color: lightThemeLightest,
+            color: darkThemeText,
             title: darkThemeText,
             subtitle: darkThemeText,
-            buttonBorder: "#1f2a41",
+            buttonBorder: darkThemeDark,
             buttonBorderHover: callToActionPrimary,
-            chipBackground: chipBackgroundDark,
+            chipBackground: darkThemeDark,
             gallonsIcon: callToActionPrimary,
           },
           navBar: {
             background: darkThemeLight,
-            color: lightThemeLightest,
-            borderBottom: borderBottomDark,
+            color: darkThemeText,
+            borderBottom: darkThemeBorder,
           },
           sidePanel: {
             backgroundColor: darkThemeLight,
@@ -802,53 +871,30 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             dividerColor: darkThemeLightOpacity,
           },
           seasonIcons: {
-            inactiveBackground: inactiveSeasonDark,
+            inactiveBackground: darkThemeText,
           },
           totalGallons: {
             toggleContainer: {
               background: darkThemeDark,
-              border: "#1f2a41",
+              border: darkThemeDark,
             },
             toggleButton: {
               selected: {
                 background: darkThemeLight,
-                color: lightThemeBorder,
+                color: darkThemeText,
                 boxShadow:
                   "rgb(0 0 0 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px",
               },
               unselected: {
                 background: transparent,
-                color: "#9ca3af",
+                color: darkThemeText,
               },
             },
             valueDisplay: {
-              color: lightThemeBorder,
+              color: darkThemeText,
             },
             valueLabel: {
-              color: lightThemeBorder,
-            },
-          },
-          messages: {
-            info: {
-              border: infoBlue,
-              icon: infoBlue,
-            },
-            warning: {
-              border: warningOrange,
-              icon: warningOrange,
-            },
-            error: {
-              border: errorRed,
-              icon: errorRed,
-            },
-            success: {
-              border: successGreen,
-              icon: successGreen,
-            },
-            toast: {
-              background: "#2d3748",
-              text: "#e2e8f0",
-              border: "#4a5568",
+              color: darkThemeText,
             },
           },
           image: {
@@ -861,11 +907,11 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             contentBackground: darkThemeLight,
             text: darkThemeText,
             border: darkThemeBorder,
-            shadow: cardShadowLight,
+            shadow: cardShadow,
           },
           zonePage: {
             gridBackground: darkThemeDark,
-            containerBackground: primaryDark,
+            containerBackground: darkThemeLighter,
           },
         };
 
@@ -924,6 +970,120 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
       },
     },
     custom: colors,
+    components: {
+      // DataGrid component styling for panels, toolbar, etc.
+      MuiDataGrid: {
+        styleOverrides: {
+          panel: ({ theme }) => ({
+            backgroundColor:
+              colors.plantGrid.toolbar.menus.paper.backgroundColor,
+            border: colors.plantGrid.toolbar.menus.paper.border,
+            boxShadow: colors.plantGrid.toolbar.menus.paper.boxShadow,
+
+            "& .MuiDataGrid-panelHeader": {
+              color: colors.plantGrid.toolbar.menus.menuItem.color,
+              backgroundColor:
+                colors.plantGrid.toolbar.menus.paper.backgroundColor,
+              borderBottom: `1px solid ${colors.plantGrid.toolbar.menus.paper.border.replace(
+                "1px solid ",
+                ""
+              )}`,
+            },
+
+            "& .MuiDataGrid-panelContent": {
+              backgroundColor:
+                mode === "dark"
+                  ? darkThemeDark
+                  : colors.plantGrid.toolbar.menus.paper.backgroundColor,
+              color: colors.plantGrid.toolbar.menus.menuItem.color,
+            },
+
+            // Columns management header
+            "& .MuiDataGrid-columnsManagementHeader": {
+              borderBottom: `1px solid ${colors.plantGrid.toolbar.menus.paper.border.replace(
+                "1px solid ",
+                ""
+              )}`,
+            },
+
+            // Columns management footer
+            "& .MuiDataGrid-columnsManagementFooter": {
+              borderTop: `1px solid ${colors.plantGrid.toolbar.menus.paper.border.replace(
+                "1px solid ",
+                ""
+              )}`,
+            },
+
+            "& .MuiFormControlLabel-label": {
+              color: colors.plantGrid.toolbar.menus.menuItem.color,
+            },
+
+            "& .MuiCheckbox-root": {
+              color: theme.palette.primary.main,
+              "&.Mui-checked": {
+                color: theme.palette.primary.main,
+              },
+              "&:hover": {
+                backgroundColor: `${theme.palette.primary.main}14`, // 8% opacity hover
+              },
+            },
+
+            // Search bar styling
+            "& .MuiInputBase-root": {
+              color: colors.plantGrid.toolbar.menus.menuItem.color,
+              backgroundColor:
+                mode === "dark"
+                  ? darkThemeLight
+                  : colors.plantGrid.toolbar.menus.paper.backgroundColor,
+              "& .MuiInputBase-input": {
+                color: colors.plantGrid.toolbar.menus.menuItem.color,
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor:
+                  colors.plantGrid.toolbar.menus.paper.border.replace(
+                    "1px solid ",
+                    ""
+                  ),
+              },
+            },
+
+            // Search magnifying glass icon
+            "& .MuiInputBase-root .MuiSvgIcon-root": {
+              color: colors.plantGrid.toolbar.menus.menuItem.color,
+            },
+
+            // General icons (checkboxes, etc.)
+            "& .MuiSvgIcon-root": {
+              color: theme.palette.primary.main,
+            },
+
+            "& .MuiButton-root": {
+              color: colors.plantGrid.toolbar.buttons.color,
+              "&:hover": {
+                backgroundColor:
+                  colors.plantGrid.toolbar.buttons.hover.backgroundColor,
+              },
+            },
+
+            "& .MuiIconButton-root": {
+              color: colors.plantGrid.toolbar.buttons.color,
+              "&:hover": {
+                backgroundColor:
+                  colors.plantGrid.toolbar.buttons.hover.backgroundColor,
+              },
+            },
+
+            "& .MuiSelect-root": {
+              color: colors.plantGrid.toolbar.menus.menuItem.color,
+            },
+
+            "& .MuiTypography-root": {
+              color: colors.plantGrid.toolbar.menus.menuItem.color,
+            },
+          }),
+        },
+      },
+    },
   };
 };
 
