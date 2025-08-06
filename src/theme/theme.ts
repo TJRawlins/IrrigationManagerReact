@@ -52,7 +52,8 @@ const cardShadow =
 // --- Miscellaneous ---
 const borderBottomLight = "#0000001f";
 const closeIconGray = "#707174";
-const closeIconHoverGray = "#323232";
+const closeIconHoverGray = callToActionPrimary;
+// const closeIconHoverGray = "#323232";
 const inactiveSeasonLight = "#b6c2c5";
 const chipBackgroundLight = "#c9d5d7";
 
@@ -167,6 +168,9 @@ declare module "@mui/material/styles" {
         callToActionPrimary: string;
         callToActionPrimaryHover: string;
         cardShadow: string;
+        cardBackground: string;
+        pageBackground: string;
+        menuBarBackground: string;
         transparent: string;
         themeLight: string;
         themeLighter: string;
@@ -179,26 +183,6 @@ declare module "@mui/material/styles" {
         themeOverlayModal: string;
       };
       //! [== DELETE THEME ==]
-      grid: {
-        background: string;
-        rowBackground: string;
-        text: string;
-        rowHover: string;
-        border: string;
-        columnHighlight: string;
-        columnText: string;
-        buttonColor: string;
-        buttonWarning: {
-          background: string;
-        };
-        dataGridBackground: string;
-        dataGridRowBackground: string;
-        dataGridText: string;
-        dataGridRowHover: string;
-        dataGridColumnHighlight: string;
-        dataGridColumnText: string;
-        buttonWarningBackground: string;
-      };
       modal: {
         overlay: string;
         background: string;
@@ -405,7 +389,6 @@ declare module "@mui/material/styles" {
       messages?: Partial<Theme["custom"]["messages"]>;
       colors?: Partial<Theme["custom"]["colors"]>;
       //! [== DELETE THEME ==]
-      grid?: Partial<Theme["custom"]["grid"]>;
       table?: Partial<Theme["custom"]["table"]>;
       modal?: Partial<Theme["custom"]["modal"]>;
       menuBar?: Partial<Theme["custom"]["menuBar"]>;
@@ -455,6 +438,9 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             callToActionPrimary,
             callToActionPrimaryHover,
             cardShadow: cardShadow,
+            cardBackground: lightThemeLightest,
+            pageBackground: lightThemeLighter,
+            menuBarBackground: lightThemeLightest,
             transparent,
             themeLight: lightThemeLight,
             themeLighter: lightThemeLighter,
@@ -467,25 +453,6 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             themeOverlayModal: lightThemeOverlayModal,
           },
           //! [== DELETE THEME ==]
-          grid: {
-            background: "#ced8da",
-            rowBackground: lightThemeLighter,
-            text: "#555555",
-            rowHover: "#dae4e4",
-            border: "#ced8da59",
-            columnHighlight: "#dae4e473",
-            columnText: "#555555",
-            buttonWarning: {
-              background: warningOrange,
-            },
-            dataGridBackground: "#ced8da",
-            dataGridRowBackground: lightThemeLighter,
-            dataGridText: "#555555",
-            dataGridRowHover: "#dae4e4",
-            dataGridColumnHighlight: "#dae4e473",
-            dataGridColumnText: "#555555",
-            buttonWarningBackground: warningOrange,
-          },
           table: {
             background: lightThemeLighter,
           },
@@ -676,6 +643,9 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             callToActionPrimary,
             callToActionPrimaryHover,
             cardShadow: cardShadow,
+            cardBackground: darkThemeLight,
+            pageBackground: darkThemeDark,
+            menuBarBackground: darkThemeLight,
             transparent,
             themeLight: darkThemeLight,
             themeLighter: darkThemeLighter,
@@ -688,26 +658,6 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             themeOverlayModal: darkThemeOverlayModal,
           },
           //! [== DELETE THEME ==]
-          grid: {
-            background: darkThemeDark,
-            rowBackground: darkThemeDark,
-            text: darkThemeText,
-            rowHover: darkThemeLighter,
-            border: darkThemeBorder,
-            columnHighlight: darkThemeLightOpacity,
-            columnText: darkThemeText,
-            buttonColor: darkThemeText,
-            buttonWarning: {
-              background: warningOrange,
-            },
-            dataGridBackground: darkThemeDark,
-            dataGridRowBackground: darkThemeDark,
-            dataGridText: darkThemeText,
-            dataGridRowHover: darkThemeLighter,
-            dataGridColumnHighlight: darkThemeLightOpacity,
-            dataGridColumnText: darkThemeText,
-            buttonWarningBackground: warningOrange,
-          },
           table: {
             background: darkThemeLighter,
           },
@@ -808,7 +758,7 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
             description: darkThemeText,
             textHighlight: darkThemeTextHighlight,
             closeIcon: darkThemeText,
-            closeIconHover: darkThemeLighter,
+            closeIconHover: callToActionPrimary,
             fieldLabel: darkThemeText,
             fieldBackground: darkThemeLightest,
             fieldInputFont: darkThemeText,

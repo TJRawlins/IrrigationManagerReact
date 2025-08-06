@@ -455,7 +455,7 @@ const ImgUploadFilenameLabel = styled("span")(({ theme }) => ({
   position: "absolute",
   left: 0,
   top: 6,
-  color: theme.custom.modal.fieldLabel,
+  color: theme.custom.colors.themeText,
 }));
 const ImgUploadFilename = styled(Typography)(({ theme }) => ({
   flex: 1,
@@ -469,8 +469,8 @@ const ImgUploadFilename = styled(Typography)(({ theme }) => ({
   fontFamily: "inherit",
   display: "flex",
   alignItems: "center",
-  backgroundColor: theme.custom.modal.fieldBackground,
-  color: theme.custom.modal.fieldInputFont,
+  backgroundColor: theme.custom.colors.themeLightest,
+  color: theme.custom.colors.themeText,
   border: "1.5px solid transparent",
   margin: 0,
   textOverflow: "ellipsis",
@@ -529,7 +529,7 @@ const CancelButton = styled(Button)(({ theme }) => ({
 
 const ZoneNameSpan = styled("span")(({ theme }) => ({
   position: "relative",
-  background: theme.custom.modal.fieldBackground,
+  background: theme.custom.colors.themeLightest,
   padding: "2px 6px",
   fontSize: "0.75rem",
   borderRadius: "2px",

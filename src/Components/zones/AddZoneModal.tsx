@@ -30,8 +30,9 @@ type AddZoneModalProps = {
 function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
   const theme = useTheme();
   // fallback values for close icon colors
-  const closeIconColor = theme.custom?.modal?.closeIcon || "#707174";
-  const closeIconHoverColor = theme.custom?.modal?.closeIconHover || "#323232";
+  const closeIconColor = theme.custom?.colors.themeText || "#707174";
+  const closeIconHoverColor =
+    theme.custom?.colors.callToActionPrimary || "#323232";
   const { season } = useSelector((state: RootState) => state.season);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -238,7 +239,7 @@ function AddZoneModal({ open, onClose, fetchZones }: AddZoneModalProps) {
                 variant="standard"
                 sx={{
                   "& .MuiInputBase-input": {
-                    color: theme.custom.modal.fieldInputFont,
+                    color: theme.custom.colors.themeText,
                   },
                 }}
               />
@@ -325,7 +326,7 @@ const ImgUploadFilenameLabel = styled("span")(({ theme }) => ({
   position: "absolute",
   left: 0,
   top: 6,
-  color: theme.custom.modal.fieldLabel,
+  color: theme.custom.colors.themeText,
 }));
 
 const ImgUploadFilename = styled(Typography)(({ theme }) => ({
@@ -340,8 +341,8 @@ const ImgUploadFilename = styled(Typography)(({ theme }) => ({
   fontFamily: "inherit",
   display: "flex",
   alignItems: "center",
-  backgroundColor: theme.custom.modal.fieldBackground,
-  color: theme.custom.modal.fieldInputFont,
+  backgroundColor: theme.custom.colors.themeBorder,
+  color: theme.custom.colors.themeText,
   border: "1.5px solid transparent",
   margin: 0,
   textOverflow: "ellipsis",

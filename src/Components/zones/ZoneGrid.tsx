@@ -76,7 +76,7 @@ const StyledZoneGridContainer = styled(Container)(({ theme }) => ({
   padding: "0 !important",
   margin: "0 !important",
   height: "100%",
-  backgroundColor: theme.custom.colors.themeLighter,
+  backgroundColor: theme.custom.colors.pageBackground,
   flexGrow: 1,
   display: "flex",
   flexDirection: "column",

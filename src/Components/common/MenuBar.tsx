@@ -45,7 +45,7 @@ export default function MenuBar({
       <CssBaseline />
       <StyledMenuBarWrapper
         sx={{
-          backgroundColor: theme.custom.menuBar.background,
+          backgroundColor: theme.custom.colors.menuBarBackground,
           color: theme.custom.menuBar.color,
           borderBottom: `1px solid ${theme.custom.navBar.borderBottom}`,
         }}

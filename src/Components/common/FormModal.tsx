@@ -48,7 +48,7 @@ const FormModal: React.FC<FormModalProps> = ({
       slotProps={{
         backdrop: {
           style: {
-            backgroundColor: theme.custom.modal.overlay,
+            backgroundColor: theme.custom.colors.themeOverlayModal,
             backdropFilter: "blur(4px)",
           },
         },
@@ -105,36 +105,36 @@ const ModalBox = styled(Box)(({ theme }) => ({
   boxShadow:
     "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
   // Default modal styles from theme
-  backgroundColor: theme.custom.modal.background,
-  border: `1px solid ${theme.custom.modal.border}`,
+  backgroundColor: theme.custom.colors.themeLighter,
+  border: `1px solid ${theme.custom.colors.themeBorder}`,
   "& .close-icon": {
-    color: theme.custom.modal.closeIcon,
+    color: theme.custom.colors.themeText,
   },
   "& .close-icon:hover": {
-    color: theme.custom.modal.closeIconHover,
+    color: theme.custom.colors.callToActionPrimary,
   },
   // Image upload and dropdown specific styles
   "& .img-upload-filename-label, & .dropdown-override label": {
-    color: theme.custom.modal.fieldLabel,
+    color: theme.custom.colors.themeText,
   },
   "& .img-upload-filename": {
-    color: theme.custom.modal.fieldInputFont,
-    backgroundColor: theme.custom.modal.fieldBackground,
+    color: theme.custom.colors.themeText,
+    backgroundColor: theme.custom.colors.themeLighter,
   },
   "& .dropdown-override .MuiOutlinedInput-root:hover": {
-    border: `1px solid ${theme.custom.modal.fieldBorder}`,
+    border: `1px solid ${theme.custom.colors.callToActionPrimary}`,
   },
   // Notes field specific styles
   "& .input-override.notes .MuiInputBase-multiline textarea": {
-    color: theme.custom.modal.fieldInputFont,
-    backgroundColor: theme.custom.modal.fieldBackground,
+    color: theme.custom.colors.themeText,
+    backgroundColor: theme.custom.colors.themeLighter,
   },
   "& .input-override.notes .MuiInputBase-multiline textarea:hover, & .input-override.notes .MuiInputBase-multiline textarea:focus":
     {
-      border: `1px solid ${theme.custom.modal.fieldBorder}`,
+      border: `1px solid ${theme.custom.colors.callToActionPrimary}`,
     },
   "& .optional-fields-accordion": {
-    color: theme.custom.modal.titleColor,
+    color: theme.custom.colors.themeText,
   },
   "@media (min-width: 320px) and (max-width: 599px)": {
     width: "400px",
@@ -175,14 +175,14 @@ const ModalTitle = styled(Typography)(({ theme }) => ({
   fontWeight: "100 !important",
   fontFamily: '"Outfit", sans-serif !important',
   margin: 0,
-  color: theme.custom.modal.titleColor,
+  color: theme.custom.colors.themeText,
 }));
 
 const ModalDescription = styled(Typography)(({ theme }) => ({
   fontSize: "0.875rem !important",
   fontWeight: "100 !important",
   margin: 0,
-  color: theme.custom.modal.description,
+  color: theme.custom.colors.themeText,
 }));
 
 const LoadingOverlay = styled(Box)`

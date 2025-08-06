@@ -8,7 +8,7 @@ import { styled } from "@mui/material/styles";
 export const StyledTextField = styled(TextField)(({ theme }) => ({
   width: "100%",
   "& .MuiInputBase-root, & .MuiInputBase-input": {
-    backgroundColor: theme.custom.modal.fieldBackground,
+    backgroundColor: theme.custom.colors.themeBorder,
   },
   "& .MuiInputBase-input": {
     padding: "5px 12px !important",
@@ -16,16 +16,16 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     width: "100%",
     height: "38px",
     boxSizing: "border-box",
-    color: theme.custom.modal.fieldInputFont,
+    color: theme.custom.colors.themeText,
   },
   "& .MuiInputLabel-root, & .img-upload-filename-label": {
-    color: theme.custom.modal.fieldLabel,
+    color: theme.custom.colors.themeText,
     fontSize: "0.875rem !important",
     fontWeight: 400,
     transform: "translate(0, -4.5px)",
   },
   "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-root.Mui-error": {
-    color: theme.custom.modal.fieldLabel,
+    color: theme.custom.colors.themeText,
   },
   "& .MuiInputLabel-root.notes": {
     transform: "translate(0, -22px)",
@@ -47,7 +47,7 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   },
   // Blue border on focus/hover (only color changes)
   "& .MuiInputBase-root.Mui-focused, & .MuiInputBase-root:hover": {
-    border: `1.5px solid ${theme.custom.modal.fieldBorder}`,
+    border: `1.5px solid ${theme.custom.colors.callToActionPrimary}`,
     background: "inherit",
   },
   "& p.Mui-error, & + p.Mui-error": {

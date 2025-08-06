@@ -296,7 +296,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   width: "370px !important",
   height: "fit-content",
   backgroundImage: "none !important",
-  backgroundColor: theme.custom.colors.themeLightest,
+  backgroundColor: theme.custom.colors.cardBackground,
   border: `1px solid ${theme.custom.colors.themeBorder}`,
   boxShadow: theme.custom.colors.cardShadow,
 }));
