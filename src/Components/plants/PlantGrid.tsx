@@ -276,7 +276,6 @@ PlantGridProps) {
             toolbar: PlantGridToolbar,
           }}
           showToolbar
-          density="standard" // Set default density, user can change via custom toolbar
           // Column virtualization for better performance with many columns
           columnBufferPx={150}
           columnHeaderHeight={45} // Adjust this value to change header height (default is 56)
@@ -287,6 +286,7 @@ PlantGridProps) {
             },
           }}
           initialState={{
+            density: "standard", // Uncontrolled density initialization - user can change via custom toolbar
             columns: {
               columnVisibilityModel:
                 PLANT_GRID_CONFIG.INITIAL_COLUMN_VISIBILITY,
@@ -392,6 +392,7 @@ const ActionButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   ...theme.custom.plantGrid.dataGrid.root,
   width: "100%",
@@ -451,6 +452,7 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     justifyContent: "flex-start",
     padding: "8px 16px",
   },
+
   // Adjust row height based on density
   "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
     minHeight: `${PLANT_GRID_CONFIG.VIRTUALIZATION.ROW_HEIGHT_COMPACT}px`,

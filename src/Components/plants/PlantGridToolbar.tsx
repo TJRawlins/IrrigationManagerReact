@@ -77,7 +77,7 @@ function PlantGridToolbar() {
           </ToolbarButton>
         </Tooltip>
 
-        <Menu
+        <ThemedMenu
           id="density-menu"
           anchorEl={densityMenuTriggerRef.current}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
@@ -89,20 +89,24 @@ function PlantGridToolbar() {
           }}
         >
           {DENSITY_OPTIONS.map((option) => (
-            <MenuItem
+            <ThemedMenuItem
               key={option.value}
               onClick={() => {
+                console.log(
+                  `%cPlantGridToolbar: Changing density from '${density}' to '${option.value}'`,
+                  "color:#1CA1E6"
+                );
                 apiRef.current.setDensity(option.value);
                 setDensityMenuOpen(false);
               }}
             >
-              <ListItemIcon>
+              <ThemedListItemIcon>
                 {density === option.value && <Check fontSize="small" />}
-              </ListItemIcon>
+              </ThemedListItemIcon>
               <ListItemText>{option.label}</ListItemText>
-            </MenuItem>
+            </ThemedMenuItem>
           ))}
-        </Menu>
+        </ThemedMenu>
 
         <Tooltip title="Export">
           <ToolbarButton
@@ -118,7 +122,7 @@ function PlantGridToolbar() {
           </ToolbarButton>
         </Tooltip>
 
-        <Menu
+        <ThemedMenu
           id="export-menu"
           anchorEl={exportMenuTriggerRef.current}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
@@ -130,18 +134,18 @@ function PlantGridToolbar() {
           }}
         >
           <ExportPrint
-            render={<MenuItem />}
+            render={<ThemedMenuItem />}
             onClick={() => setExportMenuOpen(false)}
           >
             Print
           </ExportPrint>
           <ExportCsv
-            render={<MenuItem />}
+            render={<ThemedMenuItem />}
             onClick={() => setExportMenuOpen(false)}
           >
             Download as CSV
           </ExportCsv>
-        </Menu>
+        </ThemedMenu>
 
         <GridToolbarQuickFilter />
       </Toolbar>
@@ -188,6 +192,25 @@ const ThemedToolbarContainer = styled(Box)(({ theme }) => ({
   "& .MuiSvgIcon-root": {
     color: theme.custom.plantGrid.toolbar.textColor,
   },
+}));
+
+// Themed Menu Components
+const ThemedMenu = styled(Menu)(({ theme }) => ({
+  "& .MuiPaper-root": {
+    ...theme.custom.plantGrid.toolbar.menus.paper,
+  },
+}));
+
+const ThemedMenuItem = styled(MenuItem)(({ theme }) => ({
+  color: theme.custom.plantGrid.toolbar.menus.menuItem.color,
+  "&:hover": {
+    backgroundColor:
+      theme.custom.plantGrid.toolbar.menus.menuItem.hover.backgroundColor,
+  },
+}));
+
+const ThemedListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+  color: theme.custom.plantGrid.toolbar.menus.listItemIcon.color,
 }));
 
 export default PlantGridToolbar;
