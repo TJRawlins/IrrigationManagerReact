@@ -35,7 +35,7 @@ export const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
 export const StyledSelect = styled(Select)(({ theme }) => ({
   width: "100%",
   // Add the specific styling for FormControl alignment
-  "& .MuiInputBase-formControl": {
+  "&.MuiInputBase-formControl": {
     borderRadius: "5px !important",
     marginTop: "17px",
   },
