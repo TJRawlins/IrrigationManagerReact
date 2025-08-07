@@ -145,25 +145,9 @@ const BUTTONS = {
 declare module "@mui/material/styles" {
   interface Theme {
     custom: {
-      // fonts: {
-      //   headers: {
-      //     fontFamily: string;
-      //     letterSpacing: string;
-      //   };
-      //   logo: {
-      //     fontFamily: string;
-      //     letterSpacing: string;
-      //   };
-      //   content: {
-      //     fontFamily: string;
-      //     letterSpacing: string;
-      //   };
-      // };
       //* [== KEEP THEME ==]
       fonts: typeof FONTS;
-      //* [== KEEP THEME ==]
       buttons: typeof BUTTONS;
-      //* [== KEEP THEME ==]
       colors: {
         callToActionPrimary: string;
         callToActionPrimaryHover: string;
