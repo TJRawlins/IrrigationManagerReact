@@ -1,4 +1,9 @@
 export { default as StyledTextField } from "./StyledTextField";
+export {
+  StyledSelect,
+  StyledFormControl,
+  StyledInputLabel,
+} from "./StyledDropdownMenu";
 export { default as FormModal } from "./FormModal";
 export { default as ConfirmationPopover } from "./ConfirmationPopover";
 export { default as FloatingActionButton } from "./FloatingActionButton";
