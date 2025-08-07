@@ -469,7 +469,7 @@ const ImgUploadFilename = styled(Typography)(({ theme }) => ({
   fontFamily: "inherit",
   display: "flex",
   alignItems: "center",
-  backgroundColor: theme.custom.colors.themeLightest,
+  backgroundColor: theme.custom.colors.themeBorder,
   color: theme.custom.colors.themeText,
   border: "1.5px solid transparent",
   margin: 0,
