@@ -12,8 +12,6 @@ import {
   updateCurrentPlantList,
 } from "../../../redux/plantSlice";
 import { Plant } from "../../../App/models/Plant";
-import "../../../styles/baseStyles/BaseCard.css";
-
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import ZoneCardHeader from "./ZoneCardHeader";
 import ImageCard from "../../common/ImageCard";
