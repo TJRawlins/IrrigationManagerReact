@@ -52,8 +52,9 @@ const ConfirmationPopover: React.FC<ConfirmationPopoverProps> = ({
       slotProps={{
         paper: {
           sx: {
-            backgroundColor: backgroundColor || theme.custom.modal.background,
-            color: textColor || theme.custom.modal.titleColor,
+            backgroundColor:
+              backgroundColor || theme.custom.colors.themeLightest,
+            color: textColor || theme.custom.colors.themeText,
             boxShadow: 3,
             backgroundImage: "none",
             borderTop: `8px solid ${theme.custom.messages.warning.icon}`,
