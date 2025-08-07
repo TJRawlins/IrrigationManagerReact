@@ -3,19 +3,13 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  CircularProgress,
-  FormControl,
-  InputLabel,
   MenuItem,
-  Modal,
-  Select,
   styled,
-  TextField,
   Tooltip,
   Typography,
-  useTheme,
+  FormHelperText,
+  Button,
 } from "@mui/material";
-import Button from "@mui/material/Button";
 import { ChangeEvent, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -23,7 +17,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import agent from "../../App/api/agent";
 import { updateCurrentZone } from "../../redux/zoneSlice";
-import FormHelperText from "@mui/material/FormHelperText";
 import { app } from "../../App/firebase/firebase";
 import {
   getStorage,
@@ -33,12 +26,17 @@ import {
   StorageReference,
   FirebaseStorage,
 } from "firebase/storage";
-import { v4 } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import Compressor from "compressorjs";
-import "../../styles/baseStyles/BaseCard.css";
-import { IoClose } from "react-icons/io5";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useTheme } from "@mui/material/styles";
+import { useImageUpload } from "../../hooks/useImageUpload";
+import {
+  FormModal,
+  StyledTextField,
+  StyledSelect,
+  StyledFormControl,
+  StyledInputLabel,
+} from "../common";
 
 type AddPlantModalProps = {
   open: boolean;
@@ -46,38 +44,31 @@ type AddPlantModalProps = {
   fetchPlants: (id: number) => Promise<void>;
 };
 
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
 function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
   const dispatch = useDispatch();
-  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const theme = useTheme();
+  // fallback values for close icon colors
+  const closeIconColor = theme.custom?.colors.themeText || "#707174";
+  const closeIconHoverColor =
+    theme.custom?.colors.callToActionPrimary || "#323232";
   const { zone } = useSelector((state: RootState) => state.zone);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // color theme
-  const theme = useTheme();
-
   // Firebase Storage Variables
-  const [error, setError] = useState<string>("");
-  const [imageUpload, setImageUpload] = useState<File>();
-  const [imagePathAndFileName, setImagePathAndFileName] = useState<string>();
+  const username = "tjrawlins"; // Replace with actual username from context/store if available
+  const {
+    error,
+    imageUpload,
+    imagePathAndFileName,
+    handleImageValidation,
+    clearImage,
+  } = useImageUpload({ username, folder: "plants" });
   const storage: FirebaseStorage = getStorage(app);
   const imageRef: StorageReference = ref(storage, imagePathAndFileName);
 
   const handleClose = () => {
     onClose();
-    setError("");
-    setImageUpload(undefined);
+    clearImage();
   };
 
   // TODO - Update local storage for zone. Added to onSubmit
@@ -116,17 +107,14 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
 
   const onSubmit = (values: object, props: { resetForm: () => void }) => {
     // updateLocalStorageZone was added to update and persist gallons on PlantBar
-    if (isClicked) {
-      if (imageUpload) {
-        setIsLoading(true);
-        uploadImage(imageRef, imageUpload, values, props);
-      } else {
-        setIsLoading(true);
-        addPlant(values, props);
-      }
-      setIsClicked(false);
-      console.log("%cAddPlantModal: Plant Added", "color:#1CA1E6");
+    if (imageUpload) {
+      setIsLoading(true);
+      uploadImage(imageRef, imageUpload, values, props);
+    } else {
+      setIsLoading(true);
+      addPlant(values, props);
     }
+    console.log("%cAddPlantModal: Plant Added", "color:#1CA1E6");
   };
 
   const uploadImage = async (
@@ -146,66 +134,8 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
           }
         })
         .then(() => addPlant(values, props));
-      setImageUpload(undefined);
+      clearImage();
     });
-  };
-
-  // Onchange event for "Select Image" button
-  const handleImageValidation = async (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setImageUpload(undefined);
-    if (!event.target.files?.[0]) {
-      return;
-    }
-    if (!event.target.files?.[0].type.startsWith("image/")) {
-      setError("Invalid image file.");
-      return;
-    }
-    // 5MB limit
-    if (event.target.files?.[0].size > 5 * 1024 * 1024) {
-      setError("File size exceeds 5MB");
-      return;
-    }
-    if (event.target.files?.[0]) {
-      try {
-        const compressedFile: File = await compressImage(
-          event.target.files?.[0]
-        );
-        if (compressedFile.size < event.target.files?.[0].size) {
-          generateImageFileName(compressedFile);
-          setError("");
-        } else {
-          setError("Select a different image");
-        }
-      } catch (error) {
-        setError("Compression Error");
-        console.error("Compression Error:", error);
-      }
-    }
-  };
-
-  const compressImage = async (file: File): Promise<File> => {
-    return new Promise((resolve, reject) => {
-      new Compressor(file, {
-        quality: 0.6,
-        width: 500,
-        success(result) {
-          resolve(result as File);
-        },
-        error(err) {
-          reject(err);
-        },
-      });
-    });
-  };
-
-  // TODO: Need to replace "tjrawlins" with the username
-  const generateImageFileName = (compressedFile: File) => {
-    setImageUpload(compressedFile);
-    setImagePathAndFileName(
-      `users/tjrawlins/images/plants/${compressedFile.name.toString()}${v4()}`
-    );
   };
 
   const checkInitialValues = async (values: object): Promise<object> => {
@@ -265,120 +195,63 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
   };
 
   return (
-    <Modal
-      className="modal-overlay"
+    <FormModal
       open={open}
-      onClose={() => {}} // Prevent closing on backdrop click or escape key
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      slotProps={{
-        backdrop: {
-          style: {
-            backgroundColor: theme.custom.modal.overlay,
-            backdropFilter: "blur(4px)",
-          },
-        },
-      }}
+      onClose={handleClose}
+      title="Add Plant"
+      description={`Add a new plant to the ${zone.name.toLocaleLowerCase()} zone`}
+      loading={isLoading}
+      closeIconColor={closeIconColor}
+      closeIconHoverColor={closeIconHoverColor}
     >
-      <Box
-        className="modal-box"
-        sx={{
-          backgroundColor: theme.custom.modal.background,
-          border: `1px solid ${theme.custom.modal.border}`,
-        }}
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+        enableReinitialize={true}
       >
-        <IoClose className="close-icon" onClick={handleClose} />
-        <div className="modal-title-container">
-          {isLoading && (
-            <Modal
-              open={open}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-              slotProps={{
-                backdrop: {
-                  style: { backgroundColor: "transparent" },
-                },
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                  height: "100%",
-                  position: "absolute",
-                  top: "0",
-                  left: "0",
-                }}
-              >
-                <CircularProgress sx={{ color: theme.palette.primary.main }} />
-              </Box>
-            </Modal>
-          )}
-          <Typography
-            className="modal-title"
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            sx={{
-              color: theme.custom.modal.titleColor,
-            }}
-          >
-            Add Plant
-          </Typography>
-          <Typography
-            className="modal-description"
-            component="p"
-            sx={{
-              color: theme.custom.modal.description,
-            }}
-          >
-            Add a new plant to the {zone.name.toLocaleLowerCase()} zone
-          </Typography>
-        </div>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
-          enableReinitialize={true}
-        >
-          {({ errors, touched, values, handleChange }) => (
-            <Form style={{ width: "100%", padding: "0 24px 24px" }}>
-              <div className="split-container">
-                <Box className="input">
-                  <Field
-                    as={TextField}
-                    required
-                    className="input input-override"
-                    id="plant-name-input"
-                    name="name"
-                    label="Plant name"
-                    type="text"
-                    autoComplete=""
-                    variant="standard"
-                    error={touched.name && Boolean(errors.name)}
-                  />
-                  <FormHelperText error={touched.name && Boolean(errors.name)}>
-                    {touched.name && errors.name ? errors.name : ""}
-                  </FormHelperText>
-                </Box>
-              </div>
-              <div className="split-container">
-                <FormControl fullWidth className="dropdown-override">
-                  <InputLabel id="plant-type-input" sx={{ padding: "0 5px" }}>
+        {({ errors, touched, values, handleChange }) => (
+          <Form style={{ width: "100%", padding: "0 24px 24px" }}>
+            <SplitContainer>
+              <InputBox>
+                <Field
+                  as={StyledTextField}
+                  required
+                  id="plant-name-input"
+                  name="name"
+                  label="Plant name"
+                  type="text"
+                  autoComplete=""
+                  variant="standard"
+                  error={touched.name && Boolean(errors.name)}
+                />
+                <ErrorHelperText error={touched.name && Boolean(errors.name)}>
+                  {touched.name && errors.name ? errors.name : ""}
+                </ErrorHelperText>
+              </InputBox>
+            </SplitContainer>
+
+            <SplitContainer>
+              <InputBox>
+                <StyledFormControl fullWidth>
+                  <StyledInputLabel id="plant-type-input">
                     Plant type
-                    <span aria-hidden="true" className="MuiInputLabel-asterisk">
-                      {" " + "*"}
-                    </span>
-                  </InputLabel>
+                    <span className="MuiInputLabel-asterisk"> *</span>
+                  </StyledInputLabel>
                   <Field
-                    as={Select}
+                    as={StyledSelect}
                     required
-                    aria-hidden="false"
                     name="type"
-                    type="select"
                     error={touched.type && Boolean(errors.type)}
+                    labelId="plant-type-input"
+                    MenuProps={{
+                      PaperProps: {
+                        sx: {
+                          backgroundColor: theme.custom.colors.themeLighter,
+                          border: `1px solid ${theme.custom.colors.themeBorder}`,
+                        },
+                      },
+                    }}
                   >
                     <MenuItem value={"Tree"}>Tree</MenuItem>
                     <MenuItem value={"Shrub"}>Shrub</MenuItem>
@@ -388,229 +261,243 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
                     <MenuItem value={"Vine"}>Vine</MenuItem>
                     <MenuItem value={"Cacti"}>Cacti</MenuItem>
                   </Field>
-                  <FormHelperText error={touched.type && Boolean(errors.type)}>
+                  <ErrorHelperText error={touched.type && Boolean(errors.type)}>
                     {touched.type && errors.type ? errors.type : ""}
-                  </FormHelperText>
-                </FormControl>
-                <Box className="input" sx={{ width: "210px" }}>
+                  </ErrorHelperText>
+                </StyledFormControl>
+              </InputBox>
+
+              <InputBox>
+                <Field
+                  as={StyledTextField}
+                  required
+                  id="quantity-input"
+                  name="quantity"
+                  label="Quantity"
+                  type="number"
+                  autoComplete=""
+                  variant="standard"
+                  InputProps={{ inputProps: { min: 0, max: 150 } }}
+                  error={touched.quantity && Boolean(errors.quantity)}
+                />
+                <ErrorHelperText
+                  error={touched.quantity && Boolean(errors.quantity)}
+                >
+                  {touched.quantity && errors.quantity ? errors.quantity : ""}
+                </ErrorHelperText>
+              </InputBox>
+
+              <Tooltip
+                title="Required Gallons Per Week (GPW), per plant"
+                arrow
+                sx={{ zIndex: 999 }}
+              >
+                <InputBox>
                   <Field
-                    as={TextField}
+                    as={StyledTextField}
                     required
-                    className="input input-override"
-                    id="quantity-input"
-                    name="quantity"
-                    label="Quantity"
+                    id="gals-wk-input"
+                    name="galsPerWk"
+                    label="Required GPW"
                     type="number"
                     autoComplete=""
                     variant="standard"
-                    InputProps={{ inputProps: { min: 0, max: 150 } }}
-                    error={touched.quantity && Boolean(errors.quantity)}
+                    error={touched.galsPerWk && Boolean(errors.galsPerWk)}
                   />
-                  <FormHelperText
-                    error={touched.quantity && Boolean(errors.quantity)}
+                  <ErrorHelperText
+                    error={touched.galsPerWk && Boolean(errors.galsPerWk)}
                   >
-                    {touched.quantity && errors.quantity ? errors.quantity : ""}
-                  </FormHelperText>
-                </Box>
-                <Tooltip
-                  title="Required Gallons Per Week (GPW), per plant"
-                  arrow
-                  sx={{ zIndex: 999 }}
+                    {touched.galsPerWk && errors.galsPerWk
+                      ? errors.galsPerWk
+                      : ""}
+                  </ErrorHelperText>
+                </InputBox>
+              </Tooltip>
+            </SplitContainer>
+
+            <SplitContainer>
+              <Tooltip title="Number of emitters per plant" arrow>
+                <InputBox>
+                  <Field
+                    as={StyledTextField}
+                    required
+                    id="emitters-input"
+                    label="Emitter count"
+                    name="emittersPerPlant"
+                    type="number"
+                    autoComplete=""
+                    variant="standard"
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      values.galsPerWkCalc = getGalsPerWkCalcValue(
+                        values,
+                        event
+                      );
+                      handleChange(event);
+                    }}
+                    error={
+                      touched.emittersPerPlant &&
+                      Boolean(errors.emittersPerPlant)
+                    }
+                  />
+                  <ErrorHelperText
+                    error={
+                      touched.emittersPerPlant &&
+                      Boolean(errors.emittersPerPlant)
+                    }
+                  >
+                    {touched.emittersPerPlant && errors.emittersPerPlant
+                      ? errors.emittersPerPlant
+                      : ""}
+                  </ErrorHelperText>
+                </InputBox>
+              </Tooltip>
+
+              <Tooltip title="Gallons Per Hour per plant" arrow>
+                <InputBox>
+                  <Field
+                    as={StyledTextField}
+                    required
+                    id="emitters-gph-input"
+                    label="Emitter GPH"
+                    name="emitterGPH"
+                    type="number"
+                    autoComplete=""
+                    variant="standard"
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      values.galsPerWkCalc = getGalsPerWkCalcValue(
+                        values,
+                        event
+                      );
+                      handleChange(event);
+                    }}
+                    error={touched.emitterGPH && Boolean(errors.emitterGPH)}
+                  />
+                  <ErrorHelperText
+                    error={touched.emitterGPH && Boolean(errors.emitterGPH)}
+                  >
+                    {touched.emitterGPH && errors.emitterGPH
+                      ? errors.emitterGPH
+                      : ""}
+                  </ErrorHelperText>
+                </InputBox>
+              </Tooltip>
+
+              <Tooltip
+                title="Calculated Gallons Per Week (GPW), per plant. Automatically calculated based on emitter count, flow rate, and zone runtime. Compare with 'Req. GPW' value and adjust as necessary"
+                arrow
+                sx={{ zIndex: 999 }}
+              >
+                <InputBox>
+                  <Field
+                    as={StyledTextField}
+                    id="gals-wk-calc-input"
+                    name="galsPerWkCalc"
+                    label="Calculated GPW"
+                    type="number"
+                    autoComplete=""
+                    variant="standard"
+                    disabled
+                  />
+                </InputBox>
+              </Tooltip>
+            </SplitContainer>
+
+            <OptionalFieldsAccordion>
+              <AccordionSummary
+                expandIcon={
+                  <ExpandMoreIcon
+                    sx={{ color: theme.custom.colors.themeText }}
+                  />
+                }
+                aria-controls="optional-fields-summary"
+                id="optional-fields-summary"
+              >
+                <Typography
+                  component="span"
+                  sx={{ color: theme.custom.colors.themeText }}
                 >
-                  <Box className="input">
-                    <Box sx={{ display: "flex" }}>
-                      <span>
-                        <Field
-                          as={TextField}
-                          required
-                          className="input input-override"
-                          id="gals-wk-input"
-                          name="galsPerWk"
-                          label="Required GPW"
-                          type="number"
-                          autoComplete=""
-                          variant="standard"
-                          error={touched.galsPerWk && Boolean(errors.galsPerWk)}
-                        />
-                        <FormHelperText
-                          error={touched.galsPerWk && Boolean(errors.galsPerWk)}
-                        >
-                          {touched.galsPerWk && errors.galsPerWk
-                            ? errors.galsPerWk
-                            : ""}
-                        </FormHelperText>
-                      </span>
-                    </Box>
-                  </Box>
-                </Tooltip>
-              </div>
-              <div className="split-container">
-                <Tooltip title="Number of emitters per plant" arrow>
-                  <Box className="input input-override">
+                  Optional Fields
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <SplitContainer>
+                  <InputBox>
                     <Field
-                      as={TextField}
-                      required
-                      className="input"
-                      id="emitters-input"
-                      label="Emitter count"
-                      name="emittersPerPlant"
+                      as={StyledTextField}
+                      id="age-input"
+                      label="Plant age"
+                      name="age"
                       type="number"
                       autoComplete=""
                       variant="standard"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        values.galsPerWkCalc = getGalsPerWkCalcValue(
-                          values,
-                          event
-                        );
-                        handleChange(event);
+                      InputProps={{
+                        inputProps: { min: 0, max: 150 },
                       }}
-                      error={
-                        touched.emittersPerPlant &&
-                        Boolean(errors.emittersPerPlant)
-                      }
                     />
-                    <FormHelperText
-                      error={
-                        touched.emittersPerPlant &&
-                        Boolean(errors.emittersPerPlant)
-                      }
-                    >
-                      {touched.emittersPerPlant && errors.emittersPerPlant
-                        ? errors.emittersPerPlant
-                        : ""}
-                    </FormHelperText>
-                  </Box>
-                </Tooltip>
-                <Tooltip title="Gallons Per Hour per plant" arrow>
-                  <Box className="input input-override">
+                  </InputBox>
+                  <InputBox>
                     <Field
-                      as={TextField}
-                      required
-                      className="input"
-                      id="emitters-gph-input"
-                      label="Emitter GPH"
-                      name="emitterGPH"
+                      as={StyledTextField}
+                      id="hardiness-zone-input"
+                      label="USDA zone"
+                      name="hardinessZone"
                       type="number"
                       autoComplete=""
                       variant="standard"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        values.galsPerWkCalc = getGalsPerWkCalcValue(
-                          values,
-                          event
-                        );
-                        handleChange(event);
-                      }}
-                      error={touched.emitterGPH && Boolean(errors.emitterGPH)}
+                      InputProps={{ inputProps: { min: 1, max: 11 } }}
                     />
-                    <FormHelperText
-                      error={touched.emitterGPH && Boolean(errors.emitterGPH)}
-                    >
-                      {touched.emitterGPH && errors.emitterGPH
-                        ? errors.emitterGPH
-                        : ""}
-                    </FormHelperText>
-                  </Box>
-                </Tooltip>
-                <Tooltip
-                  title="Calculated Gallons Per Week (GPW), per plant. Automatically calculated 
-                      based on emitter count, flow rate, and zone runtime. 
-                      Compare with 'Req. GPW' value and adjust as necessary"
-                  arrow
-                  sx={{ zIndex: 999 }}
-                >
-                  <Box className="input">
-                    <Box sx={{ display: "flex" }}>
-                      <Field
-                        as={TextField}
-                        className="input input-override"
-                        id="gals-wk-calc-input"
-                        name="galsPerWkCalc"
-                        label="Calculated GPW"
-                        type="number"
-                        autoComplete=""
-                        variant="standard"
-                        disabled
-                      />
-                    </Box>
-                  </Box>
-                </Tooltip>
-              </div>
-              <Accordion className="optional-fields-accordion">
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="optional-fields-summary"
-                  id="optional-fields-summary"
-                >
-                  <Typography component="span">Optional Fields</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <div className="split-container">
-                    <Box className="input">
-                      <Field
-                        as={TextField}
-                        className="input input-override"
-                        id="age-input"
-                        label="Plant age"
-                        name="age"
-                        type="number"
-                        autoComplete=""
-                        variant="standard"
-                        InputProps={{
-                          min: 0,
-                          max: 150,
-                        }}
-                      />
-                    </Box>
-                    <Box className="input">
-                      <Field
-                        as={TextField}
-                        className="input input-override"
-                        id="hardiness-zone-input"
-                        label="USDA zone"
-                        name="hardinessZone"
-                        type="number"
-                        autoComplete=""
-                        variant="standard"
-                        InputProps={{ inputProps: { min: 1, max: 11 } }}
-                      />
-                    </Box>
-                  </div>
-                  <div className="split-container">
-                    <FormControl fullWidth className="dropdown-override">
-                      <InputLabel id="exposure-input" sx={{ padding: "0 5px" }}>
+                  </InputBox>
+                </SplitContainer>
+
+                <SplitContainer>
+                  <InputBox>
+                    <StyledFormControl fullWidth>
+                      <StyledInputLabel id="exposure-input">
                         Exposure
-                      </InputLabel>
+                      </StyledInputLabel>
                       <Field
-                        style={{ padding: "5px !important" }}
-                        as={Select}
+                        as={StyledSelect}
                         name="exposure"
-                        type="select"
+                        labelId="exposure-input"
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              backgroundColor: theme.custom.colors.themeLighter,
+                              border: `1px solid ${theme.custom.colors.themeBorder}`,
+                            },
+                          },
+                        }}
                       >
-                        <MenuItem
-                          value={""}
-                          className="dropdown-unselect"
-                        ></MenuItem>
+                        <MenuItem value={""}>
+                          <em>None</em>
+                        </MenuItem>
                         <MenuItem value={"Full Sun"}>Full Sun</MenuItem>
                         <MenuItem value={"Partial Sun"}>Partial Sun</MenuItem>
                       </Field>
-                    </FormControl>
-                    <FormControl fullWidth className="dropdown-override">
-                      <InputLabel
-                        id="harvest-month-input"
-                        sx={{ padding: "0 5px" }}
-                      >
+                    </StyledFormControl>
+                  </InputBox>
+
+                  <InputBox>
+                    <StyledFormControl fullWidth>
+                      <StyledInputLabel id="harvest-month-input">
                         Harvest
-                      </InputLabel>
+                      </StyledInputLabel>
                       <Field
-                        style={{ padding: "5px !important" }}
-                        as={Select}
+                        as={StyledSelect}
                         name="harvestMonth"
-                        type="select"
+                        labelId="harvest-month-input"
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              backgroundColor: theme.custom.colors.themeLighter,
+                              border: `1px solid ${theme.custom.colors.themeBorder}`,
+                            },
+                          },
+                        }}
                       >
-                        <MenuItem
-                          value={""}
-                          className="dropdown-unselect"
-                        ></MenuItem>
+                        <MenuItem value={""}>
+                          <em>None</em>
+                        </MenuItem>
                         <MenuItem value={"January"}>January</MenuItem>
                         <MenuItem value={"February"}>February</MenuItem>
                         <MenuItem value={"March"}>March</MenuItem>
@@ -624,88 +511,219 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
                         <MenuItem value={"November"}>November</MenuItem>
                         <MenuItem value={"December"}>December</MenuItem>
                       </Field>
-                    </FormControl>
-                  </div>
-                  <div className="split-container">
-                    <Box className="input input-override notes">
-                      <Field
-                        sx={{ width: "100%", mt: "1rem" }}
-                        label="Notes"
-                        name="notes"
-                        as={TextField}
-                        type="text"
-                        multiline
-                        maxRows={3}
-                      />
-                    </Box>
-                  </div>
-                  <div className="split-container upload">
-                    <label htmlFor="" className="img-upload-filename-label">
-                      Image file name
-                    </label>
-                    {imageUpload && !error ? (
-                      <Tooltip
-                        title={imageUpload ? imageUpload.name.toString() : ""}
-                        arrow
-                      >
-                        <Typography
-                          className="img-upload-filename"
-                          component={"div"}
-                        >
-                          {imageUpload ? imageUpload.name.toString() : ""}
-                        </Typography>
-                      </Tooltip>
-                    ) : (
-                      <Typography
-                        className="img-upload-filename error"
-                        component={"div"}
-                      >
-                        {error}
-                      </Typography>
-                    )}
-                    <Button
-                      className="img-upload-btn"
-                      component="label"
-                      role={undefined}
-                      variant="contained"
-                      tabIndex={-1}
-                      startIcon={<CloudUploadIcon />}
-                    >
-                      Select Image
-                      <VisuallyHiddenInput
-                        type="file"
-                        accept="image/*"
-                        onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                          handleImageValidation(event)
-                        }
-                        multiple
-                      />
-                    </Button>
-                  </div>
-                </AccordionDetails>
-              </Accordion>
-              <Box className="btn-wrapper">
-                <Button
-                  className="card-btn submit-btn"
-                  type="submit"
-                  onClick={() => setIsClicked(true)}
-                >
-                  Add Plant
-                </Button>
-                <Button
-                  className="card-btn cancel-btn"
-                  type="button"
-                  onClick={handleClose}
-                >
-                  Cancel
-                </Button>
-              </Box>
-            </Form>
-          )}
-        </Formik>
-      </Box>
-    </Modal>
+                    </StyledFormControl>
+                  </InputBox>
+                </SplitContainer>
+
+                <SplitContainer>
+                  <InputBox>
+                    <Field
+                      as={StyledTextField}
+                      sx={{ width: "100%", mt: "1rem" }}
+                      label="Notes"
+                      name="notes"
+                      type="text"
+                      multiline
+                      maxRows={3}
+                    />
+                  </InputBox>
+                </SplitContainer>
+
+                <SplitContainer upload>
+                  <ImgUploadFilenameLabel as="span">
+                    Image file name
+                  </ImgUploadFilenameLabel>
+                  <ImgUploadFilename
+                    as="div"
+                    id="image-filename-field"
+                    style={error ? { color: "#f44336" } : {}}
+                  >
+                    {error
+                      ? error
+                      : imageUpload
+                      ? imageUpload.name.toString()
+                      : ""}
+                  </ImgUploadFilename>
+                  <ImgUploadBtn as="label" variant="contained" tabIndex={-1}>
+                    <CloudUploadIcon sx={{ mr: 1 }} />
+                    Select Image
+                    <VisuallyHiddenInput
+                      type="file"
+                      accept="image/*"
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        handleImageValidation(event)
+                      }
+                      multiple
+                    />
+                  </ImgUploadBtn>
+                </SplitContainer>
+              </AccordionDetails>
+            </OptionalFieldsAccordion>
+
+            <ButtonWrapper>
+              <AddButton type="submit">Add Plant</AddButton>
+              <CancelButton type="button" onClick={handleClose}>
+                Cancel
+              </CancelButton>
+            </ButtonWrapper>
+          </Form>
+        )}
+      </Formik>
+    </FormModal>
   );
 }
 
 export default AddPlantModal;
+
+// Styled components
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+
+const SplitContainer = styled("div")<{ upload?: boolean }>`
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  ${(props) =>
+    props.upload &&
+    `
+      justify-content: right;
+      position: relative;
+      padding-top:1.5rem
+    `}
+`;
+
+const InputBox = styled(Box)`
+  width: 100% !important;
+  position: relative;
+`;
+
+const ErrorHelperText = styled(FormHelperText)`
+  position: absolute !important;
+  top: 22px;
+  left: 13px;
+  pointer-events: none;
+`;
+
+const OptionalFieldsAccordion = styled(Accordion)(() => ({
+  backgroundColor: "transparent !important",
+  backgroundImage: "none !important",
+  boxShadow: "none !important",
+  border: "none !important",
+  margin: "16px 0 !important",
+  "&:before": {
+    display: "none",
+  },
+  "& .MuiAccordionSummary-root": {
+    backgroundColor: "transparent !important",
+    padding: "8px 0",
+    minHeight: "auto",
+    transition: "margin-bottom 0.2s ease-in-out",
+    "&:not(.Mui-expanded)": {
+      marginBottom: 0,
+    },
+    "&.Mui-expanded": {
+      minHeight: "auto",
+      marginBottom: "8px",
+    },
+  },
+  "& .MuiAccordionSummary-content": {
+    margin: "0",
+    "&.Mui-expanded": {
+      margin: "0",
+    },
+  },
+  "& .MuiAccordionDetails-root": {
+    backgroundColor: "transparent !important",
+    padding: "0",
+    paddingTop: "8px",
+  },
+}));
+
+const ImgUploadFilenameLabel = styled("span")(({ theme }) => ({
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  transform: "translate(0, -4.5px)",
+  position: "absolute",
+  left: 0,
+  top: 6,
+  color: theme.custom.colors.themeText,
+}));
+
+const ImgUploadFilename = styled(Typography)(({ theme }) => ({
+  flex: 1,
+  minWidth: 0,
+  height: "38px",
+  padding: "5px 12px",
+  borderRadius: 5,
+  boxSizing: "border-box",
+  fontSize: "0.875rem",
+  fontWeight: 400,
+  fontFamily: "inherit",
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: theme.custom.colors.themeBorder,
+  color: theme.custom.colors.themeText,
+  border: "1.5px solid transparent",
+  margin: 0,
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+}));
+
+const ImgUploadBtn = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardPrimary,
+  flex: 1,
+  height: "38px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  textTransform: "none",
+  cursor: "pointer",
+  "&:hover": {
+    ...theme.custom.buttons.cardPrimary.hover,
+  },
+}));
+
+const ButtonWrapper = styled(Box)({
+  display: "flex",
+  gap: ".75rem",
+  marginTop: "1.5rem",
+  width: "48%",
+});
+
+const AddButton = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardPrimary,
+  width: "100%",
+  height: "38px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  textTransform: "none",
+  cursor: "pointer",
+  "&:hover": {
+    ...theme.custom.buttons.cardPrimary.hover,
+  },
+}));
+
+const CancelButton = styled(Button)(({ theme }) => ({
+  ...theme.custom.buttons.cardSecondary,
+  width: "100%",
+  height: "38px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  textTransform: "none",
+  cursor: "pointer",
+  "&:hover": {
+    ...theme.custom.buttons.cardSecondary.hover,
+  },
+}));
