@@ -518,9 +518,8 @@ function AddPlantModal({ open, onClose, fetchPlants }: AddPlantModalProps) {
                 <SplitContainer>
                   <InputBox>
                     <Field
-                      className="notes-field"
                       as={StyledTextField}
-                      sx={{ width: "100%", mt: "1rem" }}
+                      id="notes-input"
                       label="Notes"
                       name="notes"
                       type="text"
@@ -608,10 +607,6 @@ const InputBox = styled(Box)`
   & .MuiInputBase-root,
   & .MuiOutlinedInput-root {
     padding: 0;
-  }
-  & .notes-field .MuiInputLabel-root[data-shrink="false"],
-  & .notes-field .MuiInputLabel-root[data-shrink="true"] {
-    top: -16px;
   }
   & .MuiOutlinedInput-notchedOutline {
     border: none;

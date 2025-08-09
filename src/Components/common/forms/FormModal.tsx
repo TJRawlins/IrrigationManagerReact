@@ -101,12 +101,15 @@ const ModalBox = styled(Box)(({ theme }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "500px",
+  maxHeight: "90vh",
+  overflow: "auto",
   borderRadius: "7px",
   boxShadow:
     "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
   // Default modal styles from theme
   backgroundColor: theme.custom.colors.themeLighter,
   border: `1px solid ${theme.custom.colors.themeBorder}`,
+
   "& .close-icon": {
     color: theme.custom.colors.themeText,
   },

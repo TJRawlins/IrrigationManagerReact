@@ -1,0 +1,43 @@
+/* Fallback Global Scrollbar Styles */
+/* These styles provide a fallback if MUI's CssBaseline doesn't cover all cases */
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #0077b3;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #606162; /* Light mode text color */
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: #0077b3;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0077b3 transparent;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  *::-webkit-scrollbar-thumb:hover {
+    background: #b1b1b6; /* Dark mode text color */
+  }
+}

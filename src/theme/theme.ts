@@ -861,6 +861,43 @@ export const themeSettings = (mode: "light" | "dark"): ThemeOptions => {
     },
     custom: colors,
     components: {
+      // Global scrollbar styling using MUI's CssBaseline
+      MuiCssBaseline: {
+        styleOverrides: {
+          "*::-webkit-scrollbar": {
+            width: "8px",
+            height: "8px",
+          },
+          "*::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+          "*::-webkit-scrollbar-thumb": {
+            background: callToActionPrimary,
+            borderRadius: "4px",
+            transition: "all 0.3s ease",
+            "&:hover": {
+              background: mode === "light" ? lightThemeText : darkThemeText,
+            },
+            "&:active": {
+              background: callToActionPrimary,
+            },
+          },
+          "*::-webkit-scrollbar-corner": {
+            background: "transparent",
+          },
+          // Firefox scrollbar styling
+          "*": {
+            scrollbarWidth: "auto",
+            scrollbarColor: `${callToActionPrimary} transparent`,
+          },
+          // Ensure MUI components inherit the scrollbar styling
+          ".MuiModal-root *, .MuiDialog-root *, .MuiDrawer-root *, .MuiDataGrid-root *":
+            {
+              scrollbarWidth: "auto",
+              scrollbarColor: `${callToActionPrimary} transparent`,
+            },
+        },
+      },
       // DataGrid component styling for panels, toolbar, etc.
       MuiDataGrid: {
         styleOverrides: {
