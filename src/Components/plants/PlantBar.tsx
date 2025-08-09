@@ -11,7 +11,7 @@ import agent from "../../App/api/agent";
 import { updateCurrentSeason } from "../../redux/seasonSlice";
 import MenuBar, { MenuBarButton } from "../common/MenuBar";
 import FloatingActionButton from "../common/FloatingActionButton";
-import { useDrawer } from "../../App/Layout/DrawerContext";
+import { useResponsiveDrawer } from "../../hooks/useResponsiveDrawer";
 
 type PlantBarProps = {
   fetchPlants: (id: number) => Promise<void>;
@@ -26,7 +26,7 @@ export default function PlantBar({ fetchPlants }: PlantBarProps) {
   const [isAddPlantModalOpen, setIsAddPlantModalOpen] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width:1024px)");
   const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
-  const { open, setOpen } = useDrawer();
+  const { open, setOpen } = useResponsiveDrawer();
 
   // const subtitle = `${zone.name}, ${zone.totalPlants} plant${
   //   zone.totalPlants !== 1 ? "s" : ""

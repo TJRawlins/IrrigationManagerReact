@@ -3,7 +3,6 @@ import { CssBaseline, Box, ThemeProvider } from "@mui/material";
 import RouterComponent from "../../routes/RouterComponent";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ColorModeContext, useMode } from "../../theme/theme";
-import { DrawerProvider } from "./DrawerContext";
 import Navbar from "./Navbar";
 
 function AppContent() {
@@ -40,11 +39,9 @@ function App() {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <DrawerProvider>
-            <Router>
-              <AppContent />
-            </Router>
-          </DrawerProvider>
+          <Router>
+            <AppContent />
+          </Router>
         </ThemeProvider>
       </ColorModeContext.Provider>
     </>

@@ -9,7 +9,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import AddIcon from "@mui/icons-material/Add";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import FloatingActionButton from "../common/FloatingActionButton";
-import { useDrawer } from "../../App/Layout/DrawerContext";
+import { useResponsiveDrawer } from "../../hooks/useResponsiveDrawer";
 
 type ZoneBarProps = {
   fetchZones(args: number): Promise<void>;
@@ -31,7 +31,7 @@ export default function ZoneBar({
   const [isAddZoneModalOpen, setIsAddZoneModalOpen] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width:1024px)");
   const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
-  const { open, setOpen } = useDrawer();
+  const { open, setOpen } = useResponsiveDrawer();
 
   // Filter zones for the current season
   const zonesForSeason = Array.isArray(zoneList)

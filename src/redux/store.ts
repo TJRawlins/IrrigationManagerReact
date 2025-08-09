@@ -6,6 +6,7 @@ import zoneListReducer from "./zoneSlice";
 // import treflePlantReducer from "./plantSlice";
 import plantReducer from "./plantSlice";
 import plantListReducer from "./plantSlice";
+import uiReducer from "./uiSlice";
 // ...
 
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
     // treflePlant: treflePlantReducer,
     plant: plantReducer,
     plantList: plantListReducer,
+    ui: uiReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

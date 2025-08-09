@@ -5,7 +5,6 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { MdOutlineBrandingWatermark as ZonesIcon } from "react-icons/md";
 import MuiDrawer from "@mui/material/Drawer";
 import Typography from "@mui/material/Typography";
@@ -29,25 +28,16 @@ import {
 } from "@mui/icons-material";
 
 import logoIcon from "../../assets/irrigation logo icon.png";
-import { useDrawer } from "./DrawerContext";
+import { useResponsiveDrawer } from "../../hooks/useResponsiveDrawer";
 import { Link } from "react-router-dom";
 import List from "@mui/material/List";
 import { useContext } from "react";
 import { ColorModeContext } from "../../theme/theme";
-import React from "react";
 
 export default function Navbar() {
   const theme = useTheme();
-  const { open, setOpen } = useDrawer();
+  const { open, setOpen, isSmallOrMobile } = useResponsiveDrawer();
   const colorMode = useContext(ColorModeContext);
-  const isSmallOrMobile = useMediaQuery("(max-width:1023px)");
-
-  // Hide Drawer on small/mobile screens by default
-  React.useEffect(() => {
-    if (isSmallOrMobile && open) {
-      setOpen(false);
-    }
-  }, [isSmallOrMobile, open, setOpen]);
 
   // Handler for chevron left (close)
   const handleDrawerClose = () => {
@@ -122,13 +112,7 @@ export default function Navbar() {
   return (
     <>
       <CssBaseline />
-      <Drawer
-        variant="permanent"
-        open={open && (!isSmallOrMobile || (isSmallOrMobile && open))}
-        sx={{
-          display: isSmallOrMobile && !open ? "none" : "block",
-        }}
-      >
+      <Drawer variant="permanent" open={open}>
         <DrawerHeader
           sx={{ justifyContent: open ? "space-between" : "center", px: 2 }}
         >
@@ -282,6 +266,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => {
+  const isSmallOrMobile = `@media (max-width: 1023px)`;
+
   return {
     width: drawerWidth,
     flexShrink: 0,
@@ -289,6 +275,16 @@ const Drawer = styled(MuiDrawer, {
     boxSizing: "border-box",
     background: theme.custom.sidePanel.backgroundColor,
     color: theme.custom.sidePanel.iconColor,
+    // Hide the docked element on mobile when closed to prevent layout space
+    ...(!open && {
+      [isSmallOrMobile]: {
+        "&.MuiDrawer-docked": {
+          width: 0,
+          minWidth: 0,
+          overflow: "hidden",
+        },
+      },
+    }),
     ...(open
       ? {
           ...openedMixin(theme),
@@ -296,6 +292,17 @@ const Drawer = styled(MuiDrawer, {
             ...openedMixin(theme),
             background: theme.custom.sidePanel.backgroundColor,
             color: theme.custom.sidePanel.iconColor,
+            transition: theme.transitions.create(["transform", "width"], {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+            // Mobile: slide in from left and overlay content
+            [isSmallOrMobile]: {
+              position: "fixed",
+              transform: "translateX(0)",
+              visibility: "visible",
+              zIndex: theme.zIndex.drawer,
+            },
           },
         }
       : {
@@ -304,6 +311,17 @@ const Drawer = styled(MuiDrawer, {
             ...closedMixin(theme),
             background: theme.custom.sidePanel.backgroundColor,
             color: theme.custom.sidePanel.iconColor,
+            transition: theme.transitions.create(["transform", "width"], {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.leavingScreen,
+            }),
+            // Mobile: slide out to left and hide
+            [isSmallOrMobile]: {
+              position: "fixed",
+              transform: "translateX(-100%)",
+              visibility: "hidden",
+              zIndex: theme.zIndex.drawer,
+            },
           },
         }),
   };
